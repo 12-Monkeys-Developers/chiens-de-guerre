@@ -1,0 +1,14 @@
+{{!
+  Rangée de trois écussons cliquables représentant un rang de 0 à 3, comme sur la fiche papier.
+  Paramètres attendus : `path` (chemin du champ à mettre à jour), `rank` (valeur courante),
+  `editable` (autorise le clic).
+}}
+<div class="rank-shields" data-tooltip="{{rankTooltip rank}}">
+  {{#each (range 1 @root.SYSTEM.MAX_RANK) as |step|}}
+    {{#if ../editable}}
+      <a class="shield {{#if (gte ../rank step)}}filled{{/if}}" data-action="setRank" data-target="{{../path}}" data-rank="{{step}}"></a>
+    {{else}}
+      <span class="shield {{#if (gte ../rank step)}}filled{{/if}}"></span>
+    {{/if}}
+  {{/each}}
+</div>

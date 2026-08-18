@@ -1,0 +1,54 @@
+{
+  "id": "chiens-de-guerre",
+  "title": "Chiens de guerre",
+  "description": "Le système Chiens de guerre pour Foundry VTT.",
+  "url": "#{URL}#",
+  "version": "#{VERSION}#",
+  "compatibility": {
+    "minimum": "14",
+    "maximum": "14",
+    "verified": "14"
+  },
+  "authors": [
+    {
+      "name": "Christophe Laudon"
+    }
+  ],
+  "esmodules": ["cdg.mjs"],
+  "styles": ["css/cdg.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "fr",
+      "name": "French",
+      "path": "lang/fr.json"
+    },
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/fr.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": { "htmlFields": ["specialTraits", "details.biography.private", "details.biography.public", "details.notes.private", "details.notes.public"] },
+      "adversaire": { "htmlFields": ["details.description", "details.notes"] }
+    },
+    "Item": {
+      "equipment": { "htmlFields": ["description"] },
+      "arcanum": { "htmlFields": ["description", "effect"] },
+      "feature": { "htmlFields": ["description"] },
+      "peuple": { "htmlFields": ["description"] },
+      "carriere": { "htmlFields": ["description"] }
+    }
+  },
+  "grid": {
+    "distance": 1.5,
+    "units": "m"
+  },
+  "socket": false,
+  "initiative": "1d20",
+  "background": "systems/chiens-de-guerre/ui/bataille-panoramique.webp",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#"
+}

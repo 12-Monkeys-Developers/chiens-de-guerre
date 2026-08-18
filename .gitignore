@@ -1,0 +1,15 @@
+# Node Modules
+node_modules/
+
+# Foundry VTT
+packs
+styles/**/*.css
+
+# Matière première : PDF des règles, fiche de personnage, images extraites.
+# Les visuels réellement utilisés par le système sont copiés dans ui/, qui est versionné.
+source/
+
+# Tools
+.claudeignore
+CLAUDE.md
+.claude/

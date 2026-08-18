@@ -1,0 +1,12 @@
+<section class="description">
+  <h2 class="section-title">{{localize "CDG.label.long.description"}}</h2>
+  <div class="free-text">
+    {{formInput systemFields.description value=system.description enriched=enrichedDescription
+      name="system.description" toggled=true}}
+  </div>
+</section>
+
+<div class="field-line">
+  <label>{{localize "CDG.label.long.origin"}}</label>
+  <input type="text" name="system.origin" value="{{system.origin}}" spellcheck="false" />
+</div>

@@ -1,0 +1,76 @@
+// Champs de saisie : la fiche papier n'a pas de boîtes, seulement des lignes à remplir. Les inputs
+// reprennent ce parti — un simple filet sous le texte, pas de cadre.
+.cdg {
+  input[type="text"],
+  input[type="number"],
+  select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+    border-radius: 0;
+    color: var(--cdg-text);
+    font-family: var(--cdg-font-text);
+    font-size: 0.85rem;
+    height: 1.5rem;
+    padding: 0 0.2rem;
+
+    &:focus {
+      border-bottom-color: var(--cdg-blood);
+      box-shadow: none;
+      outline: none;
+    }
+
+    &:disabled {
+      color: var(--cdg-muted);
+      border-bottom-style: dotted;
+    }
+  }
+
+  input[type="number"] {
+    text-align: center;
+    width: 3.5rem;
+  }
+
+  select {
+    // La flèche native reste visible : sans cadre, elle est le seul indice qu'on peut dérouler.
+    border-bottom: 1px solid var(--cdg-parchment-line);
+  }
+
+  .field-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-bottom: 0.25rem;
+
+    > label {
+      flex: 0 0 auto;
+      min-width: 5.5rem;
+    }
+
+    > input[type="text"],
+    > select {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .value {
+      flex: 1 1 auto;
+      font-size: 0.85rem;
+      border-bottom: 1px solid transparent;
+    }
+  }
+
+  // Zones de texte riche : le fond parchemin transparaît, seul un filet les délimite.
+  .free-text {
+    border: 1px solid var(--cdg-parchment-line);
+    border-radius: var(--cdg-radius);
+    background: rgb(255 255 255 / 35%);
+    padding: 0.3rem 0.5rem;
+    min-height: 4rem;
+
+    .editor,
+    prose-mirror {
+      min-height: 4rem;
+    }
+  }
+}

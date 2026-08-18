@@ -1,0 +1,51 @@
+<header class="sheet-header adversaire-header">
+
+  <div class="portrait">
+    <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
+      {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} />
+  </div>
+
+  <div class="identity">
+    <div class="field-line name-line">
+      {{#if unlocked}}
+        <input type="text" name="name" value="{{actor.name}}" spellcheck="false" />
+      {{else}}
+        <span class="value name">{{actor.name}}</span>
+      {{/if}}
+    </div>
+    <div class="field-line size-line">
+      <label>{{localize "CDG.label.long.size"}}</label>
+      {{#if unlocked}}
+        <select name="system.details.size">
+          {{selectOptions choiceSizes selected=details.size localize=true}}
+        </select>
+      {{else}}
+        <span class="value">{{localize (lookup choiceSizes details.size)}}</span>
+      {{/if}}
+    </div>
+  </div>
+
+  <section class="abilities">
+    <ol class="ability-list">
+      {{#each SYSTEM.ABILITIES as |ability id|}}
+        {{#with (lookup @root.abilities id) as |pool|}}
+          <li class="ability" data-ability="{{id}}">
+            <span class="ability-name">{{localize ability.label}}</span>
+            <div class="pool">
+              <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
+              <span class="pool-value">{{pool.value}}</span>
+              <span class="pool-separator">/</span>
+              {{#if @root.unlocked}}
+                <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.max}}" min="0" data-dtype="Number" />
+              {{else}}
+                <span class="pool-max">{{pool.max}}</span>
+              {{/if}}
+              <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="1"><i class="fas fa-plus"></i></a>
+            </div>
+          </li>
+        {{/with}}
+      {{/each}}
+    </ol>
+  </section>
+
+</header>

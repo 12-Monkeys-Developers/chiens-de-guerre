@@ -1,0 +1,159 @@
+// En-tête de la fiche de personnage : le bandeau de bataille rouge, le portrait dans l'étendard
+// déchiré, l'état civil, puis les trois caractéristiques.
+.cdg.actor {
+  .sheet-header {
+    display: grid;
+    grid-template-columns: 190px 1fr 240px;
+    gap: 0.6rem;
+    align-items: start;
+    padding: 0.6rem 0.8rem 0.4rem;
+    // Illustration de bataille en fond d'en-tête, très atténuée pour rester lisible.
+    background-image: linear-gradient(rgb(242 236 224 / 82%), rgb(242 236 224 / 95%)), url("@{cdg-battle-image}");
+    background-size: cover;
+    background-position: center 30%;
+    border-bottom: 2px solid var(--cdg-ink);
+  }
+
+  // L'étendard sert de cadre au portrait : l'image de bannière est en fond, le portrait est posé
+  // dedans, légèrement rétréci pour laisser voir les bords déchirés.
+  .banner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 400 / 500;
+    background-image: url("@{cdg-banner-image}");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 2px 4px rgb(0 0 0 / 25%));
+
+    .portrait {
+      position: absolute;
+      inset: 12% 16%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .actor-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  .identity {
+    display: flex;
+    flex-direction: column;
+
+    .name-line .name {
+      font-family: var(--cdg-font-title);
+      font-size: 1.3rem;
+      color: var(--cdg-ink);
+    }
+
+    .name-line input[type="text"] {
+      font-family: var(--cdg-font-title);
+      font-size: 1.15rem;
+    }
+
+    .grade-line {
+      .pay {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--cdg-blood);
+        white-space: nowrap;
+      }
+    }
+  }
+
+  // Les trois caractéristiques : nom, réserve sur maximum, et les trois bulles d'amélioration.
+  .abilities {
+    .ability-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .ability {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      column-gap: 0.4rem;
+      align-items: center;
+      padding: 0.15rem 0.3rem;
+      background: rgb(255 255 255 / 45%);
+      border-left: 3px solid var(--cdg-blood);
+      border-radius: 0 var(--cdg-radius) var(--cdg-radius) 0;
+    }
+
+    .ability-name {
+      font-family: var(--cdg-font-title);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--cdg-ink);
+    }
+
+    .pool {
+      grid-row: 1 / span 2;
+      grid-column: 2;
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+    }
+
+    .pool-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      min-width: 1.6rem;
+      text-align: center;
+      color: var(--cdg-blood);
+    }
+
+    .pool-separator {
+      color: var(--cdg-muted);
+    }
+
+    .pool-max {
+      font-size: 0.95rem;
+      min-width: 1.6rem;
+      text-align: center;
+      width: 2.4rem;
+    }
+
+    .pool-step {
+      color: var(--cdg-ink-soft);
+      font-size: 0.7rem;
+
+      &:hover {
+        color: var(--cdg-blood);
+        text-shadow: none;
+      }
+    }
+
+    .improvements {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+  }
+}
+
+// L'adversaire réutilise le même vocabulaire, sans étendard ni bandeau de bataille.
+.cdg.actor.adversaire .sheet-header {
+  grid-template-columns: 64px 1fr 240px;
+  background-image: none;
+
+  .portrait .actor-img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border: 2px solid var(--cdg-ink);
+    border-radius: var(--cdg-radius);
+  }
+}

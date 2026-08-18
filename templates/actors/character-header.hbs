@@ -1,0 +1,118 @@
+<header class="sheet-header">
+
+  <div class="banner">
+    <div class="portrait">
+      <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
+        {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} />
+    </div>
+  </div>
+
+  <div class="identity">
+    <div class="field-line name-line">
+      <label>{{localize "CDG.label.long.surnom"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="name" value="{{actor.name}}" spellcheck="false" />
+      {{else}}
+        <span class="value name">{{actor.name}}</span>
+      {{/if}}
+    </div>
+
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.vraiNom"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="system.identity.vraiNom" value="{{identity.vraiNom}}" spellcheck="false" />
+      {{else}}
+        <span class="value">{{identity.vraiNom}}</span>
+      {{/if}}
+    </div>
+
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.peuple"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="system.identity.peuple" value="{{identity.peuple}}" spellcheck="false" />
+      {{else}}
+        <span class="value">{{identity.peuple}}</span>
+      {{/if}}
+    </div>
+
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.religion"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="system.identity.religion" value="{{identity.religion}}" spellcheck="false" />
+      {{else}}
+        <span class="value">{{identity.religion}}</span>
+      {{/if}}
+    </div>
+
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.carriere"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="system.identity.carriere" value="{{identity.carriere}}" spellcheck="false" />
+      {{else}}
+        <span class="value">{{identity.carriere}}</span>
+      {{/if}}
+    </div>
+
+    <div class="field-line grade-line">
+      <label>{{localize "CDG.label.long.grade"}}</label>
+      {{#if unlocked}}
+        <select name="system.identity.grade">
+          {{selectOptions choiceGrades selected=identity.grade blank="" localize=true labelAttr="label" valueAttr="id"}}
+        </select>
+      {{else}}
+        <span class="value">{{#if identity.grade}}{{localize (concat "CDG.grades." identity.grade)}}{{/if}}</span>
+      {{/if}}
+      <span class="pay" data-tooltip="{{localize 'CDG.label.long.solde'}}">{{identity.pay}} {{localize "CDG.currency.ducatShort"}}/{{localize "CDG.label.short.month"}}</span>
+    </div>
+
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.ascendance"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="system.identity.ascendance" value="{{identity.ascendance}}" spellcheck="false" />
+      {{else}}
+        <span class="value">{{identity.ascendance}}</span>
+      {{/if}}
+    </div>
+
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.compulsion"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="system.identity.compulsion" value="{{identity.compulsion}}" spellcheck="false" />
+      {{else}}
+        <span class="value">{{identity.compulsion}}</span>
+      {{/if}}
+    </div>
+  </div>
+
+  <section class="abilities">
+    <h2 class="section-title">{{localize "CDG.label.long.abilities"}}</h2>
+    <ol class="ability-list">
+      {{#each SYSTEM.ABILITIES as |ability id|}}
+        {{#with (lookup @root.abilities id) as |pool|}}
+          <li class="ability" data-ability="{{id}}">
+            <span class="ability-name">{{localize ability.label}}</span>
+
+            <div class="pool" data-tooltip="{{localize 'CDG.ui.poolHint'}}">
+              <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
+              <span class="pool-value">{{pool.value}}</span>
+              <span class="pool-separator">/</span>
+              {{#if @root.unlocked}}
+                <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.max}}" min="0" data-dtype="Number" />
+              {{else}}
+                <span class="pool-max">{{pool.max}}</span>
+              {{/if}}
+              <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="1"><i class="fas fa-plus"></i></a>
+            </div>
+
+            <div class="improvements" data-tooltip="{{localize 'CDG.ui.improvementsHint'}}">
+              {{#each (range 1 @root.SYSTEM.ABILITY_MAX_IMPROVEMENTS) as |step|}}
+                <span class="bubble {{#if (gte pool.improvements step)}}filled{{/if}}"></span>
+              {{/each}}
+            </div>
+          </li>
+        {{/with}}
+      {{/each}}
+    </ol>
+  </section>
+
+</header>

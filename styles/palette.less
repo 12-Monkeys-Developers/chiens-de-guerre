@@ -1,0 +1,36 @@
+// Couleurs prélevées sur la fiche de personnage : le rouge sang des éclaboussures, le brun-noir des
+// bandeaux de titre, le parchemin du fond, le vert-de-gris des libellés de compétences.
+//
+// Thème clair uniquement pour l'instant. Toutes les couleurs passent par ces variables : ajouter un
+// thème sombre plus tard consistera à les redéfinir ici, sans toucher aux feuilles des fiches.
+:root {
+  --cdg-blood: #7a1010;
+  --cdg-blood-light: #a83232;
+  --cdg-blood-dark: #4d0a0a;
+
+  --cdg-ink: #1a1512;
+  --cdg-ink-soft: #3a322c;
+
+  --cdg-parchment: #f2ece0;
+  --cdg-parchment-dark: #ded4c2;
+  --cdg-parchment-line: #b9ab92;
+
+  --cdg-label: #4a5a48;
+  --cdg-text: #241d18;
+  --cdg-muted: #7c7266;
+
+  --cdg-shield-empty: #ffffff;
+  --cdg-shield-border: #4a4239;
+  --cdg-shield-filled: #3a322c;
+
+  --cdg-font-title: "Modesto Condensed", "Signika", serif;
+  --cdg-font-label: "Signika", sans-serif;
+  --cdg-font-text: "Signika", sans-serif;
+
+  --cdg-radius: 3px;
+}
+
+// Ressources graphiques, référencées une seule fois pour rester faciles à remplacer.
+@cdg-parchment-image: "../ui/parchemin.webp";
+@cdg-banner-image: "../ui/banniere.webp";
+@cdg-battle-image: "../ui/bataille-large.webp";

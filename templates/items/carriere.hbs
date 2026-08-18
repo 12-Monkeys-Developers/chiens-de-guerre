@@ -1,0 +1,70 @@
+<section class="item-body">
+
+  <div class="field-line">
+    <label>{{localize "CDG.label.long.abilityBonus"}}</label>
+    <select name="system.abilityBonus">
+      {{selectOptions choiceAbilities selected=system.abilityBonus blank="" localize=true labelAttr="label" valueAttr="id"}}
+    </select>
+  </div>
+
+  <section class="starting-skills">
+    <h2 class="section-title">
+      {{localize "CDG.label.long.startingSkills"}}
+      {{#if isEditable}}
+        <a class="create" data-action="addSkill" data-tooltip="{{localize 'CDG.ui.addSkill'}}"><i class="fas fa-plus"></i></a>
+      {{/if}}
+    </h2>
+    <ul class="skill-lines">
+      {{#each system.skills as |entry index|}}
+        <li class="skill-line">
+          <select name="system.skills.{{index}}.skill">
+            {{selectOptions @root.choiceSkills selected=entry.skill localize=true labelAttr="label" valueAttr="id"}}
+          </select>
+          <input type="number" name="system.skills.{{index}}.rank" value="{{entry.rank}}" min="0" max="3" data-dtype="Number" />
+          {{#if @root.isEditable}}
+            <a class="item-control" data-action="removeSkill" data-index="{{index}}"><i class="fas fa-xmark"></i></a>
+          {{/if}}
+        </li>
+      {{else}}
+        <li class="empty">{{localize "CDG.ui.noStartingSkill"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section class="starting-arcanums">
+    <h2 class="section-title">{{localize "CDG.label.long.startingArcanums"}}</h2>
+    <ul class="item-list">
+      {{#each arcanums as |arcanum|}}
+        <li class="item-row">
+          <img class="item-img" src="{{arcanum.img}}" />
+          <span class="item-name">{{arcanum.name}}</span>
+          {{#if @root.isEditable}}
+            <a class="item-control" data-action="removeReference" data-field="arcanums" data-uuid="{{arcanum.uuid}}"><i class="fas fa-xmark"></i></a>
+          {{/if}}
+        </li>
+      {{else}}
+        <li class="empty">{{localize "CDG.ui.dropArcanumsHere"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section class="starting-equipments">
+    <h2 class="section-title">{{localize "CDG.label.long.startingEquipments"}}</h2>
+    <ul class="item-list">
+      {{#each equipments as |equipment|}}
+        <li class="item-row">
+          <img class="item-img" src="{{equipment.img}}" />
+          <span class="item-name">{{equipment.name}}</span>
+          {{#if @root.isEditable}}
+            <a class="item-control" data-action="removeReference" data-field="equipments" data-uuid="{{equipment.uuid}}"><i class="fas fa-xmark"></i></a>
+          {{/if}}
+        </li>
+      {{else}}
+        <li class="empty">{{localize "CDG.ui.dropEquipmentsHere"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs"}}
+
+</section>

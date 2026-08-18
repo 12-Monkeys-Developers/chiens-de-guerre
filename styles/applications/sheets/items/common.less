@@ -1,0 +1,44 @@
+// Fiches d'objet : les lignes de compétences de départ d'une carrière et les listes de références
+// déposées par glisser-déposer.
+.cdg.item {
+  .skill-lines {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .skill-line {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.1rem 0;
+
+    select {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+  }
+
+  .price-line {
+    .price-part {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.2rem;
+    }
+
+    .unit {
+      font-size: 0.78rem;
+      color: var(--cdg-muted);
+    }
+  }
+
+  .starting-skills,
+  .starting-arcanums,
+  .starting-equipments,
+  .features,
+  .languages,
+  .effect,
+  .description {
+    margin-bottom: 0.7rem;
+  }
+}

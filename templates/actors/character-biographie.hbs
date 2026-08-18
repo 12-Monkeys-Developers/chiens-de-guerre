@@ -1,0 +1,50 @@
+<section class="tab tab-biographie{{#if tabs.biographie.active}} active{{/if}}" data-group="primary" data-tab="biographie">
+
+  <div class="field-line size-line">
+    <label>{{localize "CDG.label.long.size"}}</label>
+    {{#if unlocked}}
+      <select name="system.details.size">
+        {{selectOptions choiceSizes selected=details.size localize=true}}
+      </select>
+    {{else}}
+      <span class="value">{{localize (lookup choiceSizes details.size)}}</span>
+    {{/if}}
+  </div>
+
+  <section class="notes-section">
+    <h2 class="section-title">{{localize "CDG.label.long.biographyPublic"}}</h2>
+    <div class="free-text">
+      {{formInput systemFields.details.fields.biography.fields.public value=system.details.biography.public
+        enriched=enrichedBiographyPublic name="system.details.biography.public" toggled=true}}
+    </div>
+  </section>
+
+  {{#if isEditable}}
+    <section class="notes-section">
+      <h2 class="section-title">{{localize "CDG.label.long.biographyPrivate"}}</h2>
+      <div class="free-text">
+        {{formInput systemFields.details.fields.biography.fields.private value=system.details.biography.private
+          enriched=enrichedBiographyPrivate name="system.details.biography.private" toggled=true}}
+      </div>
+    </section>
+  {{/if}}
+
+  <section class="notes-section">
+    <h2 class="section-title">{{localize "CDG.label.long.notesPublic"}}</h2>
+    <div class="free-text">
+      {{formInput systemFields.details.fields.notes.fields.public value=system.details.notes.public
+        enriched=enrichedNotesPublic name="system.details.notes.public" toggled=true}}
+    </div>
+  </section>
+
+  {{#if isEditable}}
+    <section class="notes-section">
+      <h2 class="section-title">{{localize "CDG.label.long.notesPrivate"}}</h2>
+      <div class="free-text">
+        {{formInput systemFields.details.fields.notes.fields.private value=system.details.notes.private
+          enriched=enrichedNotesPrivate name="system.details.notes.private" toggled=true}}
+      </div>
+    </section>
+  {{/if}}
+
+</section>

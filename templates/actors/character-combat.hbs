@@ -1,0 +1,143 @@
+<section class="tab tab-combat{{#if tabs.combat.active}} active{{/if}}" data-group="primary" data-tab="combat">
+
+  <div class="combat-top">
+    <div class="initiative-block">
+      <h2 class="section-title">{{localize "CDG.label.long.initiative"}}</h2>
+      <div class="init-score">
+        <label>{{localize "CDG.label.long.initiativeValue"}}</label>
+        <input type="number" name="system.combat.initiative.value" value="{{combat.initiative.value}}" data-dtype="Number" />
+      </div>
+      <div class="init-modifier">
+        <label>{{localize "CDG.label.long.initiativeModifier"}}</label>
+        <span class="value" data-tooltip="{{localize 'CDG.ui.initiativeModifierHint'}}">{{signed combat.initiative.modifier}}</span>
+      </div>
+      <div class="init-bonus">
+        <label>{{localize "CDG.label.long.initiativeBonus"}}</label>
+        <input type="number" name="system.combat.initiative.bonus" value="{{combat.initiative.bonus}}" data-dtype="Number" />
+      </div>
+      {{#if combat.armorOverloaded}}
+        <p class="warning">{{localize "CDG.ui.armorOverloaded"}}</p>
+      {{/if}}
+      <p class="hint">{{localize "CDG.ui.initiativeHint"}}</p>
+    </div>
+
+    <div class="dodge-block">
+      <h2 class="section-title">{{localize "CDG.label.long.dodgesUsed"}}</h2>
+      <div class="dodge-track">
+        {{#each SYSTEM.DODGE_MALUS as |malus index|}}
+          <a class="dodge-step {{#if (gte @root.combat.dodgesUsed index)}}used{{/if}}"
+            data-action="setDodges" data-count="{{index}}">{{signed malus}}</a>
+        {{/each}}
+      </div>
+      <p class="current-malus">{{localize "CDG.label.long.nextDodge"}} <strong>{{signed combat.dodgeMalus}}</strong></p>
+
+      <div class="parry">
+        <label>{{localize "CDG.label.long.parry"}}</label>
+        <a class="parry-toggle {{#unless combat.canParry}}used{{/unless}}" data-action="toggleParry"
+          data-tooltip="{{localize 'CDG.ui.parryHint'}}">
+          <i class="fas {{#if combat.canParry}}fa-shield{{else}}fa-shield-slash{{/if}}"></i>
+          {{#if combat.canParry}}{{localize "CDG.ui.parryAvailable"}}{{else}}{{localize "CDG.ui.parryUsed"}}{{/if}}
+        </a>
+      </div>
+    </div>
+
+    <div class="wounds-block">
+      <h2 class="section-title">{{localize "CDG.label.long.wounds"}}</h2>
+      <ul class="wound-levels">
+        {{#each woundLevels as |level|}}
+          {{#with (lookup @root.wounds level.id) as |wound|}}
+            <li class="wound-level" data-level="{{level.id}}">
+              <span class="wound-name">{{localize level.label}}</span>
+              <div class="wound-boxes">
+                {{#each (range 1 wound.max) as |box|}}
+                  <a class="box {{#if (gte wound.value box)}}checked{{/if}}"
+                    data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>
+                {{/each}}
+              </div>
+              <span class="wound-malus">{{signed level.malus}}</span>
+            </li>
+          {{/with}}
+        {{/each}}
+      </ul>
+      <p class="current-malus">
+        {{localize "CDG.label.long.currentWoundMalus"}} <strong>{{signed wounds.malus}}</strong>
+      </p>
+      {{#if system.isDying}}
+        <p class="warning">{{localize "CDG.ui.dying"}}</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="combat-gear">
+    <section class="weapons">
+      <h2 class="section-title">
+        {{localize "CDG.label.long.weapons"}}
+        {{#if isEditable}}
+          <a class="create" data-action="createItem" data-type="equipment" data-subtype="weapon"
+            data-tooltip="{{localize 'CDG.ui.addWeapon'}}"><i class="fas fa-plus"></i></a>
+        {{/if}}
+      </h2>
+      <ul class="item-list">
+        {{#each weapons as |weapon|}}
+          <li class="item-row draggable" data-item-id="{{weapon.id}}">
+            <img class="item-img" src="{{weapon.img}}" data-action="editItem" />
+            <span class="item-name" data-action="editItem">{{weapon.name}}</span>
+            <span class="item-label">{{localize "CDG.label.long.damage"}}</span>
+            {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
+                rank=weapon.system.damage.rank editable=false}}
+            {{#if @root.isEditable}}
+              <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </section>
+
+    <section class="protections">
+      <h2 class="section-title">
+        {{localize "CDG.label.long.protections"}}
+        {{#if isEditable}}
+          <a class="create" data-action="createItem" data-type="equipment" data-subtype="armor"
+            data-tooltip="{{localize 'CDG.ui.addArmor'}}"><i class="fas fa-plus"></i></a>
+          <a class="create" data-action="createItem" data-type="equipment" data-subtype="shield"
+            data-tooltip="{{localize 'CDG.ui.addShield'}}"><i class="fas fa-shield"></i></a>
+        {{/if}}
+      </h2>
+      <ul class="item-list">
+        {{#each armors as |armor|}}
+          <li class="item-row draggable {{#if armor.system.equipped}}equipped{{/if}}" data-item-id="{{armor.id}}">
+            <a class="equip-toggle" data-action="toggleEquipped" data-tooltip="{{localize 'CDG.ui.toggleEquipped'}}">
+              <i class="fas {{#if armor.system.equipped}}fa-circle-check{{else}}fa-circle{{/if}}"></i>
+            </a>
+            <img class="item-img" src="{{armor.img}}" data-action="editItem" />
+            <span class="item-name" data-action="editItem">{{armor.name}}</span>
+            <span class="item-label">{{localize "CDG.label.long.protection"}}</span>
+            {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
+                rank=armor.system.protection.rank editable=false}}
+            <span class="item-init">{{localize "CDG.label.short.init"}} {{signed armor.system.initMalus}}</span>
+            {{#if @root.isEditable}}
+              <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
+            {{/if}}
+          </li>
+        {{/each}}
+
+        {{#each shields as |shield|}}
+          <li class="item-row draggable {{#if shield.system.equipped}}equipped{{/if}}" data-item-id="{{shield.id}}">
+            <a class="equip-toggle" data-action="toggleEquipped" data-tooltip="{{localize 'CDG.ui.toggleEquipped'}}">
+              <i class="fas {{#if shield.system.equipped}}fa-circle-check{{else}}fa-circle{{/if}}"></i>
+            </a>
+            <img class="item-img" src="{{shield.img}}" data-action="editItem" />
+            <span class="item-name" data-action="editItem">{{shield.name}}</span>
+            <span class="item-label">{{localize "CDG.label.long.blockBonus"}}</span>
+            <span class="item-value">{{signed shield.system.blockBonus}}</span>
+            <span class="item-init">{{localize "CDG.label.short.init"}} {{signed shield.system.initMalus}}</span>
+            {{#if @root.isEditable}}
+              <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </section>
+  </div>
+
+</section>

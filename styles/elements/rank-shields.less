@@ -1,0 +1,76 @@
+// Les écussons de rang de la fiche papier : trois petits blasons à noircir, réutilisés pour les
+// compétences, les dégâts d'une arme et la protection d'une armure.
+//
+// Dessinés en CSS plutôt qu'en image pour rester nets à toute taille et suivre la couleur du thème.
+.cdg {
+  .rank-shields {
+    display: inline-flex;
+    gap: 2px;
+    align-items: center;
+  }
+
+  .shield {
+    display: inline-block;
+    width: 13px;
+    height: 15px;
+    background: var(--cdg-shield-empty);
+    border: 1px solid var(--cdg-shield-border);
+    // Silhouette de blason : épaules droites, pointe en bas.
+    clip-path: polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%);
+    text-decoration: none;
+    transition: background-color 0.12s ease;
+
+    &.filled {
+      background: var(--cdg-shield-filled);
+    }
+  }
+
+  a.shield {
+    cursor: pointer;
+
+    &:hover {
+      background: var(--cdg-blood-light);
+      box-shadow: none;
+    }
+  }
+
+  // Cases carrées : blessures, traits de personnalité, langues.
+  .box {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    background: var(--cdg-shield-empty);
+    border: 1px solid var(--cdg-shield-border);
+    border-radius: 1px;
+    text-decoration: none;
+
+    &.checked,
+    &.filled {
+      background: var(--cdg-blood);
+      border-color: var(--cdg-blood-dark);
+    }
+  }
+
+  a.box {
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--cdg-blood);
+      box-shadow: none;
+    }
+  }
+
+  // Bulles d'amélioration de caractéristique (les trois petits ronds de la fiche).
+  .bubble {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--cdg-shield-border);
+    border-radius: 50%;
+    background: var(--cdg-shield-empty);
+
+    &.filled {
+      background: var(--cdg-ink);
+    }
+  }
+}

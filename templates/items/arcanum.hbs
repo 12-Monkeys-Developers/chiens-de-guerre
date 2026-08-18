@@ -1,0 +1,41 @@
+<section class="item-body">
+
+  <div class="field-line">
+    <label>{{localize "CDG.label.long.arcanumType"}}</label>
+    <select name="system.arcanumType">
+      {{selectOptions choiceTypes selected=system.arcanumType localize=true labelAttr="label" valueAttr="id"}}
+    </select>
+  </div>
+
+  <div class="field-line">
+    <label>{{localize "CDG.label.long.rank"}}</label>
+    <input type="number" name="system.rank" value="{{system.rank}}"
+      min="{{SYSTEM.ARCANUM_MIN_RANK}}" max="{{SYSTEM.ARCANUM_MAX_RANK}}" data-dtype="Number" />
+  </div>
+
+  {{#if isPassive}}
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.linkedSkill"}}</label>
+      <select name="system.linkedSkill">
+        {{selectOptions choiceSkills selected=system.linkedSkill blank="" localize=true labelAttr="label" valueAttr="id"}}
+      </select>
+    </div>
+    <p class="hint">{{localize "CDG.ui.passiveArcanumHint"}} <strong>{{signed bonus}}</strong></p>
+  {{else}}
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.espritCost"}}</label>
+      <input type="number" name="system.espritCost" value="{{system.espritCost}}" min="0" data-dtype="Number" />
+    </div>
+    <p class="hint">{{localize "CDG.ui.mysticArcanumHint"}}</p>
+  {{/if}}
+
+  <section class="effect">
+    <h2 class="section-title">{{localize "CDG.label.long.effect"}}</h2>
+    <div class="free-text">
+      {{formInput systemFields.effect value=system.effect enriched=enrichedEffect name="system.effect" toggled=true}}
+    </div>
+  </section>
+
+  {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs"}}
+
+</section>

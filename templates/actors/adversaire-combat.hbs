@@ -1,0 +1,80 @@
+<section class="tab tab-combat{{#if tabs.combat.active}} active{{/if}}" data-group="primary" data-tab="combat">
+
+  <div class="combat-top">
+    <div class="initiative-block">
+      <h2 class="section-title">{{localize "CDG.label.long.initiative"}}</h2>
+      <div class="init-score">
+        <label>{{localize "CDG.label.long.initiativeValue"}}</label>
+        <input type="number" name="system.combat.initiative.value" value="{{combat.initiative.value}}" data-dtype="Number" />
+      </div>
+      <div class="init-modifier">
+        <label>{{localize "CDG.label.long.initiativeModifier"}}</label>
+        <span class="value">{{signed combat.initiative.modifier}}</span>
+      </div>
+      <div class="init-bonus">
+        <label>{{localize "CDG.label.long.initiativeBonus"}}</label>
+        <input type="number" name="system.combat.initiative.bonus" value="{{combat.initiative.bonus}}" data-dtype="Number" />
+      </div>
+    </div>
+
+    <div class="dodge-block">
+      <h2 class="section-title">{{localize "CDG.label.long.dodgesUsed"}}</h2>
+      <div class="dodge-track">
+        {{#each SYSTEM.DODGE_MALUS as |malus index|}}
+          <a class="dodge-step {{#if (gte @root.combat.dodgesUsed index)}}used{{/if}}"
+            data-action="setDodges" data-count="{{index}}">{{signed malus}}</a>
+        {{/each}}
+      </div>
+      <div class="parry">
+        <a class="parry-toggle {{#unless combat.canParry}}used{{/unless}}" data-action="toggleParry">
+          <i class="fas {{#if combat.canParry}}fa-shield{{else}}fa-shield-slash{{/if}}"></i>
+          {{#if combat.canParry}}{{localize "CDG.ui.parryAvailable"}}{{else}}{{localize "CDG.ui.parryUsed"}}{{/if}}
+        </a>
+      </div>
+    </div>
+
+    <div class="wounds-block">
+      <h2 class="section-title">{{localize "CDG.label.long.wounds"}}</h2>
+      <ul class="wound-levels">
+        {{#each woundLevels as |level|}}
+          {{#with (lookup @root.wounds level.id) as |wound|}}
+            <li class="wound-level" data-level="{{level.id}}">
+              <span class="wound-name">{{localize level.label}}</span>
+              <div class="wound-boxes">
+                {{#each (range 1 wound.max) as |box|}}
+                  <a class="box {{#if (gte wound.value box)}}checked{{/if}}"
+                    data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>
+                {{/each}}
+              </div>
+              <span class="wound-malus">{{signed level.malus}}</span>
+            </li>
+          {{/with}}
+        {{/each}}
+      </ul>
+      <p class="current-malus">{{localize "CDG.label.long.currentWoundMalus"}} <strong>{{signed wounds.malus}}</strong></p>
+    </div>
+  </div>
+
+  <section class="weapons">
+    <h2 class="section-title">
+      {{localize "CDG.label.long.weapons"}}
+      {{#if isEditable}}
+        <a class="create" data-action="createItem" data-type="equipment" data-subtype="weapon"><i class="fas fa-plus"></i></a>
+      {{/if}}
+    </h2>
+    <ul class="item-list">
+      {{#each weapons as |weapon|}}
+        <li class="item-row draggable" data-item-id="{{weapon.id}}">
+          <img class="item-img" src="{{weapon.img}}" data-action="editItem" />
+          <span class="item-name" data-action="editItem">{{weapon.name}}</span>
+          <span class="item-label">{{localize "CDG.label.long.damage"}}</span>
+          {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=weapon.system.damage.rank editable=false}}
+          {{#if @root.isEditable}}
+            <a class="item-control" data-action="deleteItem"><i class="fas fa-trash"></i></a>
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+
+</section>

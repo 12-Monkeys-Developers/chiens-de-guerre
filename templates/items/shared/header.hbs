@@ -1,0 +1,12 @@
+<header class="sheet-header item-header">
+  <img class="item-img" src="{{item.img}}" data-tooltip="{{item.name}}"
+    {{#if isEditable}}data-action="editImage" data-edit="img"{{/if}} />
+  <div class="titles">
+    {{#if isEditable}}
+      <input class="name" type="text" name="name" value="{{item.name}}" spellcheck="false" />
+    {{else}}
+      <span class="name">{{item.name}}</span>
+    {{/if}}
+    <span class="type">{{localize (concat "TYPES.Item." item.type)}}</span>
+  </div>
+</header>

@@ -1,0 +1,52 @@
+<section class="tab tab-equipement{{#if tabs.equipement.active}} active{{/if}}" data-group="primary" data-tab="equipement">
+
+  <section class="gear">
+    <h2 class="section-title">
+      {{localize "CDG.label.long.equipment"}}
+      {{#if isEditable}}
+        <a class="create" data-action="createItem" data-type="equipment" data-subtype="misc"
+          data-tooltip="{{localize 'CDG.ui.addGear'}}"><i class="fas fa-plus"></i></a>
+      {{/if}}
+    </h2>
+    <ul class="item-list">
+      {{#each gear as |item|}}
+        <li class="item-row draggable" data-item-id="{{item.id}}">
+          <img class="item-img" src="{{item.img}}" data-action="editItem" />
+          <span class="item-name" data-action="editItem">{{item.name}}</span>
+          <span class="item-quantity">×{{item.system.quantity}}</span>
+          {{#if @root.isEditable}}
+            <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
+          {{/if}}
+        </li>
+      {{else}}
+        <li class="empty">{{localize "CDG.ui.noGear"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section class="purse">
+    <h2 class="section-title">{{localize "CDG.label.long.purse"}}</h2>
+    <ul class="currency-list">
+      {{#each currencies as |currency|}}
+        <li class="currency">
+          <label>{{localize currency.label}}</label>
+          <input type="number" name="system.wealth.{{currency.id}}" value="{{lookup @root.wealth currency.id}}" min="0" data-dtype="Number" />
+        </li>
+      {{/each}}
+    </ul>
+    <p class="hint">{{localize "CDG.ui.currencyHint"}}</p>
+  </section>
+
+  <section class="rest">
+    <h2 class="section-title">{{localize "CDG.label.long.rest"}}</h2>
+    <div class="rest-buttons">
+      {{#each choiceRestConditions as |condition|}}
+        <a class="rest-button" data-action="rest" data-condition="{{condition.id}}"
+          data-tooltip="{{localize 'CDG.ui.restHint'}}">
+          {{localize condition.label}} <span class="recovery">+{{condition.recovery}}</span>
+        </a>
+      {{/each}}
+    </div>
+  </section>
+
+</section>

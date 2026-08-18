@@ -1,0 +1,91 @@
+// Grammaire typographique de la fiche papier : titres de section en capitales sur bandeau sombre,
+// libellés de champs en petites capitales, valeurs en chiffres nets.
+.cdg {
+  color: var(--cdg-text);
+  font-family: var(--cdg-font-text);
+
+  // Bandeau de titre : bande sombre aux extrémités déchirées, terminée par une pointe de lance,
+  // comme les bandeaux imprimés. Dessiné en CSS pour rester net à toute largeur — les bandeaux de
+  // la fiche portent leur texte en dur et ne sont pas réutilisables tels quels.
+  .section-title {
+    position: relative;
+    margin: 0 0 0.4rem 0;
+    padding: 0.15rem 2.2rem 0.15rem 0.8rem;
+    background: linear-gradient(180deg, var(--cdg-ink) 0%, var(--cdg-ink-soft) 100%);
+    color: var(--cdg-parchment);
+    font-family: var(--cdg-font-title);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: none;
+    clip-path: polygon(0 0, calc(100% - 1.6rem) 0, 100% 50%, calc(100% - 1.6rem) 100%, 0 100%);
+
+    // Les trois gouttes de sang qui suivent chaque bandeau sur la fiche.
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--cdg-blood);
+      box-shadow:
+        -8px -3px 0 -1px var(--cdg-blood),
+        -14px 2px 0 -2px var(--cdg-blood);
+      transform: translateY(-50%);
+    }
+
+    a {
+      color: var(--cdg-parchment-dark);
+      font-size: 0.85rem;
+      margin-left: 0.4rem;
+
+      &:hover {
+        color: #ffffff;
+        text-shadow: none;
+      }
+    }
+  }
+
+  h3 {
+    font-family: var(--cdg-font-title);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--cdg-blood);
+    border: none;
+    margin: 0 0 0.3rem 0;
+  }
+
+  label {
+    font-family: var(--cdg-font-label);
+    font-size: 0.78rem;
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    color: var(--cdg-label);
+  }
+
+  .hint {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--cdg-muted);
+    margin: 0.3rem 0 0 0;
+  }
+
+  .warning {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--cdg-blood);
+    margin: 0.3rem 0 0 0;
+  }
+
+  .empty {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--cdg-muted);
+    padding: 0.3rem 0;
+    list-style: none;
+  }
+}

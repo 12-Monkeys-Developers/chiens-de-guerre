@@ -1,0 +1,407 @@
+// Contenu des onglets de la fiche de personnage.
+.cdg.actor {
+  // --- Compétences : les trois colonnes de la fiche papier -----------------------------------
+  .skill-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 1.2rem;
+  }
+
+  .skill-column {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .skill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.1rem 0;
+
+    .skill-name {
+      font-size: 0.82rem;
+      color: var(--cdg-label);
+      text-align: right;
+      flex: 1 1 auto;
+    }
+  }
+
+  // --- Personnalité : 17 couples vice / vertu ------------------------------------------------
+  .trait-pairs {
+    list-style: none;
+    margin: 0 0 0.8rem 0;
+    padding: 0;
+  }
+
+  .trait-pair {
+    display: grid;
+    grid-template-columns: 1fr auto auto 1fr auto;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.08rem 0;
+
+    &.invoked {
+      background: rgb(122 16 16 / 8%);
+    }
+
+    .trait-label {
+      font-size: 0.82rem;
+      color: var(--cdg-muted);
+
+      &.vice {
+        text-align: right;
+      }
+
+      &.dominant {
+        color: var(--cdg-ink);
+        font-weight: 700;
+      }
+    }
+
+    .trait-boxes {
+      display: flex;
+      gap: 2px;
+
+      // Colonne des vices : rendue à l'envers pour que la case 1 soit la plus proche du libellé,
+      // comme sur la fiche papier où les deux colonnes se font face.
+      &.vice {
+        flex-direction: row-reverse;
+      }
+    }
+
+    // Le trait qui sépare les deux colonnes sur la fiche.
+    .trait-boxes.virtue {
+      border-left: 1px solid var(--cdg-blood);
+      padding-left: 0.4rem;
+    }
+
+    .invoke {
+      color: var(--cdg-parchment-line);
+      font-size: 0.75rem;
+
+      &:hover {
+        color: var(--cdg-blood);
+        text-shadow: none;
+      }
+    }
+
+    &.invoked .invoke {
+      color: var(--cdg-blood);
+    }
+  }
+
+  .karma-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0.5rem;
+    border-top: 1px solid var(--cdg-parchment-line);
+    border-bottom: 1px solid var(--cdg-parchment-line);
+
+    .totals {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .karma strong,
+    .allegiance strong {
+      font-family: var(--cdg-font-title);
+      font-size: 1.1rem;
+      margin-left: 0.3rem;
+    }
+
+    .allegiance-obscurite strong {
+      color: var(--cdg-ink);
+    }
+
+    .allegiance-balance strong {
+      color: var(--cdg-label);
+    }
+
+    .allegiance-lumiere strong {
+      color: var(--cdg-blood-light);
+    }
+  }
+
+  .passion-block {
+    margin-top: 0.6rem;
+    text-align: center;
+
+    .tokens {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .token-count {
+      font-family: var(--cdg-font-title);
+      font-size: 1.4rem;
+      color: var(--cdg-blood);
+      min-width: 2rem;
+    }
+
+    .clear-invoked {
+      font-size: 0.78rem;
+      text-decoration: underline;
+      color: var(--cdg-ink-soft);
+    }
+  }
+
+  // --- Combat --------------------------------------------------------------------------------
+  .combat-top {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .initiative-block {
+    .init-score,
+    .init-modifier,
+    .init-bonus {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .init-modifier .value {
+      font-family: var(--cdg-font-title);
+      font-size: 1.1rem;
+      color: var(--cdg-blood);
+    }
+  }
+
+  .dodge-track {
+    display: flex;
+    gap: 0.15rem;
+
+    .dodge-step {
+      flex: 1 1 0;
+      text-align: center;
+      font-size: 0.78rem;
+      padding: 0.15rem 0;
+      background: var(--cdg-shield-empty);
+      border: 1px solid var(--cdg-shield-border);
+      border-radius: var(--cdg-radius);
+      color: var(--cdg-ink);
+
+      &.used {
+        background: var(--cdg-blood);
+        border-color: var(--cdg-blood-dark);
+        color: var(--cdg-parchment);
+      }
+
+      &:hover {
+        border-color: var(--cdg-blood);
+        text-shadow: none;
+      }
+    }
+  }
+
+  .parry {
+    margin-top: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    .parry-toggle {
+      font-size: 0.8rem;
+      color: var(--cdg-label);
+
+      &.used {
+        color: var(--cdg-muted);
+        text-decoration: line-through;
+      }
+
+      &:hover {
+        color: var(--cdg-blood);
+        text-shadow: none;
+      }
+    }
+  }
+
+  .wound-levels {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wound-level {
+    display: grid;
+    grid-template-columns: 1fr auto 2rem;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.1rem 0;
+
+    .wound-name {
+      font-size: 0.8rem;
+      font-variant: small-caps;
+      color: var(--cdg-label);
+    }
+
+    .wound-boxes {
+      display: flex;
+      gap: 3px;
+    }
+
+    .wound-malus {
+      text-align: right;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--cdg-blood);
+    }
+  }
+
+  .current-malus {
+    margin: 0.3rem 0 0 0;
+    font-size: 0.8rem;
+
+    strong {
+      color: var(--cdg-blood);
+      font-size: 1rem;
+    }
+  }
+
+  .combat-gear {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  // --- Équipement ----------------------------------------------------------------------------
+  .currency-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+
+    .currency {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+  }
+
+  .rest-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+
+    .rest-button {
+      padding: 0.2rem 0.6rem;
+      font-size: 0.78rem;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      background: rgb(255 255 255 / 45%);
+      color: var(--cdg-ink);
+
+      &:hover {
+        border-color: var(--cdg-blood);
+        color: var(--cdg-blood);
+        text-shadow: none;
+      }
+
+      .recovery {
+        font-weight: 700;
+        color: var(--cdg-blood);
+      }
+    }
+  }
+
+  .purse,
+  .rest,
+  .gear {
+    margin-bottom: 0.8rem;
+  }
+
+  // --- Arcanums ------------------------------------------------------------------------------
+  // Restreint à `.active` : sans cela le `display: grid` prendrait le pas sur le `display: none`
+  // que Foundry applique aux onglets inactifs, et l'onglet resterait visible en permanence.
+  .tab-arcanums.active {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    grid-template-areas:
+      "arcanums side"
+      "traits side";
+    gap: 0.8rem;
+    align-items: start;
+
+    .arcanums {
+      grid-area: arcanums;
+    }
+
+    .special-traits {
+      grid-area: traits;
+    }
+
+    .arcanums-side {
+      grid-area: side;
+    }
+  }
+
+  .arcanum-list {
+    .arcanum-type {
+      font-size: 0.75rem;
+      font-variant: small-caps;
+      color: var(--cdg-muted);
+    }
+
+    .arcanum-rank {
+      font-family: var(--cdg-font-title);
+      font-size: 1rem;
+      color: var(--cdg-ink);
+      min-width: 1.2rem;
+      text-align: center;
+    }
+
+    .arcanum-bonus,
+    .arcanum-cost {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--cdg-blood);
+      min-width: 3rem;
+      text-align: right;
+    }
+  }
+
+  .language-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.15rem 0.5rem;
+
+    .language {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  .experience .xp-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem;
+
+    &.total strong {
+      font-family: var(--cdg-font-title);
+      font-size: 1.1rem;
+      color: var(--cdg-blood);
+    }
+  }
+
+  // --- Biographie ----------------------------------------------------------------------------
+  .notes-section {
+    margin-bottom: 0.8rem;
+  }
+}

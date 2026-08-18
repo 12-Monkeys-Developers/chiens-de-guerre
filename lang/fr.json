@@ -1,0 +1,415 @@
+{
+  "TYPES": {
+    "Actor": {
+      "character": "Personnage",
+      "adversaire": "Adversaire"
+    },
+    "Item": {
+      "equipment": "Équipement",
+      "arcanum": "Arcanum",
+      "feature": "Trait spécial",
+      "peuple": "Peuple",
+      "carriere": "Carrière"
+    }
+  },
+  "CDG": {
+    "notif": {
+      "ready": "Prêt à en découdre."
+    },
+    "sheet": {
+      "character": "Fiche de personnage",
+      "adversaire": "Fiche d'adversaire",
+      "equipment": "Fiche d'équipement",
+      "arcanum": "Fiche d'arcanum",
+      "feature": "Fiche de trait spécial",
+      "peuple": "Fiche de peuple",
+      "carriere": "Fiche de carrière",
+      "tabs": {
+        "competences": "Compétences",
+        "personnalite": "Personnalité",
+        "combat": "Combat",
+        "equipement": "Équipement",
+        "arcanums": "Arcanums",
+        "biographie": "Biographie",
+        "description": "Description"
+      }
+    },
+    "abilities": {
+      "long": {
+        "corps": "Corps",
+        "vivacite": "Vivacité",
+        "esprit": "Esprit"
+      },
+      "short": {
+        "corps": "COR",
+        "vivacite": "VIV",
+        "esprit": "ESP"
+      }
+    },
+    "skills": {
+      "acrobatie": "Acrobatie",
+      "artsArtisanats": "Arts et artisanats",
+      "athletisme": "Athlétisme",
+      "autorite": "Autorité",
+      "baratin": "Baratin",
+      "blocage": "Blocage",
+      "commerce": "Commerce",
+      "discretion": "Discrétion",
+      "eloquence": "Éloquence",
+      "empathie": "Empathie",
+      "equitation": "Équitation",
+      "erudition": "Érudition",
+      "escamotage": "Escamotage",
+      "esquive": "Esquive",
+      "etiquette": "Étiquette",
+      "ingenierie": "Ingénierie",
+      "investigation": "Investigation",
+      "medecine": "Médecine",
+      "melee": "Mêlée",
+      "portArmures": "Port d'armures",
+      "religionsLegendes": "Religions et légendes",
+      "sciencesNaturelles": "Sciences naturelles",
+      "sensCombat": "Sens du combat",
+      "sensBatailles": "Sens des batailles",
+      "sensDuels": "Sens des duels",
+      "survie": "Survie",
+      "tactique": "Tactique",
+      "tir": "Tir",
+      "vigilance": "Vigilance",
+      "vigueur": "Vigueur",
+      "volonte": "Volonté"
+    },
+    "traits": {
+      "blase": "Blasé",
+      "curieux": "Curieux",
+      "concupiscent": "Concupiscent",
+      "chaste": "Chaste",
+      "couard": "Couard",
+      "courageux": "Courageux",
+      "desinvolte": "Désinvolte",
+      "meticuleux": "Méticuleux",
+      "dogmatique": "Dogmatique",
+      "tolerant": "Tolérant",
+      "dynamique": "Dynamique",
+      "calme": "Calme",
+      "egocentrique": "Égocentrique",
+      "altruiste": "Altruiste",
+      "excentrique": "Excentrique",
+      "sobre": "Sobre",
+      "fier": "Fier",
+      "modeste": "Modeste",
+      "grossier": "Grossier",
+      "raffine": "Raffiné",
+      "impassible": "Impassible",
+      "sensible": "Sensible",
+      "impulsif": "Impulsif",
+      "reflechi": "Réfléchi",
+      "mefiant": "Méfiant",
+      "naif": "Naïf",
+      "renferme": "Renfermé",
+      "expansif": "Expansif",
+      "triste": "Triste",
+      "joyeux": "Joyeux",
+      "trompeur": "Trompeur",
+      "loyal": "Loyal",
+      "vindicatif": "Vindicatif",
+      "pacifiste": "Pacifiste"
+    },
+    "allegiance": {
+      "obscurite": "Obscurité",
+      "balance": "Balance",
+      "lumiere": "Lumière"
+    },
+    "grades": {
+      "duplicator": "Duplicator",
+      "sergent": "Sergent",
+      "lieutenant": "Lieutenant"
+    },
+    "languages": {
+      "stygien": "Stygien",
+      "tuheen": "Tuhéen",
+      "escannien": "Escannien",
+      "elfique": "Elfique",
+      "lithelin": "Lithelin",
+      "aduatain": "Aduatain",
+      "tolenien": "Tolénien",
+      "darguanais": "Darguanais"
+    },
+    "wounds": {
+      "legere": "Blessures légères",
+      "grave": "Blessures graves",
+      "mortelle": "Blessures mortelles"
+    },
+    "ranks": {
+      "0": "Incompétent",
+      "1": "Novice",
+      "2": "Professionnel",
+      "3": "Expert",
+      "hint": {
+        "0": "2d20, on garde le pire",
+        "1": "1d20",
+        "2": "2d20, on garde le meilleur",
+        "3": "3d20, on garde le meilleur"
+      }
+    },
+    "success": {
+      "weak": "Oui, mais…",
+      "standard": "Oui"
+    },
+    "rest": {
+      "execrables": "Conditions exécrables",
+      "voyage": "Conditions de voyage",
+      "agreables": "Conditions agréables",
+      "exceptionnelles": "Conditions exceptionnelles"
+    },
+    "size": {
+      "petite": "Petite",
+      "moyenne": "Moyenne",
+      "grande": "Grande",
+      "enorme": "Énorme"
+    },
+    "currency": {
+      "ducat": "Ducats",
+      "ducatShort": "D",
+      "denier": "Deniers",
+      "denierShort": "d"
+    },
+    "arcanum": {
+      "types": {
+        "physique": "Physique",
+        "mystique": "Mystique"
+      }
+    },
+    "equipment": {
+      "subtypes": {
+        "weapon": "Arme",
+        "armor": "Armure",
+        "shield": "Bouclier",
+        "misc": "Divers"
+      },
+      "armorCategories": {
+        "legere": "Légère",
+        "moyenne": "Moyenne",
+        "lourde": "Lourde"
+      }
+    },
+    "label": {
+      "long": {
+        "surnom": "Surnom",
+        "vraiNom": "Vrai nom",
+        "peuple": "Peuple",
+        "religion": "Religion",
+        "carriere": "Carrière",
+        "grade": "Grade",
+        "solde": "Solde mensuelle",
+        "ascendance": "Ascendance",
+        "compulsion": "Compulsion",
+        "abilities": "Caractéristiques",
+        "skills": "Compétences",
+        "traits": "Traits de personnalité",
+        "vicesTotal": "Vices",
+        "virtuesTotal": "Vertus",
+        "karma": "Karma",
+        "allegiance": "Allégeance",
+        "passion": "Passion",
+        "initiative": "Initiative",
+        "initiativeValue": "Score",
+        "initiativeModifier": "Modificateur total",
+        "initiativeBonus": "Bonus",
+        "dodgesUsed": "Esquives utilisées",
+        "nextDodge": "Prochaine esquive :",
+        "parry": "Parade",
+        "wounds": "Blessures",
+        "currentWoundMalus": "Malus courant :",
+        "weapons": "Armes",
+        "protections": "Protections",
+        "damage": "Dégâts",
+        "protection": "Protection",
+        "blockBonus": "Bonus de blocage",
+        "initMalus": "Malus d'initiative",
+        "armorCategory": "Catégorie",
+        "equipment": "Équipement",
+        "purse": "Bourse",
+        "rest": "Repos",
+        "arcanums": "Arcanums",
+        "arcanumType": "Nature",
+        "rank": "Rang",
+        "linkedSkill": "Compétence bonifiée",
+        "espritCost": "Coût en Esprit",
+        "effect": "Effet",
+        "specialTraits": "Traits spéciaux",
+        "languages": "Langues maîtrisées",
+        "startingLanguages": "Langues de départ",
+        "grantedFeatures": "Traits accordés",
+        "startingSkills": "Compétences de départ",
+        "startingArcanums": "Arcanums de départ",
+        "startingEquipments": "Équipement de départ",
+        "abilityBonus": "Caractéristique augmentée",
+        "xp": "Expérience",
+        "xpTotal": "Total gagné",
+        "xpSpent": "Dépensée",
+        "xpAvailable": "Disponible",
+        "quantity": "Quantité",
+        "weight": "Poids",
+        "price": "Prix",
+        "subtype": "Type",
+        "description": "Description",
+        "origin": "Origine",
+        "size": "Taille",
+        "biographyPublic": "Biographie publique",
+        "biographyPrivate": "Biographie privée",
+        "notesPublic": "Notes publiques",
+        "notesPrivate": "Notes privées",
+        "vice": "Vice",
+        "virtue": "Vertu"
+      },
+      "short": {
+        "init": "Init.",
+        "month": "mois"
+      }
+    },
+    "ui": {
+      "sheetModeEdit": "Mode édition",
+      "newItem": "Nouvel objet : {type}",
+      "delete": "Supprimer",
+      "remove": "Retirer",
+      "deleteItemTitle": "Supprimer l'objet",
+      "deleteItemContent": "Supprimer définitivement <strong>{name}</strong> ?",
+      "toggleEquipped": "Équiper ou déséquiper",
+      "addWeapon": "Ajouter une arme",
+      "addArmor": "Ajouter une armure",
+      "addShield": "Ajouter un bouclier",
+      "addGear": "Ajouter un objet",
+      "addArcanum": "Ajouter un arcanum",
+      "addFeature": "Ajouter un trait spécial",
+      "addSkill": "Ajouter une compétence",
+      "noGear": "Aucun objet.",
+      "noArcanum": "Aucun arcanum.",
+      "noStartingSkill": "Aucune compétence de départ.",
+      "dropFeaturesHere": "Déposez ici les traits accordés par le peuple.",
+      "dropArcanumsHere": "Déposez ici les arcanums de départ.",
+      "dropEquipmentsHere": "Déposez ici l'équipement de départ.",
+      "poolHint": "Réserve courante sur maximum. Cliquez pour dépenser ou rendre un point.",
+      "improvementsHint": "Augmentations achetées en expérience (5 XP chacune, 3 au maximum).",
+      "spendPassion": "Dépenser un jeton",
+      "gainPassion": "Gagner un jeton",
+      "clearInvokedTraits": "Nouvelle session : libérer tous les traits",
+      "invokeTraitHint": "Marquer ce trait comme invoqué pour la session.",
+      "passionHint": "Dépenser un jeton ajoute la valeur d'un trait dominant au seuil de réussite. S'imposer ce malus en rapporte un. Céder à sa compulsion : +1 jeton ; y résister : -1.",
+      "initiativeHint": "Initiative = jet de Sens du combat + Vivacité courante + modificateur. Chaque action entreprise dans le round retire 10 points.",
+      "initiativeModifierHint": "Bonus de la fiche, plus les malus de l'armure et du bouclier portés.",
+      "armorOverloaded": "Rang de Port d'armures insuffisant : le malus de l'armure est doublé.",
+      "parryHint": "Une seule parade par round.",
+      "parryAvailable": "Disponible",
+      "parryUsed": "Utilisée",
+      "dying": "Mourant : un test de Corps / Vigueur est requis à chaque round.",
+      "currencyHint": "1 ducat vaut 100 deniers.",
+      "restHint": "Chaque réserve regagne ce nombre de points, sans dépasser son maximum.",
+      "languagesHint": "L'écrit dépend du rang en Érudition : 0 analphabète, 1 sa langue et le stygien avec peine, 2 parfaitement, 3 toutes ses langues parlées.",
+      "armorCategoryHint": "Sans un rang de Port d'armures au moins égal à la catégorie, le malus d'initiative est doublé.",
+      "passiveArcanumHint": "Bonus constant accordé par cet arcanum :",
+      "mysticArcanumHint": "Activation : consommer les points d'Esprit et réussir un test d'Esprit / Arcanum."
+    },
+    "settings": {
+      "debugMode": {
+        "name": "Mode débogage",
+        "hint": "Affiche dans la console les informations de débogage des fiches et du combat."
+      },
+      "autoResetRoundCounters": {
+        "name": "Réinitialiser esquives et parade",
+        "hint": "Remet à zéro les esquives utilisées et la parade de chaque combattant à la fin de chaque round."
+      }
+    },
+    "Character": {
+      "FIELDS": {
+        "identity": {
+          "vraiNom": { "label": "Vrai nom" },
+          "peuple": { "label": "Peuple" },
+          "religion": { "label": "Religion" },
+          "carriere": { "label": "Carrière" },
+          "grade": { "label": "Grade" },
+          "ascendance": { "label": "Ascendance" },
+          "compulsion": { "label": "Compulsion" }
+        },
+        "passion": {
+          "tokens": { "label": "Jetons de passion" }
+        },
+        "specialTraits": { "label": "Traits spéciaux" },
+        "languages": { "label": "Langues maîtrisées" },
+        "xp": {
+          "total": { "label": "Expérience gagnée" },
+          "spent": { "label": "Expérience dépensée" }
+        },
+        "details": {
+          "size": { "label": "Taille" },
+          "biography": {
+            "public": { "label": "Biographie publique" },
+            "private": { "label": "Biographie privée" }
+          },
+          "notes": {
+            "public": { "label": "Notes publiques" },
+            "private": { "label": "Notes privées" }
+          }
+        }
+      }
+    },
+    "Adversaire": {
+      "FIELDS": {
+        "details": {
+          "size": { "label": "Taille" },
+          "description": { "label": "Description" },
+          "notes": { "label": "Notes" }
+        }
+      }
+    },
+    "Equipment": {
+      "FIELDS": {
+        "description": { "label": "Description" },
+        "origin": { "label": "Origine" },
+        "subtype": { "label": "Type" },
+        "equipped": { "label": "Équipé" },
+        "quantity": { "label": "Quantité" },
+        "category": { "label": "Catégorie d'armure" },
+        "blockBonus": { "label": "Bonus de blocage" },
+        "initMalus": { "label": "Malus d'initiative" },
+        "weight": { "label": "Poids" }
+      }
+    },
+    "Arcanum": {
+      "FIELDS": {
+        "description": { "label": "Description" },
+        "origin": { "label": "Origine" },
+        "arcanumType": { "label": "Nature" },
+        "rank": { "label": "Rang" },
+        "effect": { "label": "Effet" },
+        "linkedSkill": { "label": "Compétence bonifiée" },
+        "espritCost": { "label": "Coût en Esprit" }
+      }
+    },
+    "Feature": {
+      "FIELDS": {
+        "description": { "label": "Description" },
+        "origin": { "label": "Origine" }
+      }
+    },
+    "Peuple": {
+      "FIELDS": {
+        "description": { "label": "Description" },
+        "origin": { "label": "Origine" },
+        "abilityBonus": { "label": "Caractéristique augmentée" },
+        "features": { "label": "Traits accordés" },
+        "languages": { "label": "Langues de départ" }
+      }
+    },
+    "Carriere": {
+      "FIELDS": {
+        "description": { "label": "Description" },
+        "origin": { "label": "Origine" },
+        "abilityBonus": { "label": "Caractéristique augmentée" },
+        "skills": { "label": "Compétences de départ" },
+        "arcanums": { "label": "Arcanums de départ" },
+        "equipments": { "label": "Équipement de départ" }
+      }
+    }
+  }
+}

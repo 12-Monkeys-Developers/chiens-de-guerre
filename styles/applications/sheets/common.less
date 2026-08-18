@@ -1,0 +1,160 @@
+// Habillage commun aux fiches d'acteur et d'objet : fond parchemin, listes d'objets, onglets.
+.cdg {
+  // Le fond parchemin est posé sur le contenu de la fenêtre, pas sur la fenêtre elle-même, pour
+  // laisser la barre de titre de Foundry intacte.
+  .window-content {
+    background-color: var(--cdg-parchment);
+    background-image: url("@{cdg-parchment-image}");
+    background-size: cover;
+    background-position: center;
+    color: var(--cdg-text);
+    padding: 0;
+  }
+
+  // Onglets : languettes sobres, soulignées de sang quand elles sont actives.
+  nav.tabs {
+    display: flex;
+    gap: 0.2rem;
+    margin: 0 0.6rem;
+    border-bottom: 2px solid var(--cdg-ink);
+
+    > a.item {
+      padding: 0.25rem 0.7rem;
+      font-family: var(--cdg-font-title);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--cdg-ink-soft);
+      border: none;
+      text-shadow: none;
+
+      &:hover {
+        color: var(--cdg-blood);
+        text-shadow: none;
+      }
+
+      &.active {
+        background: var(--cdg-ink);
+        color: var(--cdg-parchment);
+        border-radius: var(--cdg-radius) var(--cdg-radius) 0 0;
+      }
+    }
+  }
+
+  .tab {
+    padding: 0.6rem 0.8rem 1rem;
+  }
+
+  // Listes d'objets : une ligne par objet, image, nom, puis les valeurs qui comptent.
+  .item-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .item-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.15rem 0.2rem;
+    border-bottom: 1px dotted var(--cdg-parchment-line);
+
+    &:hover {
+      background: rgb(122 16 16 / 6%);
+    }
+
+    &.equipped {
+      // L'équipement porté est marqué d'un filet de sang à gauche.
+      box-shadow: inset 3px 0 0 var(--cdg-blood);
+    }
+
+    .item-img {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .item-name {
+      flex: 1 1 auto;
+      font-size: 0.85rem;
+      cursor: pointer;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .item-label {
+      font-size: 0.72rem;
+      font-variant: small-caps;
+      color: var(--cdg-label);
+      flex: 0 0 auto;
+    }
+
+    .item-value,
+    .item-quantity,
+    .item-init {
+      font-size: 0.8rem;
+      flex: 0 0 auto;
+    }
+
+    .item-control,
+    .equip-toggle {
+      flex: 0 0 auto;
+      color: var(--cdg-ink-soft);
+      font-size: 0.8rem;
+
+      &:hover {
+        color: var(--cdg-blood);
+        text-shadow: none;
+      }
+    }
+  }
+
+  // En-tête des fiches d'objet.
+  .item-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.8rem 0.4rem;
+
+    .item-img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border: 2px solid var(--cdg-ink);
+      border-radius: var(--cdg-radius);
+    }
+
+    .titles {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .name {
+      display: block;
+      width: 100%;
+      font-family: var(--cdg-font-title);
+      font-size: 1.15rem;
+      color: var(--cdg-ink);
+    }
+
+    .type {
+      font-size: 0.75rem;
+      font-variant: small-caps;
+      color: var(--cdg-muted);
+    }
+  }
+
+  .item-body {
+    padding: 0.4rem 0.8rem 1rem;
+
+    .rank-line {
+      align-items: center;
+    }
+  }
+}
