@@ -5,7 +5,7 @@ const { sheets } = foundry.applications
 const { HandlebarsApplicationMixin } = foundry.applications.api
 
 /**
- * Socle des fiches d'objet : en-tête commun (image, nom, origine), description, et l'action de
+ * Socle des fiches d'objet : en-tête commun (image, nom), description, et l'action de
  * réglage des rangs partagée avec les fiches d'acteur.
  */
 export default class CdgBaseItemSheet extends HandlebarsApplicationMixin(sheets.ItemSheetV2) {

@@ -37,6 +37,13 @@ export default class CdgCharacterData extends CdgActorData {
       tokens: new fields.NumberField({ ...requiredInteger, initial: SYSTEM.BASE_PASSION_TOKENS, min: 0 }),
       invokedThisSession: new fields.ArrayField(new fields.StringField()),
     })
+    
+
+    schema.karma = new fields.SchemaField({
+        value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+      vices: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+      virtues: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+    })
 
     schema.combat = new fields.SchemaField({
       initiative: new fields.SchemaField({
@@ -143,7 +150,7 @@ export default class CdgCharacterData extends CdgActorData {
       virtues,
       value: virtues - vices,
     }
-
+console.log("this.karma",this.karma);
     // Les tranches sont ordonnées par maximum croissant ; la dernière a un maximum nul et ramasse
     // tout ce qui dépasse.
     const allegiance = Object.values(SYSTEM.ALLEGIANCES).find((a) => a.max === null || this.karma.value <= a.max)

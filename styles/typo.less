@@ -10,16 +10,14 @@
   .section-title {
     position: relative;
     margin: 0 0 0.4rem 0;
-    padding: 0.15rem 2.2rem 0.15rem 0.8rem;
-    background: linear-gradient(180deg, var(--cdg-ink) 0%, var(--cdg-ink-soft) 100%);
+    padding: 0rem 2.2rem 0.4rem 0.8rem;
+      background-image: url("../assets/ui/images/epee-noire-gauche.webp");
     color: var(--cdg-parchment);
     font-family: var(--cdg-font-title);
-    font-size: 1.05rem;
-    font-weight: 700;
     letter-spacing: 0.06em;
-    text-transform: uppercase;
     border: none;
-    clip-path: polygon(0 0, calc(100% - 1.6rem) 0, 100% 50%, calc(100% - 1.6rem) 100%, 0 100%);
+    background-size: 300px 40px;
+    background-repeat: no-repeat;
 
     // Les trois gouttes de sang qui suivent chaque bandeau sur la fiche.
     &::after {
@@ -48,6 +46,11 @@
       }
     }
   }
+    .section-title-right{
+      background-image: url("../assets/ui/images/epee-noire-droite.webp");
+      text-align: right;
+    padding: 0rem 0.8rem 0.4rem 2.2rem;
+    }
 
   h3 {
     font-family: var(--cdg-font-title);

@@ -151,7 +151,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
     // Constantes utilisées par les gabarits : rangées d'écussons, listes de choix.
     context.SYSTEM = SYSTEM
-    context.skillColumns = [1, 2, 3].map((column) => Object.values(SYSTEM.SKILLS).filter((skill) => skill.column === column))
+    context.skillColumns = [1, 2].map((column) => Object.values(SYSTEM.SKILLS).filter((skill) => skill.column === column))
     context.woundLevels = Object.values(SYSTEM.WOUND_LEVELS)
     context.choiceSizes = SYSTEM.SIZES
 

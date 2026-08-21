@@ -38,7 +38,15 @@ export default class CdgCharacterSheet extends CdgBaseActorSheet {
   /** @override */
   static TABS = {
     primary: {
-      tabs: [{ id: "competences" }, { id: "personnalite" }, { id: "combat" }, { id: "equipement" }, { id: "arcanums" }, { id: "biographie" }],
+      tabs: [
+        {
+          id: "competences", cssClass: "tabName" },
+        { id: "personnalite", cssClass: "tabName" },
+        { id: "combat", cssClass: "tabName" },
+        { id: "equipement", cssClass: "tabName" },
+        { id: "arcanums", cssClass: "tabName" },
+        { id: "biographie", cssClass: "tabName" },
+      ],
       initial: "competences",
       labelPrefix: "CDG.sheet.tabs",
     },

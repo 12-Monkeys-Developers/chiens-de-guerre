@@ -20,7 +20,7 @@
     "prettier": "^3.3.3"
   },
   "dependencies": {
-    "gulp": "^5.0.0",
+    "gulp": "^5.0.1",
     "gulp-less": "^5.0.0"
   }
 }

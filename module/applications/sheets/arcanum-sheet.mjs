@@ -24,7 +24,9 @@ export default class CdgArcanumSheet extends CdgBaseItemSheet {
     context.bonus = this.document.system.bonus
     context.choiceTypes = SYSTEM.ARCANUM_TYPES
     context.choiceSkills = SYSTEM.SKILLS
-    context.enrichedEffect = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.effect ?? "")
+    context.enrichedEffect1 = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.rankData.effect1 ?? "");
+    context.enrichedEffect2 = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.rankData.effect2 ?? "");
+    context.enrichedEffect3 = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.rankData.effect3 ?? "");
 
     return context
   }

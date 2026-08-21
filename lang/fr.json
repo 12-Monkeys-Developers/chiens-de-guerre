@@ -365,7 +365,6 @@
     "Equipment": {
       "FIELDS": {
         "description": { "label": "Description" },
-        "origin": { "label": "Origine" },
         "subtype": { "label": "Type" },
         "equipped": { "label": "Équipé" },
         "quantity": { "label": "Quantité" },
@@ -378,7 +377,6 @@
     "Arcanum": {
       "FIELDS": {
         "description": { "label": "Description" },
-        "origin": { "label": "Origine" },
         "arcanumType": { "label": "Nature" },
         "rank": { "label": "Rang" },
         "effect": { "label": "Effet" },
@@ -388,14 +386,12 @@
     },
     "Feature": {
       "FIELDS": {
-        "description": { "label": "Description" },
-        "origin": { "label": "Origine" }
+        "description": { "label": "Description" }
       }
     },
     "Peuple": {
       "FIELDS": {
         "description": { "label": "Description" },
-        "origin": { "label": "Origine" },
         "abilityBonus": { "label": "Caractéristique augmentée" },
         "features": { "label": "Traits accordés" },
         "languages": { "label": "Langues de départ" }
@@ -404,7 +400,6 @@
     "Carriere": {
       "FIELDS": {
         "description": { "label": "Description" },
-        "origin": { "label": "Origine" },
         "abilityBonus": { "label": "Caractéristique augmentée" },
         "skills": { "label": "Compétences de départ" },
         "arcanums": { "label": "Arcanums de départ" },

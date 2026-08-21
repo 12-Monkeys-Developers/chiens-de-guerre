@@ -34,7 +34,7 @@
     </div>
 
     <div class="wounds-block">
-      <h2 class="section-title">{{localize "CDG.label.long.wounds"}}</h2>
+      <h2 class="section-title section-title-right">{{localize "CDG.label.long.wounds"}}</h2>
       <ul class="wound-levels">
         {{#each woundLevels as |level|}}
           {{#with (lookup @root.wounds level.id) as |wound|}}
