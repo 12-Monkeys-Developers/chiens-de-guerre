@@ -26,11 +26,11 @@ export default class CdgArcanumData extends CdgItemData {
     })
 
     schema.rankData = new fields.SchemaField({
-      name1 : new fields.StringField({ required: true, blank: false, initial: "Nom_rang1", required: true, nullable: false }),
+      name1: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang1" }),
       effect1: new fields.HTMLField(),
-      name2 : new fields.StringField({ required: true, blank: false, initial: "Nom_rang2", required: true, nullable: false }),
+      name2: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang2" }),
       effect2: new fields.HTMLField(),
-      name3 : new fields.StringField({ required: true, blank: false, initial: "Nom_rang3", required: true, nullable: false }),
+      name3: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang3" }),
       effect3: new fields.HTMLField(),
     })
 

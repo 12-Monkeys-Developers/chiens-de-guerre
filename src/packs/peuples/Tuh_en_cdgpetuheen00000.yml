@@ -1,0 +1,37 @@
+_id: cdgpetuheen00000
+name: Tuhéen
+type: peuple
+img: icons/environment/people/group.webp
+system:
+  description: >-
+    <p>Humains de culture barbare habitant le pays de Tuhée, organisés à
+    l'origine en clans. Alliés de force de Tol-Amoth, ils virent leur pays de
+    nouveau envahi et démantelé à l'issue de la guerre. On les tient pour peu
+    dignes de confiance, alors qu'ils jugent l'honneur comme la plus grande des
+    qualités.</p>
+  abilityBonus: corps
+  features:
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrvolontedefe
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrtraitrehomm
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrversatilite
+  languages:
+    - stygien
+    - tuheen
+effects:
+  - _id: cdgeatuheen00000
+    name: Ajustement de caractéristique
+    img: icons/environment/people/group.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.corps.max
+          type: add
+          value: 1
+          phase: initial
+    _key: '!items.effects!cdgpetuheen00000.cdgeatuheen00000'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgpetuheen00000'

@@ -2,7 +2,9 @@
 node_modules/
 
 # Foundry VTT
-packs
+# Les compendiums compilés seulement : la barre oblique initiale limite le motif à la racine, sans
+# quoi il attraperait aussi src/packs, où vivent les sources YAML qui, elles, sont versionnées.
+/packs/
 styles/**/*.css
 
 # Matière première : PDF des règles, fiche de personnage, images extraites.

@@ -26,9 +26,20 @@
       {{/if}}
     </div>
 
-    <div class="field-line">
+    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
+        il réapparaît intact si l'on retire l'objet. }}
+    <div class="field-line origin-line">
       <label>{{localize "CDG.label.long.peuple"}}</label>
-      {{#if unlocked}}
+      {{#if peuple}}
+        <span class="value origin" data-item-id="{{peuple.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{peuple.name}}</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{peuple.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else if unlocked}}
         <input type="text" name="system.identity.peuple" value="{{identity.peuple}}" spellcheck="false" />
       {{else}}
         <span class="value">{{identity.peuple}}</span>
@@ -44,9 +55,20 @@
       {{/if}}
     </div>
 
-    <div class="field-line">
+    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
+        il réapparaît intact si l'on retire l'objet. }}
+    <div class="field-line origin-line">
       <label>{{localize "CDG.label.long.carriere"}}</label>
-      {{#if unlocked}}
+      {{#if carriere}}
+        <span class="value origin" data-item-id="{{carriere.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{carriere.name}}</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{carriere.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else if unlocked}}
         <input type="text" name="system.identity.carriere" value="{{identity.carriere}}" spellcheck="false" />
       {{else}}
         <span class="value">{{identity.carriere}}</span>
@@ -90,13 +112,17 @@
       {{#each SYSTEM.ABILITIES as |ability id|}}
         {{#with (lookup @root.abilities id) as |pool|}}
           <li class="ability" data-ability="{{id}}">
-            <span class="ability-name">{{localize ability.label}}</span>
+            <span class="ability-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
 
             <div class="pool" data-tooltip="{{localize 'CDG.ui.poolHint'}}">
               <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
               <span class="pool-value">{{pool.value}}</span>
               <span class="pool-separator">/</span>
-              {{#if @root.unlocked}}
+              {{!-- Un maximum imposé par un effet reste en lecture seule même en mode édition :
+                    le champ affiche la valeur dérivée, la ressaisir écrirait le bonus en dur. --}}
+              {{#if (lookup @root.overrides (concat "system.abilities." id ".max"))}}
+                <span class="pool-max overridden" data-tooltip="{{localize 'CDG.ui.lockedByEffect'}}">{{pool.max}}</span>
+              {{else if @root.unlocked}}
                 <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.max}}" min="0" data-dtype="Number" />
               {{else}}
                 <span class="pool-max">{{pool.max}}</span>

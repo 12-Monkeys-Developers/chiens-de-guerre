@@ -60,6 +60,28 @@ export const SKILLS = {
 }
 
 /**
+ * Caractéristique proposée d'office pour les compétences dont les règles fixent le couple.
+ *
+ * Le couple caractéristique / compétence reste choisi au moment du jet, mais les règles de combat et
+ * de bataille en imposent quelques-uns : Vivacité / Mêlée, Corps / Blocage, Esprit / Tactique...
+ * La fenêtre de jet s'en sert comme simple présélection, que le joueur reste libre de changer.
+ * Les compétences absentes de cette table n'ont pas de couple imposé.
+ */
+export const SKILL_DEFAULT_ABILITY = {
+  blocage: "corps",
+  melee: "vivacite",
+  portArmures: "corps",
+  sensBatailles: "esprit",
+  sensCombat: "vivacite",
+  sensDuels: "vivacite",
+  tactique: "esprit",
+  tir: "vivacite",
+  esquive: "vivacite",
+  vigueur: "corps",
+  volonte: "esprit",
+}
+
+/**
  * Les 17 couples de traits de personnalité, dans l'ordre de la fiche.
  * Pour chaque couple, l'un des deux traits est dominant et noté de 1 à 3, l'autre est inhibé et
  * reste à 0. Il n'y a pas de score neutre.

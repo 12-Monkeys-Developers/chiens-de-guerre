@@ -1,0 +1,38 @@
+_id: cdgpeescannien00
+name: Escannien
+type: peuple
+img: icons/environment/people/group.webp
+system:
+  description: >-
+    <p>Peuple humain du sud occupant les terres arides du royaume d'Escannie. On
+    les considère souvent comme mystérieux, exotiques et cultivés. Neutres au
+    début de la guerre, ils rejoignirent Tol-Amoth par opportunisme en plein
+    milieu du conflit, à la surprise générale.<p><em>Les Escanniens parlent une
+    troisième langue, au choix du joueur : elle n'est pas listée ici,
+    puisqu'elle varie d'un personnage à l'autre.</em></p></p>
+  abilityBonus: esprit
+  features:
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrraffine0000
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrtraitrehomm
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrversatilite
+  languages:
+    - stygien
+    - escannien
+effects:
+  - _id: cdgeaescannien00
+    name: Ajustement de caractéristique
+    img: icons/environment/people/group.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _key: '!items.effects!cdgpeescannien00.cdgeaescannien00'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgpeescannien00'

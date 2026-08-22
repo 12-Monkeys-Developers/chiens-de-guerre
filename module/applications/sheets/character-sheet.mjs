@@ -40,7 +40,9 @@ export default class CdgCharacterSheet extends CdgBaseActorSheet {
     primary: {
       tabs: [
         {
-          id: "competences", cssClass: "tabName" },
+          id: "competences",
+          cssClass: "tabName",
+        },
         { id: "personnalite", cssClass: "tabName" },
         { id: "combat", cssClass: "tabName" },
         { id: "equipement", cssClass: "tabName" },
@@ -85,6 +87,12 @@ export default class CdgCharacterSheet extends CdgBaseActorSheet {
     context.choiceRestConditions = SYSTEM.REST_CONDITIONS
     context.currencies = Object.values(SYSTEM.CURRENCIES)
 
+    context.featureGroups = this.#prepareFeatureGroups()
+    context.situationalModifiers = this.document.system.situationalModifiers.map((modifier) => ({
+      ...modifier,
+      situationLabel: SYSTEM.SITUATIONS[modifier.situation]?.label ?? "CDG.effect.anySituation",
+    }))
+
     context.enrichedSpecialTraits = await enrichHTML(this.document.system.specialTraits)
     context.enrichedBiographyPublic = await enrichHTML(this.document.system.details.biography.public)
     context.enrichedBiographyPrivate = await enrichHTML(this.document.system.details.biography.private)
@@ -92,6 +100,22 @@ export default class CdgCharacterSheet extends CdgBaseActorSheet {
     context.enrichedNotesPrivate = await enrichHTML(this.document.system.details.notes.private)
 
     return context
+  }
+
+  /**
+   * Range les traits spéciaux par provenance.
+   *
+   * Un joueur cherche « ce que mon peuple me donne », pas une liste à plat. Les catégories vides
+   * sont écartées : mieux vaut deux groupes remplis que quatre titres dont trois ne portent rien.
+   * @returns {Object[]}
+   */
+  #prepareFeatureGroups() {
+    return Object.values(SYSTEM.FEATURE_CATEGORIES)
+      .map((category) => ({
+        ...category,
+        features: this.document.features.filter((feature) => feature.system.category === category.id),
+      }))
+      .filter((group) => group.features.length > 0)
   }
 
   /**

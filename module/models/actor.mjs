@@ -32,12 +32,29 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
       Object.values(SYSTEM.WOUND_LEVELS).reduce((obj, level) => {
         obj[level.id] = new fields.SchemaField({
           value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 }),
+          // Cases accordées en plus de celles que donne la Vigueur. Cible d'effet : le trait
+          // Ex-immortel des Nains de cendres ajoute ainsi une case de blessure grave.
+          bonus: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
         })
         return obj
       }, {}),
     )
 
     return schema
+  }
+
+  /**
+   * Ouvre la corbeille où les effets déposent leurs bonus circonstanciels.
+   *
+   * Elle doit exister avant que les effets s'appliquent. L'ordre de la V14 le garantit :
+   * `system.prepareBaseData()` précède `prepareEmbeddedDocuments()`, qui déclenche la phase
+   * `initial`. Ce n'est pas un champ de schéma — rien n'est persisté, tout est reconstruit à
+   * chaque préparation.
+   * @override
+   */
+  prepareBaseData() {
+    super.prepareBaseData()
+    this.situationalModifiers = []
   }
 
   /** @override */
@@ -59,7 +76,9 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
     let worst = null
     for (const level of Object.values(SYSTEM.WOUND_LEVELS)) {
       const wound = this.wounds[level.id]
-      wound.max = slots[level.id]
+      // `bonus` est posé par les effets en phase `initial`, donc avant ce calcul : les cases
+      // accordées par un trait s'ajoutent à celles de la Vigueur avant que `value` soit rognée.
+      wound.max = slots[level.id] + wound.bonus
       // Une baisse du rang de Vigueur peut laisser plus de cases cochées que disponibles.
       wound.value = Math.min(wound.value, wound.max)
       if (wound.value > 0 && (worst === null || level.order > worst.order)) worst = level

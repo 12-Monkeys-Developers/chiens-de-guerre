@@ -1,0 +1,19 @@
+_id: cdgtrcitoyensup0
+name: Citoyen supérieur
+type: feature
+img: icons/skills/social/diplomacy-handshake.webp
+system:
+  description: >-
+    <p>En raison de la réputation des Aduatons et de leur rôle dans la Première
+    Alliance, on vous soupçonne difficilement d'être un Marqué. La plupart des
+    interlocuteurs ont un a priori positif à votre égard.</p>
+  category: origine
+  suspicion: favorable
+  creationGrants:
+    customizationPoints: 0
+    freeSkillRanks: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrcitoyensup0'

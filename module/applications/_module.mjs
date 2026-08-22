@@ -1,3 +1,5 @@
+export { default as CdgRollDialog } from "./roll-dialog.mjs"
+
 export { default as CdgBaseActorSheet } from "./sheets/base-actor-sheet.mjs"
 export { default as CdgCharacterSheet } from "./sheets/character-sheet.mjs"
 export { default as CdgAdversaireSheet } from "./sheets/adversaire-sheet.mjs"

@@ -1,0 +1,530 @@
+// Fenêtre de test et carte de chat.
+//
+// Même grammaire que les fiches : bandeaux de titre sombres, libellés en petites capitales, filets
+// plutôt que cadres. Deux ajouts propres au jet : les pastilles de dés, qui doivent se lire d'un
+// coup d'œil, et le bandeau de seuil, qui est le seul chiffre vraiment important de la fenêtre.
+
+// Pastille d'un dé. La couleur porte l'issue : sang pour l'échec, encre pour la réussite.
+.cdg-die() {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 2px solid var(--cdg-shield-border);
+  border-radius: var(--cdg-radius);
+  background: var(--cdg-shield-empty);
+  color: var(--cdg-ink);
+  font-family: var(--cdg-font-title);
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.cdg.roll {
+  .window-content {
+    padding: 0.6rem 0.8rem 0 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  // Le corps de la fenêtre est enveloppé : un PART de HandlebarsApplicationMixin doit rendre un
+  // seul élément racine. C'est lui qui porte l'empilement des sections.
+  .roll-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  section {
+    margin: 0;
+  }
+
+  // --- Couple caractéristique / compétence ---
+
+  .ability-choice {
+    display: flex;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0 0 0.5rem 0;
+    padding: 0;
+
+    > li {
+      flex: 1 1 0;
+    }
+
+    .ability {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.1rem;
+      padding: 0.35rem 0.2rem;
+      background: transparent;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      color: var(--cdg-text);
+      cursor: pointer;
+
+      .ability-name {
+        font-family: var(--cdg-font-label);
+        font-variant: small-caps;
+        font-size: 0.82rem;
+        letter-spacing: 0.03em;
+        color: var(--cdg-label);
+      }
+
+      .ability-score {
+        font-family: var(--cdg-font-title);
+        font-size: 1.1rem;
+        line-height: 1;
+
+        .max {
+          font-size: 0.75rem;
+          color: var(--cdg-muted);
+        }
+      }
+
+      &:hover {
+        border-color: var(--cdg-blood-light);
+        box-shadow: none;
+      }
+
+      // La caractéristique retenue est celle que le jet consommera : elle mérite le rouge sang.
+      &.selected {
+        background: var(--cdg-blood);
+        border-color: var(--cdg-blood-dark);
+
+        .ability-name,
+        .ability-score {
+          color: var(--cdg-parchment);
+        }
+
+        .max {
+          color: var(--cdg-parchment-dark);
+        }
+      }
+    }
+  }
+
+  .skill-line .handful {
+    flex: 0 0 auto;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  // --- Modificateurs ---
+
+  .field-line > label.inline {
+    min-width: 0;
+    margin-left: 0.6rem;
+  }
+
+  .free-modifier {
+    width: 3rem;
+  }
+
+  .effort-steps,
+  .passion-modes {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .effort-step,
+  .passion-mode {
+    padding: 0.15rem 0.5rem;
+    background: transparent;
+    border: 1px solid var(--cdg-parchment-line);
+    border-radius: var(--cdg-radius);
+    color: var(--cdg-text);
+    font-family: var(--cdg-font-label);
+    font-size: 0.78rem;
+    font-variant: small-caps;
+    line-height: 1.3;
+    cursor: pointer;
+    width: auto;
+
+    &:hover:not(:disabled) {
+      border-color: var(--cdg-blood-light);
+      box-shadow: none;
+    }
+
+    &.selected {
+      background: var(--cdg-ink-soft);
+      border-color: var(--cdg-ink);
+      color: var(--cdg-parchment);
+    }
+
+    &:disabled {
+      color: var(--cdg-muted);
+      border-style: dotted;
+      cursor: not-allowed;
+    }
+  }
+
+  .passion-line .tokens {
+    flex: 0 0 auto;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  // Modificateurs déduits de la fiche : toujours visibles, toujours décochables.
+  .auto-modifiers {
+    list-style: none;
+    margin: 0.4rem 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      width: auto;
+      padding: 0.15rem 0.45rem;
+      background: var(--cdg-parchment-dark);
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      color: var(--cdg-text);
+      font-size: 0.78rem;
+      cursor: pointer;
+
+      .value {
+        font-family: var(--cdg-font-title);
+      }
+
+      &:hover {
+        border-color: var(--cdg-blood-light);
+        box-shadow: none;
+      }
+    }
+
+    // Écarté : le modificateur reste lisible, mais barré, pour qu'on sache qu'il existe.
+    .off .toggle {
+      background: transparent;
+      color: var(--cdg-muted);
+      border-style: dotted;
+
+      .label,
+      .value {
+        text-decoration: line-through;
+      }
+    }
+  }
+
+  // --- Synthèse du seuil ---
+
+  .roll-summary {
+    border-top: 2px solid var(--cdg-ink);
+    padding-top: 0.4rem;
+
+    .sr {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+
+      .sr-label {
+        font-family: var(--cdg-font-label);
+        font-variant: small-caps;
+        letter-spacing: 0.04em;
+        color: var(--cdg-label);
+      }
+
+      .sr-value {
+        font-family: var(--cdg-font-title);
+        font-size: 1.8rem;
+        line-height: 1;
+        color: var(--cdg-blood);
+      }
+    }
+
+    .breakdown {
+      list-style: none;
+      margin: 0.3rem 0 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.15rem 0.5rem;
+      font-size: 0.78rem;
+      color: var(--cdg-ink-soft);
+
+      .part {
+        display: inline-flex;
+        gap: 0.25rem;
+      }
+
+      .part-value {
+        font-family: var(--cdg-font-title);
+      }
+
+      .base .part-value {
+        color: var(--cdg-blood);
+      }
+    }
+
+    .handful-hint {
+      margin: 0.35rem 0 0 0;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--cdg-muted);
+    }
+  }
+
+  // --- Pied de fenêtre ---
+
+  .roll-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.5rem 0.8rem;
+    border-top: 1px solid var(--cdg-parchment-line);
+
+    .roll-state {
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      &.ok {
+        color: var(--cdg-muted);
+      }
+
+      &.good {
+        color: var(--cdg-label);
+      }
+
+      &.warn {
+        color: var(--cdg-blood);
+        font-weight: 700;
+      }
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    button {
+      width: auto;
+      padding: 0.25rem 0.8rem;
+      font-family: var(--cdg-font-label);
+      font-variant: small-caps;
+      letter-spacing: 0.04em;
+      border-radius: var(--cdg-radius);
+      cursor: pointer;
+    }
+
+    .cancel {
+      background: transparent;
+      border: 1px solid var(--cdg-parchment-line);
+      color: var(--cdg-ink-soft);
+    }
+
+    .launch {
+      background: var(--cdg-blood);
+      border: 1px solid var(--cdg-blood-dark);
+      color: var(--cdg-parchment);
+
+      &:hover {
+        background: var(--cdg-blood-light);
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// --- Carte de chat ---
+
+.cdg-roll-card {
+  font-family: var(--cdg-font-text);
+  color: var(--cdg-text);
+
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.4rem;
+
+    .test-name {
+      font-family: var(--cdg-font-label);
+      font-variant: small-caps;
+      letter-spacing: 0.03em;
+      font-size: 0.9rem;
+    }
+
+    .card-sr {
+      font-family: var(--cdg-font-title);
+      color: var(--cdg-blood);
+      white-space: nowrap;
+    }
+  }
+
+  .pushed-note {
+    margin: 0 0 0.3rem 0;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--cdg-muted);
+  }
+
+  .card-dice {
+    list-style: none;
+    display: flex;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+
+    .die {
+      .cdg-die();
+    }
+
+    button.die {
+      cursor: pointer;
+
+      &:hover {
+        border-color: var(--cdg-blood);
+        box-shadow: none;
+      }
+    }
+
+    // Avant le choix, le dé le plus avantageux est signalé — sans être imposé.
+    .die.suggested {
+      border-color: var(--cdg-blood);
+      border-width: 3px;
+    }
+
+    // Après le choix, seul le dé conservé compte ; les autres s'effacent sans disparaître.
+    .die.discarded {
+      opacity: 0.4;
+      font-size: 0.9rem;
+      width: 1.9rem;
+      height: 1.9rem;
+      align-self: center;
+    }
+
+    .die.kept {
+      border-color: var(--cdg-ink);
+      border-width: 3px;
+    }
+
+    .die.criticalSuccess {
+      background: var(--cdg-ink-soft);
+      color: var(--cdg-parchment);
+    }
+
+    .die.failure {
+      color: var(--cdg-blood);
+    }
+
+    .die.criticalFailure {
+      background: var(--cdg-blood);
+      border-color: var(--cdg-blood-dark);
+      color: var(--cdg-parchment);
+    }
+  }
+
+  .card-prompt {
+    margin: 0.4rem 0 0 0;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--cdg-blood);
+  }
+
+  .card-verdict {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-top: 0.45rem;
+
+    .verdict-label {
+      font-family: var(--cdg-font-title);
+      font-size: 1.1rem;
+    }
+
+    .verdict-quality {
+      font-size: 0.78rem;
+      color: var(--cdg-muted);
+    }
+  }
+
+  &.failure .card-verdict,
+  &.criticalFailure .card-verdict {
+    color: var(--cdg-blood);
+  }
+
+  .card-note {
+    margin: 0.2rem 0 0 0;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--cdg-muted);
+  }
+
+  .card-detail {
+    margin-top: 0.45rem;
+    font-size: 0.78rem;
+
+    summary {
+      cursor: pointer;
+      font-family: var(--cdg-font-label);
+      font-variant: small-caps;
+      color: var(--cdg-label);
+    }
+
+    ul {
+      list-style: none;
+      margin: 0.25rem 0 0 0;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dotted var(--cdg-parchment-line);
+    }
+
+    .part-value {
+      font-family: var(--cdg-font-title);
+    }
+
+    .card-cost {
+      margin: 0.3rem 0 0 0;
+      font-style: italic;
+      color: var(--cdg-muted);
+    }
+  }
+
+  .card-push {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 0.2rem 0.5rem;
+    background: transparent;
+    border: 1px solid var(--cdg-blood);
+    border-radius: var(--cdg-radius);
+    color: var(--cdg-blood);
+    font-family: var(--cdg-font-label);
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--cdg-blood);
+      color: var(--cdg-parchment);
+      box-shadow: none;
+    }
+  }
+}
+
+// Les noms de compétence et de caractéristique de la fiche ouvrent la fenêtre de test : rien ne le
+// dit sur la fiche papier, il faut donc que le survol l'annonce.
+.cdg [data-action="rollTest"] {
+  cursor: pointer;
+
+  &:hover {
+    color: var(--cdg-blood);
+  }
+}

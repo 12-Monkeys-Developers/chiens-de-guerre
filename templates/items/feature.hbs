@@ -1,3 +1,38 @@
 <section class="item-body">
+
+  <div class="field-line">
+    <label>{{localize "CDG.label.long.featureCategory"}}</label>
+    <select name="system.category">
+      {{selectOptions choiceCategories selected=system.category localize=true labelAttr="label" valueAttr="id"}}
+    </select>
+  </div>
+
+  <div class="field-line">
+    <label>{{localize "CDG.label.long.featureSuspicion"}}</label>
+    <select name="system.suspicion">
+      {{selectOptions choiceSuspicions selected=system.suspicion localize=true labelAttr="label" valueAttr="id"}}
+    </select>
+  </div>
+
+  {{!-- Ce que le trait accorde à la création : l'assistant travaille sur un brouillon, aucun effet
+        actif n'existe encore à ce moment-là. --}}
+  <section class="creation-grants">
+    <h2 class="section-title">{{localize "CDG.label.long.creationGrants"}}</h2>
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.customizationPoints"}}</label>
+      {{formInput systemFields.creationGrants.fields.customizationPoints
+                  name="system.creationGrants.customizationPoints"
+                  value=system.creationGrants.customizationPoints}}
+    </div>
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.freeSkillRanks"}}</label>
+      {{formInput systemFields.creationGrants.fields.freeSkillRanks
+                  name="system.creationGrants.freeSkillRanks"
+                  value=system.creationGrants.freeSkillRanks}}
+    </div>
+  </section>
+
+  {{> "systems/chiens-de-guerre/templates/items/shared/effects.hbs"}}
+
   {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs"}}
 </section>

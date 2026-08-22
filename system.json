@@ -16,7 +16,24 @@
   ],
   "esmodules": ["cdg.mjs"],
   "styles": ["css/cdg.css"],
-  "packs": [],
+  "packs": [
+    {
+      "name": "peuples",
+      "label": "Peuples",
+      "system": "chiens-de-guerre",
+      "path": "packs/peuples",
+      "type": "Item",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "traits",
+      "label": "Traits spéciaux",
+      "system": "chiens-de-guerre",
+      "path": "packs/traits",
+      "type": "Item",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    }
+  ],
   "languages": [
     {
       "lang": "fr",

@@ -1,0 +1,37 @@
+_id: cdgpeelfeputride
+name: Elfe putride
+type: peuple
+img: icons/environment/people/group.webp
+system:
+  description: >-
+    <p>Les elfes forment un peuple végétal dont chaque individu est lié à un
+    arbre. Quelques-uns, sur le point de mourir, nouèrent un pacte avec
+    Tol-Amoth et survécurent à la destruction de leur Arbre-Vie, devenant des
+    morts-vivants dont la chair végétale semble littéralement pourrir. Ils sont
+    honnis et pourchassés par leur peuple.</p>
+  abilityBonus: vivacite
+  features:
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrvisionnoctu
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrmortvivantv
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrennemimorte
+  languages:
+    - stygien
+    - elfique
+effects:
+  - _id: cdgeaelfeputride
+    name: Ajustement de caractéristique
+    img: icons/environment/people/group.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.vivacite.max
+          type: add
+          value: 1
+          phase: initial
+    _key: '!items.effects!cdgpeelfeputride.cdgeaelfeputride'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgpeelfeputride'

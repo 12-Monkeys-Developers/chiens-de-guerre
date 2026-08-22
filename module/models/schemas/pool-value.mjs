@@ -17,6 +17,9 @@ export class PoolValue extends foundry.abstract.DataModel {
       bonuses: new fields.SchemaField({
         sheet: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
       }),
+      // Points regagnés en plus lors du repos quotidien. Cible d'effet : le trait orque
+      // Infatigable ajoute ainsi +1 au seul Corps, sans toucher aux deux autres réserves.
+      restBonus: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
     }
   }
 }

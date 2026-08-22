@@ -7,7 +7,7 @@
           <ul class="skill-column">
             {{#each column as |skill|}}
               <li class="skill" data-skill="{{skill.id}}">
-                <span class="skill-name">{{localize skill.label}}</span>
+                <span class="skill-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize skill.label}}</span>
                 {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
                     path=(concat "system.skills." skill.id ".rank")
                     rank=(lookup (lookup @root.skills skill.id) "rank")

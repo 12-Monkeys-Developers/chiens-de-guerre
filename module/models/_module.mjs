@@ -2,6 +2,8 @@ export { default as CdgActorData } from "./actor.mjs"
 export { default as CdgCharacterData } from "./character.mjs"
 export { default as CdgAdversaireData } from "./adversaire.mjs"
 
+export { default as CdgActiveEffectData } from "./active-effect.mjs"
+
 export { default as CdgItemData } from "./item.mjs"
 export { default as CdgEquipmentData } from "./equipment.mjs"
 export { default as CdgArcanumData } from "./arcanum.mjs"

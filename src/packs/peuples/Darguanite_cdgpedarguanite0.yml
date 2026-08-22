@@ -1,0 +1,36 @@
+_id: cdgpedarguanite0
+name: Darguanite
+type: peuple
+img: icons/environment/people/group.webp
+system:
+  description: >-
+    <p>Le royaume de Darguan est une monarchie décadente où les classes sont
+    très marquées. À l'issue de la guerre, les Darguanites ont annexé une partie
+    de l'Escannie, sous le regard réprobateur de leurs voisins. Ils passent pour
+    précieux, voire extravagants.</p>
+  abilityBonus: esprit
+  features:
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrsophistique
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrpartisanhom
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrversatilite
+  languages:
+    - stygien
+    - darguanais
+effects:
+  - _id: cdgeadarguanite0
+    name: Ajustement de caractéristique
+    img: icons/environment/people/group.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _key: '!items.effects!cdgpedarguanite0.cdgeadarguanite0'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgpedarguanite0'
