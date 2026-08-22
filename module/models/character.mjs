@@ -15,7 +15,6 @@ export default class CdgCharacterData extends CdgActorData {
     // eux leur vrai nom, qu'un magicien pourrait retourner contre eux.
     schema.identity = new fields.SchemaField({
       vraiNom: new fields.StringField({ required: true, blank: true }),
-      peuple: new fields.StringField({ required: true, blank: true }),
       religion: new fields.StringField({ required: true, blank: true }),
       carriere: new fields.StringField({ required: true, blank: true }),
       // La chaîne vide est un choix valide : un personnage fraîchement créé n'a pas encore de grade.

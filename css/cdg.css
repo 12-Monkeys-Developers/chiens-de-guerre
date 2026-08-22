@@ -56,7 +56,9 @@
   background-image: url("../assets/ui/images/epee-noire-gauche.webp");
   color: var(--cdg-parchment);
   font-family: var(--cdg-font-title);
-  letter-spacing: 0.06em;
+  font-size: 3rem;
+  -webkit-text-stroke: 1px black;
+  letter-spacing: 0.03em;
   border: none;
   background-size: 300px 40px;
   background-repeat: no-repeat;
@@ -85,6 +87,7 @@
 .cdg .section-title-right {
   background-image: url("../assets/ui/images/epee-noire-droite.webp");
   text-align: right;
+  justify-self: end;
   padding: 0rem 0.8rem 0.4rem 2.2rem;
 }
 .cdg h3 {
@@ -1454,6 +1457,6 @@ cdg-toggle-switch[checked] thumb {
 #pause > img {
   content: url("../assets/ui/images/epee-crane.webp");
   height: auto;
-  width: 240px;
+  width: 120px;
   opacity: 70%;
 }

@@ -13,7 +13,7 @@
       {{#each features as |feature|}}
         <li class="item-row" data-uuid="{{feature.uuid}}">
           <img class="item-img" src="{{feature.img}}" />
-          <span class="item-name">{{feature.name}}</span>
+          <span class="item-name" data-action="editFeature" data-uuid="{{feature.uuid}}">{{feature.name}}</span>
           {{#if @root.isEditable}}
             <a class="item-control" data-action="removeFeature" data-uuid="{{feature.uuid}}"
               data-tooltip="{{localize 'CDG.ui.remove'}}"><i class="fas fa-xmark"></i></a>
