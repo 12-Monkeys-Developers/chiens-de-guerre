@@ -26,9 +26,20 @@
       {{/if}}
     </div>
 
-    <div class="field-line">
+    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
+        il réapparaît intact si l'on retire l'objet. }}
+    <div class="field-line origin-line">
       <label>{{localize "CDG.label.long.peuple"}}</label>
-      {{#if unlocked}}
+      {{#if peuple}}
+        <span class="value origin" data-item-id="{{peuple.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{peuple.name}}</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{peuple.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else if unlocked}}
         <input type="text" name="system.identity.peuple" value="{{identity.peuple}}" spellcheck="false" />
       {{else}}
         <span class="value">{{identity.peuple}}</span>
@@ -44,9 +55,20 @@
       {{/if}}
     </div>
 
-    <div class="field-line">
+    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
+        il réapparaît intact si l'on retire l'objet. }}
+    <div class="field-line origin-line">
       <label>{{localize "CDG.label.long.carriere"}}</label>
-      {{#if unlocked}}
+      {{#if carriere}}
+        <span class="value origin" data-item-id="{{carriere.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{carriere.name}}</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{carriere.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else if unlocked}}
         <input type="text" name="system.identity.carriere" value="{{identity.carriere}}" spellcheck="false" />
       {{else}}
         <span class="value">{{identity.carriere}}</span>

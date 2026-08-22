@@ -531,6 +531,26 @@ cdg-toggle-switch[checked] thumb {
   border: 2px solid var(--cdg-ink);
   border-radius: var(--cdg-radius);
 }
+.cdg .identity .origin-line .origin {
+  flex: 1 1 auto;
+}
+.cdg .identity .origin-line .origin a {
+  color: var(--cdg-blood);
+  text-decoration: none;
+}
+.cdg .identity .origin-line .origin a:hover {
+  color: var(--cdg-blood-light);
+  text-shadow: none;
+}
+.cdg .identity .origin-line .origin-remove {
+  flex: 0 0 auto;
+  color: var(--cdg-muted);
+  font-size: 0.8rem;
+}
+.cdg .identity .origin-line .origin-remove:hover {
+  color: var(--cdg-blood);
+  text-shadow: none;
+}
 .cdg.actor .flexrowsb {
   display: flex;
   flex-direction: row;

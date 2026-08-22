@@ -47,6 +47,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       toggleLanguage: CdgBaseActorSheet.#onToggleLanguage,
       rest: CdgBaseActorSheet.#onRest,
       rollTest: CdgBaseActorSheet.#onRollTest,
+      removeOrigin: CdgBaseActorSheet.#onRemoveOrigin,
     },
   }
 
@@ -169,6 +170,10 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.gear = this.document.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id)
     context.arcanums = this.document.arcanums
     context.features = this.document.features
+
+    // Peuple et carrière ne sont pas de l'inventaire : ils s'affichent sur leur ligne de l'en-tête.
+    context.peuple = this.document.peuple
+    context.carriere = this.document.carriere
 
     if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
 
@@ -388,6 +393,21 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     })
   }
 
+  /**
+   * Retire un peuple ou une carrière, et ce qu'il avait accordé.
+   *
+   * Distinct de `deleteItem`, qui ne supprimerait que l'objet lui-même et laisserait ses traits
+   * orphelins sur la fiche.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte, ou est contenu dans, un `data-item-id`.
+   */
+  static async #onRemoveOrigin(event, target) {
+    if (!this.isEditable) return
+    const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    if (!item) return
+    return this.document.revokeOrigin(item)
+  }
+
   // #endregion
 
   // #region Glisser-déposer
@@ -427,6 +447,9 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
     // Réorganisation interne : l'objet appartient déjà à cet acteur, il n'y a rien à copier.
     if (item.parent?.uuid === this.document.uuid) return
+
+    // Une origine ne se copie pas telle quelle : elle accorde aussi ce qu'elle référence.
+    if (SYSTEM.ORIGIN_TYPES.includes(item.type)) return this.document.grantOrigin(item)
 
     return this.document.createEmbeddedDocuments("Item", [item.toObject()])
   }

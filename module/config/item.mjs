@@ -8,6 +8,14 @@ export const ITEM_TYPE = {
 }
 
 /**
+ * Les types d'objet qui décrivent d'où vient un personnage.
+ *
+ * Ils ne se comportent pas comme le reste de l'inventaire : on n'en porte qu'un de chaque, et les
+ * déposer accorde au personnage ce qu'ils référencent — d'où l'aiguillage propre dans le dépôt.
+ */
+export const ORIGIN_TYPES = [ITEM_TYPE.peuple, ITEM_TYPE.carriere]
+
+/**
  * D'où vient un trait spécial. Sert à regrouper les traits sur la fiche : un joueur cherche
  * « ce que mon peuple me donne », pas une liste à plat.
  */

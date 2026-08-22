@@ -32,10 +32,10 @@
         "arcanums": "Arcanums",
         "biographie": "Biographie",
         "description": "Description",
-        "main":"Description",
-        "rank1":"Rang1",
-        "rank2":"Rang2",
-        "rank3":"Rang3"
+        "main": "Description",
+        "rank1": "Rang1",
+        "rank2": "Rang2",
+        "rank3": "Rang3"
       }
     },
     "abilities": {
@@ -233,6 +233,23 @@
         "actorMissing": "Le personnage de ce jet est introuvable.",
         "cannotPush": "Se dépasser exige 1 point dans chaque réserve : {abilities} est déjà au plus bas."
       }
+    },
+    "origin": {
+      "open": "Ouvrir la fiche",
+      "remove": "Retirer",
+      "notForAdversaire": "Un adversaire n'a ni peuple ni carrière : {type} n'a pas été ajouté.",
+      "alreadyPresent": "{type} déjà défini : {name}. Retirez-le avant d'en déposer un autre.",
+      "applied": "{name} appliqué.",
+      "appliedWith": "{name} appliqué : {details}.",
+      "grantFeatures": "{count} trait(s) spécial(aux)",
+      "grantArcanums": "{count} arcanum(s)",
+      "grantEquipments": "{count} objet(s) d'équipement",
+      "grantLanguages": "{count} langue(s)",
+      "grantSkillRanks": "{count} rang(s) de compétence",
+      "missingGrant": "{name} : {count} élément(s) introuvable(s). Le compendium qui les porte est sans doute absent.",
+      "removeTitle": "Retirer {type}",
+      "removeContent": "<p>Retirer <strong>{name}</strong> et les {count} objet(s) qu'il a accordés ?</p><p class=\"hint\">Les langues apprises et les rangs de compétence resteront : rien ne distingue plus ce qui venait de cette origine de ce que le personnage a gagné depuis.</p>",
+      "removeContentAlone": "<p>Retirer <strong>{name}</strong> ?</p>"
     },
     "rest": {
       "execrables": "Conditions exécrables",

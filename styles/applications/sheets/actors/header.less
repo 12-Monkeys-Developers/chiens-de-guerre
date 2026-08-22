@@ -153,3 +153,32 @@
     border-radius: var(--cdg-radius);
   }
 }
+
+// Ligne d'origine — peuple et carrière. Quand l'objet est là, la ligne cesse d'être un champ à
+// remplir pour devenir un lien vers sa fiche, suivi d'une croix discrète pour le retirer.
+.cdg .identity .origin-line {
+  .origin {
+    flex: 1 1 auto;
+
+    a {
+      color: var(--cdg-blood);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--cdg-blood-light);
+        text-shadow: none;
+      }
+    }
+  }
+
+  .origin-remove {
+    flex: 0 0 auto;
+    color: var(--cdg-muted);
+    font-size: 0.8rem;
+
+    &:hover {
+      color: var(--cdg-blood);
+      text-shadow: none;
+    }
+  }
+}
