@@ -33,6 +33,13 @@ Hooks.once("init", function () {
   // liste devient la classe de jet par défaut de toute la partie, y compris pour un `/r 1d6`.
   CONFIG.Dice.rolls.push(dice.CdgRoll)
 
+  // Effets actifs. L'enregistrement du type de change doit rester dans `init` : le cœur met en
+  // cache la table des types dès le premier accès, et sa fenêtre de configuration écarte
+  // silencieusement les changes dont le type lui est inconnu.
+  CONFIG.ActiveEffect.documentClass = documents.CdgActiveEffect
+  CONFIG.ActiveEffect.dataModels.base = models.CdgActiveEffectData
+  documents.CdgActiveEffect.registerChangeTypes()
+
   // Acteurs
   CONFIG.Actor.documentClass = documents.CdgActor
   CONFIG.Actor.dataModels = {

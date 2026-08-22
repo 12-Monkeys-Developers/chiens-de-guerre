@@ -1,0 +1,18 @@
+_id: cdgtrversatilite
+name: Versatilité
+type: feature
+img: icons/magic/control/silhouette-hold-change-blue.webp
+system:
+  description: >-
+    <p>Réputés pour leur adaptabilité, les humains gagnent 2 points de
+    personnalisation supplémentaires lors de la création de personnage.</p>
+  category: origine
+  suspicion: neutre
+  creationGrants:
+    customizationPoints: 2
+    freeSkillRanks: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrversatilite'

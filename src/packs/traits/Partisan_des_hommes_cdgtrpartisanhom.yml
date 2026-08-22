@@ -1,0 +1,18 @@
+_id: cdgtrpartisanhom
+name: Partisan des hommes
+type: feature
+img: icons/skills/social/diplomacy-handshake.webp
+system:
+  description: >-
+    <p>Le rôle de votre peuple dans la Première Entente fait que l'on vous
+    soupçonne rarement d'être un Marqué.</p>
+  category: origine
+  suspicion: favorable
+  creationGrants:
+    customizationPoints: 0
+    freeSkillRanks: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrpartisanhom'

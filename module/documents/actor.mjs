@@ -64,6 +64,9 @@ export default class CdgActor extends Actor {
   /**
    * Applique le repos de fin de journée : chaque réserve regagne le nombre de points correspondant
    * au confort du repos, sans dépasser son maximum.
+   *
+   * `restBonus` se cumule au confort du repos, réserve par réserve : c'est par lui que le trait
+   * orque Infatigable rend un point de Corps de plus, sans rien changer à la Vivacité ni à l'Esprit.
    * @param {string} conditionId Un identifiant de SYSTEM.REST_CONDITIONS.
    * @returns {Promise<CdgActor|undefined>}
    */
@@ -74,7 +77,7 @@ export default class CdgActor extends Actor {
     const updates = {}
     for (const ability of Object.values(SYSTEM.ABILITIES)) {
       const pool = this.system.abilities[ability.id]
-      updates[`system.abilities.${ability.id}.value`] = Math.min(pool.max, pool.value + condition.recovery)
+      updates[`system.abilities.${ability.id}.value`] = Math.min(pool.max, pool.value + condition.recovery + pool.restBonus)
     }
     return this.update(updates)
   }

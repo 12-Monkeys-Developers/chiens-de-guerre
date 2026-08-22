@@ -1,0 +1,35 @@
+_id: cdgtrtheatral000
+name: Théâtral
+type: feature
+img: icons/skills/social/theft-pickpocket-bribery-brown.webp
+system:
+  description: >-
+    <p>Vous bénéficiez d'un bonus de +2 à tous les tests visant à jouer la
+    comédie ou à mentir.</p>
+  category: origine
+  suspicion: neutre
+  creationGrants:
+    customizationPoints: 0
+    freeSkillRanks: 0
+effects:
+  - _id: cdgeftheatral000
+    name: Théâtral
+    img: icons/skills/social/theft-pickpocket-bribery-brown.webp
+    type: base
+    transfer: true
+    disabled: false
+    description: >-
+      <p>Vous bénéficiez d'un bonus de +2 à tous les tests visant à jouer la
+      comédie ou à mentir.</p>
+    system:
+      changes:
+        - key: system.modifiers.sr
+          type: cdg.situational
+          value: 2
+          phase: initial
+          situation: comedie
+    _key: '!items.effects!cdgtrtheatral000.cdgeftheatral000'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrtheatral000'

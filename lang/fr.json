@@ -258,6 +258,38 @@
         "mystique": "Mystique"
       }
     },
+    "situations": {
+      "charme": "Se montrer charmant",
+      "comedie": "Jouer la comédie ou mentir",
+      "socialTout": "Toute interaction sociale",
+      "arts": "Arts et connaissances académiques",
+      "endurance": "Endurer ou persévérer",
+      "penombre": "Pénombre"
+    },
+    "effect": {
+      "types": {
+        "situational": "Bonus circonstanciel"
+      },
+      "anySituation": "Toute situation",
+      "summary": {
+        "permanent": "{value} à {key}",
+        "situational": "{value} — {situation}"
+      }
+    },
+    "feature": {
+      "categories": {
+        "origine": "Trait d'origine",
+        "carriere": "Don de carrière",
+        "marque": "Marque de l'Oblitéré",
+        "autre": "Autre"
+      },
+      "suspicions": {
+        "favorable": "A priori favorable",
+        "neutre": "Sans incidence",
+        "defavorable": "Soupçonné plus facilement",
+        "hostile": "Identifié comme Marqué"
+      }
+    },
     "equipment": {
       "subtypes": {
         "weapon": "Arme",
@@ -339,7 +371,14 @@
         "notesPublic": "Notes publiques",
         "notesPrivate": "Notes privées",
         "vice": "Vice",
-        "virtue": "Vertu"
+        "virtue": "Vertu",
+        "effects": "Effets",
+        "featureCategory": "Origine du trait",
+        "featureSuspicion": "Regard des humains",
+        "creationGrants": "Accordé à la création",
+        "customizationPoints": "Points de personnalisation",
+        "freeSkillRanks": "Compétences au rang 1",
+        "situationalModifiers": "Bonus circonstanciels"
       },
       "short": {
         "init": "Init.",
@@ -386,7 +425,17 @@
       "languagesHint": "L'écrit dépend du rang en Érudition : 0 analphabète, 1 sa langue et le stygien avec peine, 2 parfaitement, 3 toutes ses langues parlées.",
       "armorCategoryHint": "Sans un rang de Port d'armures au moins égal à la catégorie, le malus d'initiative est doublé.",
       "passiveArcanumHint": "Bonus constant accordé par cet arcanum :",
-      "mysticArcanumHint": "Activation : consommer les points d'Esprit et réussir un test d'Esprit / Arcanum."
+      "mysticArcanumHint": "Activation : consommer les points d'Esprit et réussir un test d'Esprit / Arcanum.",
+      "createEffect": "Ajouter un effet",
+      "edit": "Modifier",
+      "enableEffect": "Activer l'effet",
+      "disableEffect": "Désactiver l'effet",
+      "noEffect": "Aucun effet.",
+      "noChange": "Aucune modification.",
+      "effectNotTransferred": "Cet effet ne s'applique pas au porteur de l'objet.",
+      "noSituationalModifier": "Aucun bonus circonstanciel.",
+      "situationalHint": "Ces bonus ne s'appliquent pas d'office : le meneur juge si la situation s'y prête.",
+      "lockedByEffect": "Valeur imposée par un effet actif."
     },
     "settings": {
       "debugMode": {
@@ -534,6 +583,31 @@
       "FIELDS": {
         "description": {
           "label": "Description"
+        },
+        "category": {
+          "label": "Origine du trait"
+        },
+        "suspicion": {
+          "label": "Regard des humains"
+        },
+        "creationGrants": {
+          "customizationPoints": {
+            "label": "Points de personnalisation"
+          },
+          "freeSkillRanks": {
+            "label": "Compétences au rang 1"
+          }
+        }
+      }
+    },
+    "Effect": {
+      "FIELDS": {
+        "changes": {
+          "element": {
+            "situation": {
+              "label": "Situation"
+            }
+          }
         }
       }
     },

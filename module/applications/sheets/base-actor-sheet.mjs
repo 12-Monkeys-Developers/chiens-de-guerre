@@ -140,6 +140,11 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.fields = this.document.schema.fields
     context.systemFields = this.document.system.schema.fields
 
+    // Les chemins pilotés par un effet actif. `overrides` est peuplé par applyActiveEffects : un
+    // champ qui s'y trouve serait réécrit à la préparation suivante, autant l'afficher verrouillé
+    // plutôt que de laisser le joueur saisir une valeur qui ne tiendra pas.
+    context.overrides = foundry.utils.flattenObject(this.document.overrides ?? {})
+
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
     context.viewLimited = this.isLimitedView

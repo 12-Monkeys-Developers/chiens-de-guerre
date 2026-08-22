@@ -1,0 +1,30 @@
+_id: cdgtrinfatigable
+name: Infatigable
+type: feature
+img: icons/skills/melee/strike-hammer-destructive-orange.webp
+system:
+  description: <p>Après chaque repos, vous récupérez 1 point de Corps supplémentaire.</p>
+  category: origine
+  suspicion: neutre
+  creationGrants:
+    customizationPoints: 0
+    freeSkillRanks: 0
+effects:
+  - _id: cdgefinfatigable
+    name: Infatigable
+    img: icons/skills/melee/strike-hammer-destructive-orange.webp
+    type: base
+    transfer: true
+    disabled: false
+    description: <p>Après chaque repos, vous récupérez 1 point de Corps supplémentaire.</p>
+    system:
+      changes:
+        - key: system.abilities.corps.restBonus
+          type: add
+          value: 1
+          phase: initial
+    _key: '!items.effects!cdgtrinfatigable.cdgefinfatigable'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrinfatigable'

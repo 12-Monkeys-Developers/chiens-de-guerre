@@ -5,6 +5,7 @@ import * as COMBAT from "./combat.mjs"
 import * as EQUIPMENT from "./equipment.mjs"
 import * as ITEM from "./item.mjs"
 import * as RANKS from "./ranks.mjs"
+import * as SITUATIONS from "./situations.mjs"
 
 export const ASCII = `
    ****   ****     ****
@@ -80,4 +81,10 @@ export const SYSTEM = {
   TOKEN_SIZE: ACTOR.TOKEN_SIZE,
   ITEM_TYPE: ITEM.ITEM_TYPE,
   ITEM_ICONS: ITEM.ITEM_ICONS,
+  FEATURE_CATEGORIES: ITEM.FEATURE_CATEGORIES,
+  FEATURE_SUSPICIONS: ITEM.FEATURE_SUSPICIONS,
+
+  SITUATIONS: SITUATIONS.SITUATIONS,
+  SITUATIONAL_CHANGE_TYPE: SITUATIONS.SITUATIONAL_CHANGE_TYPE,
+  SITUATIONAL_CHANGE_KEY: SITUATIONS.SITUATIONAL_CHANGE_KEY,
 }
