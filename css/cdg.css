@@ -897,6 +897,430 @@ cdg-toggle-switch[checked] thumb {
 .cdg.item .description {
   margin-bottom: 0.7rem;
 }
+.cdg.roll .window-content {
+  padding: 0.6rem 0.8rem 0 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.cdg.roll .roll-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.cdg.roll section {
+  margin: 0;
+}
+.cdg.roll .ability-choice {
+  display: flex;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+}
+.cdg.roll .ability-choice > li {
+  flex: 1 1 0;
+}
+.cdg.roll .ability-choice .ability {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.35rem 0.2rem;
+  background: transparent;
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+  color: var(--cdg-text);
+  cursor: pointer;
+}
+.cdg.roll .ability-choice .ability .ability-name {
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  color: var(--cdg-label);
+}
+.cdg.roll .ability-choice .ability .ability-score {
+  font-family: var(--cdg-font-title);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.cdg.roll .ability-choice .ability .ability-score .max {
+  font-size: 0.75rem;
+  color: var(--cdg-muted);
+}
+.cdg.roll .ability-choice .ability:hover {
+  border-color: var(--cdg-blood-light);
+  box-shadow: none;
+}
+.cdg.roll .ability-choice .ability.selected {
+  background: var(--cdg-blood);
+  border-color: var(--cdg-blood-dark);
+}
+.cdg.roll .ability-choice .ability.selected .ability-name,
+.cdg.roll .ability-choice .ability.selected .ability-score {
+  color: var(--cdg-parchment);
+}
+.cdg.roll .ability-choice .ability.selected .max {
+  color: var(--cdg-parchment-dark);
+}
+.cdg.roll .skill-line .handful {
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+.cdg.roll .field-line > label.inline {
+  min-width: 0;
+  margin-left: 0.6rem;
+}
+.cdg.roll .free-modifier {
+  width: 3rem;
+}
+.cdg.roll .effort-steps,
+.cdg.roll .passion-modes {
+  display: flex;
+  gap: 0.25rem;
+}
+.cdg.roll .effort-step,
+.cdg.roll .passion-mode {
+  padding: 0.15rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+  color: var(--cdg-text);
+  font-family: var(--cdg-font-label);
+  font-size: 0.78rem;
+  font-variant: small-caps;
+  line-height: 1.3;
+  cursor: pointer;
+  width: auto;
+}
+.cdg.roll .effort-step:hover:not(:disabled),
+.cdg.roll .passion-mode:hover:not(:disabled) {
+  border-color: var(--cdg-blood-light);
+  box-shadow: none;
+}
+.cdg.roll .effort-step.selected,
+.cdg.roll .passion-mode.selected {
+  background: var(--cdg-ink-soft);
+  border-color: var(--cdg-ink);
+  color: var(--cdg-parchment);
+}
+.cdg.roll .effort-step:disabled,
+.cdg.roll .passion-mode:disabled {
+  color: var(--cdg-muted);
+  border-style: dotted;
+  cursor: not-allowed;
+}
+.cdg.roll .passion-line .tokens {
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+.cdg.roll .auto-modifiers {
+  list-style: none;
+  margin: 0.4rem 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.cdg.roll .auto-modifiers .toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: auto;
+  padding: 0.15rem 0.45rem;
+  background: var(--cdg-parchment-dark);
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+  color: var(--cdg-text);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.cdg.roll .auto-modifiers .toggle .value {
+  font-family: var(--cdg-font-title);
+}
+.cdg.roll .auto-modifiers .toggle:hover {
+  border-color: var(--cdg-blood-light);
+  box-shadow: none;
+}
+.cdg.roll .auto-modifiers .off .toggle {
+  background: transparent;
+  color: var(--cdg-muted);
+  border-style: dotted;
+}
+.cdg.roll .auto-modifiers .off .toggle .label,
+.cdg.roll .auto-modifiers .off .toggle .value {
+  text-decoration: line-through;
+}
+.cdg.roll .roll-summary {
+  border-top: 2px solid var(--cdg-ink);
+  padding-top: 0.4rem;
+}
+.cdg.roll .roll-summary .sr {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.cdg.roll .roll-summary .sr .sr-label {
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  color: var(--cdg-label);
+}
+.cdg.roll .roll-summary .sr .sr-value {
+  font-family: var(--cdg-font-title);
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--cdg-blood);
+}
+.cdg.roll .roll-summary .breakdown {
+  list-style: none;
+  margin: 0.3rem 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.5rem;
+  font-size: 0.78rem;
+  color: var(--cdg-ink-soft);
+}
+.cdg.roll .roll-summary .breakdown .part {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+.cdg.roll .roll-summary .breakdown .part-value {
+  font-family: var(--cdg-font-title);
+}
+.cdg.roll .roll-summary .breakdown .base .part-value {
+  color: var(--cdg-blood);
+}
+.cdg.roll .roll-summary .handful-hint {
+  margin: 0.35rem 0 0 0;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--cdg-muted);
+}
+.cdg.roll .roll-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.5rem 0.8rem;
+  border-top: 1px solid var(--cdg-parchment-line);
+}
+.cdg.roll .roll-footer .roll-state {
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.cdg.roll .roll-footer .roll-state.ok {
+  color: var(--cdg-muted);
+}
+.cdg.roll .roll-footer .roll-state.good {
+  color: var(--cdg-label);
+}
+.cdg.roll .roll-footer .roll-state.warn {
+  color: var(--cdg-blood);
+  font-weight: 700;
+}
+.cdg.roll .roll-footer .controls {
+  display: flex;
+  gap: 0.4rem;
+}
+.cdg.roll .roll-footer button {
+  width: auto;
+  padding: 0.25rem 0.8rem;
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  border-radius: var(--cdg-radius);
+  cursor: pointer;
+}
+.cdg.roll .roll-footer .cancel {
+  background: transparent;
+  border: 1px solid var(--cdg-parchment-line);
+  color: var(--cdg-ink-soft);
+}
+.cdg.roll .roll-footer .launch {
+  background: var(--cdg-blood);
+  border: 1px solid var(--cdg-blood-dark);
+  color: var(--cdg-parchment);
+}
+.cdg.roll .roll-footer .launch:hover {
+  background: var(--cdg-blood-light);
+  box-shadow: none;
+}
+.cdg-roll-card {
+  font-family: var(--cdg-font-text);
+  color: var(--cdg-text);
+}
+.cdg-roll-card .card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.4rem;
+}
+.cdg-roll-card .card-header .test-name {
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  font-size: 0.9rem;
+}
+.cdg-roll-card .card-header .card-sr {
+  font-family: var(--cdg-font-title);
+  color: var(--cdg-blood);
+  white-space: nowrap;
+}
+.cdg-roll-card .pushed-note {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--cdg-muted);
+}
+.cdg-roll-card .card-dice {
+  list-style: none;
+  display: flex;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+}
+.cdg-roll-card .card-dice .die {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 2px solid var(--cdg-shield-border);
+  border-radius: var(--cdg-radius);
+  background: var(--cdg-shield-empty);
+  color: var(--cdg-ink);
+  font-family: var(--cdg-font-title);
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 0;
+}
+.cdg-roll-card .card-dice button.die {
+  cursor: pointer;
+}
+.cdg-roll-card .card-dice button.die:hover {
+  border-color: var(--cdg-blood);
+  box-shadow: none;
+}
+.cdg-roll-card .card-dice .die.suggested {
+  border-color: var(--cdg-blood);
+  border-width: 3px;
+}
+.cdg-roll-card .card-dice .die.discarded {
+  opacity: 0.4;
+  font-size: 0.9rem;
+  width: 1.9rem;
+  height: 1.9rem;
+  align-self: center;
+}
+.cdg-roll-card .card-dice .die.kept {
+  border-color: var(--cdg-ink);
+  border-width: 3px;
+}
+.cdg-roll-card .card-dice .die.criticalSuccess {
+  background: var(--cdg-ink-soft);
+  color: var(--cdg-parchment);
+}
+.cdg-roll-card .card-dice .die.failure {
+  color: var(--cdg-blood);
+}
+.cdg-roll-card .card-dice .die.criticalFailure {
+  background: var(--cdg-blood);
+  border-color: var(--cdg-blood-dark);
+  color: var(--cdg-parchment);
+}
+.cdg-roll-card .card-prompt {
+  margin: 0.4rem 0 0 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--cdg-blood);
+}
+.cdg-roll-card .card-verdict {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.45rem;
+}
+.cdg-roll-card .card-verdict .verdict-label {
+  font-family: var(--cdg-font-title);
+  font-size: 1.1rem;
+}
+.cdg-roll-card .card-verdict .verdict-quality {
+  font-size: 0.78rem;
+  color: var(--cdg-muted);
+}
+.cdg-roll-card.failure .card-verdict,
+.cdg-roll-card.criticalFailure .card-verdict {
+  color: var(--cdg-blood);
+}
+.cdg-roll-card .card-note {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--cdg-muted);
+}
+.cdg-roll-card .card-detail {
+  margin-top: 0.45rem;
+  font-size: 0.78rem;
+}
+.cdg-roll-card .card-detail summary {
+  cursor: pointer;
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  color: var(--cdg-label);
+}
+.cdg-roll-card .card-detail ul {
+  list-style: none;
+  margin: 0.25rem 0 0 0;
+  padding: 0;
+}
+.cdg-roll-card .card-detail li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted var(--cdg-parchment-line);
+}
+.cdg-roll-card .card-detail .part-value {
+  font-family: var(--cdg-font-title);
+}
+.cdg-roll-card .card-detail .card-cost {
+  margin: 0.3rem 0 0 0;
+  font-style: italic;
+  color: var(--cdg-muted);
+}
+.cdg-roll-card .card-push {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.2rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--cdg-blood);
+  border-radius: var(--cdg-radius);
+  color: var(--cdg-blood);
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.cdg-roll-card .card-push:hover {
+  background: var(--cdg-blood);
+  color: var(--cdg-parchment);
+  box-shadow: none;
+}
+.cdg [data-action="rollTest"] {
+  cursor: pointer;
+}
+.cdg [data-action="rollTest"]:hover {
+  color: var(--cdg-blood);
+}
 #pause > img {
   content: url("../assets/ui/images/epee-crane.webp");
   height: auto;

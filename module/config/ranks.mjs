@@ -1,36 +1,43 @@
 /**
  * Les quatre rangs de compétence et la poignée de dés associée.
  *
- * Le système est en dessous : on cherche à faire moins que le seuil de réussite. « Le meilleur »
- * est donc le plus petit résultat, d'où les `kl` (keep lowest) aux rangs 2 et 3, et le `kh`
- * (keep highest, donc le pire) au rang 0.
- *
- * Le moteur de jet n'est pas encore branché : ces formules servent pour l'instant aux info-bulles
- * de la fiche, et seront la source unique quand il le sera.
+ * Le système est « en dessous » : on cherche un résultat inférieur ou égal au seuil de réussite.
+ * Attention, « le meilleur dé » n'est pas le plus petit : c'est le plus grand qui reste sous le
+ * seuil, puisque la qualité de la réussite est le score du dé (p. 42). Aucun `kh`/`kl` de Foundry ne
+ * sait exprimer ça — la poignée est donc lancée brute et le dé conservé est choisi ensuite :
+ * imposé par le système au rang 0, laissé au joueur aux rangs 2 et 3.
  */
 export const RANKS = {
   0: {
     id: 0,
     label: "CDG.ranks.0",
-    formula: "2d20kh",
+    formula: "2d20",
+    dice: 2,
+    keep: "worst",
     hint: "CDG.ranks.hint.0",
   },
   1: {
     id: 1,
     label: "CDG.ranks.1",
     formula: "1d20",
+    dice: 1,
+    keep: "single",
     hint: "CDG.ranks.hint.1",
   },
   2: {
     id: 2,
     label: "CDG.ranks.2",
-    formula: "2d20kl",
+    formula: "2d20",
+    dice: 2,
+    keep: "choice",
     hint: "CDG.ranks.hint.2",
   },
   3: {
     id: 3,
     label: "CDG.ranks.3",
-    formula: "3d20kl",
+    formula: "3d20",
+    dice: 3,
+    keep: "choice",
     hint: "CDG.ranks.hint.3",
   },
 }
@@ -53,3 +60,23 @@ export const SUCCESS_QUALITY = {
 
 /** Le résultat maximal d'un d20, utile pour le critique sur seuil supérieur à 20. */
 export const NATURAL_MAX = 20
+
+/**
+ * La table des difficultés (p. 40). Le modificateur s'applique au seuil de réussite, jamais au dé.
+ *
+ * Les quatre crans du milieu sont « ceux les plus couramment utilisés en jeu » ; les extrêmes sont
+ * à réserver aux actions véritablement héroïques, ou aux cas où l'on ne lancerait normalement pas
+ * les dés mais où l'échec aurait un impact réel. `order` fixe l'ordre du sélecteur.
+ */
+export const DIFFICULTIES = {
+  tresFacile: { id: "tresFacile", label: "CDG.difficulties.tresFacile", modifier: 10, order: 1 },
+  facile: { id: "facile", label: "CDG.difficulties.facile", modifier: 5, order: 2 },
+  assezSimple: { id: "assezSimple", label: "CDG.difficulties.assezSimple", modifier: 2, order: 3 },
+  moyenne: { id: "moyenne", label: "CDG.difficulties.moyenne", modifier: 0, order: 4 },
+  complication: { id: "complication", label: "CDG.difficulties.complication", modifier: -2, order: 5 },
+  difficile: { id: "difficile", label: "CDG.difficulties.difficile", modifier: -5, order: 6 },
+  tresDifficile: { id: "tresDifficile", label: "CDG.difficulties.tresDifficile", modifier: -10, order: 7 },
+}
+
+/** Difficulté proposée par défaut à l'ouverture de la fenêtre de jet. */
+export const DEFAULT_DIFFICULTY = "moyenne"

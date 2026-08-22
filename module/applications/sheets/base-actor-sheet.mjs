@@ -1,5 +1,6 @@
 import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../helpers/utils.mjs"
+import CdgRollDialog from "../roll-dialog.mjs"
 
 const { sheets } = foundry.applications
 const { HandlebarsApplicationMixin } = foundry.applications.api
@@ -45,6 +46,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       adjustPool: CdgBaseActorSheet.#onAdjustPool,
       toggleLanguage: CdgBaseActorSheet.#onToggleLanguage,
       rest: CdgBaseActorSheet.#onRest,
+      rollTest: CdgBaseActorSheet.#onRollTest,
     },
   }
 
@@ -366,6 +368,19 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
   static async #onRest(event, target) {
     if (!this.isEditable) return
     return this.document.rest(target.dataset.condition)
+  }
+
+  /**
+   * Ouvre la fenêtre de test. Le couple caractéristique / compétence n'est qu'une présélection :
+   * cliquer sur une compétence laisse la caractéristique libre, et inversement.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte, ou est contenu dans, un `data-skill` ou un `data-ability`.
+   */
+  static async #onRollTest(event, target) {
+    return CdgRollDialog.open(this.document, {
+      skillId: target.closest("[data-skill]")?.dataset.skill ?? null,
+      abilityId: target.closest("[data-ability]")?.dataset.ability ?? null,
+    })
   }
 
   // #endregion

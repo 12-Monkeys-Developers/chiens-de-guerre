@@ -12,9 +12,14 @@ Il complète le `README.md`, qui décrit l'état courant, et le `CHANGELOG.md`, 
 - **Pas de système de modificateurs** : les bonus sont saisis à la main. Les arcanums physiques
   portent leur `linkedSkill` et leur bonus calculé (+2 par rang), mais rien ne les applique
   automatiquement à la compétence — c'est le premier chantier du jour où on branchera les modificateurs.
-- **Pas de moteur de jet** : `module/config/ranks.mjs` décrit déjà les poignées de dés par rang
-  (2d20kh / 1d20 / 2d20kl / 3d20kl) et les qualités de réussite. C'est la source unique à brancher
-  quand le moteur arrivera ; en attendant elles ne servent qu'aux info-bulles.
+- **La poignée de dés n'est pas un `kh`/`kl` de Foundry.** Le système est « en dessous », mais le
+  meilleur dé n'est ni le plus grand ni le plus petit : c'est le plus grand qui reste sous le seuil,
+  puisque la qualité de la réussite est le score du dé. `module/config/ranks.mjs` donne donc `dice`
+  (le nombre de d20) et `keep` (`worst` au rang 0, `single` au rang 1, `choice` aux rangs 2 et 3) ;
+  la poignée est lancée brute et le dé conservé est désigné après coup — imposé par le système au
+  rang 0, choisi par le joueur ensuite. Toute la casuistique de résolution tient dans
+  `module/dice/roll-outcome.mjs`, volontairement pur : il n'importe rien de Foundry et se teste
+  hors du jeu.
 - **Blessures stockées en compteur**, pas en tableau de booléens : `system.wounds.<niveau>.value`
   est le nombre de cases cochées, `max` est dérivé du rang de Vigueur. Un compteur se met à jour
   d'un seul champ, là où un tableau imposerait de réécrire la collection entière à chaque clic.
