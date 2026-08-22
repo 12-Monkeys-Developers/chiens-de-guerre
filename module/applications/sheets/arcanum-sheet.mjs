@@ -13,8 +13,28 @@ export default class CdgArcanumSheet extends CdgBaseItemSheet {
   /** @override */
   static PARTS = {
     header: { template: `${SYSTEM.PATH}/templates/items/shared/header.hbs` },
-    main: { template: `${SYSTEM.PATH}/templates/items/arcanum.hbs`, templates: [SHARED_DESCRIPTION], scrollable: [""] },
+    tabs: { template: "templates/generic/tab-navigation.hbs" },
+    main: { template: `${SYSTEM.PATH}/templates/items/arcanummain.hbs`, templates: [SHARED_DESCRIPTION], scrollable: [""] },
+    rank1: { template: `${SYSTEM.PATH}/templates/items/arcanumrank1.hbs`, templates: [SHARED_DESCRIPTION], scrollable: [""] },
+    rank2: { template: `${SYSTEM.PATH}/templates/items/arcanumrank2.hbs`, templates: [SHARED_DESCRIPTION], scrollable: [""] },
+    rank3: { template: `${SYSTEM.PATH}/templates/items/arcanumrank3.hbs`, templates: [SHARED_DESCRIPTION], scrollable: [""] },
   }
+
+  /** @override */
+  static TABS = {
+    primary: {
+      tabs: [
+        {
+          id: "main", cssClass: "tabName" },
+        { id: "rank1", cssClass: "tabName" },
+        { id: "rank2", cssClass: "tabName" },
+        { id: "rank3", cssClass: "tabName" },
+      ],
+      initial: "main",
+      labelPrefix: "CDG.sheet.tabs",
+    },
+  }
+
 
   /** @override */
   async _prepareContext() {

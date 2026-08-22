@@ -1,3 +1,5 @@
+<section class="tab tab-main{{#if tabs.main.active}} active{{/if}}" data-group="primary" data-tab="main">
+
 <section class="item-body">
 
   <div class="field-line">
@@ -30,21 +32,5 @@
   {{/if}}
 
   {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs"}}
-
-  <section class="effect">
-    <h2 class="section-title">{{localize "CDG.label.long.effect"}} : </h2>
-    {{formInput systemFields.rankData.fields.name1 value=system.rankData.name1}}
-    <div class="free-text">
-      {{formInput systemFields.rankData.fields.effect1 value=system.rankData.effect1 enriched=enrichedEffect1 name="system.rankData.effect1" toggled=true}}
-    </div>
-    {{formInput systemFields.rankData.fields.name2 value=system.rankData.name2}}
-    <div class="free-text">
-      {{formInput systemFields.rankData.fields.effect2 value=system.rankData.effect2 enriched=enrichedEffect2 name="system.rankData.effect2" toggled=true}}
-    </div>
-    {{formInput systemFields.rankData.fields.name3 value=system.rankData.name3}}
-    <div class="free-text">
-      {{formInput systemFields.rankData.fields.effect3 value=system.rankData.effect3 enriched=enrichedEffect3 name="system.rankData.effect3" toggled=true}}
-    </div>
-  </section>
-
+</section>
 </section>

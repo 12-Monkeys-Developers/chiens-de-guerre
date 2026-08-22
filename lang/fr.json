@@ -31,7 +31,11 @@
         "equipement": "Équipement",
         "arcanums": "Arcanums",
         "biographie": "Biographie",
-        "description": "Description"
+        "description": "Description",
+        "main":"Description",
+        "rank1":"Rang1",
+        "rank2":"Rang2",
+        "rank3":"Rang3"
       }
     },
     "abilities": {

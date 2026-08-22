@@ -1,0 +1,12 @@
+<section class="tab tab-rank1{{#if tabs.rank1.active}} active{{/if}}" data-group="primary" data-tab="rank1">
+  <section class="item-body">
+    <section class="effect">
+      <h2>{{formInput systemFields.rankData.fields.name1 value=system.rankData.name1}}</h2>
+      
+      <div class="free-text">
+        {{formInput systemFields.rankData.fields.effect1 value=system.rankData.effect1 enriched=enrichedEffect1 name="system.rankData.effect1" toggled=true}}
+      </div>
+    </section>
+
+  </section>
+</section>

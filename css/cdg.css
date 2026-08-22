@@ -52,7 +52,7 @@
 .cdg .section-title {
   position: relative;
   margin: 0 0 0.4rem 0;
-  padding: 0rem 2.2rem 0.4rem 0.8rem;
+  padding: 0rem 2.2rem 0.4rem 5rem;
   background-image: url("../assets/ui/images/epee-noire-gauche.webp");
   color: var(--cdg-parchment);
   font-family: var(--cdg-font-title);
@@ -860,6 +860,9 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.actor .notes-section {
   margin-bottom: 0.8rem;
+}
+.cdg.item .prosemirror {
+  min-height: 300px;
 }
 .cdg.item .skill-lines {
   list-style: none;
