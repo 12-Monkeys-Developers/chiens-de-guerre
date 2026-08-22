@@ -54,6 +54,7 @@
   margin: 0 0 0.4rem 0;
   padding: 0rem 2.2rem 0.4rem 5rem;
   background-image: url("../assets/ui/images/epee-noire-gauche.webp");
+  background-position: center left;
   color: var(--cdg-parchment);
   font-family: var(--cdg-font-title);
   font-size: 3rem;
@@ -86,6 +87,7 @@
 }
 .cdg .section-title-right {
   background-image: url("../assets/ui/images/epee-noire-droite.webp");
+  background-position: center right;
   text-align: right;
   justify-self: end;
   padding: 0rem 0.8rem 0.4rem 2.2rem;
@@ -266,8 +268,7 @@ cdg-toggle-switch[checked] thumb {
   min-width: 0;
 }
 .cdg .field-line .value {
-  flex: 1 1 auto;
-  font-size: 0.85rem;
+  font-size: 1rem;
   border-bottom: 1px solid transparent;
 }
 .cdg .free-text {
@@ -411,7 +412,7 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.actor .sheet-header {
   display: grid;
-  grid-template-columns: 190px 1fr 240px;
+  grid-template-columns: 190px 1fr 300px;
   gap: 0.6rem;
   align-items: start;
   padding: 0.6rem 0.8rem 0.4rem;
