@@ -72,15 +72,7 @@ export default class CdgCharacterData extends CdgActorData {
     )
 
     schema.details = new fields.SchemaField({
-      size: new fields.StringField({ required: true, blank: false, initial: "moyenne", choices: Object.keys(SYSTEM.SIZES) }),
-      biography: new fields.SchemaField({
-        private: new fields.HTMLField(),
-        public: new fields.HTMLField(),
-      }),
-      notes: new fields.SchemaField({
-        private: new fields.HTMLField(),
-        public: new fields.HTMLField(),
-      }),
+      biography: new fields.HTMLField(),
     })
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
@@ -106,13 +98,6 @@ export default class CdgCharacterData extends CdgActorData {
         const img = SYSTEM.ACTOR_ICONS[this.parent.type]
         if (img) updates.img = img
       }
-
-      const size = SYSTEM.TOKEN_SIZE[this.details.size] ?? SYSTEM.TOKEN_SIZE.moyenne
-      foundry.utils.mergeObject(updates.prototypeToken, {
-        width: size.size,
-        height: size.size,
-        texture: { scaleX: size.scale, scaleY: size.scale },
-      })
     }
 
     this.parent.updateSource(updates)

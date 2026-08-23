@@ -1,50 +1,40 @@
 <section class="tab tab-biographie{{#if tabs.biographie.active}} active{{/if}}" data-group="primary" data-tab="biographie">
 
-  <div class="field-line size-line">
-    <label>{{localize "CDG.label.long.size"}}</label>
-    {{#if unlocked}}
-      <select name="system.details.size">
-        {{selectOptions choiceSizes selected=details.size localize=true}}
-      </select>
-    {{else}}
-      <span class="value">{{localize (lookup choiceSizes details.size)}}</span>
-    {{/if}}
-  </div>
+  <section class="languages">
+    <h2 class="section-title">{{localize "CDG.label.long.languages"}}</h2>
+    <ul class="language-list">
+      {{#each languages as |language|}}
+        <li class="language">
+          <a class="box {{#if language.known}}checked{{/if}}" data-action="toggleLanguage" data-language="{{language.id}}"></a>
+          <span>{{localize language.label}}</span>
+        </li>
+      {{/each}}
+    </ul>
+    <p class="hint">{{localize "CDG.ui.languagesHint"}}</p>
+  </section>
 
-  <section class="notes-section">
-    <h2 class="section-title">{{localize "CDG.label.long.biographyPublic"}}</h2>
-    <div class="free-text">
-      {{formInput systemFields.details.fields.biography.fields.public value=system.details.biography.public
-        enriched=enrichedBiographyPublic name="system.details.biography.public" toggled=true}}
+  <section class="experience">
+    <h2 class="section-title">{{localize "CDG.label.long.xp"}}</h2>
+    <div class="xp-line">
+      <label>{{localize "CDG.label.long.xpTotal"}}</label>
+      <input type="number" name="system.xp.total" value="{{xp.total}}" min="0" data-dtype="Number" />
+    </div>
+    <div class="xp-line">
+      <label>{{localize "CDG.label.long.xpSpent"}}</label>
+      <input type="number" name="system.xp.spent" value="{{xp.spent}}" min="0" data-dtype="Number" />
+    </div>
+    <div class="xp-line total">
+      <label>{{localize "CDG.label.long.xpAvailable"}}</label>
+      <strong>{{xp.available}}</strong>
     </div>
   </section>
 
-  {{#if isEditable}}
-    <section class="notes-section">
-      <h2 class="section-title">{{localize "CDG.label.long.biographyPrivate"}}</h2>
-      <div class="free-text">
-        {{formInput systemFields.details.fields.biography.fields.private value=system.details.biography.private
-          enriched=enrichedBiographyPrivate name="system.details.biography.private" toggled=true}}
-      </div>
-    </section>
-  {{/if}}
-
-  <section class="notes-section">
-    <h2 class="section-title">{{localize "CDG.label.long.notesPublic"}}</h2>
+  <section class="biography-section">
+    <h2 class="section-title">{{localize "CDG.label.long.biography"}}</h2>
     <div class="free-text">
-      {{formInput systemFields.details.fields.notes.fields.public value=system.details.notes.public
-        enriched=enrichedNotesPublic name="system.details.notes.public" toggled=true}}
+      {{formInput systemFields.details.fields.biography value=system.details.biography
+        enriched=enrichedBiography name="system.details.biography" toggled=true}}
     </div>
   </section>
-
-  {{#if isEditable}}
-    <section class="notes-section">
-      <h2 class="section-title">{{localize "CDG.label.long.notesPrivate"}}</h2>
-      <div class="free-text">
-        {{formInput systemFields.details.fields.notes.fields.private value=system.details.notes.private
-          enriched=enrichedNotesPrivate name="system.details.notes.private" toggled=true}}
-      </div>
-    </section>
-  {{/if}}
 
 </section>

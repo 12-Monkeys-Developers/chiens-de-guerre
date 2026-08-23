@@ -48,7 +48,7 @@
   ],
   "documentTypes": {
     "Actor": {
-      "character": { "htmlFields": ["specialTraits", "details.biography.private", "details.biography.public", "details.notes.private", "details.notes.public"] },
+      "character": { "htmlFields": ["specialTraits", "details.biography"] },
       "adversaire": { "htmlFields": ["details.description", "details.notes"] }
     },
     "Item": {

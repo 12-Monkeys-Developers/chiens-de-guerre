@@ -257,12 +257,6 @@
       "agreables": "Conditions agréables",
       "exceptionnelles": "Conditions exceptionnelles"
     },
-    "size": {
-      "petite": "Petite",
-      "moyenne": "Moyenne",
-      "grande": "Grande",
-      "enorme": "Énorme"
-    },
     "currency": {
       "ducat": "Ducats",
       "ducatShort": "D",
@@ -382,10 +376,7 @@
         "subtype": "Type",
         "description": "Description",
         "origin": "Origine",
-        "size": "Taille",
-        "biographyPublic": "Biographie publique",
-        "biographyPrivate": "Biographie privée",
-        "notesPublic": "Notes publiques",
+        "biography": "Biographie",
         "notesPrivate": "Notes privées",
         "vice": "Vice",
         "virtue": "Vertu",
@@ -509,24 +500,8 @@
           }
         },
         "details": {
-          "size": {
-            "label": "Taille"
-          },
           "biography": {
-            "public": {
-              "label": "Biographie publique"
-            },
-            "private": {
-              "label": "Biographie privée"
-            }
-          },
-          "notes": {
-            "public": {
-              "label": "Notes publiques"
-            },
-            "private": {
-              "label": "Notes privées"
-            }
+            "label": "Biographie"
           }
         }
       }
@@ -534,9 +509,6 @@
     "Adversaire": {
       "FIELDS": {
         "details": {
-          "size": {
-            "label": "Taille"
-          },
           "description": {
             "label": "Description"
           },

@@ -161,7 +161,6 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.SYSTEM = SYSTEM
     context.skillColumns = [1, 2].map((column) => Object.values(SYSTEM.SKILLS).filter((skill) => skill.column === column))
     context.woundLevels = Object.values(SYSTEM.WOUND_LEVELS)
-    context.choiceSizes = SYSTEM.SIZES
 
     // Inventaire regroupé par sous-type, dans l'ordre d'affichage de la fiche.
     context.weapons = this.document.weapons

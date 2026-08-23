@@ -815,21 +815,9 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor .gear {
   margin-bottom: 0.8rem;
 }
-.cdg.actor .tab-arcanums.active {
-  display: grid;
-  grid-template-columns: 1fr 260px;
-  grid-template-areas: "arcanums side" "traits side";
-  gap: 0.8rem;
-  align-items: start;
-}
-.cdg.actor .tab-arcanums.active .arcanums {
-  grid-area: arcanums;
-}
-.cdg.actor .tab-arcanums.active .special-traits {
-  grid-area: traits;
-}
-.cdg.actor .tab-arcanums.active .arcanums-side {
-  grid-area: side;
+.cdg.actor .tab-arcanums .arcanums,
+.cdg.actor .tab-arcanums .special-traits {
+  margin-bottom: 0.8rem;
 }
 .cdg.actor .arcanum-list .arcanum-type {
   font-size: 0.75rem;
@@ -876,8 +864,43 @@ cdg-toggle-switch[checked] thumb {
   font-size: 1.1rem;
   color: var(--cdg-blood);
 }
-.cdg.actor .notes-section {
+.cdg.actor .tab-biographie.active {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.cdg.actor .tab-biographie .languages,
+.cdg.actor .tab-biographie .experience {
   margin-bottom: 0.8rem;
+  flex: 0 0 auto;
+}
+.cdg.actor .biography-section {
+  display: flex;
+  flex: 1 1 12rem;
+  flex-direction: column;
+  min-height: 12rem;
+}
+.cdg.actor .biography-section .free-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 10rem;
+  overflow: hidden;
+}
+.cdg.actor .biography-section .editor,
+.cdg.actor .biography-section prose-mirror {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.cdg.actor .biography-section prose-mirror > .editor-container,
+.cdg.actor .biography-section prose-mirror > .editor-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 .cdg.item .prosemirror {
   min-height: 300px;

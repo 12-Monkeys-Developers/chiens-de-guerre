@@ -13,16 +13,6 @@
         <span class="value name">{{actor.name}}</span>
       {{/if}}
     </div>
-    <div class="field-line size-line">
-      <label>{{localize "CDG.label.long.size"}}</label>
-      {{#if unlocked}}
-        <select name="system.details.size">
-          {{selectOptions choiceSizes selected=details.size localize=true}}
-        </select>
-      {{else}}
-        <span class="value">{{localize (lookup choiceSizes details.size)}}</span>
-      {{/if}}
-    </div>
   </div>
 
   <section class="abilities">

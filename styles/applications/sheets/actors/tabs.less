@@ -328,27 +328,10 @@
   }
 
   // --- Arcanums ------------------------------------------------------------------------------
-  // Restreint à `.active` : sans cela le `display: grid` prendrait le pas sur le `display: none`
-  // que Foundry applique aux onglets inactifs, et l'onglet resterait visible en permanence.
-  .tab-arcanums.active {
-    display: grid;
-    grid-template-columns: 1fr 260px;
-    grid-template-areas:
-      "arcanums side"
-      "traits side";
-    gap: 0.8rem;
-    align-items: start;
-
-    .arcanums {
-      grid-area: arcanums;
-    }
-
+  .tab-arcanums {
+    .arcanums,
     .special-traits {
-      grid-area: traits;
-    }
-
-    .arcanums-side {
-      grid-area: side;
+      margin-bottom: 0.8rem;
     }
   }
 
@@ -407,7 +390,49 @@
   }
 
   // --- Biographie ----------------------------------------------------------------------------
-  .notes-section {
+  // L'éditeur riche occupe tout l'espace laissé sous les informations fixes. Le `min-height`
+  // garantit une zone de saisie confortable même avant d'agrandir la fenêtre.
+  .tab-biographie.active {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .tab-biographie .languages,
+  .tab-biographie .experience {
     margin-bottom: 0.8rem;
+    flex: 0 0 auto;
+  }
+
+  .biography-section {
+    display: flex;
+    flex: 1 1 12rem;
+    flex-direction: column;
+    min-height: 12rem;
+
+    .free-text {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      min-height: 10rem;
+      overflow: hidden;
+    }
+
+    .editor,
+    prose-mirror {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    prose-mirror > .editor-container,
+    prose-mirror > .editor-content {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+    }
   }
 }

@@ -94,10 +94,7 @@ export default class CdgCharacterSheet extends CdgBaseActorSheet {
     }))
 
     context.enrichedSpecialTraits = await enrichHTML(this.document.system.specialTraits)
-    context.enrichedBiographyPublic = await enrichHTML(this.document.system.details.biography.public)
-    context.enrichedBiographyPrivate = await enrichHTML(this.document.system.details.biography.private)
-    context.enrichedNotesPublic = await enrichHTML(this.document.system.details.notes.public)
-    context.enrichedNotesPrivate = await enrichHTML(this.document.system.details.notes.private)
+    context.enrichedBiography = await enrichHTML(this.document.system.details.biography)
 
     return context
   }

@@ -26,7 +26,6 @@ export default class CdgAdversaireData extends CdgActorData {
     })
 
     schema.details = new fields.SchemaField({
-      size: new fields.StringField({ required: true, blank: false, initial: "moyenne", choices: Object.keys(SYSTEM.SIZES) }),
       // Ce qui tient lieu de fiche de créature : nature, tactique, faiblesses.
       description: new fields.HTMLField(),
       notes: new fields.HTMLField(),
@@ -53,13 +52,6 @@ export default class CdgAdversaireData extends CdgActorData {
         const img = SYSTEM.ACTOR_ICONS[this.parent.type]
         if (img) updates.img = img
       }
-
-      const size = SYSTEM.TOKEN_SIZE[this.details.size] ?? SYSTEM.TOKEN_SIZE.moyenne
-      foundry.utils.mergeObject(updates.prototypeToken, {
-        width: size.size,
-        height: size.size,
-        texture: { scaleX: size.scale, scaleY: size.scale },
-      })
     }
 
     this.parent.updateSource(updates)
