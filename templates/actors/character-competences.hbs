@@ -11,7 +11,7 @@
                 {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
                     path=(concat "system.skills." skill.id ".rank")
                     rank=(lookup (lookup @root.skills skill.id) "rank")
-                    editable=@root.isEditable}}
+                    editable=@root.unlocked}}
               </li>
             {{/each}}
           </ul>
@@ -41,19 +41,15 @@
                 libellé, comme sur la fiche papier. }}
             <div class="trait-boxes vice">
               {{#each (range 1 3) as |step|}}
-                {{#if unlocked}}
-                  <a class="box {{#if (and pair.isVice (gte pair.value step))}}filled{{/if}}"
-                    data-action="setTrait" data-pair="{{pair.id}}" data-side="vice" data-value="{{step}}"></a>
-                    {{else}}
-                  <a class="box {{#if (and pair.isVice (gte pair.value step))}}filled{{/if}}"></a>
-                {{/if}}
+                <a class="box {{#if (and pair.isVice (gte pair.value step))}}filled{{/if}}"
+                  {{#if @root.unlocked}}data-action="setTrait" data-pair="{{pair.id}}" data-side="vice" data-value="{{step}}"{{/if}}></a>
               {{/each}}
             </div>
 
             <div class="trait-boxes virtue">
               {{#each (range 1 3) as |step|}}
                 <a class="box {{#if (and pair.isVirtue (gte pair.value step))}}filled{{/if}}"
-                  data-action="setTrait" data-pair="{{pair.id}}" data-side="virtue" data-value="{{step}}"></a>
+                  {{#if @root.unlocked}}data-action="setTrait" data-pair="{{pair.id}}" data-side="virtue" data-value="{{step}}"{{/if}}></a>
               {{/each}}
             </div>
 
