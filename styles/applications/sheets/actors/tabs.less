@@ -1,9 +1,14 @@
 // Contenu des onglets de la fiche de personnage.
 .cdg.actor {
   // --- Compétences : les trois colonnes de la fiche papier -----------------------------------
+  .flexrowsb{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+  }
   .skill-columns {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 0 1.2rem;
   }
 
@@ -21,6 +26,7 @@
     padding: 0.1rem 0;
 
     .skill-name {
+      font-family: "masqualero";
       font-size: 0.82rem;
       color: var(--cdg-label);
       text-align: right;

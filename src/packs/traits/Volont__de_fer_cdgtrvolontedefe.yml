@@ -1,0 +1,35 @@
+_id: cdgtrvolontedefe
+name: Volonté de fer
+type: feature
+img: icons/magic/life/heart-cross-strong-green.webp
+system:
+  description: >-
+    <p>Vous bénéficiez d'un bonus de +1 à tous les tests visant à endurer ou
+    persévérer, dont les tests d'encaissement des blessures.</p>
+  category: origine
+  suspicion: neutre
+  creationGrants:
+    customizationPoints: 0
+    freeSkillRanks: 0
+effects:
+  - _id: cdgefvolontedefe
+    name: Volonté de fer
+    img: icons/magic/life/heart-cross-strong-green.webp
+    type: base
+    transfer: true
+    disabled: false
+    description: >-
+      <p>Vous bénéficiez d'un bonus de +1 à tous les tests visant à endurer ou
+      persévérer, dont les tests d'encaissement des blessures.</p>
+    system:
+      changes:
+        - key: system.modifiers.sr
+          type: cdg.situational
+          value: 1
+          phase: initial
+          situation: endurance
+    _key: '!items.effects!cdgtrvolontedefe.cdgefvolontedefe'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrvolontedefe'

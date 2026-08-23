@@ -23,14 +23,46 @@
   --cdg-shield-border: #4a4239;
   --cdg-shield-filled: #3a322c;
 
-  --cdg-font-title: "Modesto Condensed", "Signika", serif;
-  --cdg-font-label: "Signika", sans-serif;
-  --cdg-font-text: "Signika", sans-serif;
+  --cdg-font-title: "darka", serif;
+  --cdg-font-label: "cinzel", sans-serif;
+  --cdg-font-text: "masqualero", sans-serif;
 
   --cdg-radius: 3px;
 }
 
 // Ressources graphiques, référencées une seule fois pour rester faciles à remplacer.
 @cdg-parchment-image: "../ui/parchemin.webp";
-@cdg-banner-image: "../ui/banniere.webp";
 @cdg-battle-image: "../ui/bataille-large.webp";
+
+// Polices de caractère
+@font-face {
+    font-family: 'darka';
+    src: url('../assets/fonts/darka-regular.eot');
+    src: local('darka regular'), local('darka-regular'),
+        url('../assets/fonts/darka-regular.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/darka-regular.woff2') format('woff2'),
+        url('../assets/fonts/darka-regular.woff') format('woff'),
+        url('../assets/fonts/darka-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+  font-family: "masqualero";
+  src: url("../assets/fonts/masqualero.otf") format("truetype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "masqualero";
+  src: url("../assets/fonts/masqualero-black.otf") format("truetype");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "cinzel";
+  src: url("../assets/fonts/cinzel-regular.otf") format("truetype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "cinzel";
+  src: url("../assets/fonts/cinzel-bold.otf") format("truetype");
+  font-weight: bold;
+}

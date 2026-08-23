@@ -31,7 +31,11 @@
         "equipement": "Équipement",
         "arcanums": "Arcanums",
         "biographie": "Biographie",
-        "description": "Description"
+        "description": "Description",
+        "main": "Description",
+        "rank1": "Rang1",
+        "rank2": "Rang2",
+        "rank3": "Rang3"
       }
     },
     "abilities": {
@@ -152,9 +156,100 @@
         "3": "3d20, on garde le meilleur"
       }
     },
+    "difficulties": {
+      "tresFacile": "Très facile",
+      "facile": "Facile",
+      "assezSimple": "Assez simple",
+      "moyenne": "Moyenne",
+      "complication": "Légère complication",
+      "difficile": "Difficile",
+      "tresDifficile": "Très difficile"
+    },
     "success": {
       "weak": "Oui, mais…",
       "standard": "Oui"
+    },
+    "roll": {
+      "title": "Faire un test",
+      "titleFor": "Test — {name}",
+      "pair": "Caractéristique et compétence",
+      "skill": "Compétence",
+      "noSkill": "Aucune compétence pertinente",
+      "modifiers": "Modificateurs",
+      "difficulty": "Difficulté",
+      "freeModifier": "Modificateur",
+      "effort": "Effort",
+      "noEffort": "Aucun",
+      "passion": "Passion",
+      "noPassion": "Aucune",
+      "passionBonus": "Invoquer",
+      "passionMalus": "S'imposer",
+      "tokens": "Jetons :",
+      "dodge": "Esquives déjà tentées",
+      "block": "Bouclier",
+      "wounds": {
+        "legere": "Blessure légère",
+        "grave": "Blessure grave",
+        "mortelle": "Blessure mortelle"
+      },
+      "sr": "Seuil de réussite",
+      "srShort": "SR",
+      "breakdown": "Détail du seuil",
+      "quality": "Qualité",
+      "willChoose": "vous choisirez le dé à conserver.",
+      "willImpose": "le résultat le moins bon sera imposé.",
+      "singleDie": "un seul dé, rien à choisir.",
+      "chooseDie": "Choisissez le dé que vous conservez.",
+      "imposedNote": "Rang 0 : le résultat le moins bon a été imposé.",
+      "pushedNote": "Second jet, obtenu en se dépassant.",
+      "push": "Se dépasser",
+      "effortSpent": "Effort investi :",
+      "launch": "Lancer les dés",
+      "cancel": "Annuler",
+      "outcome": {
+        "criticalSuccess": "Oui, et…",
+        "failure": "Échec",
+        "criticalFailure": "Échec critique"
+      },
+      "status": {
+        "ready": "Prêt à lancer.",
+        "untrained": "Incompétent : deux dés, et le moins bon sera imposé.",
+        "desperate": "Seuil nul ou négatif : seul un 1 réussira, et un {critical} ou plus sera un échec critique.",
+        "assured": "Seuil au-delà de 20 : plus d'échec critique, et {bonus} de qualité en prime."
+      },
+      "hint": {
+        "effort": "Chaque point investi ajoute 3 au seuil et vide d'autant la réserve, après le jet. Une réserve ne peut jamais tomber à zéro volontairement.",
+        "noEffortLeft": "Réserve trop basse : aucun effort possible sans tomber à zéro.",
+        "passionBonus": "Dépenser un jeton pour ajouter le rang du trait au seuil.",
+        "passionMalus": "S'imposer le malus correspondant pour gagner un jeton.",
+        "wound": "Malus de la blessure la plus grave. À décocher sur un test d'encaissement ou de stabilisation.",
+        "arcanum": "Bonus constant d'un arcanum physique lié à cette compétence.",
+        "dodge": "Malus cumulatif des esquives déjà tentées dans le round.",
+        "block": "Bonus de parade du bouclier équipé.",
+        "situational": "Bonus circonstanciel : au meneur de juger s'il s'applique à cette action.",
+        "push": "Relancer tous les dés en consommant 1 point de Corps, de Vivacité et d'Esprit. Le seuil est conservé. Une seule fois par test."
+      },
+      "notif": {
+        "actorMissing": "Le personnage de ce jet est introuvable.",
+        "cannotPush": "Se dépasser exige 1 point dans chaque réserve : {abilities} est déjà au plus bas."
+      }
+    },
+    "origin": {
+      "open": "Ouvrir la fiche",
+      "remove": "Retirer",
+      "notForAdversaire": "Un adversaire n'a ni peuple ni carrière : {type} n'a pas été ajouté.",
+      "alreadyPresent": "{type} déjà défini : {name}. Retirez-le avant d'en déposer un autre.",
+      "applied": "{name} appliqué.",
+      "appliedWith": "{name} appliqué : {details}.",
+      "grantFeatures": "{count} trait(s) spécial(aux)",
+      "grantArcanums": "{count} arcanum(s)",
+      "grantEquipments": "{count} objet(s) d'équipement",
+      "grantLanguages": "{count} langue(s)",
+      "grantSkillRanks": "{count} rang(s) de compétence",
+      "missingGrant": "{name} : {count} élément(s) introuvable(s). Le compendium qui les porte est sans doute absent.",
+      "removeTitle": "Retirer {type}",
+      "removeContent": "<p>Retirer <strong>{name}</strong> et les {count} objet(s) qu'il a accordés ?</p><p class=\"hint\">Les langues apprises et les rangs de compétence resteront : rien ne distingue plus ce qui venait de cette origine de ce que le personnage a gagné depuis.</p>",
+      "removeContentAlone": "<p>Retirer <strong>{name}</strong> ?</p>"
     },
     "rest": {
       "execrables": "Conditions exécrables",
@@ -178,6 +273,38 @@
       "types": {
         "physique": "Physique",
         "mystique": "Mystique"
+      }
+    },
+    "situations": {
+      "charme": "Se montrer charmant",
+      "comedie": "Jouer la comédie ou mentir",
+      "socialTout": "Toute interaction sociale",
+      "arts": "Arts et connaissances académiques",
+      "endurance": "Endurer ou persévérer",
+      "penombre": "Pénombre"
+    },
+    "effect": {
+      "types": {
+        "situational": "Bonus circonstanciel"
+      },
+      "anySituation": "Toute situation",
+      "summary": {
+        "permanent": "{value} à {key}",
+        "situational": "{value} — {situation}"
+      }
+    },
+    "feature": {
+      "categories": {
+        "origine": "Trait d'origine",
+        "carriere": "Don de carrière",
+        "marque": "Marque de l'Oblitéré",
+        "autre": "Autre"
+      },
+      "suspicions": {
+        "favorable": "A priori favorable",
+        "neutre": "Sans incidence",
+        "defavorable": "Soupçonné plus facilement",
+        "hostile": "Identifié comme Marqué"
       }
     },
     "equipment": {
@@ -261,7 +388,14 @@
         "notesPublic": "Notes publiques",
         "notesPrivate": "Notes privées",
         "vice": "Vice",
-        "virtue": "Vertu"
+        "virtue": "Vertu",
+        "effects": "Effets",
+        "featureCategory": "Origine du trait",
+        "featureSuspicion": "Regard des humains",
+        "creationGrants": "Accordé à la création",
+        "customizationPoints": "Points de personnalisation",
+        "freeSkillRanks": "Compétences au rang 1",
+        "situationalModifiers": "Bonus circonstanciels"
       },
       "short": {
         "init": "Init.",
@@ -308,7 +442,17 @@
       "languagesHint": "L'écrit dépend du rang en Érudition : 0 analphabète, 1 sa langue et le stygien avec peine, 2 parfaitement, 3 toutes ses langues parlées.",
       "armorCategoryHint": "Sans un rang de Port d'armures au moins égal à la catégorie, le malus d'initiative est doublé.",
       "passiveArcanumHint": "Bonus constant accordé par cet arcanum :",
-      "mysticArcanumHint": "Activation : consommer les points d'Esprit et réussir un test d'Esprit / Arcanum."
+      "mysticArcanumHint": "Activation : consommer les points d'Esprit et réussir un test d'Esprit / Arcanum.",
+      "createEffect": "Ajouter un effet",
+      "edit": "Modifier",
+      "enableEffect": "Activer l'effet",
+      "disableEffect": "Désactiver l'effet",
+      "noEffect": "Aucun effet.",
+      "noChange": "Aucune modification.",
+      "effectNotTransferred": "Cet effet ne s'applique pas au porteur de l'objet.",
+      "noSituationalModifier": "Aucun bonus circonstanciel.",
+      "situationalHint": "Ces bonus ne s'appliquent pas d'office : le meneur juge si la situation s'y prête.",
+      "lockedByEffect": "Valeur imposée par un effet actif."
     },
     "settings": {
       "debugMode": {
@@ -323,32 +467,66 @@
     "Character": {
       "FIELDS": {
         "identity": {
-          "vraiNom": { "label": "Vrai nom" },
-          "peuple": { "label": "Peuple" },
-          "religion": { "label": "Religion" },
-          "carriere": { "label": "Carrière" },
-          "grade": { "label": "Grade" },
-          "ascendance": { "label": "Ascendance" },
-          "compulsion": { "label": "Compulsion" }
+          "vraiNom": {
+            "label": "Vrai nom"
+          },
+          "peuple": {
+            "label": "Peuple"
+          },
+          "religion": {
+            "label": "Religion"
+          },
+          "carriere": {
+            "label": "Carrière"
+          },
+          "grade": {
+            "label": "Grade"
+          },
+          "ascendance": {
+            "label": "Ascendance"
+          },
+          "compulsion": {
+            "label": "Compulsion"
+          }
         },
         "passion": {
-          "tokens": { "label": "Jetons de passion" }
+          "tokens": {
+            "label": "Jetons de passion"
+          }
         },
-        "specialTraits": { "label": "Traits spéciaux" },
-        "languages": { "label": "Langues maîtrisées" },
+        "specialTraits": {
+          "label": "Traits spéciaux"
+        },
+        "languages": {
+          "label": "Langues maîtrisées"
+        },
         "xp": {
-          "total": { "label": "Expérience gagnée" },
-          "spent": { "label": "Expérience dépensée" }
+          "total": {
+            "label": "Expérience gagnée"
+          },
+          "spent": {
+            "label": "Expérience dépensée"
+          }
         },
         "details": {
-          "size": { "label": "Taille" },
+          "size": {
+            "label": "Taille"
+          },
           "biography": {
-            "public": { "label": "Biographie publique" },
-            "private": { "label": "Biographie privée" }
+            "public": {
+              "label": "Biographie publique"
+            },
+            "private": {
+              "label": "Biographie privée"
+            }
           },
           "notes": {
-            "public": { "label": "Notes publiques" },
-            "private": { "label": "Notes privées" }
+            "public": {
+              "label": "Notes publiques"
+            },
+            "private": {
+              "label": "Notes privées"
+            }
           }
         }
       }
@@ -356,59 +534,133 @@
     "Adversaire": {
       "FIELDS": {
         "details": {
-          "size": { "label": "Taille" },
-          "description": { "label": "Description" },
-          "notes": { "label": "Notes" }
+          "size": {
+            "label": "Taille"
+          },
+          "description": {
+            "label": "Description"
+          },
+          "notes": {
+            "label": "Notes"
+          }
         }
       }
     },
     "Equipment": {
       "FIELDS": {
-        "description": { "label": "Description" },
-        "origin": { "label": "Origine" },
-        "subtype": { "label": "Type" },
-        "equipped": { "label": "Équipé" },
-        "quantity": { "label": "Quantité" },
-        "category": { "label": "Catégorie d'armure" },
-        "blockBonus": { "label": "Bonus de blocage" },
-        "initMalus": { "label": "Malus d'initiative" },
-        "weight": { "label": "Poids" }
+        "description": {
+          "label": "Description"
+        },
+        "subtype": {
+          "label": "Type"
+        },
+        "equipped": {
+          "label": "Équipé"
+        },
+        "quantity": {
+          "label": "Quantité"
+        },
+        "category": {
+          "label": "Catégorie d'armure"
+        },
+        "blockBonus": {
+          "label": "Bonus de blocage"
+        },
+        "initMalus": {
+          "label": "Malus d'initiative"
+        },
+        "weight": {
+          "label": "Poids"
+        }
       }
     },
     "Arcanum": {
       "FIELDS": {
-        "description": { "label": "Description" },
-        "origin": { "label": "Origine" },
-        "arcanumType": { "label": "Nature" },
-        "rank": { "label": "Rang" },
-        "effect": { "label": "Effet" },
-        "linkedSkill": { "label": "Compétence bonifiée" },
-        "espritCost": { "label": "Coût en Esprit" }
+        "description": {
+          "label": "Description"
+        },
+        "arcanumType": {
+          "label": "Nature"
+        },
+        "rank": {
+          "label": "Rang"
+        },
+        "effect": {
+          "label": "Effet"
+        },
+        "linkedSkill": {
+          "label": "Compétence bonifiée"
+        },
+        "espritCost": {
+          "label": "Coût en Esprit"
+        }
       }
     },
     "Feature": {
       "FIELDS": {
-        "description": { "label": "Description" },
-        "origin": { "label": "Origine" }
+        "description": {
+          "label": "Description"
+        },
+        "category": {
+          "label": "Origine du trait"
+        },
+        "suspicion": {
+          "label": "Regard des humains"
+        },
+        "creationGrants": {
+          "customizationPoints": {
+            "label": "Points de personnalisation"
+          },
+          "freeSkillRanks": {
+            "label": "Compétences au rang 1"
+          }
+        }
+      }
+    },
+    "Effect": {
+      "FIELDS": {
+        "changes": {
+          "element": {
+            "situation": {
+              "label": "Situation"
+            }
+          }
+        }
       }
     },
     "Peuple": {
       "FIELDS": {
-        "description": { "label": "Description" },
-        "origin": { "label": "Origine" },
-        "abilityBonus": { "label": "Caractéristique augmentée" },
-        "features": { "label": "Traits accordés" },
-        "languages": { "label": "Langues de départ" }
+        "description": {
+          "label": "Description"
+        },
+        "abilityBonus": {
+          "label": "Caractéristique augmentée"
+        },
+        "features": {
+          "label": "Traits accordés"
+        },
+        "languages": {
+          "label": "Langues de départ"
+        }
       }
     },
     "Carriere": {
       "FIELDS": {
-        "description": { "label": "Description" },
-        "origin": { "label": "Origine" },
-        "abilityBonus": { "label": "Caractéristique augmentée" },
-        "skills": { "label": "Compétences de départ" },
-        "arcanums": { "label": "Arcanums de départ" },
-        "equipments": { "label": "Équipement de départ" }
+        "description": {
+          "label": "Description"
+        },
+        "abilityBonus": {
+          "label": "Caractéristique augmentée"
+        },
+        "skills": {
+          "label": "Compétences de départ"
+        },
+        "arcanums": {
+          "label": "Arcanums de départ"
+        },
+        "equipments": {
+          "label": "Équipement de départ"
+        }
       }
     }
   }

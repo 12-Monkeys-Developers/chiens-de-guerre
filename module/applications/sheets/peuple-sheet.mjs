@@ -11,6 +11,7 @@ export default class CdgPeupleSheet extends CdgBaseItemSheet {
     actions: {
       removeFeature: CdgPeupleSheet.#onRemoveFeature,
       toggleLanguage: CdgPeupleSheet.#onToggleLanguage,
+      editFeature: CdgPeupleSheet.#onEditFeature,
     },
   }
 
@@ -89,5 +90,17 @@ export default class CdgPeupleSheet extends CdgBaseItemSheet {
     else known.add(language)
 
     return this.document.update({ "system.languages": [...known] })
+  }
+
+  /**
+   * Ouvre la fiche d'un objet.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte `data-item-id`.
+   */
+  static async #onEditFeature(event, target) {
+    if (!this.isEditable) return
+    const uuid = target.dataset.uuid;
+    const item = await fromUuid(uuid);
+    return item?.sheet.render(true)
   }
 }

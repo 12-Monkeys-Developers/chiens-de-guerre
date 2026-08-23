@@ -1,3 +1,5 @@
+<section class="tab tab-main{{#if tabs.main.active}} active{{/if}}" data-group="primary" data-tab="main">
+
 <section class="item-body">
 
   <div class="field-line">
@@ -29,13 +31,6 @@
     <p class="hint">{{localize "CDG.ui.mysticArcanumHint"}}</p>
   {{/if}}
 
-  <section class="effect">
-    <h2 class="section-title">{{localize "CDG.label.long.effect"}}</h2>
-    <div class="free-text">
-      {{formInput systemFields.effect value=system.effect enriched=enrichedEffect name="system.effect" toggled=true}}
-    </div>
-  </section>
-
   {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs"}}
-
+</section>
 </section>

@@ -17,7 +17,9 @@
     gap: 0.2rem;
     margin: 0 0.6rem;
     border-bottom: 2px solid var(--cdg-ink);
-
+    .tabName{
+      color: black;
+    }
     > a.item {
       padding: 0.25rem 0.7rem;
       font-family: var(--cdg-font-title);
@@ -32,17 +34,12 @@
         color: var(--cdg-blood);
         text-shadow: none;
       }
-
-      &.active {
-        background: var(--cdg-ink);
-        color: var(--cdg-parchment);
-        border-radius: var(--cdg-radius) var(--cdg-radius) 0 0;
-      }
     }
   }
 
   .tab {
     padding: 0.6rem 0.8rem 1rem;
+    
   }
 
   // Listes d'objets : une ligne par objet, image, nom, puis les valeurs qui comptent.

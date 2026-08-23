@@ -1,5 +1,6 @@
 import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../helpers/utils.mjs"
+import CdgRollDialog from "../roll-dialog.mjs"
 
 const { sheets } = foundry.applications
 const { HandlebarsApplicationMixin } = foundry.applications.api
@@ -45,6 +46,8 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       adjustPool: CdgBaseActorSheet.#onAdjustPool,
       toggleLanguage: CdgBaseActorSheet.#onToggleLanguage,
       rest: CdgBaseActorSheet.#onRest,
+      rollTest: CdgBaseActorSheet.#onRollTest,
+      removeOrigin: CdgBaseActorSheet.#onRemoveOrigin,
     },
   }
 
@@ -138,6 +141,11 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.fields = this.document.schema.fields
     context.systemFields = this.document.system.schema.fields
 
+    // Les chemins pilotés par un effet actif. `overrides` est peuplé par applyActiveEffects : un
+    // champ qui s'y trouve serait réécrit à la préparation suivante, autant l'afficher verrouillé
+    // plutôt que de laisser le joueur saisir une valeur qui ne tiendra pas.
+    context.overrides = foundry.utils.flattenObject(this.document.overrides ?? {})
+
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
     context.viewLimited = this.isLimitedView
@@ -151,7 +159,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
     // Constantes utilisées par les gabarits : rangées d'écussons, listes de choix.
     context.SYSTEM = SYSTEM
-    context.skillColumns = [1, 2, 3].map((column) => Object.values(SYSTEM.SKILLS).filter((skill) => skill.column === column))
+    context.skillColumns = [1, 2].map((column) => Object.values(SYSTEM.SKILLS).filter((skill) => skill.column === column))
     context.woundLevels = Object.values(SYSTEM.WOUND_LEVELS)
     context.choiceSizes = SYSTEM.SIZES
 
@@ -162,6 +170,10 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.gear = this.document.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id)
     context.arcanums = this.document.arcanums
     context.features = this.document.features
+
+    // Peuple et carrière ne sont pas de l'inventaire : ils s'affichent sur leur ligne de l'en-tête.
+    context.peuple = this.document.peuple
+    context.carriere = this.document.carriere
 
     if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
 
@@ -368,6 +380,34 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     return this.document.rest(target.dataset.condition)
   }
 
+  /**
+   * Ouvre la fenêtre de test. Le couple caractéristique / compétence n'est qu'une présélection :
+   * cliquer sur une compétence laisse la caractéristique libre, et inversement.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte, ou est contenu dans, un `data-skill` ou un `data-ability`.
+   */
+  static async #onRollTest(event, target) {
+    return CdgRollDialog.open(this.document, {
+      skillId: target.closest("[data-skill]")?.dataset.skill ?? null,
+      abilityId: target.closest("[data-ability]")?.dataset.ability ?? null,
+    })
+  }
+
+  /**
+   * Retire un peuple ou une carrière, et ce qu'il avait accordé.
+   *
+   * Distinct de `deleteItem`, qui ne supprimerait que l'objet lui-même et laisserait ses traits
+   * orphelins sur la fiche.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte, ou est contenu dans, un `data-item-id`.
+   */
+  static async #onRemoveOrigin(event, target) {
+    if (!this.isEditable) return
+    const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    if (!item) return
+    return this.document.revokeOrigin(item)
+  }
+
   // #endregion
 
   // #region Glisser-déposer
@@ -407,6 +447,9 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
     // Réorganisation interne : l'objet appartient déjà à cet acteur, il n'y a rien à copier.
     if (item.parent?.uuid === this.document.uuid) return
+
+    // Une origine ne se copie pas telle quelle : elle accorde aussi ce qu'elle référence.
+    if (SYSTEM.ORIGIN_TYPES.includes(item.type)) return this.document.grantOrigin(item)
 
     return this.document.createEmbeddedDocuments("Item", [item.toObject()])
   }

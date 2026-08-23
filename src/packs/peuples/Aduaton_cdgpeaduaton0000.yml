@@ -1,0 +1,37 @@
+_id: cdgpeaduaton0000
+name: Aduaton
+type: peuple
+img: icons/environment/people/group.webp
+system:
+  description: >-
+    <p>Le Saint-Empire d'Aduatonnie est une civilisation humaine très avancée et
+    très industrieuse, bâtie sur une société féodale et particulièrement dévote
+    à l'austère religion tyvardique. À l'issue de la guerre, c'est la nation la
+    plus puissante militairement, et elle lorgne sur les terres
+    frontalières.</p>
+  abilityBonus: esprit
+  features:
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrindustrieux
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrcitoyensup0
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrversatilite
+  languages:
+    - stygien
+    - aduatain
+effects:
+  - _id: cdgeaaduaton0000
+    name: Ajustement de caractéristique
+    img: icons/environment/people/group.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _key: '!items.effects!cdgpeaduaton0000.cdgeaaduaton0000'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgpeaduaton0000'

@@ -1,0 +1,20 @@
+_id: cdgtrapostat0000
+name: Apostat
+type: feature
+img: icons/magic/light/explosion-star-glow-silhouette.webp
+system:
+  description: >-
+    <p>Vous êtes automatiquement identifié comme un Marqué. La plupart des
+    peuples vous jugent néanmoins digne de confiance, en raison de votre
+    incapacité à mentir. Les nains restés liés à l'eïpimor vous traquent et
+    cherchent à vous détruire.</p>
+  category: origine
+  suspicion: hostile
+  creationGrants:
+    customizationPoints: 0
+    freeSkillRanks: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrapostat0000'

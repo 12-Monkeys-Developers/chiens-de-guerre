@@ -25,8 +25,14 @@ export default class CdgArcanumData extends CdgItemData {
       max: SYSTEM.ARCANUM_MAX_RANK,
     })
 
-    // Résumé court affiché en face du rang dans le tableau des arcanums de la fiche.
-    schema.effect = new fields.HTMLField()
+    schema.rankData = new fields.SchemaField({
+      name1: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang1" }),
+      effect1: new fields.HTMLField(),
+      name2: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang2" }),
+      effect2: new fields.HTMLField(),
+      name3: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang3" }),
+      effect3: new fields.HTMLField(),
+    })
 
     // Arcanum physique : la compétence bonifiée. Vide si l'arcanum agit sur un aspect du combat qui
     // n'est pas une compétence de la liste, auquel cas `effect` le décrit.

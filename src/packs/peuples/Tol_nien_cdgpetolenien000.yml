@@ -1,0 +1,36 @@
+_id: cdgpetolenien000
+name: Tolènien
+type: peuple
+img: icons/environment/people/group.webp
+system:
+  description: >-
+    <p>Tolène est une nation humaine florissante dont l'unité s'est disloquée à
+    la sortie de la guerre. Elle est désormais morcelée en cités-États qui se
+    font la guerre, en proie aux querelles de succession. On prête aux Tolèniens
+    impétuosité et charme.</p>
+  abilityBonus: vivacite
+  features:
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrtheatral000
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrpartisanhom
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrversatilite
+  languages:
+    - stygien
+    - tolenien
+effects:
+  - _id: cdgeatolenien000
+    name: Ajustement de caractéristique
+    img: icons/environment/people/group.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.vivacite.max
+          type: add
+          value: 1
+          phase: initial
+    _key: '!items.effects!cdgpetolenien000.cdgeatolenien000'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgpetolenien000'

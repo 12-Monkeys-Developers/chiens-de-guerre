@@ -38,6 +38,12 @@ export default class CdgCharacterData extends CdgActorData {
       invokedThisSession: new fields.ArrayField(new fields.StringField()),
     })
 
+    schema.karma = new fields.SchemaField({
+      value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+      vices: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+      virtues: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+    })
+
     schema.combat = new fields.SchemaField({
       initiative: new fields.SchemaField({
         value: new fields.NumberField({ ...requiredInteger, initial: 0 }),

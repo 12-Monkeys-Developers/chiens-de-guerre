@@ -1,0 +1,18 @@
+_id: cdgtrincapmentir
+name: Incapable de mentir
+type: feature
+img: icons/magic/control/silhouette-hold-change-blue.webp
+system:
+  description: >-
+    <p>Vous ne pouvez en aucun cas mentir. Vous pouvez toutefois garder le
+    silence ou éluder une réponse.</p>
+  category: origine
+  suspicion: neutre
+  creationGrants:
+    customizationPoints: 0
+    freeSkillRanks: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrincapmentir'

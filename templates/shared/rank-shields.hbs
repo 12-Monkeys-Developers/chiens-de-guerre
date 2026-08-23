@@ -6,9 +6,9 @@
 <div class="rank-shields" data-tooltip="{{rankTooltip rank}}">
   {{#each (range 1 @root.SYSTEM.MAX_RANK) as |step|}}
     {{#if ../editable}}
-      <a class="shield {{#if (gte ../rank step)}}filled{{/if}}" data-action="setRank" data-target="{{../path}}" data-rank="{{step}}"></a>
+      <a class="shield {{#if (gte ../rank step)}}fa-solid{{else}}fa-light{{/if}} fa-shield" data-action="setRank" data-target="{{../path}}" data-rank="{{step}}"></a>
     {{else}}
-      <span class="shield {{#if (gte ../rank step)}}filled{{/if}}"></span>
+      <a class="shield {{#if (gte ../rank step)}}fa-solid{{else}}fa-light{{/if}} fa-shield"></a>
     {{/if}}
   {{/each}}
 </div>

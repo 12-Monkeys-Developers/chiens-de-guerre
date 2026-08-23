@@ -16,7 +16,24 @@
   ],
   "esmodules": ["cdg.mjs"],
   "styles": ["css/cdg.css"],
-  "packs": [],
+  "packs": [
+    {
+      "name": "peuples",
+      "label": "Peuples",
+      "system": "chiens-de-guerre",
+      "path": "packs/peuples",
+      "type": "Item",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "traits",
+      "label": "Traits spéciaux",
+      "system": "chiens-de-guerre",
+      "path": "packs/traits",
+      "type": "Item",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    }
+  ],
   "languages": [
     {
       "lang": "fr",
@@ -42,13 +59,34 @@
       "carriere": { "htmlFields": ["description"] }
     }
   },
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "hbs", "json"],
+      "paths": ["lang/", "assets/", "templates/", "css/"]
+    }
+  },
   "grid": {
     "distance": 1.5,
-    "units": "m"
+    "units": "m",
+    "type": 0
   },
+  "media": [
+    {
+      "type": "cover",
+      "thumbnail": "systems/chiens-de-guerre/assets/images/logos/thumbnail-cdg.webp",
+      "loop": false,
+      "flags": {}
+    },
+    {
+      "type": "setup",
+      "loop": false,
+      "thumbnail": "systems/chiens-de-guerre/assets/images/logos/thumbnail-cdg.webp",
+      "flags": {}
+    }
+  ],
   "socket": false,
   "initiative": "1d20",
-  "background": "systems/chiens-de-guerre/ui/bataille-panoramique.webp",
+  "background": "systems/chiens-de-guerre/assets/images/logos/thumbnail-cdg.webp",
   "manifest": "#{MANIFEST}#",
   "download": "#{DOWNLOAD}#"
 }

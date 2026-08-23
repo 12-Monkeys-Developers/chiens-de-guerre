@@ -1,0 +1,155 @@
+// Les effets actifs : la liste éditable sur une fiche d'objet, le pense-bête des bonus
+// circonstanciels sur la fiche de personnage, et la ligne de saisie d'un bonus circonstanciel
+// dans la fenêtre de configuration d'un effet.
+
+.cdg {
+  // Un titre de sous-groupe à l'intérieur d'une section : les traits rangés par provenance.
+  // Volontairement discret — le bandeau de section reste le seul repère fort de la fiche.
+  .group-title {
+    margin: 0.6rem 0 0.2rem 0;
+    border: none;
+    font-family: var(--cdg-font-label);
+    font-size: 0.82rem;
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    color: var(--cdg-label);
+    border-bottom: 1px solid var(--cdg-parchment-line);
+  }
+
+  // --- Liste des effets d'un objet -----------------------------------------------------------
+  .effects {
+    .effect-row {
+      align-items: flex-start;
+
+      // Un effet désactivé reste lisible mais visiblement en retrait : le masquer ferait croire
+      // à une suppression.
+      &.disabled {
+        opacity: 0.5;
+      }
+    }
+
+    .effect-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .effect-changes {
+      list-style: none;
+      margin: 0.1rem 0 0 0;
+      padding: 0;
+      font-size: 0.78rem;
+      color: var(--cdg-muted);
+
+      li {
+        line-height: 1.3;
+      }
+    }
+  }
+
+  // --- Pense-bête des bonus circonstanciels --------------------------------------------------
+  .situational-modifiers {
+    .modifier-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .modifier {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      padding: 0.15rem 0;
+      border-bottom: 1px dotted var(--cdg-parchment-line);
+    }
+
+    .modifier-value {
+      flex: 0 0 2.2rem;
+      font-weight: 700;
+      text-align: right;
+      color: var(--cdg-blood);
+    }
+
+    .modifier-label {
+      flex: 0 1 auto;
+      font-family: var(--cdg-font-label);
+      font-variant: small-caps;
+    }
+
+    // La situation est la nuance, pas l'information principale : elle passe au second plan et
+    // cède la place la première quand la fiche se resserre.
+    .modifier-situation {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 0.75rem;
+      font-style: italic;
+      color: var(--cdg-muted);
+      text-align: right;
+    }
+  }
+
+  // --- Le regard porté sur un Marqué ---------------------------------------------------------
+  // Quatre crans, du toléré au traqué. Seuls les crans qui disent quelque chose sont affichés,
+  // d'où l'absence de style « neutre ».
+  .suspicion {
+    flex: 0 0 auto;
+    padding: 0.05rem 0.4rem;
+    border-radius: var(--cdg-radius);
+    font-size: 0.7rem;
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+
+    &.suspicion-favorable {
+      background: var(--cdg-parchment-dark);
+      color: var(--cdg-label);
+    }
+
+    &.suspicion-defavorable {
+      background: var(--cdg-blood-light);
+      color: var(--cdg-parchment);
+    }
+
+    &.suspicion-hostile {
+      background: var(--cdg-blood-dark);
+      color: var(--cdg-parchment);
+    }
+  }
+
+  // Une valeur imposée par un effet : elle occupe la place d'un champ de saisie sans en être un.
+  .overridden {
+    color: var(--cdg-blood);
+    font-style: italic;
+    cursor: help;
+  }
+}
+
+// --- Ligne de saisie d'un bonus circonstanciel ------------------------------------------------
+// La fenêtre de configuration d'un effet appartient au cœur : on ne s'accroche qu'à la ligne que
+// le système dessine lui-même, et on reprend la grille des lignes voisines.
+.active-effect-config .cdg-situational-change {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  .situation {
+    flex: 2 1 0;
+    min-width: 0;
+  }
+
+  .type {
+    flex: 2 1 0;
+    min-width: 0;
+  }
+
+  .value {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .priority {
+    flex: 0 0 4rem;
+  }
+}

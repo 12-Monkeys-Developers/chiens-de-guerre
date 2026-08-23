@@ -1,0 +1,38 @@
+_id: cdgpenaindecendr
+name: Nain de cendres
+type: peuple
+img: icons/environment/people/group.webp
+system:
+  description: >-
+    <p>Les nains de cendres ont trahi leurs pairs en acceptant de commercer avec
+    Tol-Amoth pendant la guerre. En renonçant à leur promesse, ils ont rompu
+    l'eïpimor, l'affinité mystique qui les lie aux leurs, et perdu leur
+    immortalité au profit de l'individualité. Leur physique tient désormais plus
+    de l'ardoise poussiéreuse que du granit, d'où leur surnom.</p>
+  abilityBonus: corps
+  features:
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrvisiontherm
+    - Compendium.chiens-de-guerre.traits.Item.cdgtreximmortel0
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrincapmentir
+    - Compendium.chiens-de-guerre.traits.Item.cdgtrapostat0000
+  languages:
+    - stygien
+    - lithelin
+effects:
+  - _id: cdgeanaindecendr
+    name: Ajustement de caractéristique
+    img: icons/environment/people/group.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.corps.max
+          type: add
+          value: 1
+          phase: initial
+    _key: '!items.effects!cdgpenaindecendr.cdgeanaindecendr'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgpenaindecendr'

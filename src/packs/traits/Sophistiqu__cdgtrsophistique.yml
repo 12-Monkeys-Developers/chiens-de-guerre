@@ -1,0 +1,35 @@
+_id: cdgtrsophistique
+name: Sophistiqué
+type: feature
+img: icons/skills/social/intimidation-impressing.webp
+system:
+  description: >-
+    <p>Vous bénéficiez d'un bonus de +2 à tous les tests visant à vous montrer
+    charmant, charismatique ou socialement habile.</p>
+  category: origine
+  suspicion: neutre
+  creationGrants:
+    customizationPoints: 0
+    freeSkillRanks: 0
+effects:
+  - _id: cdgefsophistique
+    name: Sophistiqué
+    img: icons/skills/social/intimidation-impressing.webp
+    type: base
+    transfer: true
+    disabled: false
+    description: >-
+      <p>Vous bénéficiez d'un bonus de +2 à tous les tests visant à vous montrer
+      charmant, charismatique ou socialement habile.</p>
+    system:
+      changes:
+        - key: system.modifiers.sr
+          type: cdg.situational
+          value: 2
+          phase: initial
+          situation: charme
+    _key: '!items.effects!cdgtrsophistique.cdgefsophistique'
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgtrsophistique'

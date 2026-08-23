@@ -8,6 +8,7 @@ export * as elements from "./module/elements/_module.mjs"
 import * as models from "./module/models/_module.mjs"
 import * as documents from "./module/documents/_module.mjs"
 import * as applications from "./module/applications/_module.mjs"
+import * as dice from "./module/dice/_module.mjs"
 import * as helpers from "./module/helpers/_module.mjs"
 
 Hooks.once("init", function () {
@@ -22,7 +23,22 @@ Hooks.once("init", function () {
     models,
     documents,
     helpers,
+    dice,
+    // Raccourci de macro : `game.system.api.roll(actor)` ouvre la fenêtre de test.
+    roll: (actor, seed) => applications.CdgRollDialog.open(actor, seed),
   }
+
+  // Jets : la carte d'un test est reconstruite à chaque changement, il faut que le message sache
+  // restaurer sa propre classe de jet. On enregistre à la suite, pas en tête : le premier de la
+  // liste devient la classe de jet par défaut de toute la partie, y compris pour un `/r 1d6`.
+  CONFIG.Dice.rolls.push(dice.CdgRoll)
+
+  // Effets actifs. L'enregistrement du type de change doit rester dans `init` : le cœur met en
+  // cache la table des types dès le premier accès, et sa fenêtre de configuration écarte
+  // silencieusement les changes dont le type lui est inconnu.
+  CONFIG.ActiveEffect.documentClass = documents.CdgActiveEffect
+  CONFIG.ActiveEffect.dataModels.base = models.CdgActiveEffectData
+  documents.CdgActiveEffect.registerChangeTypes()
 
   // Acteurs
   CONFIG.Actor.documentClass = documents.CdgActor
@@ -78,3 +94,7 @@ Hooks.once("ready", function () {
 
   console.info(helpers.Utils.log(game.i18n.localize("CDG.notif.ready")))
 })
+
+// Les boutons d'une carte de test — choisir son dé, se dépasser — sont branchés à chaque rendu du
+// message : le chat réécrit son contenu à la moindre mise à jour.
+Hooks.on("renderChatMessageHTML", (message, html) => dice.CdgRoll.activateListeners(message, html))

@@ -1,0 +1,50 @@
+<section class="effects">
+  <h2 class="section-title">
+    {{localize "CDG.label.long.effects"}}
+    {{#if isEditable}}
+      <a class="item-control" data-action="createEffect" data-tooltip="{{localize 'CDG.ui.createEffect'}}">
+        <i class="fas fa-plus"></i>
+      </a>
+    {{/if}}
+  </h2>
+
+  <ul class="item-list">
+    {{#each effects as |effect|}}
+      <li class="item-row effect-row {{#if effect.disabled}}disabled{{/if}}" data-effect-id="{{effect.id}}">
+        <img class="item-img" src="{{effect.img}}" alt="{{effect.name}}" />
+        <div class="effect-body">
+          <span class="item-name">{{effect.name}}</span>
+          <ul class="effect-changes">
+            {{#each effect.changes as |change|}}
+              <li>{{change}}</li>
+            {{else}}
+              <li class="empty">{{localize "CDG.ui.noChange"}}</li>
+            {{/each}}
+          </ul>
+          {{#unless effect.transfer}}
+            <p class="notification warning">{{localize "CDG.ui.effectNotTransferred"}}</p>
+          {{/unless}}
+        </div>
+        {{#if @root.isEditable}}
+          {{#if effect.disabled}}
+            <a class="item-control" data-action="toggleEffect" data-tooltip="{{localize 'CDG.ui.enableEffect'}}">
+              <i class="fas fa-toggle-off"></i>
+            </a>
+          {{else}}
+            <a class="item-control" data-action="toggleEffect" data-tooltip="{{localize 'CDG.ui.disableEffect'}}">
+              <i class="fas fa-toggle-on"></i>
+            </a>
+          {{/if}}
+          <a class="item-control" data-action="editEffect" data-tooltip="{{localize 'CDG.ui.edit'}}">
+            <i class="fas fa-pen-to-square"></i>
+          </a>
+          <a class="item-control" data-action="deleteEffect" data-tooltip="{{localize 'CDG.ui.remove'}}">
+            <i class="fas fa-trash"></i>
+          </a>
+        {{/if}}
+      </li>
+    {{else}}
+      <li class="empty">{{localize "CDG.ui.noEffect"}}</li>
+    {{/each}}
+  </ul>
+</section>
