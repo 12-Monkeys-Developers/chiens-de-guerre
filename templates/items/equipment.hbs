@@ -7,7 +7,26 @@
     </select>
   </div>
 
+  {{#if (or isWeapon isArmor isShield)}}
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.category"}}</label>
+      <select name="system.category">
+        {{selectOptions choiceCategories selected=system.category blank="" localize=true labelAttr="label" valueAttr="id"}}
+      </select>
+    </div>
+  {{/if}}
+
   {{#if isWeapon}}
+    <div class="field-line attack-test-line">
+      <label>{{localize "CDG.label.long.attackTest"}}</label>
+      <select name="system.attack.ability">
+        {{selectOptions choiceAbilities selected=system.attack.ability localize=true labelAttr="label" valueAttr="id"}}
+      </select>
+      <span>/</span>
+      <select name="system.attack.skill">
+        {{selectOptions choiceSkills selected=system.attack.skill localize=true labelAttr="label" valueAttr="id"}}
+      </select>
+    </div>
     <div class="field-line rank-line">
       <label>{{localize "CDG.label.long.damage"}}</label>
       {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
@@ -20,12 +39,6 @@
       <label>{{localize "CDG.label.long.protection"}}</label>
       {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
           path="system.protection.rank" rank=system.protection.rank editable=isEditable}}
-    </div>
-    <div class="field-line">
-      <label>{{localize "CDG.label.long.armorCategory"}}</label>
-      <select name="system.category">
-        {{selectOptions choiceCategories selected=system.category blank="" localize=true labelAttr="label" valueAttr="id"}}
-      </select>
     </div>
     <p class="hint">{{localize "CDG.ui.armorCategoryHint"}}</p>
   {{/if}}
@@ -47,11 +60,6 @@
   <div class="field-line">
     <label>{{localize "CDG.label.long.quantity"}}</label>
     <input type="number" name="system.quantity" value="{{system.quantity}}" min="0" data-dtype="Number" />
-  </div>
-
-  <div class="field-line">
-    <label>{{localize "CDG.label.long.weight"}}</label>
-    <input type="number" name="system.weight" value="{{system.weight}}" min="0" step="0.1" data-dtype="Number" />
   </div>
 
   <div class="field-line price-line">

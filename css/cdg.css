@@ -953,6 +953,11 @@ cdg-toggle-switch[checked] thumb {
 .cdg.item .description {
   margin-bottom: 0.7rem;
 }
+.cdg.roll {
+  --cdg-font-title: var(--cdg-font-text);
+  --cdg-font-label: var(--cdg-font-text);
+  font-family: var(--cdg-font-text);
+}
 .cdg.roll .window-content {
   padding: 0.6rem 0.8rem 0 0.8rem;
   display: flex;
@@ -966,6 +971,17 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.roll section {
   margin: 0;
+}
+.cdg.roll .section-title {
+  background-image: none;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+  color: var(--cdg-ink);
+  font-size: 1.5rem;
+  padding: 0 0 0.2rem;
+  -webkit-text-stroke: 0;
+}
+.cdg.roll .section-title::after {
+  display: none;
 }
 .cdg.roll .ability-choice {
   display: flex;
@@ -983,7 +999,7 @@ cdg-toggle-switch[checked] thumb {
   flex-direction: column;
   align-items: center;
   gap: 0.1rem;
-  padding: 0.35rem 0.2rem;
+  padding: 0.5rem 0.2rem;
   background: transparent;
   border: 1px solid var(--cdg-parchment-line);
   border-radius: var(--cdg-radius);
@@ -1107,10 +1123,6 @@ cdg-toggle-switch[checked] thumb {
   color: var(--cdg-muted);
   border-style: dotted;
 }
-.cdg.roll .auto-modifiers .off .toggle .label,
-.cdg.roll .auto-modifiers .off .toggle .value {
-  text-decoration: line-through;
-}
 .cdg.roll .roll-summary {
   border-top: 2px solid var(--cdg-ink);
   padding-top: 0.4rem;
@@ -1210,6 +1222,8 @@ cdg-toggle-switch[checked] thumb {
   box-shadow: none;
 }
 .cdg-roll-card {
+  --cdg-font-title: var(--cdg-font-text);
+  --cdg-font-label: var(--cdg-font-text);
   font-family: var(--cdg-font-text);
   color: var(--cdg-text);
 }

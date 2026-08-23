@@ -47,6 +47,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       toggleLanguage: CdgBaseActorSheet.#onToggleLanguage,
       rest: CdgBaseActorSheet.#onRest,
       rollTest: CdgBaseActorSheet.#onRollTest,
+      rollWeapon: CdgBaseActorSheet.#onRollWeapon,
       removeOrigin: CdgBaseActorSheet.#onRemoveOrigin,
     },
   }
@@ -389,6 +390,20 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     return CdgRollDialog.open(this.document, {
       skillId: target.closest("[data-skill]")?.dataset.skill ?? null,
       abilityId: target.closest("[data-ability]")?.dataset.ability ?? null,
+    })
+  }
+
+  /**
+   * Ouvre le test d'attaque associé à une arme.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte, ou est contenu dans, un `data-item-id`.
+   */
+  static async #onRollWeapon(event, target) {
+    const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    if (!weapon?.system.isWeapon) return
+    return CdgRollDialog.open(this.document, {
+      abilityId: weapon.system.attack.ability,
+      skillId: weapon.system.attack.skill,
     })
   }
 

@@ -106,10 +106,24 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     const id = `cdg-roll-${actor.uuid.replaceAll(".", "-")}`
     const existing = foundry.applications.instances.get(id)
     if (existing) {
+      existing.#applySeed(seed)
       existing.bringToFront()
+      existing.render()
       return existing
     }
     return new this(actor, seed, { id }).render({ force: true })
+  }
+
+  /**
+   * Remplace la présélection d'une fenêtre déjà ouverte, notamment lors du choix d'une arme.
+   * @param {Object} seed Présélection : `abilityId`, `skillId`.
+   */
+  #applySeed(seed) {
+    const skillId = seed.skillId ?? ""
+    if (!skillId || SYSTEM.SKILLS[skillId]) this.#draft.skillId = skillId
+
+    const abilityId = seed.abilityId ?? SYSTEM.SKILL_DEFAULT_ABILITY[skillId]
+    if (SYSTEM.ABILITIES[abilityId]) this.#draft.abilityId = abilityId
   }
 
   /** @override */

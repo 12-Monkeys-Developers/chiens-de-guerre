@@ -308,9 +308,24 @@
         "misc": "Divers"
       },
       "armorCategories": {
+        "aucune": "Aucune armure",
         "legere": "Légère",
         "moyenne": "Moyenne",
         "lourde": "Lourde"
+      },
+      "shieldCategories": {
+        "legere": "Légère",
+        "lourde": "Lourde"
+      },
+      "weaponCategories": {
+        "naturelle": "Arme naturelle",
+        "legere": "Arme légère",
+        "moyenne": "Arme moyenne",
+        "lourde": "Arme lourde",
+        "projectileImprovise": "Projectile improvisé",
+        "tirLegere": "Arme de tir légère",
+        "tirMoyenne": "Arme de tir moyenne",
+        "tirLourde": "Arme de tir lourde"
       }
     },
     "label": {
@@ -344,10 +359,11 @@
         "weapons": "Armes",
         "protections": "Protections",
         "damage": "Dégâts",
+        "attackTest": "Test d'attaque",
         "protection": "Protection",
         "blockBonus": "Bonus de blocage",
         "initMalus": "Malus d'initiative",
-        "armorCategory": "Catégorie",
+        "category": "Catégorie",
         "equipment": "Équipement",
         "purse": "Bourse",
         "rest": "Repos",
@@ -370,7 +386,6 @@
         "xpSpent": "Dépensée",
         "xpAvailable": "Disponible",
         "quantity": "Quantité",
-        "weight": "Poids",
         "price": "Prix",
         "subtype": "Type",
         "description": "Description",
@@ -401,6 +416,7 @@
       "deleteItemContent": "Supprimer définitivement <strong>{name}</strong> ?",
       "toggleEquipped": "Équiper ou déséquiper",
       "addWeapon": "Ajouter une arme",
+      "attackWithWeapon": "Effectuer le test d'attaque",
       "addArmor": "Ajouter une armure",
       "addShield": "Ajouter un bouclier",
       "addGear": "Ajouter un objet",
@@ -531,17 +547,22 @@
         "quantity": {
           "label": "Quantité"
         },
+        "attack": {
+          "ability": {
+            "label": "Caractéristique d'attaque"
+          },
+          "skill": {
+            "label": "Compétence d'attaque"
+          }
+        },
         "category": {
-          "label": "Catégorie d'armure"
+          "label": "Catégorie"
         },
         "blockBonus": {
           "label": "Bonus de blocage"
         },
         "initMalus": {
           "label": "Malus d'initiative"
-        },
-        "weight": {
-          "label": "Poids"
         }
       }
     },

@@ -28,7 +28,9 @@ export default class CdgEquipmentSheet extends CdgBaseItemSheet {
     context.isShield = this.document.system.isShield
 
     context.choiceSubtypes = SYSTEM.EQUIPMENT_SUBTYPES
-    context.choiceCategories = SYSTEM.ARMOR_CATEGORIES
+    context.choiceCategories = SYSTEM.EQUIPMENT_CATEGORIES[this.document.system.subtype] ?? {}
+    context.choiceAbilities = Object.values(SYSTEM.ABILITIES)
+    context.choiceSkills = Object.values(SYSTEM.SKILLS)
     context.currencies = Object.values(SYSTEM.CURRENCIES)
 
     return context

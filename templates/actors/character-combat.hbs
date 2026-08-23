@@ -82,6 +82,9 @@
           <li class="item-row draggable" data-item-id="{{weapon.id}}">
             <img class="item-img" src="{{weapon.img}}" data-action="editItem" />
             <span class="item-name" data-action="editItem">{{weapon.name}}</span>
+            <a class="item-control weapon-attack" data-action="rollWeapon" data-tooltip="{{localize 'CDG.ui.attackWithWeapon'}}">
+              <i class="fas {{#if weapon.system.isRangedWeapon}}fa-bow-arrow{{else}}fa-sword{{/if}}"></i>
+            </a>
             <span class="item-label">{{localize "CDG.label.long.damage"}}</span>
             {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
                 rank=weapon.system.damage.rank editable=false}}

@@ -25,10 +25,18 @@ export default class CdgEquipmentData extends CdgItemData {
     // Arme : les dégâts sont un rang de 0 à 3, comme une compétence — ce sont les dés opposés lors
     // de la résolution des dommages.
     schema.damage = new fields.EmbeddedDataField(RankValue, { nullable: false })
+    schema.attack = new fields.SchemaField({
+      ability: new fields.StringField({ required: true, blank: false, initial: "vivacite", choices: Object.keys(SYSTEM.ABILITIES) }),
+      skill: new fields.StringField({ required: true, blank: false, initial: "melee", choices: Object.keys(SYSTEM.SKILLS) }),
+    })
 
-    // Armure : protection en rangs, catégorie (qui fixe le rang de Port d'armures exigé).
+    // La catégorie dépend du sous-type. Pour une armure, elle fixe aussi le rang de Port d'armures
+    // exigé ; celles des armes et boucliers sont descriptives à ce stade.
+    const categoryIds = [...new Set(Object.values(SYSTEM.EQUIPMENT_CATEGORIES).flatMap((categories) => Object.keys(categories)))]
+    schema.category = new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...categoryIds] })
+
+    // Armure : protection en rangs.
     schema.protection = new fields.EmbeddedDataField(RankValue, { nullable: false })
-    schema.category = new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...Object.keys(SYSTEM.ARMOR_CATEGORIES)] })
 
     // Bouclier : bonus aux tests de parade.
     schema.blockBonus = new fields.NumberField({ ...requiredInteger, initial: 0 })
@@ -36,7 +44,6 @@ export default class CdgEquipmentData extends CdgItemData {
     // Armure comme bouclier ralentissent : malus saisi en négatif, tel qu'il est imprimé.
     schema.initMalus = new fields.NumberField({ ...requiredInteger, initial: 0, max: 0 })
 
-    schema.weight = new fields.NumberField({ required: true, nullable: false, initial: 0, min: 0 })
     schema.price = new fields.SchemaField(
       Object.values(SYSTEM.CURRENCIES).reduce((obj, currency) => {
         obj[currency.id] = new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 })
@@ -49,6 +56,10 @@ export default class CdgEquipmentData extends CdgItemData {
 
   get isWeapon() {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id
+  }
+
+  get isRangedWeapon() {
+    return this.isWeapon && (SYSTEM.WEAPON_CATEGORIES[this.category]?.ranged ?? false)
   }
 
   get isArmor() {
