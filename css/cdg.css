@@ -628,9 +628,10 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.actor .karma-block {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 0.5rem 1rem;
   padding: 0.5rem;
   border-top: 1px solid var(--cdg-parchment-line);
   border-bottom: 1px solid var(--cdg-parchment-line);
@@ -656,7 +657,7 @@ cdg-toggle-switch[checked] thumb {
   color: var(--cdg-blood-light);
 }
 .cdg.actor .passion-block {
-  margin-top: 0.6rem;
+  margin: 0.4rem 0 0.8rem;
   text-align: center;
 }
 .cdg.actor .passion-block .tokens {
@@ -665,10 +666,22 @@ cdg-toggle-switch[checked] thumb {
   justify-content: center;
   gap: 0.4rem;
 }
+.cdg.actor .passion-block .tokens > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.4rem;
+  line-height: 1;
+}
 .cdg.actor .passion-block .token-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--cdg-font-title);
   font-size: 1.4rem;
   color: var(--cdg-blood);
+  height: 1.4rem;
+  line-height: 1;
   min-width: 2rem;
 }
 .cdg.actor .passion-block .clear-invoked {

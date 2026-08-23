@@ -18,8 +18,18 @@
         {{/each}}
       </div>
     </div>
-    <div clas="section-traits" style="width:fit-content;">
-    <h2 class="section-title section-title-right">{{localize "CDG.label.long.traits"}}</h2>
+    <div class="section-traits" style="width:fit-content;">
+      <h2 class="section-title section-title-right">{{localize "CDG.label.long.traits"}}</h2>
+
+      <div class="passion-block">
+        <h3 data-tooltip="{{localize 'CDG.ui.passionHint'}}" data-tooltip-direction="UP">{{localize "CDG.label.long.passion"}}</h3>
+        <div class="tokens">
+          <a data-action="adjustPassion" data-delta="-1" data-tooltip="{{localize 'CDG.ui.spendPassion'}}"><i class="fas fa-minus"></i></a>
+          <span class="token-count">{{passion.tokens}}</span>
+          <a data-action="adjustPassion" data-delta="1" data-tooltip="{{localize 'CDG.ui.gainPassion'}}"><i class="fas fa-plus"></i></a>
+        </div>
+        <a class="clear-invoked" data-action="clearInvokedTraits">{{localize "CDG.ui.clearInvokedTraits"}}</a>
+      </div>
 
       <ul class="trait-pairs">
         {{#each traitPairs as |pair|}}
@@ -56,6 +66,21 @@
           </li>
         {{/each}}
       </ul>
+
+      <div class="karma-block">
+        <div class="totals">
+          <span class="total vices">{{localize "CDG.label.long.vicesTotal"}} <strong>{{karma.vices}}</strong></span>
+          <span class="total virtues">{{localize "CDG.label.long.virtuesTotal"}} <strong>{{karma.virtues}}</strong></span>
+        </div>
+        <div class="karma">
+          <label>{{localize "CDG.label.long.karma"}}</label>
+          <strong>{{signed karma.value}}</strong>
+        </div>
+        <div class="allegiance allegiance-{{karma.allegiance}}">
+          <label>{{localize "CDG.label.long.allegiance"}}</label>
+          <strong>{{localize karma.allegianceLabel}}</strong>
+        </div>
+      </div>
     </div>
   </div>
 </section>
