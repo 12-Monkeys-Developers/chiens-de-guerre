@@ -445,6 +445,10 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     const item = await Item.implementation.fromDropData(data)
     if (!item) return
 
+    // Le choix du peuple appartient à la création du personnage : contrairement aux objets
+    // manipulés en cours de partie, il ne peut être modifié qu'en mode édition.
+    if (item.type === SYSTEM.ITEM_TYPE.peuple && !this.isEditMode) return
+
     // Réorganisation interne : l'objet appartient déjà à cet acteur, il n'y a rien à copier.
     if (item.parent?.uuid === this.document.uuid) return
 

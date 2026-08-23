@@ -75,7 +75,7 @@
       {{/if}}
     </div>
 
-    <div class="field-line grade-line">
+    <div class="field-line">
       <label>{{localize "CDG.label.long.grade"}}</label>
       {{#if unlocked}}
         <select name="system.identity.grade">
@@ -84,7 +84,6 @@
       {{else}}
         <span class="value">{{#if identity.grade}}{{localize (concat "CDG.grades." identity.grade)}}{{/if}}</span>
       {{/if}}
-      <span class="pay" data-tooltip="{{localize 'CDG.label.long.solde'}}">{{identity.pay}} {{localize "CDG.currency.ducatShort"}}/{{localize "CDG.label.short.month"}}</span>
     </div>
 
     <div class="field-line">

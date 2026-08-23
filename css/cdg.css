@@ -456,12 +456,6 @@ cdg-toggle-switch[checked] thumb {
   font-family: var(--cdg-font-title);
   font-size: 1.15rem;
 }
-.cdg.actor .identity .grade-line .pay {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--cdg-blood);
-  white-space: nowrap;
-}
 .cdg.actor .abilities .ability-list {
   list-style: none;
   margin: 0;
