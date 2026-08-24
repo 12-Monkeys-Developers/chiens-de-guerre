@@ -31,8 +31,11 @@ export default class CdgCarriereSheet extends CdgBaseItemSheet {
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSkills = SYSTEM.SKILLS
 
-    const arcanums = await Promise.all(this.document.system.arcanums.map((uuid) => fromUuid(uuid)))
-    const equipments = await Promise.all(this.document.system.equipments.map((uuid) => fromUuid(uuid)))
+    const embedded = this.document.parent?.documentName === "Actor"
+    const arcanums = embedded ? this.document.system.arcanums.map((uuid) => fromUuidSync(uuid)) : await Promise.all(this.document.system.arcanums.map((uuid) => fromUuid(uuid)))
+    const equipments = embedded
+      ? this.document.system.equipments.map((uuid) => fromUuidSync(uuid))
+      : await Promise.all(this.document.system.equipments.map((uuid) => fromUuid(uuid)))
     context.arcanums = arcanums.filter((item) => item)
     context.equipments = equipments.filter((item) => item)
 

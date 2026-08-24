@@ -33,7 +33,10 @@ export default class CdgPeupleSheet extends CdgBaseItemSheet {
 
     // Les traits sont référencés par UUID : on les résout pour afficher nom et image. Un trait
     // supprimé du monde laisse une entrée vide, filtrée ici plutôt que de casser l'affichage.
-    const features = await Promise.all(this.document.system.features.map((uuid) => fromUuid(uuid)))
+    const features =
+      this.document.parent?.documentName === "Actor"
+        ? this.document.system.features.map((uuid) => fromUuidSync(uuid))
+        : await Promise.all(this.document.system.features.map((uuid) => fromUuid(uuid)))
     context.features = features.filter((feature) => feature)
 
     return context
@@ -98,9 +101,8 @@ export default class CdgPeupleSheet extends CdgBaseItemSheet {
    * @param {HTMLElement} target Porte `data-item-id`.
    */
   static async #onEditFeature(event, target) {
-    if (!this.isEditable) return
-    const uuid = target.dataset.uuid;
-    const item = await fromUuid(uuid);
+    const uuid = target.dataset.uuid
+    const item = this.document.parent?.documentName === "Actor" ? fromUuidSync(uuid) : await fromUuid(uuid)
     return item?.sheet.render(true)
   }
 }

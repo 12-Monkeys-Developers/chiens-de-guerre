@@ -96,9 +96,11 @@ export default class CdgActor extends Actor {
 
     const details = []
     const created = []
+    const createdFields = []
     let missing = 0
 
-    for (const group of CdgActor.#grantGroups(item)) {
+    const groups = CdgActor.#grantGroups(item)
+    for (const group of groups) {
       let count = 0
       for (const uuid of group.uuids) {
         const granted = await fromUuid(uuid)
@@ -109,11 +111,19 @@ export default class CdgActor extends Actor {
         const data = granted.toObject()
         foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.${CdgActor.GRANT_FLAG}`, origin.id)
         created.push(data)
+        createdFields.push(group.field)
         count++
       }
       if (count > 0) details.push(game.i18n.format(group.label, { count }))
     }
-    if (created.length > 0) await this.createEmbeddedDocuments("Item", created)
+    const embedded = created.length > 0 ? await this.createEmbeddedDocuments("Item", created) : []
+
+    // La copie de l'origine doit désormais référencer les objets qui viennent d'être embarqués,
+    // jamais leurs modèles du monde ou du compendium. L'ordre de createEmbeddedDocuments est celui
+    // des données reçues, ce qui permet de reconstruire chaque tableau sans recherche fragile.
+    const embeddedByField = Object.fromEntries(groups.map((group) => [group.field, []]))
+    embedded.forEach((document, index) => embeddedByField[createdFields[index]].push(document.uuid))
+    await origin.update(Object.fromEntries(Object.entries(embeddedByField).map(([field, uuids]) => [`system.${field}`, uuids])))
 
     const updates = item.type === SYSTEM.ITEM_TYPE.peuple ? this.#grantLanguages(item, details) : this.#grantSkillRanks(item, details)
     if (!foundry.utils.isEmpty(updates)) await this.update(updates)
@@ -130,13 +140,13 @@ export default class CdgActor extends Actor {
   /**
    * Ce qu'une origine accorde, groupé pour pouvoir en rendre compte au joueur.
    * @param {CdgItem} item
-   * @returns {{uuids: string[], label: string}[]}
+   * @returns {{field: string, uuids: string[], label: string}[]}
    */
   static #grantGroups(item) {
-    if (item.type === SYSTEM.ITEM_TYPE.peuple) return [{ uuids: item.system.features, label: "CDG.origin.grantFeatures" }]
+    if (item.type === SYSTEM.ITEM_TYPE.peuple) return [{ field: "features", uuids: item.system.features, label: "CDG.origin.grantFeatures" }]
     return [
-      { uuids: item.system.arcanums, label: "CDG.origin.grantArcanums" },
-      { uuids: item.system.equipments, label: "CDG.origin.grantEquipments" },
+      { field: "arcanums", uuids: item.system.arcanums, label: "CDG.origin.grantArcanums" },
+      { field: "equipments", uuids: item.system.equipments, label: "CDG.origin.grantEquipments" },
     ]
   }
 
