@@ -1,0 +1,57 @@
+<div class="roll-body initiative-body">
+  <section class="roll-section pair-section">
+    <h2>{{localize "CDG.combat.initiative.title"}}</h2>
+    <div class="initiative-pair">
+      <strong>{{localize "CDG.abilities.long.vivacite"}}</strong>
+      <span>+</span>
+      <strong>{{initiativeSkillLabel}}</strong>
+      <span class="rank">{{rankName}} — {{rankEntry.formula}}</span>
+    </div>
+  </section>
+
+  <section class="roll-section">
+    <h2>{{localize "CDG.roll.modifiers"}}</h2>
+    <div class="effort-row">
+      <label>{{localize "CDG.roll.effort"}}</label>
+      <div class="effort-steps">
+        {{#each effortSteps as |step|}}
+          <button type="button" data-action="setEffort" data-value="{{step.value}}" class="effort-step {{#if step.selected}}selected{{/if}}" {{disabled step.disabled}}>
+            {{step.value}}{{#if step.value}} (+{{step.bonus}}){{/if}}
+          </button>
+        {{/each}}
+      </div>
+    </div>
+
+    {{#if passion.available}}
+      <div class="form-group">
+        <label class="passion-token-label"><span>{{localize "CDG.roll.passion"}}</span><span>({{passion.tokens}})</span></label>
+        <select name="passionPairId">
+          <option value="">{{localize "CDG.roll.noPassion"}}</option>
+          {{#each passion.choices as |choice|}}
+            <option value="{{choice.id}}" {{#if (eq choice.id @root.draft.passionPairId)}}selected{{/if}}>{{choice.label}} ({{choice.value}})</option>
+          {{/each}}
+        </select>
+        <div class="passion-modes">
+          <button type="button" data-action="setPassionMode" data-mode="bonus" class="passion-mode {{#if (eq passion.mode 'bonus')}}selected{{/if}}" {{disabled (not passion.canSpend)}}>{{localize "CDG.roll.passionBonus"}}</button>
+          <button type="button" data-action="setPassionMode" data-mode="malus" class="passion-mode {{#if (eq passion.mode 'malus')}}selected{{/if}}">{{localize "CDG.roll.passionMalus"}}</button>
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="initiative-toggles">
+      {{#if hasWound}}<label><input type="checkbox" name="wound" {{checked draft.wound}}> {{localize "CDG.combat.initiative.wounds"}} ({{woundValue}})</label>{{/if}}
+      {{#if hasEquipment}}<label><input type="checkbox" name="equipment" {{checked draft.equipment}}> {{localize "CDG.combat.initiative.equipment"}} ({{equipmentValue}})</label>{{/if}}
+      {{#if hasDualWield}}<label><input type="checkbox" name="dualWield" {{checked draft.dualWield}}> {{localize "CDG.combat.initiative.dualWield"}} (+{{dualWieldValue}})</label>{{/if}}
+    </div>
+
+    <div class="form-group">
+      <label>{{localize "CDG.roll.freeModifier"}}</label>
+      <input type="number" name="modifier" value="{{draft.modifier}}">
+    </div>
+  </section>
+
+  <section class="initiative-preview">
+    <ul>{{#each parts as |part|}}<li><span>{{part.label}}</span><strong>{{signed part.value}}</strong></li>{{/each}}</ul>
+    <p>{{rankEntry.formula}} + <strong>{{fixedTotal}}</strong></p>
+  </section>
+</div>

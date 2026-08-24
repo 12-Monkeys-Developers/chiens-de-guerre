@@ -3,13 +3,9 @@
   <div class="combat-top">
     <div class="initiative-block">
       <h2 class="section-title">{{localize "CDG.label.long.initiative"}}</h2>
-      <div class="init-score">
-        <label>{{localize "CDG.label.long.initiativeValue"}}</label>
-        <input type="number" name="system.combat.initiative.value" value="{{combat.initiative.value}}" data-dtype="Number" />
-      </div>
       <div class="init-modifier">
         <label>{{localize "CDG.label.long.initiativeModifier"}}</label>
-        <span class="value">{{signed combat.initiative.modifier}}</span>
+        <span class="value" data-tooltip-html="{{initiativeModifierTooltip}}">{{signed combat.initiative.modifier}}</span>
       </div>
       <div class="init-bonus">
         <label>{{localize "CDG.label.long.initiativeBonus"}}</label>
@@ -19,6 +15,10 @@
 
     <div class="dodge-block">
       <h2 class="section-title">{{localize "CDG.label.long.dodgesUsed"}}</h2>
+      <div class="combat-quick-actions">
+        <button type="button" data-action="rollDefense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button>
+        <button type="button" data-action="rollDefense" data-defense="parry"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}</button>
+      </div>
       <div class="dodge-track">
         {{#each SYSTEM.DODGE_MALUS as |malus index|}}
           <a class="dodge-step {{#if (gte @root.combat.dodgesUsed index)}}used{{/if}}"
@@ -58,17 +58,21 @@
   <section class="weapons">
     <h2 class="section-title">
       {{localize "CDG.label.long.weapons"}}
+      <a class="item-control" data-action="rollSoak" data-tooltip="{{localize 'CDG.combat.soakTest'}}"><i class="fa-solid fa-helmet-battle"></i></a>
       {{#if isEditable}}
         <a class="create" data-action="createItem" data-type="equipment" data-subtype="weapon"><i class="fas fa-plus"></i></a>
       {{/if}}
     </h2>
     <ul class="item-list">
       {{#each weapons as |weapon|}}
-        <li class="item-row draggable" data-item-id="{{weapon.id}}">
+        <li class="item-row draggable {{#if weapon.system.equipped}}equipped{{/if}}" data-item-id="{{weapon.id}}">
+          <a class="equip-toggle" data-action="toggleEquipped" data-tooltip="{{localize 'CDG.combat.weapon.toggleHeld'}}"><i class="fas {{#if weapon.system.equipped}}fa-hand-fist{{else}}fa-hand{{/if}}"></i></a>
           <img class="item-img" src="{{weapon.img}}" data-action="editItem" />
-          <span class="item-name" data-action="rollWeapon" data-tooltip="{{localize 'CDG.ui.attackWithWeapon'}}">{{weapon.name}}</span>
+          <span class="item-name" data-action="editItem">{{weapon.name}}</span>
+          <a class="item-control weapon-attack" data-action="rollWeapon" data-tooltip="{{localize 'CDG.ui.attackWithWeapon'}}"><i class="fas {{#if weapon.system.isRangedWeapon}}fa-bow-arrow{{else}}fa-sword{{/if}}"></i></a>
           <span class="item-label">{{localize "CDG.label.long.damage"}}</span>
           {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=weapon.system.damage.rank editable=false}}
+          <a class="item-control" data-action="rollDamage" data-tooltip="{{localize 'CDG.combat.damageTest'}}"><i class="fa-solid fa-burst"></i></a>
           {{#if @root.isEditable}}
             <a class="item-control" data-action="deleteItem"><i class="fas fa-trash"></i></a>
           {{/if}}

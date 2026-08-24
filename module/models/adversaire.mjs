@@ -18,10 +18,9 @@ export default class CdgAdversaireData extends CdgActorData {
 
     schema.combat = new fields.SchemaField({
       initiative: new fields.SchemaField({
-        value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
         bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
       }),
-      dodgesUsed: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0, max: SYSTEM.MAX_TRACKED_DODGES }),
+      dodgesUsed: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
       parryUsed: new fields.BooleanField({ required: true, initial: false }),
     })
 
@@ -61,8 +60,7 @@ export default class CdgAdversaireData extends CdgActorData {
   prepareDerivedData() {
     super.prepareDerivedData()
 
-    const used = Math.min(this.combat.dodgesUsed, SYSTEM.MAX_TRACKED_DODGES)
-    this.combat.dodgeMalus = SYSTEM.DODGE_MALUS[used]
+    this.combat.dodgeMalus = -2 * this.combat.dodgesUsed
     this.combat.canParry = !this.combat.parryUsed
 
     // Pas de règle de port d'armures ici : un adversaire porte ce que le MJ lui donne.

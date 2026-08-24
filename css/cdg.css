@@ -697,7 +697,6 @@ cdg-toggle-switch[checked] thumb {
   gap: 0.8rem;
   margin-bottom: 0.8rem;
 }
-.cdg.actor .initiative-block .init-score,
 .cdg.actor .initiative-block .init-modifier,
 .cdg.actor .initiative-block .init-bonus {
   display: flex;
@@ -709,6 +708,16 @@ cdg-toggle-switch[checked] thumb {
   font-family: var(--cdg-font-title);
   font-size: 1.1rem;
   color: var(--cdg-blood);
+}
+.cdg.actor .combat-quick-actions {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 0.35rem;
+}
+.cdg.actor .combat-quick-actions button {
+  flex: 1;
+  padding: 0.2rem 0.35rem;
+  font-size: 0.75rem;
 }
 .cdg.actor .dodge-track {
   display: flex;
@@ -1221,6 +1230,52 @@ cdg-toggle-switch[checked] thumb {
   background: var(--cdg-blood-light);
   box-shadow: none;
 }
+.cdg.initiative-roll .initiative-pair {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.cdg.initiative-roll .initiative-pair .rank {
+  margin-left: auto;
+  color: var(--cdg-muted);
+}
+.cdg.initiative-roll .effort-row,
+.cdg.initiative-roll .form-group,
+.cdg.initiative-roll .initiative-toggles label,
+.cdg.initiative-roll .initiative-preview li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+.cdg.initiative-roll .initiative-toggles {
+  margin: 0.4rem 0;
+  display: grid;
+  gap: 0.2rem;
+}
+.cdg.initiative-roll .passion-token-label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  white-space: nowrap;
+}
+.cdg.initiative-roll .initiative-preview {
+  border-top: 2px solid var(--cdg-ink);
+}
+.cdg.initiative-roll .initiative-preview ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.35rem 0;
+}
+.cdg.initiative-roll .initiative-preview p {
+  margin: 0;
+  text-align: right;
+  font-size: 1.15rem;
+}
+.cdg.initiative-card h3 {
+  font-family: var(--cdg-font-text);
+}
 .cdg-roll-card {
   --cdg-font-title: var(--cdg-font-text);
   --cdg-font-label: var(--cdg-font-text);
@@ -1500,6 +1555,89 @@ cdg-toggle-switch[checked] thumb {
 }
 .active-effect-config .cdg-situational-change .priority {
   flex: 0 0 4rem;
+}
+.cdg-combat-tracker {
+  --cdg-tracker-accent: #7f1717;
+}
+.cdg-combat-tracker .cdg-combat-mode {
+  padding: 0.35rem 0.5rem;
+  border-top: 1px solid var(--color-border-dark-4);
+  border-bottom: 1px solid var(--color-border-dark-4);
+  background: rgba(0, 0, 0, 0.12);
+}
+.cdg-combat-tracker .mode-buttons,
+.cdg-combat-tracker .duel-settings {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.cdg-combat-tracker .mode-buttons button {
+  flex: 1;
+  padding: 0.2rem;
+}
+.cdg-combat-tracker .mode-buttons button.active {
+  color: white;
+  background: var(--cdg-tracker-accent);
+  border-color: #4f0909;
+}
+.cdg-combat-tracker .duel-settings {
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+  font-size: var(--font-size-12);
+}
+.cdg-combat-tracker .duel-settings select {
+  width: auto;
+  min-width: 5rem;
+}
+.cdg-combat-tracker .duel-settings label {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.cdg-combat-tracker .cdg-tracker-warning {
+  margin: 0.3rem 0 0;
+  color: var(--color-text-emphatic);
+  font-size: var(--font-size-12);
+}
+.cdg-combat-tracker .combatant .token-name {
+  min-width: 0;
+}
+.cdg-combat-tracker .combatant .cdg-role-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: var(--font-size-11);
+}
+.cdg-combat-tracker .combatant .role {
+  padding: 0.05rem 0.3rem;
+  border-radius: 0.2rem;
+}
+.cdg-combat-tracker .combatant .role.attacker {
+  color: white;
+  background: var(--cdg-tracker-accent);
+}
+.cdg-combat-tracker .combatant .role.defender {
+  border: 1px solid currentcolor;
+}
+.cdg-combat-tracker .combatant .remaining {
+  opacity: 0.75;
+}
+.cdg-combat-tracker .duel-touches {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+.cdg-combat-tracker .duel-touches button {
+  width: 1.25rem;
+  min-height: 1.25rem;
+  padding: 0;
+  line-height: 1;
+}
+.cdg-combat-tracker .combat-controls .cdg-next,
+.cdg-combat-tracker .combat-controls .cdg-end-combat {
+  flex: 1 1 50%;
+  min-width: 0;
 }
 #pause > img {
   content: url("../assets/ui/images/epee-crane.webp");

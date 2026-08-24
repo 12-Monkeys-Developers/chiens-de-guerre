@@ -1,0 +1,52 @@
+<header class="combat-tracker-header">
+  {{#if user.isGM}}
+    <nav class="encounters {{css}}" aria-label="{{localize 'COMBAT.NavLabel'}}">
+      {{#if displayCycle}}
+        <button type="button" class="inline-control icon fa-solid fa-plus" data-action="createCombat" data-tooltip aria-label="{{localize 'COMBAT.Create'}}"></button>
+        <div class="cycle-combats">
+          <button type="button" class="inline-control icon fa-solid fa-caret-left" data-action="cycleCombat" {{#if previousId}}data-combat-id="{{previousId}}"{{else}}disabled{{/if}}></button>
+          <div class="encounter-count"><span class="value">{{currentIndex}}</span><span class="separator">/</span><span class="max">{{combats.length}}</span></div>
+          <button type="button" class="inline-control icon fa-solid fa-caret-right" data-action="cycleCombat" {{#if nextId}}data-combat-id="{{nextId}}"{{else}}disabled{{/if}}></button>
+        </div>
+        <button type="button" class="inline-control icon fa-solid fa-gear" data-action="trackerSettings" data-tooltip aria-label="{{localize 'COMBAT.Settings'}}"></button>
+      {{else if combats.length}}
+        <button type="button" class="inline-control icon fa-solid fa-plus" data-action="createCombat" data-tooltip aria-label="{{localize 'COMBAT.Create'}}"></button>
+        {{#each combats as |entry|}}<button type="button" class="inline-control {{#if entry.active}}active{{/if}}" data-action="cycleCombat" data-combat-id="{{entry.id}}">{{entry.label}}</button>{{/each}}
+        <button type="button" class="inline-control icon fa-solid fa-gear" data-action="trackerSettings" data-tooltip aria-label="{{localize 'COMBAT.Settings'}}"></button>
+      {{else}}
+        <button type="button" class="combat-control-lg" data-action="createCombat"><i class="fa-solid fa-plus"></i><span>{{localize "COMBAT.Create"}}</span></button>
+      {{/if}}
+    </nav>
+  {{/if}}
+
+  {{#if combat.name}}<h2 class="encounter-name">{{combat.name}}</h2>{{/if}}
+  <div class="encounter-controls {{#if hasCombat}}combat{{/if}}">
+    <div class="control-buttons left flexrow">
+      {{#if user.isGM}}
+        <button type="button" class="inline-control combat-control icon fa-solid fa-users" data-action="rollAll" {{#unless combat.turns.length}}disabled{{/unless}} data-tooltip="COMBAT.RollAll"></button>
+        <button type="button" class="inline-control combat-control icon fa-solid fa-users-cog" data-action="rollNPC" {{#unless combat.turns.length}}disabled{{/unless}} data-tooltip="COMBAT.RollNPC"></button>
+      {{/if}}
+    </div>
+    <strong class="encounter-title">{{#if combats.length}}{{#if combat.round}}{{localize "COMBAT.Round" round=combat.round}}{{else}}{{localize "COMBAT.NotStarted"}}{{/if}}{{else}}{{localize "COMBAT.None"}}{{/if}}</strong>
+    <div class="control-buttons right flexrow"><button type="button" class="encounter-context-menu inline-control combat-control icon fa-solid fa-ellipsis-vertical" {{#unless (and user.isGM hasCombat)}}disabled{{/unless}}></button></div>
+  </div>
+
+  {{#if hasCombat}}
+    <section class="cdg-combat-mode">
+      <div class="mode-buttons">
+        {{#each combatModes as |mode|}}
+          <button type="button" data-action="setCombatMode" data-mode="{{mode.id}}" class="{{#if (eq mode.id @root.cdgMode)}}active{{/if}}" {{#unless @root.combatModeEditable}}disabled{{/unless}}>{{localize mode.label}}</button>
+        {{/each}}
+      </div>
+      {{#if isDuel}}
+        <div class="duel-settings">
+          <select data-cdg-setting="type" {{#unless combatModeEditable}}disabled{{/unless}}>{{selectOptions duelTypes selected=duelType valueAttr="id" labelAttr="label" localize=true}}</select>
+          {{#if duelIsPlaisance}}<label>{{localize "CDG.combat.duel.target"}} <select data-cdg-setting="target" {{#unless combatModeEditable}}disabled{{/unless}}>{{selectOptions duelTargets selected=duelTarget valueAttr="value" labelAttr="label"}}</select></label>{{/if}}
+          <label data-tooltip="{{localize 'CDG.combat.duel.formalHint'}}"><input type="checkbox" data-cdg-setting="formal" {{checked duelFormal}} {{#unless combatModeEditable}}disabled{{/unless}}> {{localize "CDG.combat.duel.formal"}}</label>
+        </div>
+        {{#if duelParticipantWarning}}<p class="cdg-tracker-warning"><i class="fa-solid fa-triangle-exclamation"></i> {{localize "CDG.combat.duel.warnings.participants"}}</p>{{/if}}
+        {{#if duelTied}}<p class="cdg-tracker-warning"><i class="fa-solid fa-scale-balanced"></i> {{localize "CDG.combat.duel.tie"}}</p>{{/if}}
+      {{/if}}
+    </section>
+  {{/if}}
+</header>
