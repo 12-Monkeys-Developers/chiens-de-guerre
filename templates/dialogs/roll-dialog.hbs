@@ -12,7 +12,7 @@
     <ol class="ability-choice">
       {{#each abilities as |ability|}}
         <li>
-          <button type="button" class="ability {{#if ability.selected}}selected{{/if}}" data-action="setAbility" data-ability="{{ability.id}}">
+          <button type="button" class="ability {{#if ability.selected}}selected{{/if}}" data-action="setAbility" data-ability="{{ability.id}}" {{#if @root.lockedPair}}disabled{{/if}}>
             <span class="ability-name">{{ability.name}}</span>
             <span class="ability-score">{{ability.pool.value}}<span class="max">/{{ability.pool.max}}</span></span>
           </button>
@@ -22,9 +22,13 @@
 
     <div class="field-line skill-line">
       <label for="cdg-roll-skill">{{localize "CDG.roll.skill"}}</label>
-      <select id="cdg-roll-skill" name="skillId">
-        {{selectOptions skillChoices selected=draft.skillId blank=(localize "CDG.roll.noSkill") valueAttr="id" labelAttr="label"}}
-      </select>
+      {{#if lockedPair}}
+        <strong>{{#if testLabel}}{{testLabel}}{{else if skill}}{{localize skill.label}}{{else}}{{localize "CDG.roll.noSkill"}}{{/if}}</strong>
+      {{else}}
+        <select id="cdg-roll-skill" name="skillId">
+          {{selectOptions skillChoices selected=draft.skillId blank=(localize "CDG.roll.noSkill") valueAttr="id" labelAttr="label"}}
+        </select>
+      {{/if}}
       <span class="hint handful" data-tooltip="{{rankHint}}">{{rankName}} — {{rankEntry.formula}}</span>
     </div>
   </section>

@@ -69,6 +69,9 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   /** Tout ce qui s'en déduit, reconstruit à chaque rendu. */
   #derived = {}
 
+  /** Traitement métier facultatif exécuté uniquement après un jet effectivement lancé. */
+  #afterRoll = null
+
   /**
    * Prépare le brouillon du test à partir de la présélection reçue de la fiche.
    * @param {CdgActor} actor
@@ -86,8 +89,12 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       effort: 0,
       passionPairId: "",
       passionMode: "bonus",
-      toggles: {},
+      toggles: seed.toggles ?? {},
+      rankOverride: Number.isInteger(seed.rank) ? seed.rank : null,
+      labelOverride: seed.label ?? null,
+      lockedPair: !!seed.lockedPair,
     }
+    this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
   }
 
   /**
@@ -124,6 +131,11 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
 
     const abilityId = seed.abilityId ?? SYSTEM.SKILL_DEFAULT_ABILITY[skillId]
     if (SYSTEM.ABILITIES[abilityId]) this.#draft.abilityId = abilityId
+    this.#draft.rankOverride = Number.isInteger(seed.rank) ? seed.rank : null
+    this.#draft.labelOverride = seed.label ?? null
+    this.#draft.lockedPair = !!seed.lockedPair
+    this.#draft.toggles = seed.toggles ?? {}
+    this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
   }
 
   /** @override */
@@ -172,7 +184,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
 
     // « Il peut arriver qu'aucune compétence ne soit pertinente. Dans ce cas, la poignée de dés sera
     // composée d'un unique d20, exactement comme si le test se faisait avec une compétence de rang 1. »
-    const rank = skill ? system.skills[draft.skillId].rank : SYSTEM.DEFAULT_RANK
+    const rank = Number.isInteger(draft.rankOverride) ? draft.rankOverride : skill ? system.skills[draft.skillId].rank : SYSTEM.DEFAULT_RANK
     const rankEntry = SYSTEM.RANKS[rank] ?? SYSTEM.RANKS[SYSTEM.DEFAULT_RANK]
 
     // « Un joueur ne peut jamais décider volontairement d'utiliser ainsi le dernier point d'une
@@ -205,6 +217,8 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
         selected: entry.id === draft.abilityId,
       })),
       skill,
+      testLabel: draft.labelOverride ? game.i18n.localize(draft.labelOverride) : null,
+      lockedPair: draft.lockedPair,
       skillChoices: this.#skillChoices(),
       rank,
       rankEntry,
@@ -428,7 +442,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       abilityLabel: game.i18n.localize(derived.ability.label),
       abilityValue: derived.pool.value,
       skillId: draft.skillId || null,
-      skillLabel: derived.skill ? game.i18n.localize(derived.skill.label) : null,
+      skillLabel: derived.testLabel ?? (derived.skill ? game.i18n.localize(derived.skill.label) : null),
       rank: derived.rank,
       dice: derived.rankEntry.dice,
       keep: derived.rankEntry.keep,
@@ -450,6 +464,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     if (!foundry.utils.isEmpty(updates)) await actor.update(updates)
 
     await CdgRoll.post(test)
+    await this.#afterRoll?.(test)
     return this.close()
   }
 

@@ -1,0 +1,40 @@
+<ol class="combat-tracker plain">
+  {{#each turns as |turn|}}
+    <li class="combatant {{turn.css}}" data-combatant-id="{{turn.id}}" data-action="activateCombatant">
+      <img class="token-image" src="{{turn.img}}" alt="{{turn.name}}" loading="lazy">
+      <div class="token-name">
+        <strong class="name">{{turn.name}}</strong>
+        <div class="cdg-role-line">
+          {{#if turn.isAttacker}}<span class="role attacker"><i class="fa-solid fa-sword"></i> {{localize "CDG.combat.duel.attacker"}}</span>{{/if}}
+          {{#if turn.isDefender}}<span class="role defender"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.duel.defender"}}</span>{{/if}}
+          {{#if turn.canAssignAttacker}}<button type="button" data-action="assignDuelAttacker">{{localize "CDG.combat.duel.chooseAttacker"}}</button>{{/if}}
+          {{#if @root.isSkirmish}}{{#if turn.actionsRemaining}}<span class="remaining">{{localize "CDG.combat.skirmish.actionsRemaining" count=turn.actionsRemaining}}</span>{{/if}}{{/if}}
+        </div>
+        <div class="combatant-controls">
+          {{#if @root.user.isGM}}
+            <button type="button" class="inline-control combatant-control icon fa-solid fa-eye-slash {{#if turn.hidden}}active{{/if}}" data-action="toggleHidden" data-tooltip aria-label="{{localize (ifThen turn.hidden 'COMBATANT.Show' 'COMBATANT.Hide')}}"></button>
+            <button type="button" class="inline-control combatant-control icon fa-solid fa-skull {{#if turn.isDefeated}}active{{/if}}" data-action="toggleDefeated" data-tooltip aria-label="{{localize (ifThen turn.isDefeated 'COMBATANT.UnmarkDefeated' 'COMBATANT.MarkDefeated')}}"></button>
+          {{/if}}
+          {{#if turn.canPing}}<button type="button" class="inline-control combatant-control icon fa-solid fa-bullseye-arrow" data-action="pingCombatant" data-tooltip aria-label="{{localize 'COMBATANT.Ping'}}"></button>{{/if}}
+          {{#unless @root.user.isGM}}<button type="button" class="inline-control combatant-control icon fa-solid fa-arrows-to-eye" data-action="panToCombatant" data-tooltip aria-label="{{localize 'COMBATANT.PanTo'}}"></button>{{/unless}}
+          <div class="token-effects" data-tooltip-html="{{turn.effects.tooltip}}">{{#each turn.effects.icons as |effect|}}<img class="token-effect" src="{{effect.img}}" alt="{{effect.name}}">{{/each}}</div>
+        </div>
+      </div>
+      {{#if turn.resource includeZero=true}}<div class="token-resource"><span class="resource">{{turn.resource}}</span></div>{{/if}}
+      {{#if @root.duelIsPlaisance}}
+        <div class="duel-touches">
+          {{#if @root.user.isGM}}<button type="button" data-action="adjustDuelTouch" data-delta="-1">−</button>{{/if}}
+          <strong data-tooltip="{{localize 'CDG.combat.duel.touchesHint'}}">{{turn.touches}}/{{@root.duelTarget}}</strong>
+          {{#if @root.user.isGM}}<button type="button" data-action="adjustDuelTouch" data-delta="1">+</button>{{/if}}
+        </div>
+      {{/if}}
+      <div class="token-initiative">
+        {{#if turn.initiative includeZero=true}}
+          <input type="text" class="initiative-input" inputmode="numeric" pattern="^[+=\-]?\d*" value="{{turn.initiative}}" aria-label="{{localize 'COMBATANT.FIELDS.initiative.label'}}" {{#unless @root.user.isGM}}readonly{{/unless}}>
+        {{else if turn.isOwner}}
+          <button type="button" class="combatant-control roll" data-action="rollInitiative" data-tooltip aria-label="{{localize 'COMBAT.InitiativeRoll'}}" style="--initiative-icon: url('{{@root.initiativeIcon.icon}}'); --initiative-icon-hover: url('{{@root.initiativeIcon.hover}}');"></button>
+        {{/if}}
+      </div>
+    </li>
+  {{/each}}
+</ol>

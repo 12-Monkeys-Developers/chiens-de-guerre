@@ -48,6 +48,9 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       rest: CdgBaseActorSheet.#onRest,
       rollTest: CdgBaseActorSheet.#onRollTest,
       rollWeapon: CdgBaseActorSheet.#onRollWeapon,
+      rollDefense: CdgBaseActorSheet.#onRollDefense,
+      rollDamage: CdgBaseActorSheet.#onRollDamage,
+      rollSoak: CdgBaseActorSheet.#onRollSoak,
       removeOrigin: CdgBaseActorSheet.#onRemoveOrigin,
     },
   }
@@ -156,6 +159,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.skills = this.document.system.skills
     context.wounds = this.document.system.wounds
     context.combat = this.document.system.combat
+    context.initiativeModifierTooltip = this._prepareInitiativeModifierTooltip()
     context.details = this.document.system.details
 
     // Constantes utilisées par les gabarits : rangées d'écussons, listes de choix.
@@ -178,6 +182,32 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
 
     return context
+  }
+
+  /**
+   * Explique le modificateur avec les mêmes objets et la même règle de surcharge que le modèle.
+   * @returns {string}
+   */
+  _prepareInitiativeModifierTooltip() {
+    const actor = this.document
+    const signed = (value) => (value > 0 ? `+${value}` : `${value}`)
+    const lines = [`${game.i18n.localize("CDG.label.long.initiativeBonus")} : <strong>${signed(actor.system.combat.initiative.bonus)}</strong>`]
+
+    if (actor.armor) {
+      const multiplier = actor.system.combat.armorOverloaded ? 2 : 1
+      const value = actor.armor.system.initMalus * multiplier
+      const doubled = multiplier === 2 ? ` ${game.i18n.localize("CDG.combat.initiative.doubledArmor")}` : ""
+      lines.push(`${game.i18n.localize("CDG.equipment.subtypes.armor")} — ${foundry.utils.escapeHTML(actor.armor.name)}${doubled} : <strong>${signed(value)}</strong>`)
+    }
+
+    if (actor.shield) {
+      lines.push(
+        `${game.i18n.localize("CDG.equipment.subtypes.shield")} — ${foundry.utils.escapeHTML(actor.shield.name)} : <strong>${signed(actor.shield.system.initMalus)}</strong>`,
+      )
+    }
+
+    lines.push(`${game.i18n.localize("CDG.combat.initiative.total")} : <strong>${signed(actor.system.combat.initiative.modifier)}</strong>`)
+    return `<strong>${game.i18n.localize("CDG.combat.initiative.breakdown")}</strong><br>${lines.join("<br>")}`
   }
 
   // #region Actions
@@ -404,6 +434,51 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     return CdgRollDialog.open(this.document, {
       abilityId: weapon.system.attack.ability,
       skillId: weapon.system.attack.skill,
+    })
+  }
+
+  /**
+   * Lance une esquive ou une parade et consomme ensuite la défense correspondante.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onRollDefense(event, target) {
+    const defense = target.dataset.defense
+    if (!["dodge", "parry"].includes(defense)) return
+    if (defense === "parry" && this.document.system.combat.parryUsed) ui.notifications.warn("CDG.combat.defense.parryAlreadyUsed", { localize: true })
+    const dodgeCount = this.document.system.combat.dodgesUsed
+    return CdgRollDialog.open(this.document, {
+      abilityId: defense === "dodge" ? "vivacite" : "corps",
+      skillId: defense === "dodge" ? "esquive" : "blocage",
+      lockedPair: true,
+      afterRoll: () => (defense === "dodge" ? this.document.update({ "system.combat.dodgesUsed": dodgeCount + 1 }) : this.document.update({ "system.combat.parryUsed": true })),
+    })
+  }
+
+  /**
+   * Lance Corps / Dégâts avec le rang de l'arme.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onRollDamage(event, target) {
+    const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    if (!weapon?.system.isWeapon) return
+    return CdgRollDialog.open(this.document, {
+      abilityId: "corps",
+      rank: weapon.system.damage.rank,
+      label: "CDG.combat.damageTest",
+      lockedPair: true,
+    })
+  }
+
+  /** Lance Corps / Protection avec l'armure actuellement portée. */
+  static async #onRollSoak() {
+    return CdgRollDialog.open(this.document, {
+      abilityId: "corps",
+      rank: this.document.armor?.system.protection.rank ?? 0,
+      label: "CDG.combat.soakTest",
+      lockedPair: true,
+      toggles: { wound: false },
     })
   }
 

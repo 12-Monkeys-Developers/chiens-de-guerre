@@ -10,5 +10,23 @@ export const MAX_TRACKED_DODGES = DODGE_MALUS.length - 1
 /** Chaque action entreprise pendant un round retire ce nombre de points d'initiative. */
 export const INITIATIVE_ACTION_COST = 10
 
+/** Les deux économies de tours prévues par les règles. */
+export const COMBAT_MODES = {
+  skirmish: { id: "skirmish", label: "CDG.combat.modes.skirmish", skill: "sensCombat" },
+  duel: { id: "duel", label: "CDG.combat.modes.duel", skill: "sensDuels" },
+}
+
+/** Formes de duel. */
+export const DUEL_TYPES = {
+  plaisance: { id: "plaisance", label: "CDG.combat.duel.types.plaisance" },
+  outrance: { id: "outrance", label: "CDG.combat.duel.types.outrance" },
+}
+
+/** Objectifs autorisés pour un duel de plaisance. */
+export const DUEL_TOUCH_TARGETS = [1, 2, 3]
+
+/** Bonus d'initiative lorsque deux armes sont effectivement tenues. */
+export const DUAL_WIELD_INITIATIVE_BONUS = [0, 0, 1, 2]
+
 /** Un personnage ne peut tenter qu'une seule parade (blocage) par round. */
 export const MAX_PARRY_PER_ROUND = 1

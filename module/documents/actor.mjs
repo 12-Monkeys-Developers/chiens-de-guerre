@@ -11,6 +11,11 @@ export default class CdgActor extends Actor {
     return this.equipments.filter((item) => item.system.isWeapon)
   }
 
+  /** Les armes actuellement tenues, utilisées par le combat à deux armes et les contrôles de duel. */
+  get heldWeapons() {
+    return this.weapons.filter((item) => item.system.equipped)
+  }
+
   /**
    * L'armure portée. Un personnage n'en porte qu'une : s'il en a plusieurs d'équipées, la première
    * fait foi, et c'est à la fiche d'éviter d'en arriver là.

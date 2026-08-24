@@ -351,7 +351,64 @@
   }
 }
 
+.cdg.initiative-roll {
+  .initiative-pair {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+
+    .rank {
+      margin-left: auto;
+      color: var(--cdg-muted);
+    }
+  }
+
+  .effort-row,
+  .form-group,
+  .initiative-toggles label,
+  .initiative-preview li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+
+  .initiative-toggles {
+    margin: 0.4rem 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .passion-token-label {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    white-space: nowrap;
+  }
+
+  .initiative-preview {
+    border-top: 2px solid var(--cdg-ink);
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.35rem 0;
+    }
+
+    p {
+      margin: 0;
+      text-align: right;
+      font-size: 1.15rem;
+    }
+  }
+}
+
 // --- Carte de chat ---
+
+.cdg.initiative-card h3 {
+  font-family: var(--cdg-font-text);
+}
 
 .cdg-roll-card {
   --cdg-font-title: var(--cdg-font-text);

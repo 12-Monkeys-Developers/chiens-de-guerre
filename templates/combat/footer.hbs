@@ -1,0 +1,19 @@
+<nav class="combat-controls" data-tooltip-direction="UP">
+  {{#if hasCombat}}
+    {{#if user.isGM}}
+      {{#if combat.round}}
+        <button type="button" class="combat-control combat-control-lg cdg-end-combat" data-action="endCombat"><i class="fa-solid fa-xmark"></i><span>{{localize "CDG.combat.end"}}</span></button>
+        <button type="button" class="combat-control combat-control-lg cdg-next" data-action="completeCdgAction" {{#if isDuel}}data-tooltip="{{localize 'CDG.combat.duel.endExchangeHint'}}"{{/if}} {{#unless cdgCanAdvance}}disabled{{/unless}}>
+          <i class="fa-solid fa-hourglass-half"></i>
+          <span>{{#if isDuel}}{{localize "CDG.combat.duel.endExchange"}}{{else}}{{localize "CDG.combat.skirmish.endAction"}}{{/if}}</span>
+        </button>
+      {{else}}
+        <button type="button" class="combat-control combat-control-lg" data-action="startCombat"><i class="fa-solid fa-swords"></i><span>{{localize "COMBAT.Begin"}}</span></button>
+      {{/if}}
+    {{else if cdgCanAdvance}}
+      <button type="button" class="combat-control combat-control-lg cdg-next" data-action="completeCdgAction" {{#if isDuel}}data-tooltip="{{localize 'CDG.combat.duel.endExchangeHint'}}"{{/if}}>
+        <i class="fa-solid fa-hourglass-half"></i><span>{{#if isDuel}}{{localize "CDG.combat.duel.endExchange"}}{{else}}{{localize "CDG.combat.skirmish.endAction"}}{{/if}}</span>
+      </button>
+    {{/if}}
+  {{/if}}
+</nav>

@@ -1,10 +1,10 @@
 // Contenu des onglets de la fiche de personnage.
 .cdg.actor {
   // --- Compétences : les trois colonnes de la fiche papier -----------------------------------
-  .flexrowsb{
+  .flexrowsb {
     display: flex;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content: space-between;
   }
   .skill-columns {
     display: grid;
@@ -181,7 +181,6 @@
   }
 
   .initiative-block {
-    .init-score,
     .init-modifier,
     .init-bonus {
       display: flex;
@@ -194,6 +193,18 @@
       font-family: var(--cdg-font-title);
       font-size: 1.1rem;
       color: var(--cdg-blood);
+    }
+  }
+
+  .combat-quick-actions {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.35rem;
+
+    button {
+      flex: 1;
+      padding: 0.2rem 0.35rem;
+      font-size: 0.75rem;
     }
   }
 

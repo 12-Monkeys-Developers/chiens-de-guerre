@@ -233,6 +233,62 @@
         "cannotPush": "Se dépasser exige 1 point dans chaque réserve : {abilities} est déjà au plus bas."
       }
     },
+    "combat": {
+      "end": "Fin combat",
+      "modeLocked": "Le mode et les paramètres du combat ne peuvent plus être modifiés après son commencement.",
+      "modes": {
+        "skirmish": "Escarmouche",
+        "duel": "Duel"
+      },
+      "initiative": {
+        "breakdown": "Détail du modificateur",
+        "doubledArmor": "(malus doublé)",
+        "total": "Total",
+        "title": "Initiative",
+        "titleFor": "Initiative — {name}",
+        "wounds": "Blessures",
+        "equipment": "Équipement et bonus",
+        "dualWield": "Combat à deux armes",
+        "chatTitle": "Jet d'initiative",
+        "kept": "dé conservé"
+      },
+      "skirmish": {
+        "endAction": "Fin action",
+        "actionsRemaining": "{count} action(s) restante(s)"
+      },
+      "duel": {
+        "types": {
+          "plaisance": "Duel de plaisance",
+          "outrance": "Duel à outrance"
+        },
+        "target": "Touches",
+        "touchesHint": "Touches marquées par ce combattant / touches nécessaires pour remporter le duel de plaisance.",
+        "formal": "Duel formel",
+        "formalHint": "Duel codifié : une seule arme de mêlée à une main, sans armure ni bouclier. Décochez pour un duel improvisé avec l'équipement habituel.",
+        "attacker": "Attaquant",
+        "defender": "Défenseur",
+        "chooseAttacker": "Désigner attaquant",
+        "endExchange": "Fin attaque",
+        "endExchangeHint": "Passe d'armes terminée",
+        "tie": "Égalité : relancez ou désignez l'attaquant.",
+        "noAttacker": "La passe d'armes ne peut pas se terminer tant que l'attaquant n'est pas déterminé.",
+        "victory": "{name} remporte le duel avec {touches} touche(s).",
+        "warnings": {
+          "participants": "Un duel guidé nécessite exactement deux combattants non vaincus.",
+          "equipment": "{name} ne respecte pas l'équipement du duel formel."
+        }
+      },
+      "defense": {
+        "dodge": "Esquiver",
+        "parry": "Parer",
+        "parryAlreadyUsed": "La parade de ce round a déjà été utilisée. Le jet reste autorisé pour permettre un arbitrage du MJ."
+      },
+      "damageTest": "Dégâts",
+      "soakTest": "Encaissement",
+      "weapon": {
+        "toggleHeld": "Tenir ou ranger l'arme"
+      }
+    },
     "origin": {
       "open": "Ouvrir la fiche",
       "remove": "Retirer",
@@ -436,7 +492,6 @@
       "clearInvokedTraits": "Nouvelle session : libérer tous les traits",
       "invokeTraitHint": "Marquer ce trait comme invoqué pour la session.",
       "passionHint": "Dépenser un jeton ajoute la valeur d'un trait dominant au seuil de réussite. S'imposer ce malus en rapporte un. Céder à sa compulsion : +1 jeton ; y résister : -1.",
-      "initiativeHint": "Initiative = jet de Sens du combat + Vivacité courante + modificateur. Chaque action entreprise dans le round retire 10 points.",
       "initiativeModifierHint": "Bonus de la fiche, plus les malus de l'armure et du bouclier portés.",
       "armorOverloaded": "Rang de Port d'armures insuffisant : le malus de l'armure est doublé.",
       "parryHint": "Une seule parade par round.",
