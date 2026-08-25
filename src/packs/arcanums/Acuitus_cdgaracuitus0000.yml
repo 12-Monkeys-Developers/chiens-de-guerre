@@ -1,0 +1,56 @@
+_id: cdgaracuitus0000
+name: Acuitus
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Un œil vif et un geste adroit suffisent à un archer pour transpercer
+    mortellement un homme. Acuitus offre une acuité sensorielle supérieure à
+    celle des animaux les mieux dotés par la nature. Pour chaque rang possédé
+    dans cet Arcanum, le personnage bénéficie d’un + 2 à tous les tests
+    d’attaque avec une arme à distance (tir ou jet).</p><h4>Balance /
+    Lumière</h4><p>Doté d’une vue perçante, le Marqué bénéficie par ailleurs
+    d’un bonus de + 1 par rang sur tous les tests de perception (vigilance,
+    investigation, etc.) mettant largement en jeu la
+    vision.</p><h4>Obscurité</h4><p>Le Marqué bénéficie également d’un bonus de
+    + 1 par rang sur tous les tests de perception (vigilance, investigation,
+    etc.) mettant largement en jeu l’audition, le toucher et/ou l’odorat.</p>
+  arcanumType: physique
+  rank: 1
+  rankData:
+    name1: Rang 1
+    cost1:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect1: ''
+    label1a: Lumière / Balance
+    effect1a: ''
+    label1b: Obscurité
+    effect1b: ''
+    name2: Rang 2
+    cost2:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect2: ''
+    label2a: Lumière / Balance
+    effect2a: ''
+    label2b: Obscurité
+    effect2b: ''
+    name3: Rang 3
+    cost3:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect3: ''
+    label3a: Lumière / Balance
+    effect3a: ''
+    label3b: Obscurité
+    effect3b: ''
+  linkedSkill: tir
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgaracuitus0000'

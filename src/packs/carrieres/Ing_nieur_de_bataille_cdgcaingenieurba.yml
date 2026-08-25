@@ -1,0 +1,107 @@
+_id: cdgcaingenieurba
+name: Ingénieur de bataille
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Les ingénieurs de bataille sont les spécialistes de la construction
+    d'ouvrages militaires (et par extension de la sape) ainsi que du bon usage
+    de l'artillerie. Ils sont essentiels pour correctement défendre des places
+    fortes, mais aussi et surtout pour les prendre, notamment lors de sièges,
+    dans lesquels ils excellent particulièrement.</p><h4>Au
+    choix</h4><ul><li>Arme de corps-à-corps légère (dégâts 1) <em>ou</em> arme
+    de corps-à-corps moyenne (dégâts 2).</li></ul>
+  abilityBonus: esprit
+  startingMoney: 30
+  skills:
+    - skill: artsArtisanats
+      rank: 1
+    - skill: autorite
+      rank: 1
+    - skill: commerce
+      rank: 1
+    - skill: eloquence
+      rank: 1
+    - skill: erudition
+      rank: 2
+    - skill: ingenierie
+      rank: 2
+    - skill: investigation
+      rank: 1
+    - skill: portArmures
+      rank: 1
+    - skill: sensBatailles
+      rank: 1
+    - skill: tactique
+      rank: 2
+    - skill: tir
+      rank: 1
+    - skill: vigueur
+      rank: 1
+    - skill: volonte
+      rank: 1
+    - skill: vigilance
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardelere00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarinspex00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarparmae00000
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqoutilbricol
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+effects:
+  - _id: cdgeaingenieurba
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcaingenieurba.cdgeaingenieurba'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcaingenieurba'

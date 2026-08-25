@@ -3,6 +3,11 @@ import prettier from "eslint-plugin-prettier"
 import configPrettier from "eslint-config-prettier"
 
 export default [
+  // Exclusion générale. Un objet qui ne porte que `ignores` s'applique à toute la configuration,
+  // là où le même champ posé à côté d'autres clés ne vaudrait que pour ce bloc-là.
+  // `tools/out/` est généré : c'est un corps de macro Foundry, où un `return` de premier niveau est
+  // légitime, ce qu'un parseur de module ES refuse.
+  { ignores: ["tools/out/"] },
   {
     ignores: ["node_modules/", "eslint.config.mjs", "build.mjs", "gulpfile.js"],
     languageOptions: {

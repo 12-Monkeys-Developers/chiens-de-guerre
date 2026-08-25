@@ -125,7 +125,8 @@ export default class CdgActor extends Actor {
     embedded.forEach((document, index) => embeddedByField[createdFields[index]].push(document.uuid))
     await origin.update(Object.fromEntries(Object.entries(embeddedByField).map(([field, uuids]) => [`system.${field}`, uuids])))
 
-    const updates = item.type === SYSTEM.ITEM_TYPE.peuple ? this.#grantLanguages(item, details) : this.#grantSkillRanks(item, details)
+    const updates =
+      item.type === SYSTEM.ITEM_TYPE.peuple ? this.#grantLanguages(item, details) : { ...this.#grantSkillRanks(item, details), ...this.#grantStartingMoney(item, details) }
     if (!foundry.utils.isEmpty(updates)) await this.update(updates)
 
     if (missing > 0) ui.notifications.warn(game.i18n.format("CDG.origin.missingGrant", { name: item.name, count: missing }))
@@ -186,11 +187,29 @@ export default class CdgActor extends Actor {
   }
 
   /**
+   * Verse l'argent de départ de la carrière dans la bourse du personnage.
+   *
+   * Un versement, pas une valeur imposée : le personnage garde ce qu'il avait déjà, comme les
+   * langues d'un peuple s'ajoutent à celles qu'il parlait.
+   * @param {CdgItem} item
+   * @param {string[]} details Complété au passage, pour le message de fin.
+   * @returns {Object} Mise à jour à appliquer, éventuellement vide.
+   */
+  #grantStartingMoney(item, details) {
+    const amount = item.system.startingMoney ?? 0
+    if (amount <= 0) return {}
+
+    details.push(game.i18n.format("CDG.origin.grantMoney", { amount }))
+    return { "system.wealth.ducat": this.system.wealth.ducat + amount }
+  }
+
+  /**
    * Retire une origine et ce qu'elle avait accordé, après confirmation.
    *
    * Les langues et les rangs de compétence, eux, restent : rien ne distingue plus ce qui venait de
    * l'origine de ce que le personnage a gagné depuis. La confirmation le dit, plutôt que de laisser
-   * croire à une annulation complète.
+   * croire à une annulation complète. L'argent de départ fait exception, mais à une condition
+   * stricte — voir `#revokedStartingMoney`.
    * @param {CdgItem} item L'origine embarquée à retirer.
    * @returns {Promise<CdgItem[]|undefined>}
    */
@@ -198,16 +217,37 @@ export default class CdgActor extends Actor {
     if (!SYSTEM.ORIGIN_TYPES.includes(item.type)) return
 
     const granted = this.grantedBy(item)
+    const refund = this.#revokedStartingMoney(item)
+    const content =
+      (granted.length > 0
+        ? game.i18n.format("CDG.origin.removeContent", { name: item.name, count: granted.length })
+        : game.i18n.format("CDG.origin.removeContentAlone", { name: item.name })) + (refund > 0 ? game.i18n.format("CDG.origin.removeMoney", { amount: refund }) : "")
+
     const confirmed = await foundry.applications.api.DialogV2.confirm({
       window: { title: game.i18n.format("CDG.origin.removeTitle", { type: game.i18n.localize(`TYPES.Item.${item.type}`) }) },
-      content:
-        granted.length > 0
-          ? game.i18n.format("CDG.origin.removeContent", { name: item.name, count: granted.length })
-          : game.i18n.format("CDG.origin.removeContentAlone", { name: item.name }),
+      content,
     })
     if (!confirmed) return
 
+    if (refund > 0) await this.update({ "system.wealth.ducat": this.system.wealth.ducat - refund })
     return this.deleteEmbeddedDocuments("Item", [item.id, ...granted.map((entry) => entry.id)])
+  }
+
+  /**
+   * L'argent de départ à reprendre au retrait d'une carrière — rien, la plupart du temps.
+   *
+   * On ne le reprend que si la bourse vaut exactement ce que la carrière avait versé : le
+   * personnage n'a alors ni dépensé ni gagné depuis, et poser puis retirer une carrière ne doit
+   * pas laisser de trace. Dès que le montant a bougé, on n'y touche plus — impossible de dire ce
+   * qui, dans cette bourse, venait encore de la carrière.
+   * @param {CdgItem} item
+   * @returns {number} Un nombre de ducats, 0 s'il n'y a rien à reprendre.
+   */
+  #revokedStartingMoney(item) {
+    const amount = item.system.startingMoney ?? 0
+    if (amount <= 0) return 0
+    // Seul un personnage a une bourse : le retrait passe aussi par les fiches d'adversaire.
+    return this.system.wealth?.ducat === amount ? amount : 0
   }
 
   /** @override */

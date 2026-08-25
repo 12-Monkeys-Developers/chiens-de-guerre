@@ -1,0 +1,107 @@
+_id: cdgcatireurelite
+name: Tireur d'élite
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Qu'ils soient archers ou arbalétriers, les soldats experts dans les armes
+    à distance forment un corps de troupe particulièrement redoutable aussi bien
+    dans les batailles rangées que dans les embuscades. Les tireurs d'élite
+    comptent parmi les combattants les plus dangereux dans leur domaine
+    d'expertise.</p><h4>Au choix</h4><ul><li>Arme de tir lourde (dégâts 3,
+    nécessite une action pour recharger) <em>ou</em> arme de tir moyenne (dégâts
+    2).</li></ul>
+  abilityBonus: vivacite
+  startingMoney: 30
+  skills:
+    - skill: acrobatie
+      rank: 1
+    - skill: artsArtisanats
+      rank: 1
+    - skill: athletisme
+      rank: 1
+    - skill: discretion
+      rank: 1
+    - skill: esquive
+      rank: 1
+    - skill: investigation
+      rank: 1
+    - skill: portArmures
+      rank: 1
+    - skill: sciencesNaturelles
+      rank: 1
+    - skill: sensCombat
+      rank: 2
+    - skill: sensBatailles
+      rank: 1
+    - skill: survie
+      rank: 1
+    - skill: tactique
+      rank: 1
+    - skill: tir
+      rank: 2
+    - skill: vigilance
+      rank: 2
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgaracuitus0000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardevito00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarstratagema0
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqsoldat00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmetirlou0
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+effects:
+  - _id: cdgeatireurelite
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.vivacite.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcatireurelite.cdgeatireurelite'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcatireurelite'

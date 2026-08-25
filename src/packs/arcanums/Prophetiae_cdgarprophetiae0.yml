@@ -1,0 +1,121 @@
+_id: cdgarprophetiae0
+name: Prophetiae
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Prophetiae plonge ses racines dans les anciens arts divinatoires
+    permettant d’explorer le futur mais également le passé. Les Marqués
+    présentant ce don de « double-vue » se révèlent de précieux conseillers pour
+    les gradés des compagnies franches. On les consulte par exemple souvent à la
+    veille d’une bataille. Certains pratiquants y voient une communication
+    mystique avec les dieux, d’autres une science ésotérique.</p>
+  arcanumType: mystique
+  rank: 1
+  rankData:
+    name1: Présage
+    cost1:
+      obscurite: 1
+      balance: 2
+      lumiere: 2
+    effect1: >-
+      <p>Via un rituel de divination de quelques minutes (tirage de runes, de
+      cartes, ou d’osselets ; interprétation du vol des oiseaux ; sacrifices ;
+      etc.), le pratiquant peut recevoir un présage au sujet d’une question
+      portant sur une situation envisagée dans les 24 heures. La situation peut
+      être directe (« Comment va se passer la bataille de demain ? ») ou
+      conditionnelle (« Comment se déroulera la bataille de demain si nous
+      attaquons le flanc gauche avec notre cavalerie ? »). Le devin reçoit un
+      présage qu’il interprète, au choix du MJ, comme « catastrophique » (la
+      situation aura des répercussions désastreuses), « néfaste » (la situation
+      devrait avoir une issue défavorable), « ambiguë » (la situation n’aura
+      aucune conséquence ou est trop incertaine à ce stade), « favorable » (la
+      situation a de bonnes chances d’avoir des répercussions positives) ou «
+      bénéfique » (la situation aura une issue très fructueuse). Le rituel se
+      solde par un test d’Esprit / Arcanum réalisé en secret par le MJ (de telle
+      sorte que le joueur ne sache pas si le résultat est ou non juste) :
+      réussite, le pratiquant obtient un présage correct ; réussite critique, le
+      pratiquant obtient un présage correct et sait que son présage est juste ;
+      échec, le pratiquant obtient le présage « ambiguë » (qu’il soit ou non
+      juste) ; échec critique : le pratiquant obtient un faux présage.</p>
+    label1a: Lumière / Balance
+    effect1a: <p>Lancer ce tour de magie coûte 2 points d’Esprit.</p>
+    label1b: Obscurité
+    effect1b: >-
+      <p>Lancer ce tour nécessite un rituel sanglant (sacrifice, lecture dans
+      les entrailles, etc.), la dépense de 1 point d’Esprit et que le pratiquant
+      verse son propre sang (ce qui lui inflige une blessure légère).</p>
+    name2: Vision du passé
+    cost2:
+      obscurite: 2
+      balance: 2
+      lumiere: 2
+    effect2: >-
+      <p>Le pratiquant peut s’exposer à des visions du passé, sous forme de
+      courtes mais intenses images mentales. Il doit pour cela toucher un objet
+      et se concentrer un bref instant. La vision reçue concerne en général
+      l’événement le plus marquant lié à cet objet ou — à défaut d’une empreinte
+      émotionnellement chargée — la dernière personne qui l’a manipulé. Le
+      Marqué ne peut pas orienter ses visions : il ne pose pas de questions, il
+      reçoit ce que l’objet a accumulé en lui.</p>
+    label2a: Lumière
+    effect2a: >-
+      <p>Lancer ce tour nécessite la dépense de 2 points d’Esprit. Les images
+      sont claires mais les émotions véhiculées le sont aussi, ce qui peut
+      rendre l’expérience traumatisante lorsque la scène perçue est moralement
+      difficile. Dans ce cas, le pratiquant peut perdre de 1 à 3 points d’Esprit
+      supplémentaires au gré du MJ, selon l’intensité de la charge
+      émotionnelle.</p>
+    label2b: Balance / Obscurité
+    effect2b: >-
+      <p>Lancer ce tour nécessite la dépense de 2 points d’Esprit. Les images
+      perçues sont floues et saccadées, ce qui peut les rendre difficiles à
+      interpréter. Pour en tirer quelque chose, le pratiquant doit réussir en
+      complément un test d’Esprit / Arcanum assorti d’un malus lié à
+      l’ancienneté et la force émotionnelle de l’événement entraperçu. Ainsi,
+      obtenir une vision à partir d’un poignard ayant servi à commettre un
+      meurtre barbare quelques heures auparavant sera facile (modificateur de +
+      0), tandis que tirer une information d’une poignée de porte rapidement
+      manipulée pour la dernière fois il y a des années par un passant anonyme
+      sera très difficile (malus de - 10).</p>
+    name3: Oracle
+    cost3:
+      obscurite: 2
+      balance: 3
+      lumiere: 3
+    effect3: >-
+      <p>Le pratiquant réalise un rituel de divination d’une heure au cours
+      duquel il pose une unique question, précise et concise, concernant une
+      situation future ne pouvant se dérouler dans plus d’une semaine (ex. : «
+      Ce lieu est-il sans danger pour se reposer cette nuit ? », « Où
+      allons-nous déboucher si nous suivons ce tunnel ? », « Comment se
+      déroulera la fête de la pomme prévue dans trois jours ? », « Avons-nous de
+      bonnes chances d’emporter le combat si nous attaquons le convoi demain ?
+      »). Le rituel se solde par un test d’Esprit / Arcanum réalisé en secret
+      par le MJ. Réussite : une vision ou une phrase, souvent cryptique,
+      s’impose à lui (la réponse est véridique mais peut s’avérer délicate à
+      interpréter et prend généralement la forme d’une réponse énigmatique ou
+      d’un présage). Échec : rien, aucune vision. Réussite critique : la réponse
+      est facile à interpréter. Échec critique : la vision est fausse. Les
+      questions qui ne portent pas sur une situation précise (« Quel est le sens
+      de la vie ? », « Quand est-ce que le capitaine va mourir ? »), ou qui
+      dépassent le cadre temporel maximal d’une semaine (« Quel temps fera-t-il
+      dans un mois ? ») n’obtiennent aucune réponse (exactement comme si le test
+      avait donné un échec). Les pratiquants se sentent en contact avec une
+      force supérieure, qu’ils attribuent en général au Père, à la Mère ou au
+      Fils. La prise en compte de la réponse, voire le simple fait d’en avoir
+      connaissance, est susceptible de modifier l’avenir…</p>
+    label3a: Lumière / Balance
+    effect3a: <p>Lancer ce tour de magie coûte 3 points d’Esprit.</p>
+    label3b: Obscurité
+    effect3b: >-
+      <p>Lancer ce tour nécessite un rituel sanglant (sacrifice, lecture dans
+      les entrailles, etc.), la dépense de 2 points d’Esprit et que le
+      pratiquant verse son propre sang (ce qui lui inflige une blessure
+      légère).</p>
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarprophetiae0'

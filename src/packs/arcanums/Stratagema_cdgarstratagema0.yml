@@ -1,0 +1,64 @@
+_id: cdgarstratagema0
+name: Stratagema
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Le Marqué se bat en déployant des trésors d’ingéniosité, analysant
+    rapidement les failles de ses adversaires, et les surprenant avec des
+    tactiques élaborées. Il ressent intuitivement le flux des combats. En
+    dépensant 1 point d’Esprit, le Marqué bénéficie d’un bonus de + 1 par rang
+    pour tous ses tests d’initiative, d’attaque et de défense, pendant toute la
+    durée d’une escarmouche ou d’un duel. On ne peut activer cet effet qu’une
+    seule fois par combat. Ceci ne requiert pas d’action. Exemple Lors d’une
+    escarmouche, un Marqué avec Stratagema au rang 2 ( ) peut choisir de
+    dépenser 1 point d’Esprit pour gagner un bonus de + 2 à tous ses tests
+    d’initiative, d’attaque, d’esquive et de blocage, et ce tant que dure le
+    combat.</p><h4>Lumière / Balance</h4><p>Le pratiquant se préfigure les
+    mouvements des troupes sur les champs de bataille, comme s’il lui était
+    naturel de survoler la situation. Il gagne en permanence un bonus de + 1 par
+    rang dans cet Arcanum pour tous les tests de la compétence Tactique. Cet
+    effet est passif.</p><h4>Obscurité</h4><p>Pris au cœur d’une mêlée, le
+    Marqué anticipe les mouvements de foule de telle sorte qu’il soit moins
+    exposé ou puisse plus aisément exploiter une faille chez ses adversaires. Il
+    bénéficie d’un bonus permanent de + 1 par rang dans cet Arcanum pour tous
+    les tests de la compétence Sens des batailles. Cet effet est passif.</p>
+  arcanumType: physique
+  rank: 1
+  rankData:
+    name1: Rang 1
+    cost1:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect1: ''
+    label1a: Lumière / Balance
+    effect1a: ''
+    label1b: Obscurité
+    effect1b: ''
+    name2: Rang 2
+    cost2:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect2: ''
+    label2a: Lumière / Balance
+    effect2a: ''
+    label2b: Obscurité
+    effect2b: ''
+    name3: Rang 3
+    cost3:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect3: ''
+    label3a: Lumière / Balance
+    effect3a: ''
+    label3b: Obscurité
+    effect3b: ''
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarstratagema0'

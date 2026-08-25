@@ -28,8 +28,43 @@ effects:
           value: 2
           phase: initial
           situation: arts
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
     _key: '!items.effects!cdgtrraffine0000.cdgefraffine0000'
 folder: null
 sort: 0
 flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
 _key: '!items!cdgtrraffine0000'

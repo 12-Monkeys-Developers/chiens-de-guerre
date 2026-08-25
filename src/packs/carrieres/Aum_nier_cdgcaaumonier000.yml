@@ -1,0 +1,112 @@
+_id: cdgcaaumonier000
+name: Aumônier
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Les horreurs de la guerre, celles auxquelles on assiste comme celles que
+    l'on commet, mettent à rude épreuve l'âme des mercenaires. L'aumônier
+    accompagne ses frères Marqués dans l'adversité : il les guide
+    spirituellement, célèbre les offices et veille à la cohésion morale de la
+    troupe.</p><p>Le soutien qu'il apporte ne l'exempte nullement des réalités
+    du champ de bataille. Au contraire, c'est en partageant les dangers, la boue
+    et le sang qu'il gagne la légitimité nécessaire à sa fonction.</p><p>Il est
+    courant qu'un aumônier conseille directement le commandement. Il est sage
+    que la hiérarchie tienne compte de ses avis…</p><h4>Au
+    choix</h4><ul><li>Arme de corps-à-corps légère (dégâts 1) <em>ou</em> arme
+    de corps-à-corps moyenne (dégâts 2).</li></ul><h4>Spécial</h4><p>Un aumônier
+    est de confession tyvardique, miravique ou caedique. Il s'agit généralement
+    de la foi dominante au sein de la compagnie.</p>
+  abilityBonus: esprit
+  startingMoney: 30
+  skills:
+    - skill: artsArtisanats
+      rank: 1
+    - skill: autorite
+      rank: 1
+    - skill: eloquence
+      rank: 1
+    - skill: empathie
+      rank: 2
+    - skill: erudition
+      rank: 2
+    - skill: etiquette
+      rank: 1
+    - skill: investigation
+      rank: 1
+    - skill: medecine
+      rank: 1
+    - skill: melee
+      rank: 1
+    - skill: portArmures
+      rank: 1
+    - skill: religionsLegendes
+      rank: 2
+    - skill: sciencesNaturelles
+      rank: 1
+    - skill: vigueur
+      rank: 1
+    - skill: volonte
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarsubjugatio0
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarimpero00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarprophetiae0
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+effects:
+  - _id: cdgeaaumonier000
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcaaumonier000.cdgeaaumonier000'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcaaumonier000'

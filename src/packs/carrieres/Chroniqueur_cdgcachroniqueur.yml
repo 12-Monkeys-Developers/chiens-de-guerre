@@ -1,0 +1,111 @@
+_id: cdgcachroniqueur
+name: Chroniqueur
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Le chroniqueur, un rôle unique dans chaque compagnie franche, est chargé
+    de tenir les Annales de la compagnie, dans lesquelles il consigne
+    quotidiennement les faits et gestes de ses frères d'armes.</p><p>Ce
+    manuscrit est transmis de chroniqueur en chroniqueur, précieusement conservé
+    afin qu'aucun compagnon ne sombre dans l'oubli, quand bien même il serait
+    mort depuis des décennies.</p><p>Le chroniqueur bénéficie d'un grade
+    honorifique reflétant l'importance de sa fonction mémorielle. Dans de
+    nombreuses compagnies, la lecture publique d'extraits choisis des Annales
+    est institutionnalisée.</p><h4>Au choix</h4><ul><li>Arme de corps-à-corps
+    légère (dégâts 1) <em>ou</em> arme de corps-à-corps moyenne (dégâts
+    2).</li></ul><h4>Spécial</h4><p>Vous commencez avec le grade de Sergent.</p>
+  abilityBonus: esprit
+  startingMoney: 30
+  skills:
+    - skill: autorite
+      rank: 1
+    - skill: baratin
+      rank: 1
+    - skill: commerce
+      rank: 1
+    - skill: eloquence
+      rank: 1
+    - skill: empathie
+      rank: 1
+    - skill: erudition
+      rank: 2
+    - skill: etiquette
+      rank: 1
+    - skill: investigation
+      rank: 2
+    - skill: medecine
+      rank: 1
+    - skill: portArmures
+      rank: 1
+    - skill: religionsLegendes
+      rank: 1
+    - skill: tactique
+      rank: 1
+    - skill: volonte
+      rank: 1
+    - skill: vigilance
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarimpero00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmagice00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmandatum000
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqannalescomp
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+effects:
+  - _id: cdgeachroniqueur
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcachroniqueur.cdgeachroniqueur'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcachroniqueur'

@@ -1,0 +1,45 @@
+_id: cdgeqpaqvoyageur
+name: Paquetage de voyageur
+type: equipment
+img: icons/containers/bags/pack-simple-leather.webp
+system:
+  description: >-
+    <p>Le nécessaire de celui qui vit sur les routes : de quoi camper,
+    s'orienter et subsister loin de toute étape.</p>
+  subtype: misc
+  equipped: false
+  quantity: 1
+  damage:
+    rank: 0
+    bonuses:
+      sheet: 0
+  attack:
+    ability: vivacite
+    skill: melee
+  category: ''
+  protection:
+    rank: 0
+    bonuses:
+      sheet: 0
+  blockBonus: 0
+  initMalus: 0
+  price:
+    ducat: 0
+    denier: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgeqpaqvoyageur'

@@ -22,6 +22,28 @@
 
 - Deux compendiums livrés avec le système : les 8 peuples et leurs 17 traits spéciaux, effets
   compris. Sources YAML versionnées dans `src/packs/`, compilées par `npm run YMLtoLDB`.
+- Trois compendiums de plus, générés par `npm run build:carrieres` depuis `tools/data/` : les
+  **15 carrières** (p. 84 à 89), les **22 arcanums** qu'elles accordent et les **25 équipements
+  génériques** de leur barda de départ. Déposer une carrière sur un personnage monte ses rangs de
+  compétence, lui crée ses arcanums et son équipement, et applique son ajustement de
+  caractéristique.
+- Les **22 arcanums sont complets** (p. 92 à 109) : description du livre, `linkedSkill` des quatre
+  physiques qui bonifient une compétence de la liste, et pour chacun des 13 mystiques les trois
+  tours de magie — nom, coût en Esprit par allégeance, et les deux variantes avec leur intitulé.
+- Un arcanum mystique **s'active depuis la fiche**, une baguette par rang maîtrisé : le test part
+  sur l'Esprit avec la poignée du rang maîtrisé, et l'Esprit n'est débité qu'une fois le jet lancé,
+  le seuil se calculant avant la dépense (p. 92).
+- `npm run build:carrieres` accepte `--only=<pack>` : reprendre un chapitre du livre n'oblige plus
+  à réécrire les trois compendiums, donc à perdre ce qui a été retouché en jeu.
+- `tools/build-carrieres.mjs` produit aussi `tools/out/macro-carrieres.js`, une macro autonome qui
+  crée les mêmes contenus dans les compendiums d'un monde, sans recompiler les packs du système.
+- L'**argent de départ** d'une carrière a désormais son champ, en ducats, au lieu d'une phrase en
+  fin de description. La fiche l'affiche à droite de la caractéristique augmentée, et les
+  15 carrières du compendium portent le montant du livre — 60 D pour l'émissaire, le maître d'armes
+  et l'officier, 30 D pour les douze autres.
+- Déposer une carrière **verse cet argent** dans la bourse du personnage, en s'ajoutant à ce qu'elle
+  contenait. Le retirer ne le reprend que si la bourse vaut encore exactement le montant versé :
+  au-delà, impossible de dire ce qui en venait encore.
 
 ## 0.1.0
 

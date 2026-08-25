@@ -1,0 +1,65 @@
+_id: cdgarrejuvnum000
+name: Rejuvnum
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Rejuvnum offre à son possesseur la capacité de guérir ses propres
+    blessures à une vitesse surnaturelle, au point que certains décrivent ses
+    effets comme semblables à de la régénération. Le pratiquant peut se
+    régénérer : la gravité d’une de ses blessures est alors réduite d’un cran
+    (une blessure légère disparaît, une blessure grave devient une blessure
+    légère, une blessure mortelle devient une blessure grave). Rejuvnum au rang
+    1 ( ) ne permet de traiter ainsi que les blessures légères, au rang 2 ( )
+    les blessures graves et enfin au rang 3 ( ) toutes les blessures, même
+    mortelles.</p><h4>Lumière / Balance</h4><p>Chaque régénération est une
+    action qui coûte au Marqué 1 point de Corps. Il n’a même pas besoin d’être
+    conscient pour que cet effet opère : s’il est inconscient, la régénération
+    se produit alors une fois par round, à la toute fin du
+    round.</p><h4>Obscurité</h4><p>La régénération se produit en fin de round et
+    ne consomme pas d’action. Pour pouvoir régénérer, le Marqué doit avoir
+    infligé au moins une blessure de la même gravité à un être vivant au cours
+    du round et réussir un test de Corps / Arcanum avec un malus de - 1, - 3 ou
+    - 6 selon que la blessure à guérir soit légère, grave ou mortelle. En
+    combat, il lui faudra donc généralement réussir à toucher et faire saigner
+    son adversaire. Hors combat, la scarification ou le sacrifice d’un animal,
+    voire d’un être humain devrait faire l’affaire…</p>
+  arcanumType: physique
+  rank: 1
+  rankData:
+    name1: Rang 1
+    cost1:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect1: ''
+    label1a: Lumière / Balance
+    effect1a: ''
+    label1b: Obscurité
+    effect1b: ''
+    name2: Rang 2
+    cost2:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect2: ''
+    label2a: Lumière / Balance
+    effect2a: ''
+    label2b: Obscurité
+    effect2b: ''
+    name3: Rang 3
+    cost3:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect3: ''
+    label3a: Lumière / Balance
+    effect3a: ''
+    label3b: Obscurité
+    effect3b: ''
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarrejuvnum000'

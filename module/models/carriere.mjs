@@ -26,6 +26,10 @@ export default class CdgCarriereData extends CdgItemData {
       }),
     )
 
+    // Argent de départ, en ducats. Contrairement au prix d'un équipement et à la bourse d'un
+    // personnage, il ne porte pas les deux monnaies : le livre ne donne que des ducats ronds.
+    schema.startingMoney = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 })
+
     // Arcanums et équipement de départ : UUIDs des objets correspondants.
     schema.arcanums = new fields.ArrayField(new fields.DocumentUUIDField())
     schema.equipments = new fields.ArrayField(new fields.DocumentUUIDField())

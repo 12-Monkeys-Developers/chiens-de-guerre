@@ -1,0 +1,56 @@
+_id: cdgardevito00000
+name: Devito
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>L’Arcanum Devito se concentre sur l’art de la dérobade en se basant sur
+    le leurre et sur des prouesses physiques surnaturelles, telles que des sauts
+    périlleux, des esquives acrobatiques ou des roulés-boulés. Pour chaque rang
+    possédé dans cet Arcanum, le personnage bénéficie d’un + 2 à tous les tests
+    d’esquive.</p><h4>Lumière / Balance</h4><p>Le Marqué gagne en outre un bonus
+    de + 1 par rang sur tous les tests d’Acrobatie, tels que les sauts
+    périlleux, les pirouettes ou le maintien de l’équilibre. Ce bonus s’applique
+    en particulier aux tests visant à limiter les dégâts d’une
+    chute.</p><h4>Obscurité</h4><p>Le Marqué bénéficie par ailleurs d’un bonus
+    de + 1 par rang sur tous les tests de discrétion, que ce soit pour passer
+    inaperçu ou pour dissimuler un objet sur lui.</p>
+  arcanumType: physique
+  rank: 1
+  rankData:
+    name1: Rang 1
+    cost1:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect1: ''
+    label1a: Lumière / Balance
+    effect1a: ''
+    label1b: Obscurité
+    effect1b: ''
+    name2: Rang 2
+    cost2:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect2: ''
+    label2a: Lumière / Balance
+    effect2a: ''
+    label2b: Obscurité
+    effect2b: ''
+    name3: Rang 3
+    cost3:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect3: ''
+    label3a: Lumière / Balance
+    effect3a: ''
+    label3b: Obscurité
+    effect3b: ''
+  linkedSkill: esquive
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgardevito00000'

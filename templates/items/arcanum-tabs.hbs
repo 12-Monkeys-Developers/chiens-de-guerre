@@ -1,0 +1,16 @@
+{{!-- Décalque du gabarit d'onglets du cœur, pour une seule raison : le libellé d'un onglet de rang
+      porte ses écussons, et le `{{localize tab.label}}` du cœur échapperait le HTML du partiel. --}}
+<nav class="sheet-tabs tabs arcanum-tabs {{tabClasses}}{{#if verticalTabs}} vertical{{/if}}"
+  aria-roledescription="{{localize 'SHEETS.FormNavLabel'}}">
+  {{#each tabs as |tab|}}
+    <a data-action="tab" data-group="{{tab.group}}" data-tab="{{tab.id}}"
+      {{#if tab.cssClass}}class="{{tab.cssClass}}"{{/if}}
+      {{#if tab.tooltip}}data-tooltip="{{tab.tooltip}}"{{/if}}>
+      {{#if tab.icon}}<i class="{{tab.icon}}" inert></i>{{/if}}
+      {{#if tab.label}}<span>{{localize tab.label}}</span>{{/if}}
+      {{#if tab.rank}}
+        {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=tab.rank editable=false}}
+      {{/if}}
+    </a>
+  {{/each}}
+</nav>

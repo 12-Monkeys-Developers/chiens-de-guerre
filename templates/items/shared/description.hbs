@@ -1,5 +1,8 @@
 <section class="description">
-  <h2 class="section-title">{{localize "CDG.label.long.description"}}</h2>
+  {{!-- `noTitle` sert aux fiches à onglets, dont l'onglet porte déjà le mot « Description ». --}}
+  {{#unless noTitle}}
+    <h2 class="section-title">{{localize "CDG.label.long.description"}}</h2>
+  {{/unless}}
   <div class="free-text">
     {{formInput systemFields.description value=system.description enriched=enrichedDescription
       name="system.description" toggled=true}}

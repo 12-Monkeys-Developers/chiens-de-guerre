@@ -1,0 +1,110 @@
+_id: cdgcafantassinlo
+name: Fantassin lourd
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Forts d'une discipline de fer, d'un équipement supérieur et d'une volonté
+    inébranlable, les fantassins lourds constituent l'élite des champs de
+    bataille. Spécialisés dans les affrontements en formation serrée, ils
+    excellent dans les batailles rangées, où cohésion et endurance priment sur
+    la vitesse.</p><p>Un fantassin lourd Marqué est capable, à lui seul, de
+    tenir en respect un groupe d'adversaires mal discipliné ou peu entraîné.
+    Habitué au fracas du métal et aux cris des mourants, il avance là où
+    d'autres hésitent, tenant la ligne coûte que coûte.</p><h4>Au
+    choix</h4><ul><li>Arme de corps-à-corps lourde (dégâts 3) <em>ou</em> arme
+    de corps-à-corps moyenne (dégâts 2) et bouclier lourd (init - 2, blocage +
+    4).</li></ul>
+  abilityBonus: corps
+  startingMoney: 30
+  skills:
+    - skill: athletisme
+      rank: 1
+    - skill: autorite
+      rank: 1
+    - skill: blocage
+      rank: 1
+    - skill: esquive
+      rank: 1
+    - skill: medecine
+      rank: 1
+    - skill: melee
+      rank: 1
+    - skill: portArmures
+      rank: 2
+    - skill: sensCombat
+      rank: 1
+    - skill: sensBatailles
+      rank: 2
+    - skill: sensDuels
+      rank: 1
+    - skill: survie
+      rank: 1
+    - skill: tactique
+      rank: 1
+    - skill: vigueur
+      rank: 2
+    - skill: volonte
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarinduratus00
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarobsidio0000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarrejuvnum000
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqsoldat00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmecclou00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmuremoy00
+effects:
+  - _id: cdgeafantassinlo
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.corps.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcafantassinlo.cdgeafantassinlo'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcafantassinlo'

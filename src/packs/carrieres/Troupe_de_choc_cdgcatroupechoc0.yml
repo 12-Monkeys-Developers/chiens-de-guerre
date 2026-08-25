@@ -1,0 +1,103 @@
+_id: cdgcatroupechoc0
+name: Troupe de choc
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Les troupes de choc sont exactement ce que l'on imagine lorsque l'on
+    parle de mercenaires d'élite : des individus féroces qui prennent des
+    risques considérables au mépris de leur propre sécurité, privilégiant les
+    frappes rapides et mortelles plutôt que les conflits qui s'enlisent.</p>
+  abilityBonus: corps
+  startingMoney: 30
+  skills:
+    - skill: athletisme
+      rank: 2
+    - skill: blocage
+      rank: 1
+    - skill: discretion
+      rank: 1
+    - skill: esquive
+      rank: 1
+    - skill: medecine
+      rank: 1
+    - skill: melee
+      rank: 2
+    - skill: sensCombat
+      rank: 2
+    - skill: sensBatailles
+      rank: 1
+    - skill: sensDuels
+      rank: 1
+    - skill: survie
+      rank: 1
+    - skill: tactique
+      rank: 1
+    - skill: vigueur
+      rank: 1
+    - skill: volonte
+      rank: 1
+    - skill: vigilance
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarfulmen00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarrejuvnum000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarvehementer0
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqsoldat00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmecclou00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+effects:
+  - _id: cdgeatroupechoc0
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.corps.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcatroupechoc0.cdgeatroupechoc0'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcatroupechoc0'

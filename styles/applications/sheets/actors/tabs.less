@@ -1,4 +1,19 @@
 // Contenu des onglets de la fiche de personnage.
+// Une valeur que le système calcule et que le joueur ne saisit pas : expérience disponible,
+// modificateur total d'initiative. Elle occupe le créneau d'un champ de saisie — même taille, même
+// largeur, même centrage, pour que la colonne des chiffres reste alignée — mais en rouge et sans le
+// filet qui signale qu'on peut écrire.
+.cdg-derived-value() {
+  width: 3.5rem;
+  padding: 0 0.2rem;
+  font-family: var(--cdg-font-text);
+  font-weight: inherit;
+  font-size: 0.85rem;
+  text-align: center;
+  color: var(--cdg-blood);
+}
+
+
 .cdg.actor {
   // --- Compétences : les trois colonnes de la fiche papier -----------------------------------
   .flexrowsb {
@@ -199,10 +214,9 @@
       gap: 0.4rem;
     }
 
+    // Le modificateur total est calculé, pas saisi : même traitement que l'expérience disponible.
     .init-modifier .value {
-      font-family: var(--cdg-font-title);
-      font-size: 1.1rem;
-      color: var(--cdg-blood);
+      .cdg-derived-value();
     }
   }
 
@@ -363,27 +377,67 @@
     margin-bottom: 0.8rem;
   }
 
+  // L'équipement divers tient sur deux colonnes : ce sont des lignes courtes — une image, un nom,
+  // une quantité — et une seule colonne laissait la moitié de l'onglet vide.
+  .gear-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.8rem;
+
+    .empty.full-width {
+      grid-column: 1 / -1;
+    }
+  }
+
   // --- Arcanums ------------------------------------------------------------------------------
   .tab-arcanums {
     .arcanums,
     .special-traits {
       margin-bottom: 0.8rem;
     }
+
+    // L'éditeur des traits spéciaux suit son contenu (`content-sized`) : il ne doit donc être
+    // contraint ni en hauteur ni en défilement, sans quoi il retrouverait une taille fixe.
+    .special-traits {
+      .free-text {
+        min-height: 0;
+        overflow: visible;
+      }
+
+      prose-mirror.content-sized .editor-content {
+        min-height: 2.5rem;
+      }
+    }
   }
 
   .arcanum-list {
+    // Une baguette par rang maîtrisé : trois icônes identiques se confondraient, d'où le chiffre
+    // du rang en exposant. Le nom du tour et son coût se lisent au survol.
+    .arcanum-activate {
+      flex: 0 0 auto;
+      color: var(--cdg-ink-soft);
+
+      sup {
+        margin-left: 1px;
+        font-size: 0.6rem;
+        font-weight: 700;
+      }
+
+      &:hover {
+        color: var(--cdg-blood);
+      }
+    }
+
     .arcanum-type {
       font-size: 0.75rem;
       font-variant: small-caps;
       color: var(--cdg-muted);
     }
 
-    .arcanum-rank {
-      font-family: var(--cdg-font-title);
-      font-size: 1rem;
-      color: var(--cdg-ink);
-      min-width: 1.2rem;
-      text-align: center;
+    // Le rang se lit en écussons, comme les dégâts d'une arme : la rangée ne s'étire pas et garde
+    // sa place quel que soit le rang.
+    .rank-shields {
+      flex: 0 0 auto;
     }
 
     .arcanum-bonus,
@@ -419,9 +473,7 @@
     gap: 0.4rem;
 
     &.total strong {
-      font-family: var(--cdg-font-title);
-      font-size: 1.1rem;
-      color: var(--cdg-blood);
+      .cdg-derived-value();
     }
   }
 

@@ -15,6 +15,7 @@ export default class CdgCarriereSheet extends CdgBaseItemSheet {
       addSkill: CdgCarriereSheet.#onAddSkill,
       removeSkill: CdgCarriereSheet.#onRemoveSkill,
       removeReference: CdgCarriereSheet.#onRemoveReference,
+      editReference: CdgCarriereSheet.#onEditReference,
     },
   }
 
@@ -31,11 +32,11 @@ export default class CdgCarriereSheet extends CdgBaseItemSheet {
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSkills = SYSTEM.SKILLS
 
-    const embedded = this.document.parent?.documentName === "Actor"
-    const arcanums = embedded ? this.document.system.arcanums.map((uuid) => fromUuidSync(uuid)) : await Promise.all(this.document.system.arcanums.map((uuid) => fromUuid(uuid)))
-    const equipments = embedded
-      ? this.document.system.equipments.map((uuid) => fromUuidSync(uuid))
-      : await Promise.all(this.document.system.equipments.map((uuid) => fromUuid(uuid)))
+    // Une fois la carrière déposée, ces UUID désignent les objets créés sur le personnage, pas
+    // ceux du compendium : c'est `CdgActor#grantOrigin` qui les réécrit après les avoir embarqués.
+    // Un objet supprimé depuis laisse une entrée vide, filtrée ici plutôt que de casser l'affichage.
+    const arcanums = await Promise.all(this.document.system.arcanums.map((uuid) => this.#resolve(uuid)))
+    const equipments = await Promise.all(this.document.system.equipments.map((uuid) => this.#resolve(uuid)))
     context.arcanums = arcanums.filter((item) => item)
     context.equipments = equipments.filter((item) => item)
 
@@ -98,6 +99,35 @@ export default class CdgCarriereSheet extends CdgBaseItemSheet {
     const skills = [...this.document.system.skills]
     skills.splice(index, 1)
     return this.document.update({ "system.skills": skills })
+  }
+
+  /**
+   * Résout une référence de la carrière, sans jamais lever.
+   *
+   * Sur une carrière embarquée, la référence vise un objet du personnage : `fromUuidSync` suffit et
+   * évite un rendu asynchrone de plus. Ailleurs elle vise un compendium, qu'il faut charger. Dans
+   * les deux cas un objet supprimé, ou un UUID devenu illisible, ne vaut pas une erreur — la ligne
+   * disparaît simplement de la fiche, et le clic n'ouvre rien.
+   * @param {string} uuid
+   * @returns {Promise<CdgItem|null>}
+   */
+  async #resolve(uuid) {
+    try {
+      return (this.document.parent?.documentName === "Actor" ? fromUuidSync(uuid) : await fromUuid(uuid)) ?? null
+    } catch {
+      return null
+    }
+  }
+
+  /**
+   * Ouvre la fiche de l'arcanum ou de l'équipement — celle de l'objet du personnage quand la
+   * carrière est embarquée. Si l'objet a été supprimé, il n'y a rien à ouvrir et rien à signaler.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte `data-uuid`.
+   */
+  static async #onEditReference(event, target) {
+    const item = await this.#resolve(target.dataset.uuid)
+    return item?.sheet.render({ force: true })
   }
 
   /**

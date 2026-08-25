@@ -1,0 +1,96 @@
+_id: cdgcanecromant00
+name: Nécromant
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Obémon n'est pas le dieu de l'Obscurité sans raison : les sombres arts
+    consistant à manipuler la mort elle-même sont jalousement gardés par ses
+    serviteurs. Quelques rares Marqués eurent la chance de bénéficier des
+    enseignements dans ce domaine auprès des Oblitérés eux-mêmes.</p><p>Cette
+    forme de magie, bien qu'elle doive rester dissimulée, constitue un atout
+    majeur que seules les compagnies franches savent exploiter, c'est un
+    avantage dont elles ne sauraient se priver.</p>
+  abilityBonus: esprit
+  startingMoney: 30
+  skills:
+    - skill: artsArtisanats
+      rank: 1
+    - skill: baratin
+      rank: 1
+    - skill: discretion
+      rank: 1
+    - skill: erudition
+      rank: 2
+    - skill: investigation
+      rank: 1
+    - skill: medecine
+      rank: 2
+    - skill: religionsLegendes
+      rank: 1
+    - skill: sciencesNaturelles
+      rank: 1
+    - skill: volonte
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardelere00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmagice00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmedicatus00
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmortem00000
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+effects:
+  - _id: cdgeanecromant00
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcanecromant00.cdgeanecromant00'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcanecromant00'

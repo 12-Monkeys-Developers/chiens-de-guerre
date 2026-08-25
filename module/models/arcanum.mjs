@@ -2,6 +2,20 @@ import { SYSTEM } from "../config/system.mjs"
 import CdgItemData from "./item.mjs"
 
 /**
+ * Le coût en Esprit d'un rang, une valeur par allégeance.
+ * @param {Object} fields `foundry.data.fields`
+ * @returns {SchemaField}
+ */
+function costByAllegiance(fields) {
+  return new fields.SchemaField(
+    Object.values(SYSTEM.ALLEGIANCES).reduce((obj, allegiance) => {
+      obj[allegiance.id] = new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 })
+      return obj
+    }, {}),
+  )
+}
+
+/**
  * Un pouvoir surnaturel, noté de 1 à 3.
  *
  * Physique, il est passif et donne +2 par rang sur une compétence ou un aspect du combat désigné
@@ -25,21 +39,32 @@ export default class CdgArcanumData extends CdgItemData {
       max: SYSTEM.ARCANUM_MAX_RANK,
     })
 
-    schema.rankData = new fields.SchemaField({
-      name1: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang1" }),
-      effect1: new fields.HTMLField(),
-      name2: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang2" }),
-      effect2: new fields.HTMLField(),
-      name3: new fields.StringField({ required: true, blank: false, nullable: false, initial: "Nom_rang3" }),
-      effect3: new fields.HTMLField(),
-    })
+    // Chaque rang couvre un tour de magie distinct (p. 92) : son nom, ce qu'il coûte en Esprit — un
+    // montant par allégeance, le livre faisant payer l'Obscurité plus cher sur plusieurs pouvoirs —
+    // ce que le tour fait, puis ses deux variantes.
+    //
+    // `effect` porte le texte commun au tour, celui que le livre imprime avant les puces
+    // d'allégeance ; `effectNa` et `effectNb` ne portent que ce qui change d'une voie à l'autre.
+    //
+    // Les variantes ne sont pas indexées par allégeance : le livre les regroupe librement, tantôt
+    // « Lumière / Balance » contre « Obscurité », tantôt « Balance / Obscurité » contre « Lumière ».
+    // Leur intitulé est donc du texte, recopié tel qu'il est imprimé.
+    schema.rankData = new fields.SchemaField(
+      [1, 2, 3].reduce((rankFields, rank) => {
+        rankFields[`name${rank}`] = new fields.StringField({ required: true, blank: false, nullable: false, initial: `Nom_rang${rank}` })
+        rankFields[`cost${rank}`] = costByAllegiance(fields)
+        rankFields[`effect${rank}`] = new fields.HTMLField()
+        rankFields[`label${rank}a`] = new fields.StringField({ required: true, blank: true, nullable: false, initial: "" })
+        rankFields[`effect${rank}a`] = new fields.HTMLField()
+        rankFields[`label${rank}b`] = new fields.StringField({ required: true, blank: true, nullable: false, initial: "" })
+        rankFields[`effect${rank}b`] = new fields.HTMLField()
+        return rankFields
+      }, {}),
+    )
 
     // Arcanum physique : la compétence bonifiée. Vide si l'arcanum agit sur un aspect du combat qui
     // n'est pas une compétence de la liste, auquel cas `effect` le décrit.
     schema.linkedSkill = new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...Object.keys(SYSTEM.SKILLS)] })
-
-    // Arcanum mystique : points d'Esprit consommés à l'activation.
-    schema.espritCost = new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 })
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
@@ -51,5 +76,42 @@ export default class CdgArcanumData extends CdgItemData {
   /** Bonus accordé par un arcanum physique : +2 par rang. Nul pour un arcanum mystique. */
   get bonus() {
     return this.isPassive ? this.rank * SYSTEM.PHYSICAL_BONUS_PER_RANK : 0
+  }
+
+  /**
+   * L'allégeance qui fixe les coûts : celle du personnage qui porte l'arcanum.
+   *
+   * Un arcanum de compendium n'a pas de porteur ; ses coûts sont alors lus en Balance, la voie
+   * médiane, plutôt que de n'afficher aucun chiffre sur la fiche de l'objet.
+   * @returns {string}
+   */
+  get allegiance() {
+    return this.parent?.parent?.system?.karma?.allegiance ?? SYSTEM.ALLEGIANCES.balance.id
+  }
+
+  /**
+   * Ce que coûte l'activation d'un rang, pour l'allégeance du porteur.
+   * @param {number} rank
+   * @returns {number}
+   */
+  activationCost(rank) {
+    return this.rankData[`cost${rank}`]?.[this.allegiance] ?? 0
+  }
+
+  /**
+   * Les tours que le personnage sait lancer : un par rang maîtrisé, du premier au sien.
+   *
+   * Chaque rang est un pouvoir à part entière, et le personnage garde l'usage des précédents : un
+   * pratiquant de rang 2 choisit entre le tour de rang 1 et celui de rang 2, à des coûts distincts.
+   * Vide pour un arcanum physique, qui n'a rien à activer.
+   * @returns {{rank: number, name: string, cost: number}[]}
+   */
+  get activations() {
+    if (this.isPassive) return []
+    return Array.from({ length: this.rank }, (unused, index) => index + 1).map((rank) => ({
+      rank,
+      name: this.rankData[`name${rank}`],
+      cost: this.activationCost(rank),
+    }))
   }
 }

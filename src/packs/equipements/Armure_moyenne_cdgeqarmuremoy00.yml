@@ -1,0 +1,43 @@
+_id: cdgeqarmuremoy00
+name: Armure moyenne
+type: equipment
+img: icons/equipment/chest/breastplate-scale-grey.webp
+system:
+  description: ''
+  subtype: armor
+  equipped: false
+  quantity: 1
+  damage:
+    rank: 0
+    bonuses:
+      sheet: 0
+  attack:
+    ability: vivacite
+    skill: melee
+  category: moyenne
+  protection:
+    rank: 2
+    bonuses:
+      sheet: 0
+  blockBonus: 0
+  initMalus: -3
+  price:
+    ducat: 100
+    denier: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgeqarmuremoy00'

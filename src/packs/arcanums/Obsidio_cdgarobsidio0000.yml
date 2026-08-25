@@ -1,0 +1,69 @@
+_id: cdgarobsidio0000
+name: Obsidio
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Les adeptes d’Obsidio apprennent à maîtriser toutes les subtilités de la
+    parade, que ce soit à l’aide d’armes de mêlée ou de boucliers. Ils font de
+    cet art soit un rempart impénétrable pour eux comme pour leurs alliés, soit
+    un outil offensif, utilisant au mieux les failles de l’attaquant pour s’y
+    engouffrer et réaliser des ripostes mortelles. Pour chaque rang possédé dans
+    cet Arcanum, le personnage bénéficie d’un + 2 à tous les tests de blocage,
+    aussi bien avec une arme de corps-à-corps qu’avec les
+    boucliers.</p><h4>Lumière</h4><p>Lorsqu’un allié proche (moins de 2 mètres)
+    est sur le point de recevoir un coup (après que sa tentative de blocage ou
+    d’esquive ait échoué mais avant que les dégâts soient déterminés), le Marqué
+    peut tenter de le défendre in extremis. Il doit pour cela dépenser 1 point
+    de Vivacité. Il peut alors faire un test de blocage dont le résultat se
+    substitue à celui que le défenseur aurait dû appliquer. Si cette tentative
+    ne réussit toujours pas à éviter l’attaque, soit le pratiquant décide de
+    subir les dommages (ce choix nécessite la dépense de 1 point d’Esprit), soit
+    la cible initiale reçoit le coup (par défaut). Ce pouvoir ne « consomme »
+    pas l’unique parade que peut réaliser en temps normal le combattant par
+    round.</p><h4>Balance / Obscurité</h4><p>Avant de tenter de bloquer un coup
+    au contact qui lui est destiné, le Marqué peut annoncer une tentative de
+    riposte. Ceci lui coûte 1 point de Vivacité. Si le test d’opposition
+    d’attaque / parade se solde par un échec ou un échec critique pour
+    l’assaillant, le défenseur peut alors immédiatement tenter contre lui une
+    attaque gratuite (qui ne consomme pas d’action). Ce pouvoir ne permet pas
+    d’outrepasser la limite d’une seule tentative de blocage par round.</p>
+  arcanumType: physique
+  rank: 1
+  rankData:
+    name1: Rang 1
+    cost1:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect1: ''
+    label1a: Lumière / Balance
+    effect1a: ''
+    label1b: Obscurité
+    effect1b: ''
+    name2: Rang 2
+    cost2:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect2: ''
+    label2a: Lumière / Balance
+    effect2a: ''
+    label2b: Obscurité
+    effect2b: ''
+    name3: Rang 3
+    cost3:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect3: ''
+    label3a: Lumière / Balance
+    effect3a: ''
+    label3b: Obscurité
+    effect3b: ''
+  linkedSkill: blocage
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarobsidio0000'

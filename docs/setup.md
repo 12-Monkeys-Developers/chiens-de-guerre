@@ -91,9 +91,10 @@ chaque change, via `extendFields` — et non en reconstruisant le schéma, ce qu
 
 ## Les compendiums
 
-Deux packs livrés avec le système : `peuples` (8 objets) et `traits` (17 objets, les traits partagés
-n'étant écrits qu'une fois). Les sources YAML de `src/packs/` sont la référence versionnée ;
-`packs/` est un produit de compilation, ignoré par git.
+Cinq packs livrés avec le système : `peuples` (8 objets), `traits` (17 objets, les traits partagés
+n'étant écrits qu'une fois), `arcanums` (22), `equipements` (25) et `carrieres` (15). Les sources
+YAML de `src/packs/` sont la référence versionnée ; `packs/` est un produit de compilation, ignoré
+par git.
 
 ```
 npm run YMLtoLDB    # src/packs/ → packs/   (avant de lancer Foundry)
@@ -109,8 +110,45 @@ Deux pièges :
   `!items.effects!<idObjet>.<idEffet>` pour un effet embarqué. Sans lui la CLI ignore le fichier
   **en silence** et produit un compendium vide sans le moindre message.
 
-Les identifiants sont écrits à la main (`cdgtr…` pour un trait, `cdgpe…` pour un peuple) pour que les
-UUID d'un peuple vers ses traits restent stables d'une compilation à l'autre.
+Les identifiants sont fixés d'avance (`cdgtr…` pour un trait, `cdgpe…` pour un peuple, `cdgar…` pour
+un arcanum, `cdgeq…` pour un équipement, `cdgca…` pour une carrière, `cdgea…` pour l'effet
+d'ajustement qu'une origine embarque) pour que les UUID d'une origine vers ce qu'elle accorde restent
+stables d'une compilation à l'autre.
+
+### Les carrières, les arcanums et l'équipement sont générés
+
+`peuples` et `traits` ont été écrits à la main. Les trois autres packs sortent d'un générateur, parce
+qu'une carrière n'existe pas seule : elle renvoie par UUID à ses arcanums et à son barda, et saisir
+102 références à la main serait une source d'erreurs muettes.
+
+```
+npm run build:carrieres                              # src/packs/{arcanums,equipements,carrieres}/ + la macro
+npm run build:carrieres -- --force                   # régénère par-dessus les fichiers existants
+npm run build:carrieres -- --force --only=arcanums   # ... mais un seul pack
+```
+
+- Les données vivent dans `tools/data/` — c'est là qu'on corrige, jamais dans les YAML produits.
+  `equipements.mjs` ne recopie d'ailleurs aucun chiffre : dégâts, protection, malus d'initiative,
+  couple caractéristique / compétence et prix sont lus dans `module/config/equipment.mjs`, comme
+  `CdgItem#_preUpdate` le fait quand on change la catégorie sur une fiche.
+- **Sans `--force`, un fichier déjà présent est conservé.** Les packs seront retouchés en jeu puis
+  réextraits par `npm run LDBtoYML` ; un générateur qui écrase par défaut effacerait ce travail sans
+  prévenir. `--only=<pack>` restreint la casse au pack visé : reprendre le chapitre des Arcanums ne
+  doit pas coûter les retouches faites sur l'équipement.
+- **Les 22 arcanums sont saisis** (p. 92 à 109). Un arcanum physique n'a pas de tours par rang : son
+  effet et ses deux variantes d'allégeance tiennent dans la description, ses trois onglets de rang
+  n'apparaissent même pas — la fiche les retire du sélecteur et ne les rend pas. Pour un mystique, la
+  description ne porte que la présentation de l'arcanum ; chaque rang a son nom, ses coûts, le texte
+  commun au tour (`effectN`) puis ses deux variantes.
+- Le générateur refuse d'écrire si une compétence, une caractéristique ou une catégorie n'existe pas,
+  si un rang sort des bornes, ou si deux documents se disputent un identifiant — trois erreurs que la
+  CLI, elle, accepterait en silence.
+- Chaque carrière embarque son effet d'ajustement de caractéristique, pour la même raison que les
+  peuples : `grantOrigin()` n'applique délibérément pas `system.abilityBonus`.
+- Il produit en plus `tools/out/macro-carrieres.js` (non versionné), une macro Foundry autonome qui
+  crée les mêmes contenus dans des compendiums de monde. Elle n'y réutilise pas les UUID du système :
+  elle crée d'abord arcanums et équipements, puis résout les références. Relancer la macro ne
+  duplique rien.
 
 ## Habillage
 
@@ -150,6 +188,11 @@ Deux éléments de la fiche papier sont **dessinés en CSS** plutôt qu'extraits
 - **Le bonus de faction des Tuhéens** : le livre donne « +1 Corps » dans le récapitulatif, le guide
   d'intégration mentionne un choix entre Corps, Vivacité et Esprit selon la faction. Le compendium
   retient +1 Corps.
+- **Les paquetages et le matériel divers n'ont ni contenu ni prix.** La v0.1 du livre n'a pas encore
+  de chapitre équipement ; leur `price` reste à 0.
+- **Les « ou » des carrières ne sont pas modélisables.** `equipments` reçoit la première option
+  imprimée, l'alternative est énoncée dans la description. Un champ de choix sur la carrière serait
+  plus juste, mais il faudrait que le dépôt sache poser une question au joueur.
 
 ## Vérifications passées
 

@@ -1,0 +1,96 @@
+_id: cdgarnebula00000
+name: Nebula
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Nebula se concentre sur l’art de dissimuler sa présence aux autres. C’est
+    un Arcanum extrêmement précieux pour les éclaireurs, les espions, ou
+    simplement ceux qui préfèrent éviter le danger plutôt que de
+    l’affronter.</p>
+  arcanumType: mystique
+  rank: 1
+  rankData:
+    name1: Passage sans traces
+    cost1:
+      obscurite: 1
+      balance: 1
+      lumiere: 1
+    effect1: >-
+      <p>Ce tour de magie permet au bénéficiaire, pendant une heure, de ne
+      laisser aucune piste lors de ses déplacements. Il ne laisse ni
+      d’empreintes au sol, ni traces de doigts, ni d’odeur. Employé par une
+      personne précautionneuse, il devient presque impossible à pister.</p>
+    label1a: Lumière
+    effect1a: >-
+      <p>Le Marqué dépense 1 point d’Esprit, puis doit réussir un test d’Esprit
+      / Arcanum pour activer ce pouvoir. Au moment où il l’active, il peut
+      décider de l’étendre à une ou plusieurs personnes proches (maximum 10).
+      Dans ce cas, son test subit un malus de - 1 par cible en plus de
+      lui-même.</p>
+    label1b: Balance / Obscurité
+    effect1b: >-
+      <p>Le Marqué dépense 1 point d’Esprit ; le tour prend alors effet
+      uniquement pour lui-même.</p>
+    name2: Refuge des ombres
+    cost2:
+      obscurite: 2
+      balance: 1
+      lumiere: 1
+    effect2: >-
+      <p>Pour lancer ce tour, le Marqué doit se glisser dans une zone d’ombre et
+      ne pas être observé par quiconque. Il devient alors totalement invisible
+      (techniquement, il reste visible, mais les gens ignorent instinctivement
+      sa présence). Il le demeure tant qu’il reste parfaitement immobile et ne
+      produit aucun bruit. Sa présence est toutefois révélée en cas de fouille
+      active ou de lumière soudaine. Ce tour se révèle particulièrement utile
+      pour semer des poursuivants ou tendre une embuscade.</p>
+    label2a: Lumière / Balance
+    effect2a: >-
+      <p>Le Marqué doit dépenser 1 point d’Esprit pour activer ce tour. Après
+      une minute, il devra dépenser 1 point d’Esprit supplémentaire pour
+      prolonger l’effet d’une minute, et ainsi de suite tant qu’il le souhaite
+      et peut en payer le coût.</p>
+    label2b: Obscurité
+    effect2b: >-
+      <p>Le Marqué doit dépenser 2 points d’Esprit pour activer ce tour. Il
+      demeure alors indéfiniment invisible, tant qu’il respecte les
+      conditions.</p>
+    name3: Regards aveugles
+    cost3:
+      obscurite: 3
+      balance: 2
+      lumiere: 2
+    effect3: >-
+      <p>Les observateurs cessent de voir le Marqué, même si ce pouvoir est
+      activé en pleine lumière et devant témoins. Il ne devient pas réellement
+      invisible : il s’agit d’un effet psychique. Les gens détournent le regard,
+      s’écartent de son chemin et ignorent involontairement sa présence. Cet
+      effet n’affecte que la vue, et non l’ouïe ni l’odorat. L’effet cesse
+      immédiatement dès que le pratiquant révèle sa présence à une tierce
+      personne (s’il produit un bruit, ouvre une porte, porte un coup, déplace
+      un objet, etc.). Cela n’empêche pas le bénéficiaire de se déplacer, mais
+      il a intérêt à le faire silencieusement et sans toucher à quoi que ce
+      soit. S’il reste immobile, une fouille active du lieu ne peut pas le
+      révéler — à moins d’utiliser un animal doté d’un excellent
+      flair.</p><ul><li>+ 0 : une seule personne aux alentours qui ne lui prête
+      pas particulièrement attention ;</li><li>- 5 : face à un individu qui le
+      surveille attentivement ;</li><li>- 10 : au milieu d’une foule. En cas
+      d’échec, le sort ne prend pas effet. Le tour dure une minute, prolongeable
+      au prix de 1 point d’Esprit par minute supplémentaire.</li></ul>
+    label3a: Lumière / Balance
+    effect3a: >-
+      <p>Le tour est lancé pour 2 points d’Esprit. Si le pratiquant est observé
+      au moment de l’activation, il doit réussir un test d’Esprit / Arcanum
+      assorti d’un modificateur de + 0 à - 10 :</p>
+    label3b: Obscurité
+    effect3b: >-
+      <p>Ce tour est lancé pour 3 points d’Esprit, que le pratiquant soit
+      observé ou non. Il demeure alors indéfiniment invisible, tant qu’il
+      respecte les conditions.</p>
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarnebula00000'

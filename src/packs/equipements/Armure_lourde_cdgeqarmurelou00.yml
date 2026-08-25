@@ -1,0 +1,43 @@
+_id: cdgeqarmurelou00
+name: Armure lourde
+type: equipment
+img: icons/equipment/chest/breastplate-collared-steel.webp
+system:
+  description: ''
+  subtype: armor
+  equipped: false
+  quantity: 1
+  damage:
+    rank: 0
+    bonuses:
+      sheet: 0
+  attack:
+    ability: vivacite
+    skill: melee
+  category: lourde
+  protection:
+    rank: 3
+    bonuses:
+      sheet: 0
+  blockBonus: 0
+  initMalus: -5
+  price:
+    ducat: 300
+    denier: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgeqarmurelou00'

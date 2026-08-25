@@ -1,0 +1,103 @@
+_id: cdgarmortem00000
+name: Mortem
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Mortem est un Arcanum qui fut enseigné directement par Tol-Amoth à ses
+    plus proches lieutenants, lesquels diffusèrent ensuite ce sombre savoir
+    auprès de leurs serviteurs les plus zélés. Mortem manipule les sombres
+    forces de la mort comme un outil que l’on utilise puis que lon range pour un
+    usage ultérieur. Les initiés s’engagent souvent dans cette voie dans le vain
+    espoir d’y trouver une solution à leur propre mortalité.</p>
+  arcanumType: mystique
+  rank: 1
+  rankData:
+    name1: Les yeux du trépas
+    cost1:
+      obscurite: 1
+      balance: 1
+      lumiere: 1
+    effect1: >-
+      <p>Ce tour de magie permet au nécromancien de voir la dernière scène vécue
+      par un défunt en touchant son cadavre. Ceci peut souvent, mais pas
+      systématiquement, renseigner sur la cause de la mort. Le pratiquant
+      visualise les derniers instants perçus par les yeux du mort sous la forme
+      d’une vision intense. Lancer ce tour nécessite de dépenser1 point d’Esprit
+      et de réussir un test d’Esprit / Arcanum. Plus la réussite est élevée,
+      plus la scène observée est longue et nette.</p>
+    label1a: Lumière
+    effect1a: >-
+      <p>Le pratiquant doit toucher un cadavre, quel que soit son état de
+      décomposition ou son ancienneté, tant que le crâne est intact (un os de
+      fémur seul, par exemple, ne suffirait pas). En cas de réussite, le
+      nécromant ne perçoit que des images, sans aucun son.</p>
+    label1b: Balance / Obscurité
+    effect1b: >-
+      <p>Le pratiquant doit toucher un cadavre frais (mort depuis moins de trois
+      jours). Un corps plus ancien empêche le pouvoir de fonctionner. En plus
+      des images, le pratiquant perçoit aussi les sons comme le défunt les
+      entendait, quoi que légèrement étouffés.</p>
+    name2: Communiquer avec les morts
+    cost2:
+      obscurite: 1
+      balance: 1
+      lumiere: 1
+    effect2: >-
+      <p>Le pratiquant devient capable de convoquer l’esprit d’un mort afin de
+      s’entretenir avec lui. Le rituel dure quelques minutes, et nécessite de
+      connaître le nom du défunt et de disposer de son corps ou d’une partie de
+      ce dernier (os, cheveux, sang, etc.). Le pratiquant doit également
+      dépenser 1 point d’Esprit et réussir un test d’Esprit / Arcanum avec un
+      malus de - 2. Une fois convoqué, l’esprit demeure dans le monde physique
+      pendant une minute. Il est incapable d’agir, mais peut parler.</p>
+    label2a: Lumière
+    effect2a: >-
+      <p>L’esprit est libre de mentir ou de dire la vérité tout au long de
+      l’entretien.</p>
+    label2b: Balance / Obscurité
+    effect2b: >-
+      <p>Le rituel de convocation exige que le pratiquant se fasse abondamment
+      saigner, ce qui lui inflige une blessure légère. Une fois l’esprit
+      convoqué, le nécromant peut le contraindre à dire la vérité. Cela lui
+      coûte 1 point d’Esprit par question à laquelle l’esprit ne pourra ni
+      mentir ni se soustraire. Rien n’empêche le pratiquant de discuter «
+      normalement » avec l’esprit pendant la convocation et de recourir à
+      l’interrogatoire magique qu’avec parcimonie, selon les besoins.</p>
+    name3: Serviteur cadavérique
+    cost3:
+      obscurite: 1
+      balance: 1
+      lumiere: 1
+    effect3: >-
+      <p>Au cours d’un rituel d’une heure, le nécromant peut animer un cadavre
+      pour en faire un serviteur. Cela nécessite de dépenser 1 point d’Esprit et
+      de réussir un test d’Esprit / Arcanum. Le cadavre animé ne possède aucune
+      intelligence et se contente d’exécuter strictement les ordres simples de
+      son créateur. Il ne parle pas. Les zombis sont presque indestructibles
+      sans armes adaptées : face à tout dommage non tranchant (dégâts
+      contondants ou perforants, par exemple), la protection d’un zombi passe à
+      3 .</p>
+    label3a: Lumière
+    effect3a: >-
+      <p>Le cadavre reste animé jusqu’au prochain coucher de soleil. Les
+      serviteurs cadavériques sont infatigables, assez forts mais relativement
+      lents et stupides. Ils sont incapables de manipuler une arme et se
+      montrent maladroits à mains nues. Caractéristiques : Corps 11, Vivacité 8,
+      Esprit 3 Mêlée 1 , Athlétisme 1 , Vigueur 3 Ils ne sont pas
+      particulièrement effrayants et pourraient passer pour un homme très
+      malade, voire presque banal avec un bon déguisement.</p>
+    label3b: Balance / Obscurité
+    effect3b: >-
+      <p>Le cadavre reste animé jusqu’au prochain lever de soleil. Ces
+      serviteurs sont infatigables et extrêmement puissants, mais lourdauds et
+      totalement dénués d’intelligence. Ils ne peuvent manier aucune arme et
+      sont peu efficaces à mains nues. Caractéristiques : Corps 14, Vivacité 6,
+      Esprit 1 Mêlée 1 , Athlétisme 2 , Vigueur 3 Ils sont terrifiants et ne
+      peuvent en aucun cas passer pour quelque chose de normal.</p>
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarmortem00000'

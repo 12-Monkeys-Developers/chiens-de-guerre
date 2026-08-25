@@ -1,0 +1,107 @@
+_id: cdgariter0000000
+name: Iter
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Iter est l’art du voyage. Ses tours facilitent la survie, aident le
+    voyageur à trouver son chemin et fournissent une protection pour la
+    nuit.</p>
+  arcanumType: mystique
+  rank: 1
+  rankData:
+    name1: Purification
+    cost1:
+      obscurite: 1
+      balance: 1
+      lumiere: 1
+    effect1: >-
+      <p>Ce tour rend consommable un liquide ou des ingrédients impropres à la
+      consommation (avariés ou empoisonnés, par exemple). Il ne les protège
+      cependant pas contre une putréfaction ou une corruption ultérieure :
+      ainsi, un fruit pourri traité par ce tour reprendra immédiatement son
+      processus de décomposition normal. La purification détruit les parties
+      corrompues, ce qui peut drastiquement diminuer le poids de la nourriture
+      (ainsi, lancé sur une carcasse pourrissante, il ne restera pas
+      grand-chose).</p>
+    label1a: Lumière / Balance
+    effect1a: >-
+      <p>Le pratiquant dépense 1 point d’Esprit et vise autant de nourriture
+      et/ou de liquide qu’il souhaite. Il doit alors réussir un test d’Esprit /
+      Arcanum à + 4 avec un malus de - 2 pour chaque jour de ration et - 2 pour
+      chaque 3 litres de liquide. Ainsi, tenter de purifier 1 jour de ration et
+      6 litres d’eau imposerait un test avec un modificateur final de - 2. La
+      nourriture et les liquides ainsi traités sont aussi débarrassés du goût
+      lié à la corruption.</p>
+    label1b: Obscurité
+    effect1b: >-
+      <p>Le pratiquant dépense 1 point d’Esprit et vise autant de nourriture
+      et/ou de liquide qu’il souhaite. Il doit alors réussir un test d’Esprit /
+      Arcanum à + 4 avec un malus de - 1 pour chaque jour de ration et - 1 pour
+      chaque 3 litres de liquide. Ainsi, tenter de purifier 1 jour de ration et
+      6 litres d’eau imposerait un test avec un modificateur final de + 1. La
+      nourriture et les liquides ainsi traités ne sont toutefois pas débarrassés
+      du goût lié à la corruption ; leur consommation peut nécessiter un test
+      d’Esprit / Volonté pour supporter l’odeur ou l’amertume.</p>
+    name2: Voyage assuré
+    cost2:
+      obscurite: 1
+      balance: 2
+      lumiere: 1
+    effect2: <p>Ce tour facilite le voyage dans des conditions difficiles.</p>
+    label2a: Lumière / Obscurité
+    effect2a: >-
+      <p>Le pratiquant dépense 1 point d’Esprit et vise, en plus de lui-même,
+      autant de personnes dans son champ de vision qu’il le souhaite. Il doit
+      alors réussir un test d’Esprit / Arcanum avec un malus de - 1 par individu
+      supplémentaire affecté. En cas de réussite, les bénéficiaires deviennent
+      peu sensibles aux températures (chaud, froid), aux conditions climatiques
+      (pluie, neige), aux difficultés du terrain (terrains boueux ou escarpés,
+      etc) et à l’encombrement du matériel. Ce tour transforme un déplacement
+      ardu en voyage confortable. Il ne protège cependant pas des conditions
+      extrêmes (feu, froid intense, charges excessives, etc.). L’effet dure
+      jusqu’au prochain coucher ou lever de soleil, le plus proche des deux.</p>
+    label2b: Balance
+    effect2b: >-
+      <p>Ce tour coûte 2 points d’Esprit à l’activation. Le pratiquant désigne
+      une destination qu’il a déjà visitée ou dont il connaît précisément la
+      localisation. Tant qu’il chemine vers cet objectif, il connaît
+      intuitivement la bonne direction et les chemins les plus aisés à
+      emprunter. Peu avant de rencontrer une difficulté comme une embuscade ou
+      un rôdeur dangereux, il en est averti s’il réussit un test d’Esprit /
+      Arcanum. L’effet dure jusqu’au prochain coucher ou lever de soleil, le
+      plus proche des deux.</p>
+    name3: Sanctuaire
+    cost3:
+      obscurite: 2
+      balance: 2
+      lumiere: 2
+    effect3: >-
+      <p>Ce tour nécessite un rituel d’une dizaine de minutes. Il érige un dôme
+      transparent dont l’emprise au sol est un cercle d’environ 3 mètres de
+      rayon. Le dôme n’est pas une barrière physique (on peut le traverser),
+      mais il est imperméable et conserve la chaleur. Ainsi, ses occupants sont
+      assurés d’être au sec et de bénéficier d’une température agréable. Le dôme
+      reste en place jusqu’au prochain lever de soleil.</p>
+    label3a: Lumière / Balance
+    effect3a: >-
+      <p>Lancer ce tour nécessite la dépense de 2 points d’Esprit. Des esprits
+      bienveillants veillent sur le dôme et ses occupants. Ils avertiront
+      automatiquement le pratiquant si un danger s’approche et peuvent le
+      réveiller si nécessaire.</p>
+    label3b: Obscurité
+    effect3b: >-
+      <p>Lancer ce tour nécessite la dépense de 2 points d’Esprit. Des dizaines
+      d’esprits asservis peuvent dresser un campement en peu de temps si le
+      matériel nécessaire est accessible : ils montent les tentes, déplient les
+      couchages, allument un feu et préparent les repas, etc. Ces
+      esprits-esclaves prennent également soin des occupants : pansage des
+      petites blessures, massage des pieds meurtris ou autre soin léger, etc.
+      Les occupants récupèrent 1 point bonus en Corps, Vivacité ou Esprit à
+      l’issue du repos.</p>
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgariter0000000'

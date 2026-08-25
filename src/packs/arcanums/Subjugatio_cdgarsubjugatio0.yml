@@ -1,0 +1,118 @@
+_id: cdgarsubjugatio0
+name: Subjugatio
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Subjugatio est l’art subtil d’influencer les autres. Alors qu’Impero
+    soumet brutalement les esprits, Subjugatio modifie imperceptiblement les
+    prédispositions des interlocuteurs de telle sorte qu’il soit bien plus aisé
+    de les rallier à son point de vue. Les effets de Subjugatio sont très
+    difficiles à déceler mais ne sont guère spectaculaires. Ils conviennent
+    parfaitement à un usage diplomatique et présentent l’énorme avantage de ne
+    pas détériorer les relations sur le long terme. Les tours de Subjugatio ne
+    nécessitent pas d’incantation (ni voix ni gestes) et leur usage n’est donc
+    généralement pas perceptible. Ils nécessitent toutefois toujours la dépense
+    d’une action.</p>
+  arcanumType: mystique
+  rank: 1
+  rankData:
+    name1: Moment de flottement
+    cost1:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect1: >-
+      <p>Ce tour de magie agit sur un groupe. Il impose un très bref moment de
+      flottement, sans conséquence en soi, mais que le pratiquant peut utiliser
+      à son avantage. Utilisé lors d’un discours, il force le locuteur à marquer
+      une courte pause, suffisante pour que le Marqué puisse l’interrompre et
+      placer un argument choc ou tout simplement reprendre la parole. Utilisé
+      pendant un combat, il offre la possibilité au pratiquant de lancer des
+      pourparlers — mais il a alors intérêt à se montrer extrêmement
+      convainquant. « Moment de flottement » n’impose rien d’autre que cette
+      interruption, et en particulier certainement pas que les interlocuteurs
+      soient réceptifs aux propositions : il ne fait que créer une opportunité.
+      Ce tour ne permet pas d’utiliser un quelconque effet de surprise à son
+      avantage.</p>
+    label1a: Lumière
+    effect1a: >-
+      <p>Le pratiquant doit réussir un test d’Esprit / Arcanum pour lancer ce
+      tour. Que ce soit un succès ou un échec, le pouvoir ne pourra pas être à
+      nouveau utilisé pendant cette scène. En cas de succès, il bénéficie en
+      plus des effets normaux d’un bonus de + 2 à tous les tests sociaux
+      reposant sur l’autorité pendant la scène.</p>
+    label1b: Balance / Obscurité
+    effect1b: >-
+      <p>Le pratiquant doit réussir un test d’Esprit / Arcanum pour lancer ce
+      tour. Que ce soit un succès ou un échec, le pouvoir ne pourra pas être à
+      nouveau utilisé pendant cette scène. En cas de succès, il bénéficie en
+      plus des effets normaux d’un bonus de + 2 à tous les tests sociaux
+      reposant sur le mensonge pendant la scène.</p>
+    name2: Bipolarisation du groupe
+    cost2:
+      obscurite: 1
+      balance: 1
+      lumiere: 1
+    effect2: >-
+      <p>« Bipolarisation du groupe » ne peut prendre effet que sur un groupe
+      restreint (4 à 20 individus), pendant une discussion civilisée. Il
+      focalise l’attention de tous les participants sur deux personnes : d’une
+      part le pratiquant et d’autre part l’individu dont l’ascendant social est
+      le plus fort. Ce tour rend passifs les autres participants, qui se
+      contentent d’écouter docilement ce que les deux protagonistes ont à dire.
+      Celui des deux orateurs qui remporte la joute oratoire sur l’autre aura la
+      certitude de remporter également l’adhésion du groupe, au moins pour cette
+      scène. Ce tour cristallise donc tous les débats sur deux champions, de
+      telle façon que les individualités et dissidences soient temporairement
+      muselées. Une fois la scène terminée, chacun rationalisera ce qui s’est
+      passé en mettant cela sur le compte de la dynamique de groupe.</p>
+    label2a: Lumière / Balance
+    effect2a: >-
+      <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un test
+      d’opposition d’Esprit / Arcanum contre Esprit / Volonté, l’adversaire
+      testé étant celui qui deviendrait l’orateur concurrent en cas de réussite.
+      Si le tour prend effet et que le pratiquant sort vainqueur de la joute
+      verbale qui s’ensuit, il se nimbe d’une plus grande crédibilité auprès du
+      groupe affecté pendant quelques jours.</p>
+    label2b: Obscurité
+    effect2b: >-
+      <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un test
+      d’opposition d’Esprit / Arcanum contre Esprit / Volonté, l’adversaire
+      testé étant celui qui deviendrait l’orateur concurrent en cas de réussite.
+      Si le tour prend effet et que le pratiquant sort vainqueur de la joute
+      verbale qui s’ensuit, l’orateur concurrent devient socialement
+      décrédibilisé pendant quelques jours.</p>
+    name3: Grandeur fantasmée
+    cost3:
+      obscurite: 1
+      balance: 1
+      lumiere: 1
+    effect3: >-
+      <p>La prestance du Marqué est temporairement renforcée le temps d’une
+      scène, de sorte qu’il apparaisse comme appartenant à une classe sociale
+      similaire à celle de la personne la plus influente de l’assemblée. Ainsi,
+      un simple soldat pourrait discuter sur un pied d’égalité avec son officier
+      ; il pourrait s’adresser à un membre de la noblesse sans que cela paraisse
+      incongru, voire parler à un roi comme s’il était son pair. Les effets
+      demeurent subtils : les interlocuteurs attribuent naturellement cette
+      aisance à un mot bien placé, à un port assuré ou à un visage affable. Cet
+      effet dure une scène.</p>
+    label3a: Lumière / Balance
+    effect3a: >-
+      <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un test d’Esprit
+      / Arcanum à - 2 pour lancer ce tour. En cas de succès, il bénéficie en
+      outre d’un bonus de + 4 à tous ses tests sociaux reposant sur l’autorité
+      pendant la scène.</p>
+    label3b: Obscurité
+    effect3b: >-
+      <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un test d’Esprit
+      / Arcanum à - 2 pour lancer ce tour. En cas de succès, il bénéficie en
+      outre d’un bonus de + 4 à tous ses tests sociaux reposant sur le mensonge
+      pendant la scène.</p>
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarsubjugatio0'

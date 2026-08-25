@@ -70,9 +70,9 @@
           <img class="item-img" src="{{weapon.img}}" data-action="editItem" />
           <span class="item-name" data-action="editItem">{{weapon.name}}</span>
           <a class="item-control weapon-attack" data-action="rollWeapon" data-tooltip="{{localize 'CDG.ui.attackWithWeapon'}}"><i class="fas {{#if weapon.system.isRangedWeapon}}fa-bow-arrow{{else}}fa-sword{{/if}}"></i></a>
+          <a class="item-control" data-action="rollDamage" data-tooltip="{{localize 'CDG.combat.damageTest'}}"><i class="fa-solid fa-burst"></i></a>
           <span class="item-label">{{localize "CDG.label.long.damage"}}</span>
           {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=weapon.system.damage.rank editable=false}}
-          <a class="item-control" data-action="rollDamage" data-tooltip="{{localize 'CDG.combat.damageTest'}}"><i class="fa-solid fa-burst"></i></a>
           {{#if @root.isEditable}}
             <a class="item-control" data-action="deleteItem"><i class="fas fa-trash"></i></a>
           {{/if}}

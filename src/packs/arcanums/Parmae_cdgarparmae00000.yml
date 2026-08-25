@@ -1,0 +1,110 @@
+_id: cdgarparmae00000
+name: Parmae
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Parmae regroupe divers tours dédiés à la protection et au renforcement.
+    C’est un Arcanum qui se révèle particulièrement utile pour une compagnie qui
+    se retrouve à devoir défendre une position. Un ingénieur de bataille maître
+    de Parmae peut complètement renverser le cours d’un siège en tirant la
+    quintessence des ouvrages défensifs.</p>
+  arcanumType: mystique
+  rank: 1
+  rankData:
+    name1: Glyphe de protection
+    cost1:
+      obscurite: 2
+      balance: 2
+      lumiere: 1
+    effect1: >-
+      <p>Le pratiquant appose au cours d’un rituel de plusieurs minutes une
+      inscription magique sur un objet ou un lieu. Le glyphe peut par exemple
+      servir à protéger un couloir, un pont, une porte, une fenêtre, un coffre,
+      un sac ou une boîte. Le pratiquant définit un mot de passe sous forme d’un
+      unique mot. Si un individu ouvre/entre/traverse/ touche l’objet ou le lieu
+      protégé sans prononcer à voix haute le mot de passe, il déclenche la
+      protection. La protection du glyphe perdure jusqu’à ce qu’il soit activé.
+      Si le pratiquant trace un nouveau glyphe, tout glyphe précédemment apposé
+      se décharge : un seul glyphe peut donc être actif à un moment donné.</p>
+    label1a: Lumière
+    effect1a: >-
+      <p>Apposer le glyphe nécessite la dépense de 1 point d’Esprit. Si un
+      individu déclenche le glyphe, le pratiquant en est instantanément informé
+      (mentalement et silencieusement).</p>
+    label1b: Obscurité / Balance
+    effect1b: >-
+      <p>Apposer le glyphe nécessite la dépense de 2 points d’Esprit. L’individu
+      qui déclenche le glyphe provoque une petite détonation (sonore) et subit
+      une blessure grave qu’il peut tenter de réduire avec un test
+      d’encaissement.</p>
+    name2: Renforcement
+    cost2:
+      obscurite: 1
+      balance: 1
+      lumiere: 1
+    effect2: >-
+      <p>Le pratiquant renforce un objet ou un édifice temporairement, de telle
+      sorte que sa résistance soit bien supérieure à la normale. Un outil
+      devient incassable même dans des usages extrêmes, une épée ébréchée ne se
+      brisera pas pendant le combat, une porte ne pourra pas être enfoncée sans
+      déployer des moyens disproportionnés, un mur ne s’effondrera pas en dépit
+      de tentatives de sape classiques, etc. Ce tour nécessite un rituel de
+      plusieurs minutes au cours duquel l’incantateur doit toucher sa cible. Il
+      devra dépenser d’autant plus de points d’Esprit que l’objet ou l’édifice
+      est grand : 1 point pour une arme, un outil ou une armure, 2 points pour
+      une porte, une herse ou un pont-levis, 3 points pour un petit pont, une
+      modeste section d’un rempart ou une maisonnette, 4 points pour un pont ou
+      une maison, 5 points pour un manoir, 10 points pour un château entier ou
+      une citadelle, etc. Un bouclier ou une arme en état correct ainsi enchanté
+      bénéficie, en plus d’être incassable, d’un bonus de + 2 aux tests de
+      blocage tandis qu’une armure fait profiter à son porteur d’un bonus de + 2
+      aux tests d’encaissement.</p>
+    label2a: Lumière / Balance
+    effect2a: >-
+      <p>Le renforcement dure jusqu’au prochain coucher de soleil. À l’issue de
+      cette durée, le Marqué pourra renouveler l’enchantement pour une journée
+      de plus, dans les mêmes conditions que la première fois (rituel de
+      plusieurs minutes pendant lequel il doit toucher sa cible) et pour
+      seulement 1 point d’Esprit.</p>
+    label2b: Obscurité
+    effect2b: >-
+      <p>Le renforcement dure jusqu’au prochain lever de soleil. Le pratiquant
+      peut cependant décider d’interrompre instantanément l’effet avant ce
+      moment, sur simple concentration de sa part.</p>
+    name3: Rempart
+    cost3:
+      obscurite: 2
+      balance: 3
+      lumiere: 3
+    effect3: >-
+      <p>Ce tour réarrange lentement la terre et/ou les rochers environnants en
+      un rempart dont la forme exacte est au bon vouloir du Marqué — du moment
+      qu’elle reste viable, solidement ancrée au sol et stable. Le processus de
+      création requiert un rituel d’un quart d’heure. Le mur est formé de 10
+      panneaux de 3 mètres sur 3 mètres et de 15 cm d’épaisseur. Il peut être
+      façonné grossièrement de façon à créer des créneaux ou des meurtrières. La
+      matière première excavée forme un trou et il est donc possible d’adjoindre
+      un petit fossé au rempart ainsi créé. Il est tout à fait possible
+      d’utiliser ce sort pour créer un pont ou une rampe. L’édifice final n’a
+      rien de « magique » : pour tenir, il doit respecter les lois de la
+      pesanteur ; en cela, la compétence Ingénierie du Marqué peut se révéler
+      importante pour réaliser des ouvrages « complexes », comme un pont.</p>
+    label3a: Lumière / Balance
+    effect3a: >-
+      <p>Lancer ce tour demande de dépenser 3 points d’Esprit. L’édifice créé
+      est permanent (mais reste soumis aux affres du temps et aux détériorations
+      volontaires).</p>
+    label3b: Obscurité
+    effect3b: >-
+      <p>Lancer ce tour demande de dépenser 2 points d’Esprit. L’édifice créé
+      est stable jusqu’au prochain lever de soleil. Après cette période, il se
+      délite lentement jusqu’à s’écrouler. Il est possible de prolonger sa durée
+      de vie en utilisant le tour « renforcement », qui pour l’occasion ne
+      demande que 1 point d’Esprit par utilisation.</p>
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarparmae00000'

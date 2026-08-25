@@ -10,6 +10,24 @@
     padding: 0;
   }
 
+  // Le résumé d'une carrière tient sur une ligne de deux colonnes égales : caractéristique
+  // augmentée à gauche, argent de départ à droite.
+  .carriere-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.8rem;
+  }
+
+  .starting-skills .skill-lines {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.8rem;
+
+    .empty {
+      grid-column: 1 / -1;
+    }
+  }
+
   .skill-line {
     display: flex;
     align-items: center;
@@ -22,8 +40,12 @@
     }
   }
 
-  .price-line {
-    .price-part {
+  // Même motif pour le prix d'un équipement, l'argent de départ d'une carrière et le coût
+  // d'activation d'un rang d'arcanum : un nombre, son unité en petit, autant de fois qu'il en faut.
+  .price-line,
+  .cost-line {
+    .price-part,
+    .cost-part {
       display: inline-flex;
       align-items: baseline;
       gap: 0.2rem;
@@ -43,5 +65,131 @@
   .effect,
   .description {
     margin-bottom: 0.7rem;
+  }
+}
+
+// Fiche d'arcanum : elle tient dans sa fenêtre, onglet par onglet. Sur l'onglet Description, le
+// champ occupe tout ce qui reste sous les deux listes déroulantes ; sur un onglet de rang, les deux
+// variantes se partagent l'espace à parts égales. Chacune ne montre sa barre de défilement qu'au
+// débordement, ProseMirror s'en chargeant dès que sa hauteur est contrainte.
+.cdg.item.arcanum {
+  // Seul l'onglet actif est affiché : c'est lui qui doit prendre la hauteur restante.
+  .tab.active {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .item-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  // Le sélecteur d'onglets : « Rang 2 » suivi de ses écussons, sur la même ligne que le libellé.
+  .arcanum-tabs > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .rank-name input {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: var(--cdg-font-title);
+    font-size: 1rem;
+  }
+
+  .variant-label {
+    width: 100%;
+    font-variant: small-caps;
+    color: var(--cdg-label);
+  }
+
+  // Sur un onglet de rang, le corps du tour et ses deux variantes se partagent la hauteur ; sur
+  // l'onglet Description, le champ est seul et prend tout.
+  .description,
+  .rank-effect,
+  .variant {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .free-text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .prosemirror,
+  prose-mirror {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .prosemirror > .editor-container,
+  prose-mirror > .editor-container {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}
+
+// Fiche de carrière : elle tient dans sa fenêtre plutôt que de la faire défiler en entier. Les
+// sections du haut gardent leur hauteur naturelle, la description prend tout ce qui reste et suit
+// le redimensionnement. ProseMirror sait déjà ne montrer sa barre de défilement qu'au débordement
+// (`.editor-content` en `overflow: hidden auto`) ; encore faut-il que sa hauteur soit contrainte,
+// ce que le plancher de 300 px empêchait.
+.cdg.item.carriere {
+  .item-header {
+    flex: 0 0 auto;
+  }
+
+  // Si les listes de départ débordent à elles seules, c'est le corps qui défile — pas la fenêtre.
+  .item-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .description {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 8rem;
+    margin-bottom: 0;
+  }
+
+  .free-text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .prosemirror,
+  prose-mirror {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .prosemirror > .editor-container,
+  prose-mirror > .editor-container {
+    flex: 1 1 auto;
+    min-height: 0;
   }
 }

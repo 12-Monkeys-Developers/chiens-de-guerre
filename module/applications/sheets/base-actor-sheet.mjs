@@ -52,6 +52,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       rollDamage: CdgBaseActorSheet.#onRollDamage,
       rollSoak: CdgBaseActorSheet.#onRollSoak,
       removeOrigin: CdgBaseActorSheet.#onRemoveOrigin,
+      activateArcanum: CdgBaseActorSheet.#onActivateArcanum,
     },
   }
 
@@ -160,6 +161,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.wounds = this.document.system.wounds
     context.combat = this.document.system.combat
     context.initiativeModifierTooltip = this._prepareInitiativeModifierTooltip()
+    context.abilityMaxTooltips = this._prepareAbilityMaxTooltips()
     context.details = this.document.system.details
 
     // Constantes utilisées par les gabarits : rangées d'écussons, listes de choix.
@@ -182,6 +184,41 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
 
     return context
+  }
+
+  /**
+   * Dit d'où vient chaque maximum de caractéristique imposé par un effet actif.
+   *
+   * « Valeur imposée par un effet actif » laisse le joueur chercher lequel : l'ajustement d'une
+   * carrière, celui d'un peuple et un effet posé à la main se ressemblent tous une fois appliqués.
+   * L'origine qui parle est donc l'objet porteur — « Aumônier (Carrière) », et non le nom de
+   * l'effet, qui vaut « Ajustement de caractéristique » sur les quinze carrières.
+   * @returns {Record<string, string>} Une info-bulle HTML par caractéristique concernée.
+   */
+  _prepareAbilityMaxTooltips() {
+    const signed = (value) => (value > 0 ? `+${value}` : `${value}`)
+    const lines = {}
+
+    for (const effect of this.document.appliedEffects) {
+      // Un effet posé à même l'acteur n'a pas d'objet porteur : il donne alors son propre nom.
+      const item = effect.parent?.documentName === "Item" ? effect.parent : null
+      const origin = foundry.utils.escapeHTML(item?.name ?? effect.name)
+      const kind = item ? ` (${game.i18n.localize(`TYPES.Item.${item.type}`)})` : ""
+
+      for (const change of effect.system.changes) {
+        const ability = change.key?.match(/^system\.abilities\.(\w+)\.max$/)?.[1]
+        if (!(ability in SYSTEM.ABILITIES)) continue
+
+        const value = Number(change.value)
+        // Seul un bonus se signe ; une valeur imposée s'écrit telle quelle, précédée du signe égal.
+        const amount = change.type === "add" && Number.isFinite(value) ? signed(value) : `= ${foundry.utils.escapeHTML(String(change.value))}`
+        lines[ability] ??= []
+        lines[ability].push(`<strong>${amount}</strong> ${origin}${kind}`)
+      }
+    }
+
+    const locked = game.i18n.localize("CDG.ui.lockedByEffect")
+    return Object.fromEntries(Object.entries(lines).map(([ability, sources]) => [ability, `${locked}<br>${sources.join("<br>")}`]))
   }
 
   /**
@@ -471,6 +508,46 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     })
   }
 
+  /**
+   * Active un rang d'arcanum mystique : test d'Esprit, puis dépense.
+   *
+   * Deux rangs différents entrent en jeu, et les confondre fausserait le test. La poignée de dés
+   * vient du rang **maîtrisé** dans l'arcanum — l'exemple du livre (p. 92) fait lancer 2d20 à un
+   * pratiquant de rang 2 qui déclenche pourtant son tour de rang 1. Le coût, lui, est celui du
+   * rang **lancé**.
+   *
+   * L'Esprit n'est débité qu'après le jet, parce que le seuil de réussite se calcule avant la
+   * dépense (p. 92) : le débiter d'abord baisserait le seuil du test qu'il paie.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte `data-rank`, et est contenu dans un `data-item-id`.
+   */
+  static async #onActivateArcanum(event, target) {
+    const arcanum = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const rank = parseInt(target.dataset.rank)
+    if (arcanum?.type !== SYSTEM.ITEM_TYPE.arcanum || arcanum.system.isPassive || !Number.isInteger(rank)) return
+
+    const cost = arcanum.system.activationCost(rank)
+    const esprit = this.document.system.abilities.esprit
+    const name = arcanum.system.rankData[`name${rank}`]
+    if (cost > esprit.value) {
+      return ui.notifications.warn(game.i18n.format("CDG.arcanum.notEnoughEsprit", { name, cost, value: esprit.value }))
+    }
+
+    return CdgRollDialog.open(this.document, {
+      abilityId: "esprit",
+      rank: arcanum.system.rank,
+      label: game.i18n.format("CDG.arcanum.activationTest", { arcanum: arcanum.name, rank, name }),
+      lockedPair: true,
+      afterRoll: async () => {
+        if (cost <= 0) return
+        // La réserve est relue : le jet a pu la faire bouger, un effort d'Esprit par exemple.
+        const current = this.document.system.abilities.esprit.value
+        await this.document.update({ "system.abilities.esprit.value": Math.max(0, current - cost) })
+        ui.notifications.info(game.i18n.format("CDG.arcanum.spent", { name, cost }))
+      },
+    })
+  }
+
   /** Lance Corps / Protection avec l'armure actuellement portée. */
   static async #onRollSoak() {
     return CdgRollDialog.open(this.document, {
@@ -534,9 +611,9 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     const item = await Item.implementation.fromDropData(data)
     if (!item) return
 
-    // Le choix du peuple appartient à la création du personnage : contrairement aux objets
-    // manipulés en cours de partie, il ne peut être modifié qu'en mode édition.
-    if (item.type === SYSTEM.ITEM_TYPE.peuple && !this.isEditMode) return
+    // Peuple et carrière appartiennent à la création du personnage : contrairement aux objets
+    // manipulés en cours de partie, ils ne peuvent être posés qu'en mode édition.
+    if (SYSTEM.ORIGIN_TYPES.includes(item.type) && !this.isEditMode) return
 
     // Réorganisation interne : l'objet appartient déjà à cet acteur, il n'y a rien à copier.
     if (item.parent?.uuid === this.document.uuid) return

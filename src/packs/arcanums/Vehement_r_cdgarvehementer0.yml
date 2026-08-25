@@ -1,0 +1,58 @@
+_id: cdgarvehementer0
+name: Vehementèr
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>Avec Vehementèr, un personnage développe une force surhumaine et devient
+    capable de prouesses physiques dépassant ce que le commun des mortels
+    pourrait normalement accomplir. Pour chaque rang possédé dans cet Arcanum,
+    le personnage bénéficie d’un + 2 à tous les tests de dommages réalisés au
+    corps-à-corps, que ce soit à mains nues ou avec une arme de
+    mêlée.</p><h4>Lumière / Balance</h4><p>Le Marqué bénéficie par ailleurs d’un
+    bonus de + 1 par rang sur tous les tests mettant en jeu la puissance
+    physique brute, comme escalader une paroi à la force des bras, gagner un
+    bras de fer ou soulever un objet lourd.</p><h4>Obscurité</h4><p>Le Marqué
+    bénéficie par ailleurs d’un bonus de + 1 par rang sur tous les tests mettant
+    en jeu la domination mentale via le rapport de force, par exemple pour
+    intimider autrui, obtenir des informations sous la menace ou la torture, ou
+    encore faire exécuter des ordres à des subalternes réfractaires.</p>
+  arcanumType: physique
+  rank: 1
+  rankData:
+    name1: Rang 1
+    cost1:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect1: ''
+    label1a: Lumière / Balance
+    effect1a: ''
+    label1b: Obscurité
+    effect1b: ''
+    name2: Rang 2
+    cost2:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect2: ''
+    label2a: Lumière / Balance
+    effect2a: ''
+    label2b: Obscurité
+    effect2b: ''
+    name3: Rang 3
+    cost3:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect3: ''
+    label3a: Lumière / Balance
+    effect3a: ''
+    label3b: Obscurité
+    effect3b: ''
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarvehementer0'

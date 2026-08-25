@@ -1,0 +1,43 @@
+_id: cdgeqchevalselle
+name: Cheval de selle
+type: equipment
+img: icons/environment/creatures/horse-brown.webp
+system:
+  description: <p>Monture de selle ordinaire.</p>
+  subtype: misc
+  equipped: false
+  quantity: 1
+  damage:
+    rank: 0
+    bonuses:
+      sheet: 0
+  attack:
+    ability: vivacite
+    skill: melee
+  category: ''
+  protection:
+    rank: 0
+    bonuses:
+      sheet: 0
+  blockBonus: 0
+  initMalus: 0
+  price:
+    ducat: 0
+    denier: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgeqchevalselle'

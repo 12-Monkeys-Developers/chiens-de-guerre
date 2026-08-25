@@ -1,0 +1,106 @@
+_id: cdgcadevin000000
+name: Devin
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Le devin est un magicien doté du don de « double-vue ». Il sait
+    interpréter les présages, sonder des événements révolus et entrevoir des
+    réalités distantes (parfois dans l'espace, parfois dans le temps).</p><p>Aux
+    yeux de nombre de ses frères d'armes, il demeure au mieux étrange, au pire
+    inquiétant. Pourtant, ses talents s'avèrent inestimables : les gradés ne
+    manquent jamais de le consulter avant de prendre des décisions lourdes de
+    conséquences.</p><p>Certains devins sont des mystiques profanes,
+    autodidactes ou initiés à des traditions ésotériques obscures ; d'autres se
+    présentent comme des prophètes rattachés à l'une des grandes
+    religions.</p><h4>Au choix</h4><ul><li>Le matériel de divination est au
+    choix du personnage : chapelet, jeu de cartes, pierres runiques,
+    etc.</li></ul>
+  abilityBonus: esprit
+  startingMoney: 30
+  skills:
+    - skill: artsArtisanats
+      rank: 1
+    - skill: autorite
+      rank: 1
+    - skill: baratin
+      rank: 1
+    - skill: commerce
+      rank: 1
+    - skill: eloquence
+      rank: 1
+    - skill: empathie
+      rank: 1
+    - skill: erudition
+      rank: 1
+    - skill: escamotage
+      rank: 1
+    - skill: religionsLegendes
+      rank: 2
+    - skill: volonte
+      rank: 1
+    - skill: vigilance
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarinspex00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmagice00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmandatum000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarprophetiae0
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqmatdivinat0
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+effects:
+  - _id: cdgeadevin000000
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcadevin000000.cdgeadevin000000'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcadevin000000'

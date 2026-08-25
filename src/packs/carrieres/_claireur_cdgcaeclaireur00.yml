@@ -1,0 +1,108 @@
+_id: cdgcaeclaireur00
+name: Éclaireur
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Les éclaireurs constituent l'indispensable avant-garde d'une armée.
+    Guides expérimentés, chasseurs patients ou espions discrets, ils veillent à
+    ce que les troupes ne tombent pas dans une embuscade ni dans
+    l'égarement.</p><p>Habitués à lire les traces, à interpréter les signes du
+    terrain et à anticiper les mouvements ennemis, ils sont les yeux et les
+    oreilles de la compagnie franche. Il n'est pas rare qu'ils assurent
+    également le ravitaillement, passant de longues heures à chasser, pister ou
+    cueillir.</p>
+  abilityBonus: vivacite
+  startingMoney: 30
+  skills:
+    - skill: artsArtisanats
+      rank: 1
+    - skill: athletisme
+      rank: 1
+    - skill: commerce
+      rank: 1
+    - skill: discretion
+      rank: 2
+    - skill: equitation
+      rank: 1
+    - skill: erudition
+      rank: 1
+    - skill: esquive
+      rank: 1
+    - skill: investigation
+      rank: 1
+    - skill: sciencesNaturelles
+      rank: 1
+    - skill: sensCombat
+      rank: 1
+    - skill: survie
+      rank: 2
+    - skill: tir
+      rank: 1
+    - skill: vigueur
+      rank: 1
+    - skill: vigilance
+      rank: 2
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgaracuitus0000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgariter0000000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarnebula00000
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqvoyageur
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmetirmoy0
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccmoy00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+effects:
+  - _id: cdgeaeclaireur00
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.vivacite.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcaeclaireur00.cdgeaeclaireur00'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcaeclaireur00'

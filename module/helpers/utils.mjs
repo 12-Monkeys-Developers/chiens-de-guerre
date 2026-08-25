@@ -11,6 +11,22 @@ export default class Utils {
   }
 
   /**
+   * Un champ HTML dit-il quelque chose ?
+   *
+   * ProseMirror n'écrit jamais une chaîne vide : refermer un éditeur qu'on a vidé y laisse un
+   * paragraphe sans contenu, parfois une espace insécable. Le tester à vue ferait afficher une
+   * zone ou une info-bulle vide au moindre survol.
+   * @param {string} html
+   * @returns {boolean}
+   */
+  static hasText(html) {
+    return !!html
+      ?.replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .trim()
+  }
+
+  /**
    * Nom localisé d'une caractéristique.
    * @param {string} ability
    * @returns {string}

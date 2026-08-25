@@ -1,0 +1,43 @@
+_id: cdgeqpiedbiche00
+name: Pied-de-biche
+type: equipment
+img: icons/tools/hand/pry-bar-hook-steel.webp
+system:
+  description: <p>Barre de fer coudée, pour ce qui ne s'ouvre pas autrement.</p>
+  subtype: misc
+  equipped: false
+  quantity: 1
+  damage:
+    rank: 0
+    bonuses:
+      sheet: 0
+  attack:
+    ability: vivacite
+    skill: melee
+  category: ''
+  protection:
+    rank: 0
+    bonuses:
+      sheet: 0
+  blockBonus: 0
+  initMalus: 0
+  price:
+    ducat: 0
+    denier: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: 1787773339197
+  modifiedTime: 1787773339197
+  lastModifiedBy: FO89twwfqkQD0j77
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgeqpiedbiche00'

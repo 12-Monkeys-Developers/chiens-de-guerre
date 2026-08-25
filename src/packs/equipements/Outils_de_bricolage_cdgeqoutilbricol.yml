@@ -1,0 +1,45 @@
+_id: cdgeqoutilbricol
+name: Outils de bricolage
+type: equipment
+img: icons/tools/hand/hammer-and-nail.webp
+system:
+  description: >-
+    <p>De quoi bâtir, réparer et saper : marteau, scie, ciseaux, clous et
+    cordages.</p>
+  subtype: misc
+  equipped: false
+  quantity: 1
+  damage:
+    rank: 0
+    bonuses:
+      sheet: 0
+  attack:
+    ability: vivacite
+    skill: melee
+  category: ''
+  protection:
+    rank: 0
+    bonuses:
+      sheet: 0
+  blockBonus: 0
+  initMalus: 0
+  price:
+    ducat: 0
+    denier: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: 1787773393124
+  modifiedTime: 1787773496042
+  lastModifiedBy: FO89twwfqkQD0j77
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgeqoutilbricol'

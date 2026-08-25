@@ -839,8 +839,12 @@ cdg-toggle-switch[checked] thumb {
   gap: 0.4rem;
 }
 .cdg.actor .initiative-block .init-modifier .value {
-  font-family: var(--cdg-font-title);
-  font-size: 1.1rem;
+  width: 3.5rem;
+  padding: 0 0.2rem;
+  font-family: var(--cdg-font-text);
+  font-weight: inherit;
+  font-size: 0.85rem;
+  text-align: center;
   color: var(--cdg-blood);
 }
 .cdg.actor .combat-quick-actions {
@@ -973,21 +977,44 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor .gear {
   margin-bottom: 0.8rem;
 }
+.cdg.actor .gear-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 0.8rem;
+}
+.cdg.actor .gear-list .empty.full-width {
+  grid-column: 1 / -1;
+}
 .cdg.actor .tab-arcanums .arcanums,
 .cdg.actor .tab-arcanums .special-traits {
   margin-bottom: 0.8rem;
+}
+.cdg.actor .tab-arcanums .special-traits .free-text {
+  min-height: 0;
+  overflow: visible;
+}
+.cdg.actor .tab-arcanums .special-traits prose-mirror.content-sized .editor-content {
+  min-height: 2.5rem;
+}
+.cdg.actor .arcanum-list .arcanum-activate {
+  flex: 0 0 auto;
+  color: var(--cdg-ink-soft);
+}
+.cdg.actor .arcanum-list .arcanum-activate sup {
+  margin-left: 1px;
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+.cdg.actor .arcanum-list .arcanum-activate:hover {
+  color: var(--cdg-blood);
 }
 .cdg.actor .arcanum-list .arcanum-type {
   font-size: 0.75rem;
   font-variant: small-caps;
   color: var(--cdg-muted);
 }
-.cdg.actor .arcanum-list .arcanum-rank {
-  font-family: var(--cdg-font-title);
-  font-size: 1rem;
-  color: var(--cdg-ink);
-  min-width: 1.2rem;
-  text-align: center;
+.cdg.actor .arcanum-list .rank-shields {
+  flex: 0 0 auto;
 }
 .cdg.actor .arcanum-list .arcanum-bonus,
 .cdg.actor .arcanum-list .arcanum-cost {
@@ -1018,8 +1045,12 @@ cdg-toggle-switch[checked] thumb {
   gap: 0.4rem;
 }
 .cdg.actor .experience .xp-line.total strong {
-  font-family: var(--cdg-font-title);
-  font-size: 1.1rem;
+  width: 3.5rem;
+  padding: 0 0.2rem;
+  font-family: var(--cdg-font-text);
+  font-weight: inherit;
+  font-size: 0.85rem;
+  text-align: center;
   color: var(--cdg-blood);
 }
 .cdg.actor .tab-biographie.active {
@@ -1071,6 +1102,19 @@ cdg-toggle-switch[checked] thumb {
   margin: 0;
   padding: 0;
 }
+.cdg.item .carriere-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 0.8rem;
+}
+.cdg.item .starting-skills .skill-lines {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 0.8rem;
+}
+.cdg.item .starting-skills .skill-lines .empty {
+  grid-column: 1 / -1;
+}
 .cdg.item .skill-line {
   display: flex;
   align-items: center;
@@ -1081,12 +1125,16 @@ cdg-toggle-switch[checked] thumb {
   flex: 1 1 auto;
   min-width: 0;
 }
-.cdg.item .price-line .price-part {
+.cdg.item .price-line .price-part,
+.cdg.item .cost-line .price-part,
+.cdg.item .price-line .cost-part,
+.cdg.item .cost-line .cost-part {
   display: inline-flex;
   align-items: baseline;
   gap: 0.2rem;
 }
-.cdg.item .price-line .unit {
+.cdg.item .price-line .unit,
+.cdg.item .cost-line .unit {
   font-size: 0.78rem;
   color: var(--cdg-muted);
 }
@@ -1098,6 +1146,99 @@ cdg-toggle-switch[checked] thumb {
 .cdg.item .effect,
 .cdg.item .description {
   margin-bottom: 0.7rem;
+}
+.cdg.item.arcanum .tab.active {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.cdg.item.arcanum .item-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+}
+.cdg.item.arcanum .arcanum-tabs > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.cdg.item.arcanum .rank-name input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--cdg-font-title);
+  font-size: 1rem;
+}
+.cdg.item.arcanum .variant-label {
+  width: 100%;
+  font-variant: small-caps;
+  color: var(--cdg-label);
+}
+.cdg.item.arcanum .description,
+.cdg.item.arcanum .rank-effect,
+.cdg.item.arcanum .variant {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 5rem;
+  margin-bottom: 0.6rem;
+}
+.cdg.item.arcanum .free-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.cdg.item.arcanum .prosemirror,
+.cdg.item.arcanum prose-mirror {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.cdg.item.arcanum .prosemirror > .editor-container,
+.cdg.item.arcanum prose-mirror > .editor-container {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.cdg.item.carriere .item-header {
+  flex: 0 0 auto;
+}
+.cdg.item.carriere .item-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+}
+.cdg.item.carriere .description {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 8rem;
+  margin-bottom: 0;
+}
+.cdg.item.carriere .free-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.cdg.item.carriere .prosemirror,
+.cdg.item.carriere prose-mirror {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.cdg.item.carriere .prosemirror > .editor-container,
+.cdg.item.carriere prose-mirror > .editor-container {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 .cdg.roll {
   --cdg-font-title: var(--cdg-font-text);

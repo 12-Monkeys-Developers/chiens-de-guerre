@@ -122,7 +122,7 @@
               {{!-- Un maximum imposé par un effet reste en lecture seule même en mode édition :
                     le champ affiche la valeur dérivée, la ressaisir écrirait le bonus en dur. --}}
               {{#if (lookup @root.overrides (concat "system.abilities." id ".max"))}}
-                <span class="pool-max overridden" data-tooltip="{{localize 'CDG.ui.lockedByEffect'}}">{{pool.max}}</span>
+                <span class="pool-max overridden" data-tooltip-html="{{#if (lookup @root.abilityMaxTooltips id)}}{{lookup @root.abilityMaxTooltips id}}{{else}}{{localize 'CDG.ui.lockedByEffect'}}{{/if}}">{{pool.max}}</span>
               {{else if @root.unlocked}}
                 <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.max}}" min="0" data-dtype="Number" />
               {{else}}

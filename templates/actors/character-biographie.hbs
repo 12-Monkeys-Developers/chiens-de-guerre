@@ -14,6 +14,8 @@
         <label>{{localize "CDG.label.long.xpSpent"}}</label>
         <input type="number" name="system.xp.spent" value="{{xp.spent}}" min="0" data-dtype="Number" />
       </div>
+      {{!-- Le disponible se déduit des deux lignes du dessus : il occupe le même créneau qu'un
+            champ de saisie, mais en rouge et sans filet — il ne se modifie pas. --}}
       <div class="xp-line total">
         <label>{{localize "CDG.label.long.xpAvailable"}}</label>
         <strong>{{xp.available}}</strong>
@@ -21,7 +23,11 @@
     </section>
 
     <section class="languages">
-      <h2 class="section-title section-title-right section-title-art" data-bandeau="langues">
+      {{!-- La règle de l'écrit se lit au survol du titre : sous les langues, elle occupait la place
+            d'une section pour une précision qu'on ne consulte qu'une fois. L'info-bulle est portée
+            par le titre et non par la lame, que `.title-art` met hors de portée de la souris. --}}
+      <h2 class="section-title section-title-right section-title-art" data-bandeau="langues"
+        data-tooltip="{{localize 'CDG.ui.languagesHint'}}" data-tooltip-direction="UP">
         <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/langues.webp" alt="{{localize 'CDG.label.long.languages'}}" />
       </h2>
       <ul class="language-list">
@@ -32,7 +38,6 @@
           </li>
         {{/each}}
       </ul>
-      <p class="hint">{{localize "CDG.ui.languagesHint"}}</p>
     </section>
   </div>
 

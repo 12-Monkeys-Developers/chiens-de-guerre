@@ -1,0 +1,104 @@
+_id: cdgcaenchanteur0
+name: Enchanteur
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Les enchanteurs sont des mages spécialisés dans l'art des charmes et des
+    envoûtements, capables d'insuffler la magie aussi bien dans les objets que
+    dans les êtres vivants.</p><p>Habiles dans la manipulation des glyphes, des
+    sceaux et des substances alchimiques, ils façonnent des effets durables là
+    où d'autres mages ne produisent que des manifestations éphémères.</p><p>Au
+    sein d'une compagnie franche, l'enchanteur constitue un atout précieux : il
+    renforce les armes, protège les armures, apaise les esprits troublés ou
+    affaiblit subtilement les adversaires. Les plus expérimentés peuvent même
+    façonner de rares objets magiques, véritables trésors très convoités (et
+    parfois craints) pour la puissance qu'ils renferment.</p>
+  abilityBonus: esprit
+  startingMoney: 30
+  skills:
+    - skill: artsArtisanats
+      rank: 2
+    - skill: baratin
+      rank: 1
+    - skill: commerce
+      rank: 1
+    - skill: eloquence
+      rank: 1
+    - skill: empathie
+      rank: 1
+    - skill: erudition
+      rank: 1
+    - skill: escamotage
+      rank: 1
+    - skill: etiquette
+      rank: 1
+    - skill: religionsLegendes
+      rank: 1
+    - skill: sciencesNaturelles
+      rank: 1
+    - skill: volonte
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgaralkemia0000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmagice00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarparmae00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarsubjugatio0
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqmatalchimie
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+effects:
+  - _id: cdgeaenchanteur0
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcaenchanteur0.cdgeaenchanteur0'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcaenchanteur0'

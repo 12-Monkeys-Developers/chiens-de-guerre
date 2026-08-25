@@ -23,14 +23,10 @@
       </select>
     </div>
     <p class="hint">{{localize "CDG.ui.passiveArcanumHint"}} <strong>{{signed bonus}}</strong></p>
-  {{else}}
-    <div class="field-line">
-      <label>{{localize "CDG.label.long.espritCost"}}</label>
-      <input type="number" name="system.espritCost" value="{{system.espritCost}}" min="0" data-dtype="Number" />
-    </div>
-    <p class="hint">{{localize "CDG.ui.mysticArcanumHint"}}</p>
   {{/if}}
 
-  {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs"}}
+  {{!-- L'onglet s'appelle « Description » : le champ n'a pas à le redire, et prend toute la place
+        que la fenêtre lui laisse. --}}
+  {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs" noTitle=true}}
 </section>
 </section>

@@ -1,0 +1,54 @@
+_id: cdgarinduratus00
+name: Induratus
+type: arcanum
+img: icons/magic/symbols/runes-star-blue.webp
+system:
+  description: >-
+    <p>En développant Induratus, un Marqué peut endurer des coups terribles sans
+    subir la moindre éraflure, mais aussi résister aux pires épreuves. Pour
+    chaque rang possédé dans cet Arcanum, le personnage bénéficie d’un + 2 à
+    tous les tests de résistance aux dommages.</p><h4>Lumière</h4><p>Le Marqué
+    gagne en outre un bonus de + 1 par rang sur tous les tests visant à endurer
+    les privations ou les sévices, que ce soit la fatigue, la faim, la soif ou
+    la torture.</p><h4>Balance / Obscurité</h4><p>Le Marqué bénéficie par
+    ailleurs d’un bonus de + 1 par rang sur tous les tests visant à résister aux
+    effets des maladies ou des poisons.</p>
+  arcanumType: physique
+  rank: 1
+  rankData:
+    name1: Rang 1
+    cost1:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect1: ''
+    label1a: Lumière / Balance
+    effect1a: ''
+    label1b: Obscurité
+    effect1b: ''
+    name2: Rang 2
+    cost2:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect2: ''
+    label2a: Lumière / Balance
+    effect2a: ''
+    label2b: Obscurité
+    effect2b: ''
+    name3: Rang 3
+    cost3:
+      obscurite: 0
+      balance: 0
+      lumiere: 0
+    effect3: ''
+    label3a: Lumière / Balance
+    effect3a: ''
+    label3b: Obscurité
+    effect3b: ''
+  linkedSkill: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgarinduratus00'

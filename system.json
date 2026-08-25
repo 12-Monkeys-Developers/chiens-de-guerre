@@ -32,6 +32,30 @@
       "path": "packs/traits",
       "type": "Item",
       "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "arcanums",
+      "label": "Arcanums",
+      "system": "chiens-de-guerre",
+      "path": "packs/arcanums",
+      "type": "Item",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "equipements",
+      "label": "Équipement",
+      "system": "chiens-de-guerre",
+      "path": "packs/equipements",
+      "type": "Item",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "carrieres",
+      "label": "Carrières",
+      "system": "chiens-de-guerre",
+      "path": "packs/carrieres",
+      "type": "Item",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
     }
   ],
   "languages": [

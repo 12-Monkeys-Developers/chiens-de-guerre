@@ -1,0 +1,112 @@
+_id: cdgcabarbierchir
+name: Barbier-chirurgien
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Les aléas de la guerre et les soins constants qu'exigent des hommes
+    contraints de parcourir de longues distances à pied et de survivre dans des
+    conditions éprouvantes font du barbier-chirurgien une figure majeure de la
+    compagnie franche.</p><p>Bien peu de frères d'armes peuvent se targuer de ne
+    jamais avoir eu recours à ses bons services, que ce soit aussi conséquent
+    que de lui devoir la vie ou d'avoir été soulagé d'un mal plus
+    trivial.</p><p>Le barbier-chirurgien assure les soins quotidiens des hommes
+    : il taille les barbes, réduit les fractures, cautérise les plaies et
+    prépare onguents et décoctions.</p><h4>Au choix</h4><ul><li>Arme de
+    corps-à-corps légère (dégâts 1) <em>ou</em> arme de corps-à-corps moyenne
+    (dégâts 2).</li></ul>
+  abilityBonus: esprit
+  startingMoney: 30
+  skills:
+    - skill: autorite
+      rank: 1
+    - skill: blocage
+      rank: 1
+    - skill: commerce
+      rank: 1
+    - skill: eloquence
+      rank: 1
+    - skill: empathie
+      rank: 2
+    - skill: erudition
+      rank: 1
+    - skill: investigation
+      rank: 1
+    - skill: medecine
+      rank: 2
+    - skill: melee
+      rank: 1
+    - skill: portArmures
+      rank: 1
+    - skill: sciencesNaturelles
+      rank: 2
+    - skill: survie
+      rank: 1
+    - skill: vigueur
+      rank: 1
+    - skill: volonte
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgaralkemia0000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarinduratus00
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmedicatus00
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqoutilchirur
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqmatalchimie
+effects:
+  - _id: cdgeabarbierchir
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcabarbierchir.cdgeabarbierchir'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcabarbierchir'

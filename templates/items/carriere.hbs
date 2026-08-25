@@ -1,10 +1,21 @@
 <section class="item-body">
 
-  <div class="field-line">
-    <label>{{localize "CDG.label.long.abilityBonus"}}</label>
-    <select name="system.abilityBonus">
-      {{selectOptions choiceAbilities selected=system.abilityBonus blank="" localize=true labelAttr="label" valueAttr="id"}}
-    </select>
+  {{!-- Deux colonnes égales : la caractéristique augmentée à gauche, l'argent de départ à droite. --}}
+  <div class="carriere-summary">
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.abilityBonus"}}</label>
+      <select name="system.abilityBonus">
+        {{selectOptions choiceAbilities selected=system.abilityBonus blank="" localize=true labelAttr="label" valueAttr="id"}}
+      </select>
+    </div>
+
+    <div class="field-line price-line">
+      <label>{{localize "CDG.label.long.startingMoney"}}</label>
+      <span class="price-part">
+        <input type="number" name="system.startingMoney" value="{{system.startingMoney}}" min="0" data-dtype="Number" />
+        <span class="unit">{{localize "CDG.currency.ducatShort"}}</span>
+      </span>
+    </div>
   </div>
 
   <section class="starting-skills">
@@ -35,9 +46,9 @@
     <h2 class="section-title">{{localize "CDG.label.long.startingArcanums"}}</h2>
     <ul class="item-list">
       {{#each arcanums as |arcanum|}}
-        <li class="item-row">
-          <img class="item-img" src="{{arcanum.img}}" />
-          <span class="item-name">{{arcanum.name}}</span>
+        <li class="item-row" data-uuid="{{arcanum.uuid}}">
+          <img class="item-img" src="{{arcanum.img}}" data-action="editReference" data-uuid="{{arcanum.uuid}}" />
+          <span class="item-name" data-action="editReference" data-uuid="{{arcanum.uuid}}">{{arcanum.name}}</span>
           {{#if @root.isEditable}}
             <a class="item-control" data-action="removeReference" data-field="arcanums" data-uuid="{{arcanum.uuid}}"><i class="fas fa-xmark"></i></a>
           {{/if}}
@@ -52,9 +63,9 @@
     <h2 class="section-title">{{localize "CDG.label.long.startingEquipments"}}</h2>
     <ul class="item-list">
       {{#each equipments as |equipment|}}
-        <li class="item-row">
-          <img class="item-img" src="{{equipment.img}}" />
-          <span class="item-name">{{equipment.name}}</span>
+        <li class="item-row" data-uuid="{{equipment.uuid}}">
+          <img class="item-img" src="{{equipment.img}}" data-action="editReference" data-uuid="{{equipment.uuid}}" />
+          <span class="item-name" data-action="editReference" data-uuid="{{equipment.uuid}}">{{equipment.name}}</span>
           {{#if @root.isEditable}}
             <a class="item-control" data-action="removeReference" data-field="equipments" data-uuid="{{equipment.uuid}}"><i class="fas fa-xmark"></i></a>
           {{/if}}

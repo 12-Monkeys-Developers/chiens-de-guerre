@@ -1,0 +1,107 @@
+_id: cdgcadetrousseur
+name: Détrousseur
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Sicaires, brigands, écorcheurs, pilleurs… les qualificatifs ne manquent
+    pas pour désigner ceux qui vivent des poches d'autrui.</p><p>Habitué des
+    ruelles mal éclairées comme des bivouacs mal gardés, il sait monter des
+    arnaques, détrousser une cible, s'introduire là où il n'est pas invité et
+    manier le surin avec efficacité.</p>
+  abilityBonus: vivacite
+  startingMoney: 30
+  skills:
+    - skill: acrobatie
+      rank: 1
+    - skill: athletisme
+      rank: 1
+    - skill: baratin
+      rank: 1
+    - skill: commerce
+      rank: 2
+    - skill: discretion
+      rank: 1
+    - skill: escamotage
+      rank: 2
+    - skill: esquive
+      rank: 1
+    - skill: investigation
+      rank: 1
+    - skill: melee
+      rank: 2
+    - skill: portArmures
+      rank: 1
+    - skill: sensCombat
+      rank: 1
+    - skill: sensDuels
+      rank: 1
+    - skill: survie
+      rank: 1
+    - skill: vigilance
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardextem00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarfulmen00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarnebula00000
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqvoyageur
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqoutilcrocht
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqcordegrapp0
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpiedbiche00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccmoy00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+effects:
+  - _id: cdgeadetrousseur
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.vivacite.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcadetrousseur.cdgeadetrousseur'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcadetrousseur'

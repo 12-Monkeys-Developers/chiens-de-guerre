@@ -1,0 +1,45 @@
+_id: cdgeqpaqerudit00
+name: Paquetage d'érudit
+type: equipment
+img: icons/sundries/books/book-stack.webp
+system:
+  description: >-
+    <p>Le nécessaire de celui dont l'outil de travail est le savoir : de quoi
+    lire, écrire et se déplacer avec ses notes.</p>
+  subtype: misc
+  equipped: false
+  quantity: 1
+  damage:
+    rank: 0
+    bonuses:
+      sheet: 0
+  attack:
+    ability: vivacite
+    skill: melee
+  category: ''
+  protection:
+    rank: 0
+    bonuses:
+      sheet: 0
+  blockBonus: 0
+  initMalus: 0
+  price:
+    ducat: 0
+    denier: 0
+effects: []
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgeqpaqerudit00'

@@ -32,9 +32,9 @@
         "biographie": "Biographie",
         "description": "Description",
         "main": "Description",
-        "rank1": "Rang1",
-        "rank2": "Rang2",
-        "rank3": "Rang3"
+        "rank1": "Rang 1",
+        "rank2": "Rang 2",
+        "rank3": "Rang 3"
       }
     },
     "abilities": {
@@ -301,10 +301,12 @@
       "grantEquipments": "{count} objet(s) d'équipement",
       "grantLanguages": "{count} langue(s)",
       "grantSkillRanks": "{count} rang(s) de compétence",
+      "grantMoney": "{amount} D",
       "missingGrant": "{name} : {count} élément(s) introuvable(s). Le compendium qui les porte est sans doute absent.",
       "removeTitle": "Retirer {type}",
       "removeContent": "<p>Retirer <strong>{name}</strong> et les {count} objet(s) qu'il a accordés ?</p><p class=\"hint\">Les langues apprises et les rangs de compétence resteront : rien ne distingue plus ce qui venait de cette origine de ce que le personnage a gagné depuis.</p>",
-      "removeContentAlone": "<p>Retirer <strong>{name}</strong> ?</p>"
+      "removeContentAlone": "<p>Retirer <strong>{name}</strong> ?</p>",
+      "removeMoney": "<p class=\"hint\">La bourse vaut encore exactement les {amount} D versés par cette carrière : ils seront repris.</p>"
     },
     "rest": {
       "execrables": "Conditions exécrables",
@@ -322,7 +324,13 @@
       "types": {
         "physique": "Physique",
         "mystique": "Mystique"
-      }
+      },
+      "variantPlaceholder": "Lumière / Balance, Obscurité…",
+      "activate": "Activer — rang {rank} : {name} ({cost} Esprit)",
+      "activateFree": "Activer — rang {rank} : {name}",
+      "activationTest": "{arcanum} — rang {rank} : {name}",
+      "notEnoughEsprit": "{name} coûte {cost} point(s) d'Esprit ; il n'en reste que {value}.",
+      "spent": "{name} : {cost} point(s) d'Esprit dépensé(s)."
     },
     "situations": {
       "charme": "Se montrer charmant",
@@ -428,7 +436,7 @@
         "arcanumType": "Nature",
         "rank": "Rang",
         "linkedSkill": "Compétence bonifiée",
-        "espritCost": "Coût en Esprit",
+        "activationCost": "Coût d'activation",
         "effect": "Effet",
         "specialTraits": "Traits spéciaux",
         "languages": "Langues maîtrisées",
@@ -437,6 +445,7 @@
         "startingSkills": "Compétences de départ",
         "startingArcanums": "Arcanums de départ",
         "startingEquipments": "Équipement de départ",
+        "startingMoney": "Argent de départ",
         "abilityBonus": "Caractéristique augmentée",
         "xp": "Expérience",
         "xpTotal": "Total gagné",
@@ -504,7 +513,6 @@
       "languagesHint": "L'écrit dépend du rang en Érudition : 0 analphabète, 1 sa langue et le stygien avec peine, 2 parfaitement, 3 toutes ses langues parlées.",
       "armorCategoryHint": "Sans un rang de Port d'armures au moins égal à la catégorie, le malus d'initiative est doublé.",
       "passiveArcanumHint": "Bonus constant accordé par cet arcanum :",
-      "mysticArcanumHint": "Activation : consommer les points d'Esprit et réussir un test d'Esprit / Arcanum.",
       "createEffect": "Ajouter un effet",
       "edit": "Modifier",
       "enableEffect": "Activer l'effet",
@@ -638,9 +646,6 @@
         },
         "linkedSkill": {
           "label": "Compétence bonifiée"
-        },
-        "espritCost": {
-          "label": "Coût en Esprit"
         }
       }
     },
@@ -708,6 +713,9 @@
         },
         "equipments": {
           "label": "Équipement de départ"
+        },
+        "startingMoney": {
+          "label": "Argent de départ"
         }
       }
     }

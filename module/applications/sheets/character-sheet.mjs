@@ -1,4 +1,5 @@
 import { SYSTEM } from "../../config/system.mjs"
+import Utils from "../../helpers/utils.mjs"
 import CdgBaseActorSheet from "./base-actor-sheet.mjs"
 
 /** Partiel des rangées d'écussons, partagé par plusieurs onglets. */
@@ -30,7 +31,7 @@ export default class CdgCharacterSheet extends CdgBaseActorSheet {
     competences: { template: `${SYSTEM.PATH}/templates/actors/character-competences.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
     combat: { template: `${SYSTEM.PATH}/templates/actors/character-combat.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
     equipement: { template: `${SYSTEM.PATH}/templates/actors/character-equipement.hbs`, scrollable: [""] },
-    arcanums: { template: `${SYSTEM.PATH}/templates/actors/character-arcanums.hbs`, scrollable: [""] },
+    arcanums: { template: `${SYSTEM.PATH}/templates/actors/character-arcanums.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
     biographie: { template: `${SYSTEM.PATH}/templates/actors/character-biographie.hbs`, scrollable: [""] },
   }
 
@@ -92,6 +93,9 @@ export default class CdgCharacterSheet extends CdgBaseActorSheet {
     }))
 
     context.enrichedSpecialTraits = await enrichHTML(this.document.system.specialTraits)
+    // Un éditeur qu'on a ouvert puis vidé laisse un `<p></p>` : c'est du HTML, pas du texte. La
+    // zone ne se replie que si elle ne dit vraiment rien.
+    context.hasSpecialTraits = Utils.hasText(this.document.system.specialTraits)
     context.enrichedBiography = await enrichHTML(this.document.system.details.biography)
 
     return context

@@ -14,14 +14,18 @@
         <li class="item-row draggable" data-item-id="{{arcanum.id}}">
           <img class="item-img" src="{{arcanum.img}}" data-action="editItem" />
           <span class="item-name" data-action="editItem">{{arcanum.name}}</span>
+          {{!-- Un arcanum mystique se lance rang par rang : chaque rang maîtrisé est un tour
+                distinct, avec son propre coût en Esprit. Un arcanum physique n'a rien à activer. --}}
+          {{#each arcanum.system.activations as |activation|}}
+            <a class="item-control arcanum-activate" data-action="activateArcanum" data-rank="{{activation.rank}}"
+              data-tooltip="{{#if activation.cost}}{{localize 'CDG.arcanum.activate' rank=activation.rank name=activation.name cost=activation.cost}}{{else}}{{localize 'CDG.arcanum.activateFree' rank=activation.rank name=activation.name}}{{/if}}"><i class="fa-solid fa-wand-sparkles"></i><sup>{{activation.rank}}</sup></a>
+          {{/each}}
           <span class="arcanum-type">{{localize (concat "CDG.arcanum.types." arcanum.system.arcanumType)}}</span>
-          <span class="arcanum-rank" data-tooltip="{{localize 'CDG.label.long.rank'}}">{{arcanum.system.rank}}</span>
+          {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=arcanum.system.rank editable=false}}
           {{#if arcanum.system.isPassive}}
             <span class="arcanum-bonus">{{signed arcanum.system.bonus}}</span>
-          {{else}}
-            <span class="arcanum-cost">{{arcanum.system.espritCost}} {{localize "CDG.abilities.short.esprit"}}</span>
           {{/if}}
-          {{#if @root.isEditable}}
+          {{#if @root.unlocked}}
             <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
           {{/if}}
         </li>
@@ -52,16 +56,22 @@
                 {{localize (concat "CDG.feature.suspicions." feature.system.suspicion)}}
               </span>
             {{/if}}
-            {{#if @root.isEditable}}
+            {{#if @root.unlocked}}
               <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
             {{/if}}
           </li>
         {{/each}}
       </ul>
     {{/each}}
-    <div class="free-text">
-      {{formInput systemFields.specialTraits value=system.specialTraits enriched=enrichedSpecialTraits name="system.specialTraits" toggled=true}}
-    </div>
+    {{!-- En consultation, une zone de texte vide n'apprend rien et occupe la place d'une section :
+          elle se replie. En édition elle reste, sans quoi on ne pourrait plus rien y écrire. --}}
+    {{#if (or unlocked hasSpecialTraits)}}
+      {{!-- `content-sized` est la classe que le cœur prévoit pour un éditeur qui suit son contenu :
+            elle sort `.editor-content` du positionnement absolu, et la zone grandit à la frappe. --}}
+      <div class="free-text">
+        {{formInput systemFields.specialTraits value=system.specialTraits enriched=enrichedSpecialTraits name="system.specialTraits" toggled=true classes="content-sized"}}
+      </div>
+    {{/if}}
   </section>
 
   {{!-- Pense-bête : ces bonus ne sont jamais appliqués d'office, puisque le système ne sait pas

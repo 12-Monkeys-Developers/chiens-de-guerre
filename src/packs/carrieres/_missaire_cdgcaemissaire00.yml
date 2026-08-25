@@ -1,0 +1,110 @@
+_id: cdgcaemissaire00
+name: Émissaire
+type: carriere
+img: icons/skills/trades/smithing-anvil-silver-red.webp
+system:
+  description: >-
+    <p>Les émissaires sont des hommes et des femmes de confiance choisis pour
+    leur loyauté autant que pour leur discernement. Ils portent la parole de la
+    compagnie et, à travers elle, son honneur.</p><p>La confiance considérable
+    qu'on leur accorde, conjuguée à une large autonomie d'action, se traduit par
+    un grade honorifique, marque officielle de l'autorité qui lui est
+    déléguée.</p><h4>Au choix</h4><ul><li>Paquetage de voyageur <em>ou</em>
+    paquetage d'érudit.</li><li>Arme de corps-à-corps légère (dégâts 1)
+    <em>ou</em> arme de corps-à-corps moyenne (dégâts 2).</li><li>Cheval de
+    selle, ou garguant de selle si le personnage est
+    nain.</li></ul><h4>Spécial</h4><p>Vous commencez avec le grade de
+    Sergent.</p>
+  abilityBonus: esprit
+  startingMoney: 60
+  skills:
+    - skill: artsArtisanats
+      rank: 1
+    - skill: autorite
+      rank: 1
+    - skill: baratin
+      rank: 1
+    - skill: commerce
+      rank: 1
+    - skill: discretion
+      rank: 1
+    - skill: eloquence
+      rank: 2
+    - skill: empathie
+      rank: 1
+    - skill: equitation
+      rank: 2
+    - skill: erudition
+      rank: 1
+    - skill: esquive
+      rank: 1
+    - skill: etiquette
+      rank: 1
+    - skill: investigation
+      rank: 1
+    - skill: survie
+      rank: 1
+    - skill: vigilance
+      rank: 1
+  arcanums:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgariter0000000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmandatum000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarsubjugatio0
+  equipments:
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqvoyageur
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqchevalselle
+effects:
+  - _id: cdgeaemissaire00
+    name: Ajustement de caractéristique
+    img: icons/skills/trades/smithing-anvil-silver-red.webp
+    type: base
+    transfer: true
+    disabled: false
+    system:
+      changes:
+        - key: system.abilities.esprit.max
+          type: add
+          value: 1
+          phase: initial
+    _stats:
+      coreVersion: '14.367'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!items.effects!cdgcaemissaire00.cdgeaemissaire00'
+folder: null
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: null
+  systemVersion: null
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+ownership:
+  default: 0
+_key: '!items!cdgcaemissaire00'
