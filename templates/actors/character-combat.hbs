@@ -2,7 +2,12 @@
 
   <div class="combat-top">
     <div class="initiative-block">
-      <h2 class="section-title">{{localize "CDG.label.long.initiative"}}</h2>
+      {{! Le bandeau de l'éditeur porte en dur la piste d'écussons et la légende
+          « Modificateur total d'initiative » ; celui-ci en a été débarrassé, la fiche rendant
+          déjà les deux en vrai juste en dessous. }}
+      <h2 class="section-title section-title-art" data-bandeau="initiative">
+        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/initiative.webp" alt="{{localize 'CDG.label.long.initiative'}}" />
+      </h2>
       <div class="init-modifier">
         <label>{{localize "CDG.label.long.initiativeModifier"}}</label>
         <span class="value" data-tooltip-html="{{initiativeModifierTooltip}}">{{signed combat.initiative.modifier}}</span>
@@ -17,7 +22,9 @@
     </div>
 
     <div class="dodge-block">
-      <h2 class="section-title">{{localize "CDG.label.long.dodgesUsed"}}</h2>
+      <h2 class="section-title section-title-art" data-bandeau="esquives">
+        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/esquives.webp" alt="{{localize 'CDG.label.long.dodgesUsed'}}" />
+      </h2>
       <div class="combat-quick-actions">
         <button type="button" data-action="rollDefense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button>
         <button type="button" data-action="rollDefense" data-defense="parry"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}</button>
@@ -41,7 +48,9 @@
     </div>
 
     <div class="wounds-block">
-      <h2 class="section-title section-title-right">{{localize "CDG.label.long.wounds"}}</h2>
+      <h2 class="section-title section-title-right section-title-art" data-bandeau="blessures">
+        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/blessures.webp" alt="{{localize 'CDG.label.long.wounds'}}" />
+      </h2>
       <ul class="wound-levels">
         {{#each woundLevels as |level|}}
           {{#with (lookup @root.wounds level.id) as |wound|}}
@@ -49,7 +58,7 @@
               <span class="wound-name">{{localize level.label}}</span>
               <div class="wound-boxes">
                 {{#each (range 1 wound.max) as |box|}}
-                  <a class="box {{#if (gte wound.value box)}}checked{{/if}}"
+                  <a class="shield {{#if (gte wound.value box)}}filled{{/if}}"
                     data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>
                 {{/each}}
               </div>
@@ -67,46 +76,26 @@
     </div>
   </div>
 
+  {{! Armes et protections tiennent en une seule liste, comme sur la fiche imprimée : les
+      protections d'abord — armures puis boucliers —, les armes ensuite. Le bandeau
+      calligraphié porte déjà les deux mots. }}
   <div class="combat-gear">
-    <section class="weapons">
-      <h2 class="section-title">
-        {{localize "CDG.label.long.weapons"}}
-        {{#if isEditable}}
-          <a class="create" data-action="createItem" data-type="equipment" data-subtype="weapon"
-            data-tooltip="{{localize 'CDG.ui.addWeapon'}}"><i class="fas fa-plus"></i></a>
-        {{/if}}
-      </h2>
-      <ul class="item-list">
-        {{#each weapons as |weapon|}}
-          <li class="item-row draggable {{#if weapon.system.equipped}}equipped{{/if}}" data-item-id="{{weapon.id}}">
-            <a class="equip-toggle" data-action="toggleEquipped" data-tooltip="{{localize 'CDG.combat.weapon.toggleHeld'}}"><i class="fas {{#if weapon.system.equipped}}fa-hand-fist{{else}}fa-hand{{/if}}"></i></a>
-            <img class="item-img" src="{{weapon.img}}" data-action="editItem" />
-            <span class="item-name" data-action="editItem">{{weapon.name}}</span>
-            <a class="item-control weapon-attack" data-action="rollWeapon" data-tooltip="{{localize 'CDG.ui.attackWithWeapon'}}">
-              <i class="fas {{#if weapon.system.isRangedWeapon}}fa-bow-arrow{{else}}fa-sword{{/if}}"></i>
-            </a>
-            <span class="item-label">{{localize "CDG.label.long.damage"}}</span>
-            {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
-                rank=weapon.system.damage.rank editable=false}}
-            <a class="item-control" data-action="rollDamage" data-tooltip="{{localize 'CDG.combat.damageTest'}}"><i class="fa-solid fa-burst"></i></a>
-            {{#if @root.isEditable}}
-              <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
-            {{/if}}
-          </li>
-        {{/each}}
-      </ul>
-    </section>
-
-    <section class="protections">
-      <h2 class="section-title section-title-right">
-        {{localize "CDG.label.long.protections"}}
-        <a class="item-control" data-action="rollSoak" data-tooltip="{{localize 'CDG.combat.soakTest'}}"><i class="fa-solid fa-helmet-battle"></i></a>
-        {{#if isEditable}}
-          <a class="create" data-action="createItem" data-type="equipment" data-subtype="armor"
-            data-tooltip="{{localize 'CDG.ui.addArmor'}}"><i class="fas fa-plus"></i></a>
-          <a class="create" data-action="createItem" data-type="equipment" data-subtype="shield"
-            data-tooltip="{{localize 'CDG.ui.addShield'}}"><i class="fas fa-shield"></i></a>
-        {{/if}}
+    <section class="gear-combat">
+      <h2 class="section-title section-title-art" data-bandeau="armes">
+        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/armes.webp" alt="{{localize 'CDG.label.long.weaponsAndProtections'}}" />
+        <span class="title-actions">
+          <a class="item-control" data-action="rollSoak" data-tooltip="{{localize 'CDG.combat.soakTest'}}"><i class="fa-solid fa-helmet-battle"></i></a>
+          {{#if isEditable}}
+            {{! Trois icônes distinctes : réunis sous un seul titre, trois `fa-plus` identiques
+                ne se distingueraient plus que par leur infobulle. }}
+            <a class="create" data-action="createItem" data-type="equipment" data-subtype="armor"
+              data-tooltip="{{localize 'CDG.ui.addArmor'}}"><i class="fas fa-shirt-long-sleeve"></i></a>
+            <a class="create" data-action="createItem" data-type="equipment" data-subtype="shield"
+              data-tooltip="{{localize 'CDG.ui.addShield'}}"><i class="fas fa-shield-halved"></i></a>
+            <a class="create" data-action="createItem" data-type="equipment" data-subtype="weapon"
+              data-tooltip="{{localize 'CDG.ui.addWeapon'}}"><i class="fas fa-sword"></i></a>
+          {{/if}}
+        </span>
       </h2>
       <ul class="item-list">
         {{#each armors as |armor|}}
@@ -136,6 +125,24 @@
             <span class="item-label">{{localize "CDG.label.long.blockBonus"}}</span>
             <span class="item-value">{{signed shield.system.blockBonus}}</span>
             <span class="item-init">{{localize "CDG.label.short.init"}} {{signed shield.system.initMalus}}</span>
+            {{#if @root.isEditable}}
+              <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
+            {{/if}}
+          </li>
+        {{/each}}
+
+        {{#each weapons as |weapon|}}
+          <li class="item-row draggable {{#if weapon.system.equipped}}equipped{{/if}}" data-item-id="{{weapon.id}}">
+            <a class="equip-toggle" data-action="toggleEquipped" data-tooltip="{{localize 'CDG.combat.weapon.toggleHeld'}}"><i class="fas {{#if weapon.system.equipped}}fa-hand-fist{{else}}fa-hand{{/if}}"></i></a>
+            <img class="item-img" src="{{weapon.img}}" data-action="editItem" />
+            <span class="item-name" data-action="editItem">{{weapon.name}}</span>
+            <a class="item-control weapon-attack" data-action="rollWeapon" data-tooltip="{{localize 'CDG.ui.attackWithWeapon'}}">
+              <i class="fas {{#if weapon.system.isRangedWeapon}}fa-bow-arrow{{else}}fa-sword{{/if}}"></i>
+            </a>
+            <span class="item-label">{{localize "CDG.label.long.damage"}}</span>
+            {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
+                rank=weapon.system.damage.rank editable=false}}
+            <a class="item-control" data-action="rollDamage" data-tooltip="{{localize 'CDG.combat.damageTest'}}"><i class="fa-solid fa-burst"></i></a>
             {{#if @root.isEditable}}
               <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
             {{/if}}

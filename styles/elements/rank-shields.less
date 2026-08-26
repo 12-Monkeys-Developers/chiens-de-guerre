@@ -1,7 +1,9 @@
-// Les écussons de rang de la fiche papier : trois petits blasons à noircir, réutilisés pour les
-// compétences, les dégâts d'une arme et la protection d'une armure.
+// Les écussons de rang de la fiche papier — le blason : trois petites armoiries à noircir,
+// réutilisées pour les compétences, les traits de personnalité, les dégâts d'une arme, la
+// protection d'une armure, les blessures et les langues maîtrisées.
 //
-// Dessinés en CSS plutôt qu'en image pour rester nets à toute taille et suivre la couleur du thème.
+// Le visuel vient de l'éditeur (ui/fiche/puce*.webp) plutôt que d'une forme dessinée en CSS :
+// la silhouette est celle de la fiche imprimée, au trait près.
 .cdg {
   .rank-shields {
     display: inline-flex;
@@ -10,10 +12,17 @@
   }
 
   .shield {
+    display: inline-block;
     width: 13px;
+    height: 16px; // 63 × 78 dans le fichier source, soit un rapport de 0,81
+    flex: 0 0 auto;
+    background-image: url("@{cdg-puce-image}");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    text-decoration: none;
 
     &.filled {
-      background: var(--cdg-shield-filled);
+      background-image: url("@{cdg-puce-filled-image}");
     }
   }
 
@@ -21,36 +30,10 @@
     cursor: pointer;
 
     &:hover {
-      background: transparent;
-      color: var(--cdg-blood-light);
+      background-color: transparent;
       box-shadow: none;
       text-shadow: none;
-    }
-  }
-
-  // Cases carrées : blessures, traits de personnalité, langues.
-  .box {
-    display: inline-block;
-    width: 13px;
-    height: 13px;
-    background: var(--cdg-shield-empty);
-    border: 1px solid var(--cdg-shield-border);
-    border-radius: 1px;
-    text-decoration: none;
-
-    &.checked,
-    &.filled {
-      background: var(--cdg-blood);
-      border-color: var(--cdg-blood-dark);
-    }
-  }
-
-  a.box {
-    cursor: pointer;
-
-    &:hover {
-      border-color: var(--cdg-blood);
-      box-shadow: none;
+      filter: drop-shadow(0 0 2px var(--cdg-blood-light));
     }
   }
 

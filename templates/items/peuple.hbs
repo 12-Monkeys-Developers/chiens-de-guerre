@@ -30,7 +30,7 @@
     <ul class="language-list">
       {{#each languages as |language|}}
         <li class="language">
-          <a class="box {{#if language.known}}checked{{/if}}" data-action="toggleLanguage" data-language="{{language.id}}"></a>
+          <a class="shield {{#if language.known}}filled{{/if}}" data-action="toggleLanguage" data-language="{{language.id}}"></a>
           <span>{{localize language.label}}</span>
         </li>
       {{/each}}

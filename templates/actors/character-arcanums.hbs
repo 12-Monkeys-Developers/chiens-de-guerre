@@ -1,10 +1,12 @@
 <section class="tab tab-arcanums{{#if tabs.arcanums.active}} active{{/if}}" data-group="primary" data-tab="arcanums">
 
   <section class="arcanums">
-    <h2 class="section-title">
-      {{localize "CDG.label.long.arcanums"}}
+    <h2 class="section-title section-title-art" data-bandeau="arcanums">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/arcanums.webp" alt="{{localize 'CDG.label.long.arcanums'}}" />
       {{#if isEditable}}
-        <a class="create" data-action="createItem" data-type="arcanum" data-tooltip="{{localize 'CDG.ui.addArcanum'}}"><i class="fas fa-plus"></i></a>
+        <span class="title-actions">
+          <a class="create" data-action="createItem" data-type="arcanum" data-tooltip="{{localize 'CDG.ui.addArcanum'}}"><i class="fas fa-plus"></i></a>
+        </span>
       {{/if}}
     </h2>
     <ul class="item-list arcanum-list">
@@ -30,10 +32,12 @@
   </section>
 
   <section class="special-traits">
-    <h2 class="section-title">
-      {{localize "CDG.label.long.specialTraits"}}
+    <h2 class="section-title section-title-art" data-bandeau="traits-speciaux">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/traits-speciaux.webp" alt="{{localize 'CDG.label.long.specialTraits'}}" />
       {{#if isEditable}}
-        <a class="create" data-action="createItem" data-type="feature" data-tooltip="{{localize 'CDG.ui.addFeature'}}"><i class="fas fa-plus"></i></a>
+        <span class="title-actions">
+          <a class="create" data-action="createItem" data-type="feature" data-tooltip="{{localize 'CDG.ui.addFeature'}}"><i class="fas fa-plus"></i></a>
+        </span>
       {{/if}}
     </h2>
     {{#each featureGroups as |group|}}

@@ -42,7 +42,7 @@
               <span class="wound-name">{{localize level.label}}</span>
               <div class="wound-boxes">
                 {{#each (range 1 wound.max) as |box|}}
-                  <a class="box {{#if (gte wound.value box)}}checked{{/if}}"
+                  <a class="shield {{#if (gte wound.value box)}}filled{{/if}}"
                     data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>
                 {{/each}}
               </div>

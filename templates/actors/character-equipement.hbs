@@ -1,11 +1,13 @@
 <section class="tab tab-equipement{{#if tabs.equipement.active}} active{{/if}}" data-group="primary" data-tab="equipement">
 
   <section class="gear">
-    <h2 class="section-title">
-      {{localize "CDG.label.long.equipment"}}
+    <h2 class="section-title section-title-art" data-bandeau="equipement">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/equipement.webp" alt="{{localize 'CDG.label.long.equipment'}}" />
       {{#if isEditable}}
-        <a class="create" data-action="createItem" data-type="equipment" data-subtype="misc"
-          data-tooltip="{{localize 'CDG.ui.addGear'}}"><i class="fas fa-plus"></i></a>
+        <span class="title-actions">
+          <a class="create" data-action="createItem" data-type="equipment" data-subtype="misc"
+            data-tooltip="{{localize 'CDG.ui.addGear'}}"><i class="fas fa-plus"></i></a>
+        </span>
       {{/if}}
     </h2>
     <ul class="item-list">
@@ -25,7 +27,9 @@
   </section>
 
   <section class="purse">
-    <h2 class="section-title">{{localize "CDG.label.long.purse"}}</h2>
+    <h2 class="section-title section-title-art" data-bandeau="bourse">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/bourse.webp" alt="{{localize 'CDG.label.long.purse'}}" />
+    </h2>
     <ul class="currency-list">
       {{#each currencies as |currency|}}
         <li class="currency">

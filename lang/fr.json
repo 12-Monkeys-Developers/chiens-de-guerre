@@ -414,6 +414,7 @@
         "currentWoundMalus": "Malus courant :",
         "weapons": "Armes",
         "protections": "Protections",
+        "weaponsAndProtections": "Armes et protections",
         "damage": "Dégâts",
         "attackTest": "Test d'attaque",
         "protection": "Protection",

@@ -1,7 +1,9 @@
 <section class="tab tab-competences{{#if tabs.competences.active}} active{{/if}}" data-group="primary" data-tab="competences">
   <div class="flexrowsb">
-    <div class="section-skills" style="width:fit-content;">
-      <h2 class="section-title">{{localize "CDG.label.long.skills"}}</h2>
+    <div class="section-skills">
+      <h2 class="section-title section-title-art" data-bandeau="comps">
+        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/comps.webp" alt="{{localize 'CDG.label.long.skills'}}" />
+      </h2>
       <div class="skill-columns">
         {{#each skillColumns as |column|}}
           <ul class="skill-column">
@@ -18,8 +20,10 @@
         {{/each}}
       </div>
     </div>
-    <div class="section-traits" style="width:fit-content;">
-      <h2 class="section-title section-title-right">{{localize "CDG.label.long.traits"}}</h2>
+    <div class="section-traits">
+      <h2 class="section-title section-title-right section-title-art" data-bandeau="personnalite">
+        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/personnalite.webp" alt="{{localize 'CDG.label.long.traits'}}" />
+      </h2>
 
       <div class="passion-block">
         <h3 data-tooltip="{{localize 'CDG.ui.passionHint'}}" data-tooltip-direction="UP">{{localize "CDG.label.long.passion"}}</h3>
@@ -41,14 +45,14 @@
                 libellé, comme sur la fiche papier. }}
             <div class="trait-boxes vice">
               {{#each (range 1 3) as |step|}}
-                <a class="box {{#if (and pair.isVice (gte pair.value step))}}filled{{/if}}"
+                <a class="shield {{#if (and pair.isVice (gte pair.value step))}}filled{{/if}}"
                   {{#if @root.unlocked}}data-action="setTrait" data-pair="{{pair.id}}" data-side="vice" data-value="{{step}}"{{/if}}></a>
               {{/each}}
             </div>
 
             <div class="trait-boxes virtue">
               {{#each (range 1 3) as |step|}}
-                <a class="box {{#if (and pair.isVirtue (gte pair.value step))}}filled{{/if}}"
+                <a class="shield {{#if (and pair.isVirtue (gte pair.value step))}}filled{{/if}}"
                   {{#if @root.unlocked}}data-action="setTrait" data-pair="{{pair.id}}" data-side="virtue" data-value="{{step}}"{{/if}}></a>
               {{/each}}
             </div>

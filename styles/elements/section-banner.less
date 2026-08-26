@@ -1,0 +1,54 @@
+// Géométrie des bandeaux de titre calligraphiés.
+//
+// Une seule échelle pour toute la série : la graphiste les a dessinés à la même taille, et sur la
+// fiche imprimée la lame « Compétences » couvre 280 px d'une page large de 945. L'image est donc
+// posée à 28 % de sa taille native, quelle que soit sa hauteur de canevas.
+//
+// Chaque fichier place sa bande noire à une hauteur différente (le sang et la calligraphie
+// débordent plus ou moins). `@bande` est la position du centre de cette bande, relevée fichier par
+// fichier : c'est elle qu'on aligne sur la ligne médiane du créneau, pour que toutes les lames
+// s'alignent entre elles quel que soit le titre.
+@cdg-bandeau-echelle: 0.28;
+@cdg-bandeau-creneau: 30px; // hauteur réservée dans le flux, titres d'une ligne
+@cdg-bandeau-creneau2: 44px; // titres de deux lignes
+@cdg-bandeau-creneau-mini: 24px; // Expérience, Bourse
+@cdg-bandeau-debord: -12px; // la lame mord le bord de l'onglet, dont le padding vaut 0.8rem
+
+// nom du fichier, largeur et hauteur natives, centre de la bande, hauteur du créneau.
+.cdg-bandeau(@nom; @w; @h; @bande; @creneau: @cdg-bandeau-creneau) {
+  .cdg .section-title-art[data-bandeau="@{nom}"] {
+    height: @creneau;
+
+    > .title-art {
+      // `* 1px` est indispensable : @w et @cdg-bandeau-echelle sont des nombres nus, et LESS
+      // rendrait un `width: 290.64` sans unité, que le navigateur jette en silence.
+      width: (@w * @cdg-bandeau-echelle * 1px);
+      top: (@creneau / 2) - (@h * @cdg-bandeau-echelle * @bande * 1px);
+    }
+  }
+}
+
+//            nom                w      h    bande   créneau
+.cdg-bandeau(caracs;          1038;  312;  0.467);
+.cdg-bandeau(comps;           1009;  277;  0.400);
+.cdg-bandeau(arcanums;        1009;  277;  0.400);
+.cdg-bandeau(traits-speciaux; 1038;  312;  0.467);
+.cdg-bandeau(equipement;       825;  302;  0.433);
+.cdg-bandeau(blessures;        803;  359;  0.525);
+.cdg-bandeau(armes;            876;  374;  0.450; @cdg-bandeau-creneau2);
+.cdg-bandeau(personnalite;     864;  444;  0.550; @cdg-bandeau-creneau2);
+.cdg-bandeau(langues;          938;  392;  0.467; 50px);
+.cdg-bandeau(esquives;         650;  271;  0.492);
+// Expérience : la lame de l'éditeur s'affinait vers la gauche, à rebours de celle des titres
+// CSS (Biographie, Repos), qui pointe à droite. Le bandeau a donc été recomposé — calligraphie
+// de l'éditeur reposée sur `ui/fiche/lame.webp`, la lame de référence, pointe à droite. La bande
+// occupe y 20..96 sur 114, d'où 0.509.
+.cdg-bandeau(xp;               522;  114;  0.509; @cdg-bandeau-creneau-mini);
+.cdg-bandeau(bourse;           840;  114;  0.517; @cdg-bandeau-creneau-mini);
+// Initiative n'existait pas en bandeau prêt à l'emploi : celui de l'éditeur
+// (source/cdg_foundry/recto/TITRE_init.webp) embarque la piste de six écussons et la légende
+// « Modificateur total d'initiative », que la fiche rend déjà en vrai juste en dessous. Il a été
+// recomposé en retirant ce bloc et en recollant la lame — les deux bords se raccordent au pixel
+// (bande y 31..107 de part et d'autre) —, puis détouré de son sang comme ses voisines de la
+// rangée. La lame y fait 77 px de haut, comme celle d'Esquives : même échelle, mêmes proportions.
+.cdg-bandeau(initiative;       556;   77;  0.500);

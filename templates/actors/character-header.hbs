@@ -106,7 +106,9 @@
   </div>
 
   <section class="abilities">
-    <h2 class="section-title section-title-right">{{localize "CDG.label.long.abilities"}}</h2>
+    <h2 class="section-title section-title-right section-title-art" data-bandeau="caracs">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/caracs.webp" alt="{{localize 'CDG.label.long.abilities'}}" />
+    </h2>
     <ol class="ability-list">
       {{#each SYSTEM.ABILITIES as |ability id|}}
         {{#with (lookup @root.abilities id) as |pool|}}

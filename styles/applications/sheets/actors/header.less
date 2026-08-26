@@ -58,6 +58,12 @@
 
   // Les trois caractéristiques : nom, réserve sur maximum, et les trois bulles d'amélioration.
   .abilities {
+    // L'éclaboussure du bandeau « Caractéristiques » monte 26 px au-dessus de son créneau, alors
+    // que l'en-tête n'offre que 0,6 rem de marge : sans ce dégagement elle est tranchée par le
+    // haut de la fenêtre. Seule cette colonne descend ; les trois lames restent alignées entre
+    // elles, c'est le bandeau qui vient occuper la place gagnée.
+    margin-top: 1.1rem;
+
     .ability-list {
       list-style: none;
       margin: 0;

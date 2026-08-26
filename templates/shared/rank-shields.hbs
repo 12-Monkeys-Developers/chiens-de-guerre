@@ -2,13 +2,16 @@
   Rangée de trois écussons cliquables représentant un rang de 0 à 3, comme sur la fiche papier.
   Paramètres attendus : `path` (chemin du champ à mettre à jour), `rank` (valeur courante),
   `editable` (autorise le clic).
+
+  L'écusson est le blason de la fiche imprimée (ui/fiche/puce*.webp) : la classe `filled` suffit
+  à choisir le visuel, le gabarit n'a plus à connaître de nom d'icône.
 }}
 <div class="rank-shields" data-tooltip="{{rankTooltip rank}}">
   {{#each (range 1 @root.SYSTEM.MAX_RANK) as |step|}}
     {{#if ../editable}}
-      <a class="shield {{#if (gte ../rank step)}}fa-solid{{else}}fa-light{{/if}} fa-shield" data-action="setRank" data-target="{{../path}}" data-rank="{{step}}"></a>
+      <a class="shield{{#if (gte ../rank step)}} filled{{/if}}" data-action="setRank" data-target="{{../path}}" data-rank="{{step}}"></a>
     {{else}}
-      <a class="shield {{#if (gte ../rank step)}}fa-solid{{else}}fa-light{{/if}} fa-shield"></a>
+      <span class="shield{{#if (gte ../rank step)}} filled{{/if}}"></span>
     {{/if}}
   {{/each}}
 </div>
