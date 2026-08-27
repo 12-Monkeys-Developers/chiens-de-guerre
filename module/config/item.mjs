@@ -2,6 +2,7 @@
 export const ITEM_TYPE = {
   equipment: "equipment",
   arcanum: "arcanum",
+  ascendance: "ascendance",
   feature: "feature",
   peuple: "peuple",
   carriere: "carriere",
@@ -45,6 +46,7 @@ export const FEATURE_SUSPICIONS = {
 export const ITEM_ICONS = {
   equipment: "icons/containers/bags/pack-leather-brown.webp",
   arcanum: "icons/magic/symbols/runes-star-blue.webp",
+  ascendance: "icons/magic/unholy/hand-marked-pink.webp",
   feature: "icons/sundries/scrolls/scroll-plain-tan.webp",
   peuple: "icons/environment/people/group.webp",
   carriere: "icons/skills/trades/smithing-anvil-silver-red.webp",

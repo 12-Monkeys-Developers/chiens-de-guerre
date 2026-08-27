@@ -33,6 +33,10 @@ export default class CdgActor extends Actor {
     return this.itemTypes.arcanum
   }
 
+  get ascendance() {
+    return this.itemTypes.ascendance[0] ?? null
+  }
+
   /** Arcanums physiques : bonus passifs de +2 par rang. */
   get passiveArcanums() {
     return this.arcanums.filter((item) => item.system.isPassive)
@@ -231,6 +235,11 @@ export default class CdgActor extends Actor {
 
     if (refund > 0) await this.update({ "system.wealth.ducat": this.system.wealth.ducat - refund })
     return this.deleteEmbeddedDocuments("Item", [item.id, ...granted.map((entry) => entry.id)])
+  }
+
+  async revokeAscendance(item){
+
+    return this.deleteEmbeddedDocuments("Item", [item.id])
   }
 
   /**

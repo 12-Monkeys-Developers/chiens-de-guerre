@@ -60,6 +60,7 @@ Hooks.once("init", function () {
   CONFIG.Item.dataModels = {
     equipment: models.CdgEquipmentData,
     arcanum: models.CdgArcanumData,
+    ascendance: models.CdgAscendanceData,
     feature: models.CdgFeatureData,
     peuple: models.CdgPeupleData,
     carriere: models.CdgCarriereData,
@@ -68,6 +69,7 @@ Hooks.once("init", function () {
   foundry.documents.collections.Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet)
   foundry.documents.collections.Items.registerSheet(SYSTEM.PACKAGE_ID, applications.CdgEquipmentSheet, { types: ["equipment"], makeDefault: true, label: "CDG.sheet.equipment" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.PACKAGE_ID, applications.CdgArcanumSheet, { types: ["arcanum"], makeDefault: true, label: "CDG.sheet.arcanum" })
+  foundry.documents.collections.Items.registerSheet(SYSTEM.PACKAGE_ID, applications.CdgAscendanceSheet, { types: ["ascendance"], makeDefault: true, label: "CDG.sheet.ascendance" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.PACKAGE_ID, applications.CdgFeatureSheet, { types: ["feature"], makeDefault: true, label: "CDG.sheet.feature" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.PACKAGE_ID, applications.CdgPeupleSheet, { types: ["peuple"], makeDefault: true, label: "CDG.sheet.peuple" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.PACKAGE_ID, applications.CdgCarriereSheet, { types: ["carriere"], makeDefault: true, label: "CDG.sheet.carriere" })

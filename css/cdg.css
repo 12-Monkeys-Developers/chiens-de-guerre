@@ -543,7 +543,7 @@ cdg-toggle-switch[checked] thumb {
   gap: 0.6rem;
   align-items: start;
   padding: 0.6rem 0.8rem 0.4rem;
-  background-image: linear-gradient(rgba(242, 236, 224, 0.82), rgba(242, 236, 224, 0.95)), url("../ui/bataille-large.webp");
+  background-image: linear-gradient(rgba(242, 236, 224, 0.82), rgba(242, 236, 224, 0.95)), url("../assets/images/header-fdp.webp");
   background-size: cover;
   background-position: center 30%;
   border-bottom: 2px solid var(--cdg-ink);
@@ -576,12 +576,54 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.actor .identity .name-line .name {
   font-family: var(--cdg-font-title);
-  font-size: 1.3rem;
+  font-size: 2rem;
   color: var(--cdg-ink);
 }
 .cdg.actor .identity .name-line input[type="text"] {
   font-family: var(--cdg-font-title);
   font-size: 1.15rem;
+}
+.cdg.actor .passion-block {
+  margin: 0.4rem 0 0.8rem;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
+.cdg.actor .passion-block .passion-label {
+  font-family: var(--cdg-font-title);
+  font-size: 2rem;
+  color: var(--cdg-ink);
+}
+.cdg.actor .passion-block .tokens {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 1rem;
+}
+.cdg.actor .passion-block .tokens > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.4rem;
+  line-height: 1;
+}
+.cdg.actor .passion-block .token-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cdg-font-title);
+  font-size: 1.8rem;
+  color: var(--cdg-blood);
+  height: 1.4rem;
+  line-height: 1;
+  min-width: 2rem;
+}
+.cdg.actor .passion-block .clear-invoked {
+  font-size: 0.78rem;
+  text-decoration: underline;
+  color: var(--cdg-ink-soft);
 }
 .cdg.actor .abilities {
   margin-top: 1.1rem;
@@ -791,39 +833,6 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.actor .karma-block .allegiance-lumiere strong {
   color: var(--cdg-blood-light);
-}
-.cdg.actor .passion-block {
-  margin: 0.4rem 0 0.8rem;
-  text-align: center;
-}
-.cdg.actor .passion-block .tokens {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-}
-.cdg.actor .passion-block .tokens > a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.4rem;
-  line-height: 1;
-}
-.cdg.actor .passion-block .token-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--cdg-font-title);
-  font-size: 1.4rem;
-  color: var(--cdg-blood);
-  height: 1.4rem;
-  line-height: 1;
-  min-width: 2rem;
-}
-.cdg.actor .passion-block .clear-invoked {
-  font-size: 0.78rem;
-  text-decoration: underline;
-  color: var(--cdg-ink-soft);
 }
 .cdg.actor .combat-top {
   display: grid;

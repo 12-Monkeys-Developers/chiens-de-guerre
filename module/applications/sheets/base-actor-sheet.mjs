@@ -52,6 +52,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       rollDamage: CdgBaseActorSheet.#onRollDamage,
       rollSoak: CdgBaseActorSheet.#onRollSoak,
       removeOrigin: CdgBaseActorSheet.#onRemoveOrigin,
+      removeOrigin: CdgBaseActorSheet.#onRemoveAscendance,
       activateArcanum: CdgBaseActorSheet.#onActivateArcanum,
     },
   }
@@ -178,6 +179,8 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.features = this.document.features
 
     // Peuple et carrière ne sont pas de l'inventaire : ils s'affichent sur leur ligne de l'en-tête.
+    
+    context.ascendance = this.document.ascendance
     context.peuple = this.document.peuple
     context.carriere = this.document.carriere
 
@@ -573,6 +576,15 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     if (!item) return
     return this.document.revokeOrigin(item)
   }
+
+    static async #onRemoveAscendance(event, target) {
+    if (!this.isEditable) return
+    const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    if (!item) return
+    return this.document.revokeAscendance(item)
+  }
+
+  
 
   // #endregion
 

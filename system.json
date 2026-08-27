@@ -78,6 +78,7 @@
     "Item": {
       "equipment": { "htmlFields": ["description"] },
       "arcanum": { "htmlFields": ["description", "effect"] },
+      "ascendance": { "htmlFields": ["description", "compulsionDesc"] },
       "feature": { "htmlFields": ["description"] },
       "peuple": { "htmlFields": ["description"] },
       "carriere": { "htmlFields": ["description"] }

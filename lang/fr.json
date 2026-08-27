@@ -7,6 +7,7 @@
     "Item": {
       "equipment": "Équipement",
       "arcanum": "Arcanum",
+      "ascendance":"Ascendance",
       "feature": "Trait spécial",
       "peuple": "Peuple",
       "carriere": "Carrière"
@@ -21,6 +22,7 @@
       "adversaire": "Fiche d'adversaire",
       "equipment": "Fiche d'équipement",
       "arcanum": "Fiche d'arcanum",
+      "ascendance": "Fiche d'ascendance",
       "feature": "Fiche de trait spécial",
       "peuple": "Fiche de peuple",
       "carriere": "Fiche de carrière",

@@ -45,7 +45,7 @@
 
     .name-line .name {
       font-family: var(--cdg-font-title);
-      font-size: 1.3rem;
+      font-size: 2rem;
       color: var(--cdg-ink);
     }
 
@@ -53,9 +53,53 @@
       font-family: var(--cdg-font-title);
       font-size: 1.15rem;
     }
-
   }
 
+  .passion-block {
+    margin: 0.4rem 0 0.8rem;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    .passion-label {
+      font-family: var(--cdg-font-title);
+      font-size: 2rem;
+      color: var(--cdg-ink);
+    }
+    .tokens {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0px 1rem;
+
+      > a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 1.4rem;
+        line-height: 1;
+      }
+    }
+
+    .token-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--cdg-font-title);
+      font-size: 1.8rem;
+      color: var(--cdg-blood);
+      height: 1.4rem;
+      line-height: 1;
+      min-width: 2rem;
+    }
+
+    .clear-invoked {
+      font-size: 0.78rem;
+      text-decoration: underline;
+      color: var(--cdg-ink-soft);
+    }
+  }
   // Les trois caractéristiques : nom, réserve sur maximum, et les trois bulles d'amélioration.
   .abilities {
     // L'éclaboussure du bandeau « Caractéristiques » monte 26 px au-dessus de son créneau, alors

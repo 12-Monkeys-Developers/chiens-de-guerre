@@ -45,16 +45,6 @@
         <span class="value">{{identity.peuple}}</span>
       {{/if}}
     </div>
-
-    <div class="field-line">
-      <label>{{localize "CDG.label.long.religion"}}</label>
-      {{#if unlocked}}
-        <input type="text" name="system.identity.religion" value="{{identity.religion}}" spellcheck="false" />
-      {{else}}
-        <span class="value">{{identity.religion}}</span>
-      {{/if}}
-    </div>
-
     {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
         il réapparaît intact si l'on retire l'objet. }}
     <div class="field-line origin-line">
@@ -75,6 +65,21 @@
       {{/if}}
     </div>
 
+    <div class="field-line origin-line">
+      <label>{{localize "CDG.label.long.ascendance"}}</label>
+      {{#if peuple}}
+        <span class="value origin" data-item-id="{{ascendance.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{ascendance.name}} ({{ascendance.system.compulsion}})</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{ascendance.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else}}
+        <span class="value">Déposez un Objet "Ascendance"</span>
+      {{/if}}
+    </div>
     <div class="field-line">
       <label>{{localize "CDG.label.long.grade"}}</label>
       {{#if unlocked}}
@@ -85,22 +90,12 @@
         <span class="value">{{#if identity.grade}}{{localize (concat "CDG.grades." identity.grade)}}{{/if}}</span>
       {{/if}}
     </div>
-
     <div class="field-line">
-      <label>{{localize "CDG.label.long.ascendance"}}</label>
+      <label>{{localize "CDG.label.long.religion"}}</label>
       {{#if unlocked}}
-        <input type="text" name="system.identity.ascendance" value="{{identity.ascendance}}" spellcheck="false" />
+        <input type="text" name="system.identity.religion" value="{{identity.religion}}" spellcheck="false" />
       {{else}}
-        <span class="value">{{identity.ascendance}}</span>
-      {{/if}}
-    </div>
-
-    <div class="field-line">
-      <label>{{localize "CDG.label.long.compulsion"}}</label>
-      {{#if unlocked}}
-        <input type="text" name="system.identity.compulsion" value="{{identity.compulsion}}" spellcheck="false" />
-      {{else}}
-        <span class="value">{{identity.compulsion}}</span>
+        <span class="value">{{identity.religion}}</span>
       {{/if}}
     </div>
   </div>
@@ -140,6 +135,17 @@
         {{/with}}
       {{/each}}
     </ol>
-  </section>
 
+      <div class="passion-block">
+        <div class="passion-label" data-tooltip="{{localize 'CDG.ui.passionHint'}}" data-tooltip-direction="UP">{{localize "CDG.label.long.passion"}}</div>
+        <div class="tokens">
+          <a data-action="adjustPassion" data-delta="-1" data-tooltip="{{localize 'CDG.ui.spendPassion'}}"><i class="fas fa-minus"></i></a>
+          <span class="token-count">{{passion.tokens}}</span>
+          <a data-action="adjustPassion" data-delta="1" data-tooltip="{{localize 'CDG.ui.gainPassion'}}"><i class="fas fa-plus"></i></a>
+        </div>
+        <div class="tokens">
+        <a class="clear-token" data-action="clearInvokedTraits" data-tooltip="{{localize "CDG.ui.clearInvokedTraits"}}"><i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+      </div>
+  </section>
 </header>
