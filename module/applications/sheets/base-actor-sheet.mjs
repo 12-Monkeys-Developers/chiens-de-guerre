@@ -1,4 +1,5 @@
 import { SYSTEM } from "../../config/system.mjs"
+import CdgConfrontation from "../../combat/confrontation.mjs"
 import Utils from "../../helpers/utils.mjs"
 import CdgRollDialog from "../roll-dialog.mjs"
 
@@ -464,17 +465,16 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
   }
 
   /**
-   * Ouvre le test d'attaque associé à une arme.
+   * Ouvre la confrontation de combat associée à une arme, contre l'unique cible désignée sur le
+   * canevas. `#onRollDefense`/`#onRollDamage`/`#onRollSoak` restent des jets libres, indépendants
+   * de toute confrontation, pour un usage hors de ce cycle.
    * @param {PointerEvent} event
    * @param {HTMLElement} target Porte, ou est contenu dans, un `data-item-id`.
    */
   static async #onRollWeapon(event, target) {
     const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
     if (!weapon?.system.isWeapon) return
-    return CdgRollDialog.open(this.document, {
-      abilityId: weapon.system.attack.ability,
-      skillId: weapon.system.attack.skill,
-    })
+    return CdgConfrontation.start(this.document, weapon)
   }
 
   /**

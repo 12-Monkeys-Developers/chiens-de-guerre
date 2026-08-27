@@ -1,0 +1,56 @@
+{{!
+  Corps d'un test : la poignée de dés, le verdict, le détail du seuil et le bouton de dépassement.
+  Partagé par une carte de test isolé (roll-card.hbs, phase="") et chaque sous-jet d'une carte de
+  confrontation (phase="attack"/"defense"/"damage"/"soak"), pour que `keepDie`/`pushTest` sachent
+  quel sous-jet du message ils font évoluer.
+
+  `../` plutôt que `@root` dans la boucle des dés : `@root` désignerait le contexte de la carte
+  englobante quand ce partiel est inclus depuis confrontation-card.hbs, pas le sous-jet courant.
+}}
+{{#if test.isPush}}
+  <p class="pushed-note"><i class="fa-solid fa-rotate-right" inert></i> {{localize "CDG.roll.pushedNote"}}</p>
+{{/if}}
+
+<ol class="card-dice">
+  {{#each dice as |die|}}
+    <li>
+      {{#if ../choosable}}
+        <button type="button" class="die {{die.outcome}}{{#if die.suggested}} suggested{{/if}}" data-action="keepDie" data-phase="{{../phase}}" data-index="{{die.index}}"
+          data-tooltip="{{die.label}}">{{die.result}}</button>
+      {{else}}
+        <span class="die {{die.outcome}}{{#if die.kept}} kept{{else}} discarded{{/if}}" data-tooltip="{{die.label}}">{{die.result}}</span>
+      {{/if}}
+    </li>
+  {{/each}}
+</ol>
+
+{{#if pending}}
+  <p class="card-prompt"><i class="fa-solid fa-hand-pointer" inert></i> {{localize "CDG.roll.chooseDie"}}</p>
+{{else}}
+  <div class="card-verdict">
+    <i class="fa-solid {{outcomeIcon}}" inert></i>
+    <span class="verdict-label">{{outcomeLabel}}</span>
+    {{#if outcome.success}}<span class="verdict-quality">{{localize "CDG.roll.quality"}} {{outcome.quality}}</span>{{/if}}
+  </div>
+  {{#if imposed}}<p class="card-note">{{localize "CDG.roll.imposedNote"}}</p>{{/if}}
+{{/if}}
+
+<details class="card-detail">
+  <summary>{{localize "CDG.roll.breakdown"}}</summary>
+  <ul>
+    {{#each test.breakdown as |part|}}
+      <li>
+        <span class="part-label">{{part.label}}</span>
+        <span class="part-value">{{#if part.base}}{{part.value}}{{else}}{{signed part.value}}{{/if}}</span>
+      </li>
+    {{/each}}
+  </ul>
+  {{#if test.effort}}<p class="card-cost">{{localize "CDG.roll.effortSpent"}} {{test.effort}} — {{test.abilityLabel}}</p>{{/if}}
+  {{#if test.passion}}<p class="card-cost">{{test.passion.label}} — {{#if (eq test.passion.mode "bonus")}}{{localize "CDG.roll.passionBonus"}}{{else}}{{localize "CDG.roll.passionMalus"}}{{/if}}</p>{{/if}}
+</details>
+
+{{#if canPush}}
+  <button type="button" class="card-push" data-action="pushTest" data-phase="{{phase}}" data-tooltip="{{localize 'CDG.roll.hint.push'}}">
+    <i class="fa-solid fa-rotate-right" inert></i> {{localize "CDG.roll.push"}}
+  </button>
+{{/if}}

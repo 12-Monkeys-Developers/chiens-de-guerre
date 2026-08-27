@@ -61,6 +61,34 @@
     }
   }
 
+  // --- Cible (test d'attaque uniquement) ---
+
+  .roll-target {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+
+    .target-image {
+      width: 2.2rem;
+      height: 2.2rem;
+      object-fit: cover;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+    }
+
+    .target-name {
+      font-size: 0.85rem;
+      color: var(--cdg-text);
+
+      strong {
+        color: var(--cdg-blood);
+      }
+    }
+  }
+
   // --- Couple caractéristique / compétence ---
 
   .ability-choice {

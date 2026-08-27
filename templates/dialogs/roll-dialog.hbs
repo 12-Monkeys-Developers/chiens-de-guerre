@@ -6,6 +6,13 @@
 {{! Un PART doit rendre un seul élément racine : d'où l'enveloppe. }}
 <div class="roll-body">
 
+  {{#if target}}
+    <div class="roll-target">
+      <img class="target-image" src="{{target.img}}" alt="{{target.name}}" />
+      <span class="target-name">{{localize "CDG.roll.target"}} <strong>{{target.name}}</strong></span>
+    </div>
+  {{/if}}
+
   <section class="roll-pair">
     <h2 class="section-title">{{localize "CDG.roll.pair"}}</h2>
 

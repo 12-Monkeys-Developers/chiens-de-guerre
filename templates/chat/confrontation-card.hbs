@@ -1,0 +1,99 @@
+{{!
+  Carte de confrontation (p. 44-45) : attaque, défense, dégâts, encaissement, dans un seul message
+  mis à jour au fil des jets. Chaque sous-jet réutilise le corps de carte d'un test isolé
+  (partials/test-body.hbs) ; cette carte n'ajoute que l'en-tête, les choix de défense/dommages et
+  les bandeaux de verdict.
+
+  Chaque phase est un `<details>` : toujours dépliable/repliable à la main, et replié d'office une
+  fois que l'encaissement a clos la confrontation (`collapsePriorPhases`) — sinon la carte ne cesse
+  de grandir et le bouton « Se dépasser » d'une phase déjà passée finit hors champ.
+}}
+<div class="cdg-confrontation-card">
+
+  <header class="confrontation-header">
+    <div class="party attacker">
+      <img src="{{attacker.img}}" alt="{{attacker.name}}" />
+      <span class="name">{{attacker.name}}</span>
+    </div>
+    <i class="fa-solid fa-arrow-right" inert></i>
+    <div class="party target">
+      <img src="{{target.img}}" alt="{{target.name}}" />
+      <span class="name">{{target.name}}</span>
+    </div>
+  </header>
+
+  <details class="confrontation-phase phase-attack" {{#unless collapsePriorPhases}}open{{/unless}}>
+    <summary class="phase-title">{{localize "CDG.confrontation.attack"}} — {{weapon.name}}</summary>
+    <div class="cdg-roll-card embedded {{#if attack.pending}}pending{{else}}{{attack.outcomeId}}{{/if}}">
+      {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" attack phase="attack"}}
+    </div>
+  </details>
+
+  {{#if canChooseDefense}}
+    <div class="confrontation-choices">
+      <button type="button" class="dodge" data-action="chooseDefense" data-defense="dodge">
+        <i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}
+      </button>
+      <button type="button" class="parry" data-action="chooseDefense" data-defense="parry" {{disabled parryNeedsShield}}
+        data-tooltip="{{#if parryNeedsShield}}{{localize 'CDG.confrontation.parryNeedsShield'}}{{else if parryBlocked}}{{localize 'CDG.combat.defense.parryAlreadyUsed'}}{{/if}}">
+        <i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}
+      </button>
+    </div>
+  {{/if}}
+
+  {{#if defense}}
+    <details class="confrontation-phase phase-defense" {{#unless collapsePriorPhases}}open{{/unless}}>
+      <summary class="phase-title">{{#if (eq defenseMethod "dodge")}}{{localize "CDG.combat.defense.dodge"}}{{else}}{{localize "CDG.combat.defense.parry"}}{{/if}}</summary>
+      <div class="cdg-roll-card embedded {{#if defense.pending}}pending{{else}}{{defense.outcomeId}}{{/if}}">
+        {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" defense phase="defense"}}
+      </div>
+    </details>
+  {{/if}}
+
+  {{#if opposition}}
+    <div class="confrontation-verdict {{#if opposition.hit}}hit{{else}}miss{{/if}}">
+      <i class="fa-solid {{#if opposition.hit}}fa-check{{else}}fa-xmark{{/if}}" inert></i>
+      <span>{{#if opposition.hit}}{{localize "CDG.confrontation.hit"}}{{else}}{{localize "CDG.confrontation.miss"}}{{/if}}</span>
+      {{#if opposition.ignoreArmor}}<span class="ignore-armor">{{localize "CDG.confrontation.ignoreArmor"}}</span>{{/if}}
+    </div>
+  {{/if}}
+
+  {{#if opposition.hit}}
+    {{#if (or canRollDamage canRollSoak)}}
+      <div class="confrontation-choices">
+        {{#if canRollDamage}}
+          <button type="button" data-action="rollDamage"><i class="fa-solid fa-burst"></i> {{localize "CDG.combat.damageTest"}}</button>
+        {{/if}}
+        {{#if canRollSoak}}
+          <button type="button" data-action="rollSoak"><i class="fa-solid fa-helmet-battle"></i> {{localize "CDG.combat.soakTest"}}</button>
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{#if damage}}
+      <details class="confrontation-phase phase-damage" {{#unless collapsePriorPhases}}open{{/unless}}>
+        <summary class="phase-title">{{localize "CDG.combat.damageTest"}}</summary>
+        <div class="cdg-roll-card embedded {{#if damage.pending}}pending{{else}}{{damage.outcomeId}}{{/if}}">
+          {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" damage phase="damage"}}
+        </div>
+      </details>
+    {{/if}}
+
+    {{#if soak}}
+      <details class="confrontation-phase phase-soak" open>
+        <summary class="phase-title">{{localize "CDG.combat.soakTest"}}</summary>
+        <div class="cdg-roll-card embedded {{#if soak.pending}}pending{{else}}{{soak.outcomeId}}{{/if}}">
+          {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" soak phase="soak"}}
+        </div>
+      </details>
+    {{/if}}
+  {{/if}}
+
+  {{#if woundResolved}}
+    <div class="confrontation-wound {{#if state.woundId}}{{state.woundId}}{{else}}none{{/if}}">
+      <i class="fa-solid fa-heart-crack" inert></i>
+      <span>{{woundLabel}}</span>
+    </div>
+  {{/if}}
+
+</div>

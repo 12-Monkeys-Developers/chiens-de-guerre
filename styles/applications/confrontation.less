@@ -1,0 +1,173 @@
+// Carte de confrontation de combat.
+//
+// Chaque sous-jet réutilise `.cdg-roll-card` telle quelle (dés, verdict, détail, dépassement,
+// définis dans roll.less) : cette feuille n'ajoute que ce qui est propre à la confrontation —
+// l'en-tête attaquant/cible, les choix de défense/dommages et les deux bandeaux de verdict.
+
+.cdg-confrontation-card {
+  --cdg-font-title: var(--cdg-font-text);
+  --cdg-font-label: var(--cdg-font-text);
+  font-family: var(--cdg-font-text);
+  color: var(--cdg-text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .confrontation-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+
+    i {
+      color: var(--cdg-muted);
+    }
+
+    .party {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+      flex: 1 1 0;
+      min-width: 0;
+
+      img {
+        width: 2.6rem;
+        height: 2.6rem;
+        object-fit: cover;
+        border: 1px solid var(--cdg-parchment-line);
+        border-radius: var(--cdg-radius);
+      }
+
+      .name {
+        font-family: var(--cdg-font-label);
+        font-variant: small-caps;
+        font-size: 0.78rem;
+        letter-spacing: 0.03em;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+      }
+    }
+
+    .target .name {
+      color: var(--cdg-blood);
+    }
+  }
+
+  // Chaque phase est un `<details>` : le résumé fait office de titre et de poignée pour
+  // plier/déplier, sans rien perdre du bandeau existant.
+  .confrontation-phase {
+    &[open] > .phase-title {
+      margin-bottom: 0.2rem;
+    }
+  }
+
+  .phase-title {
+    margin: 0;
+    font-family: var(--cdg-font-label);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.85rem;
+    color: var(--cdg-label);
+    cursor: pointer;
+
+    &::marker {
+      color: var(--cdg-muted);
+    }
+  }
+
+  .cdg-roll-card.embedded {
+    margin: 0;
+  }
+
+  .confrontation-choices {
+    display: flex;
+    gap: 0.4rem;
+
+    button {
+      flex: 1 1 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.5rem;
+      background: transparent;
+      border: 1px solid var(--cdg-blood);
+      border-radius: var(--cdg-radius);
+      color: var(--cdg-blood);
+      font-family: var(--cdg-font-label);
+      font-variant: small-caps;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        background: var(--cdg-blood);
+        color: var(--cdg-parchment);
+        box-shadow: none;
+      }
+
+      &:disabled {
+        color: var(--cdg-muted);
+        border-color: var(--cdg-parchment-line);
+        border-style: dotted;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .confrontation-verdict,
+  .confrontation-wound {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.3rem;
+    border-radius: var(--cdg-radius);
+    font-family: var(--cdg-font-title);
+    font-size: 1rem;
+
+    .ignore-armor {
+      font-family: var(--cdg-font-label);
+      font-size: 0.75rem;
+      font-style: italic;
+      color: var(--cdg-muted);
+    }
+  }
+
+  .confrontation-verdict {
+    &.hit {
+      background: var(--cdg-ink-soft);
+      color: var(--cdg-parchment);
+    }
+
+    &.miss {
+      background: transparent;
+      border: 1px solid var(--cdg-parchment-line);
+      color: var(--cdg-muted);
+    }
+  }
+
+  .confrontation-wound {
+    border: 1px solid var(--cdg-parchment-line);
+
+    &.legere {
+      color: var(--cdg-text);
+    }
+
+    &.grave,
+    &.mortelle {
+      background: var(--cdg-blood);
+      border-color: var(--cdg-blood-dark);
+      color: var(--cdg-parchment);
+    }
+
+    &.none {
+      color: var(--cdg-muted);
+    }
+  }
+}

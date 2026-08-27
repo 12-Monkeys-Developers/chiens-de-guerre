@@ -1294,6 +1294,28 @@ cdg-toggle-switch[checked] thumb {
 .cdg.roll .section-title::after {
   display: none;
 }
+.cdg.roll .roll-target {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+}
+.cdg.roll .roll-target .target-image {
+  width: 2.2rem;
+  height: 2.2rem;
+  object-fit: cover;
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+}
+.cdg.roll .roll-target .target-name {
+  font-size: 0.85rem;
+  color: var(--cdg-text);
+}
+.cdg.roll .roll-target .target-name strong {
+  color: var(--cdg-blood);
+}
 .cdg.roll .ability-choice {
   display: flex;
   gap: 0.4rem;
@@ -1747,6 +1769,146 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg [data-action="rollTest"]:hover {
   color: var(--cdg-blood);
+}
+.cdg-confrontation-card {
+  --cdg-font-title: var(--cdg-font-text);
+  --cdg-font-label: var(--cdg-font-text);
+  font-family: var(--cdg-font-text);
+  color: var(--cdg-text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.cdg-confrontation-card .confrontation-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+}
+.cdg-confrontation-card .confrontation-header i {
+  color: var(--cdg-muted);
+}
+.cdg-confrontation-card .confrontation-header .party {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  flex: 1 1 0;
+  min-width: 0;
+}
+.cdg-confrontation-card .confrontation-header .party img {
+  width: 2.6rem;
+  height: 2.6rem;
+  object-fit: cover;
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+}
+.cdg-confrontation-card .confrontation-header .party .name {
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.cdg-confrontation-card .confrontation-header .target .name {
+  color: var(--cdg-blood);
+}
+.cdg-confrontation-card .confrontation-phase[open] > .phase-title {
+  margin-bottom: 0.2rem;
+}
+.cdg-confrontation-card .phase-title {
+  margin: 0;
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  font-size: 0.85rem;
+  color: var(--cdg-label);
+  cursor: pointer;
+}
+.cdg-confrontation-card .phase-title::marker {
+  color: var(--cdg-muted);
+}
+.cdg-confrontation-card .cdg-roll-card.embedded {
+  margin: 0;
+}
+.cdg-confrontation-card .confrontation-choices {
+  display: flex;
+  gap: 0.4rem;
+}
+.cdg-confrontation-card .confrontation-choices button {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--cdg-blood);
+  border-radius: var(--cdg-radius);
+  color: var(--cdg-blood);
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+.cdg-confrontation-card .confrontation-choices button:hover:not(:disabled) {
+  background: var(--cdg-blood);
+  color: var(--cdg-parchment);
+  box-shadow: none;
+}
+.cdg-confrontation-card .confrontation-choices button:disabled {
+  color: var(--cdg-muted);
+  border-color: var(--cdg-parchment-line);
+  border-style: dotted;
+  cursor: not-allowed;
+}
+.cdg-confrontation-card .confrontation-verdict,
+.cdg-confrontation-card .confrontation-wound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.3rem;
+  border-radius: var(--cdg-radius);
+  font-family: var(--cdg-font-title);
+  font-size: 1rem;
+}
+.cdg-confrontation-card .confrontation-verdict .ignore-armor,
+.cdg-confrontation-card .confrontation-wound .ignore-armor {
+  font-family: var(--cdg-font-label);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--cdg-muted);
+}
+.cdg-confrontation-card .confrontation-verdict.hit {
+  background: var(--cdg-ink-soft);
+  color: var(--cdg-parchment);
+}
+.cdg-confrontation-card .confrontation-verdict.miss {
+  background: transparent;
+  border: 1px solid var(--cdg-parchment-line);
+  color: var(--cdg-muted);
+}
+.cdg-confrontation-card .confrontation-wound {
+  border: 1px solid var(--cdg-parchment-line);
+}
+.cdg-confrontation-card .confrontation-wound.legere {
+  color: var(--cdg-text);
+}
+.cdg-confrontation-card .confrontation-wound.grave,
+.cdg-confrontation-card .confrontation-wound.mortelle {
+  background: var(--cdg-blood);
+  border-color: var(--cdg-blood-dark);
+  color: var(--cdg-parchment);
+}
+.cdg-confrontation-card .confrontation-wound.none {
+  color: var(--cdg-muted);
 }
 .cdg .group-title {
   margin: 0.6rem 0 0.2rem 0;

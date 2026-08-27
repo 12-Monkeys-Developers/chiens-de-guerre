@@ -26,16 +26,29 @@ export default class CdgRoll extends Roll {
   // #region Lancer
 
   /**
+   * Lance la poignée de dés d'un test et interprète le résultat, sans poster de carte.
+   *
+   * Étape commune à un test isolé (`post`) et à un sous-jet de confrontation (`CdgConfrontation`),
+   * qui n'a pas de message propre : les deux ont besoin du même lancer et du même dé imposé d'office,
+   * mais seul le premier crée immédiatement un `ChatMessage`.
+   * @param {Object} test Le test préparé par la fenêtre de jet (voir `CdgRollDialog`).
+   * @returns {Promise<{roll: Roll, data: Object}>}
+   */
+  static async roll(test) {
+    const roll = new this(`${test.dice}d20`)
+    await roll.evaluate()
+
+    const results = roll.dice[0].results.map((die) => die.result)
+    return { roll, data: { ...test, results, keptIndex: this.#autoKeptIndex(test, results) } }
+  }
+
+  /**
    * Lance un test et poste sa carte.
    * @param {Object} test Le test préparé par la fenêtre de jet (voir `CdgRollDialog`).
    * @returns {Promise<ChatMessage>}
    */
   static async post(test) {
-    const roll = new this(`${test.dice}d20`)
-    await roll.evaluate()
-
-    const results = roll.dice[0].results.map((die) => die.result)
-    const data = { ...test, results, keptIndex: this.#autoKeptIndex(test, results) }
+    const { roll, data } = await this.roll(test)
 
     const actor = await fromUuid(test.actorUuid)
     return ChatMessage.implementation.create({

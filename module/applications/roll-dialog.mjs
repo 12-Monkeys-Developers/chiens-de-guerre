@@ -73,6 +73,15 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   #afterRoll = null
 
   /**
+   * Remplace `CdgRoll.post` comme destination du jet — une confrontation de combat fusionne ainsi
+   * le test dans sa propre carte au lieu d'en poster une autonome.
+   */
+  #postHandler = null
+
+  /** Acteur ciblé, affiché en tête de fenêtre pour un test d'attaque. */
+  #targetUuid = null
+
+  /**
    * Prépare le brouillon du test à partir de la présélection reçue de la fiche.
    * @param {CdgActor} actor
    * @param {Object} [seed] Présélection : `abilityId`, `skillId`.
@@ -95,6 +104,8 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       lockedPair: !!seed.lockedPair,
     }
     this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
+    this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
+    this.#targetUuid = seed.targetUuid ?? null
   }
 
   /**
@@ -136,6 +147,8 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#draft.lockedPair = !!seed.lockedPair
     this.#draft.toggles = seed.toggles ?? {}
     this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
+    this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
+    this.#targetUuid = seed.targetUuid ?? null
   }
 
   /** @override */
@@ -159,6 +172,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     context.actor = this.#actor
     context.draft = this.#draft
     context.hasPassion = this.hasPassion
+    context.target = this.#targetUuid ? fromUuidSync(this.#targetUuid) : null
     context.SYSTEM = SYSTEM
 
     if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
@@ -463,7 +477,8 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     }
     if (!foundry.utils.isEmpty(updates)) await actor.update(updates)
 
-    await CdgRoll.post(test)
+    const post = this.#postHandler ?? ((posted) => CdgRoll.post(posted))
+    await post(test)
     await this.#afterRoll?.(test)
     return this.close()
   }

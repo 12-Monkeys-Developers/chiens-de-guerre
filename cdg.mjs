@@ -8,10 +8,11 @@ export * as elements from "./module/elements/_module.mjs"
 import * as models from "./module/models/_module.mjs"
 import * as documents from "./module/documents/_module.mjs"
 import * as applications from "./module/applications/_module.mjs"
+import * as combat from "./module/combat/_module.mjs"
 import * as dice from "./module/dice/_module.mjs"
 import * as helpers from "./module/helpers/_module.mjs"
 
-Hooks.once("init", function () {
+Hooks.once("init", async function () {
   console.info(SYSTEM.ASCII)
   console.info(helpers.Utils.log("Initialisation..."))
 
@@ -24,9 +25,20 @@ Hooks.once("init", function () {
     documents,
     helpers,
     dice,
+    combat,
     // Raccourci de macro : `game.system.api.roll(actor)` ouvre la fenêtre de test.
     roll: (actor, seed) => applications.CdgRollDialog.open(actor, seed),
   }
+
+  // Partiel du corps d'un test, partagé par une carte de test isolé et chaque sous-jet d'une carte
+  // de confrontation : il doit être préchargé pour qu'un `{{> "chemin/vers/le/partiel.hbs"}}` le
+  // trouve au rendu, `renderTemplate` ne le résolvant pas tout seul depuis un simple chemin.
+  await foundry.applications.handlebars.loadTemplates([`${SYSTEM.PATH}/templates/chat/partials/test-body.hbs`])
+
+  // Confrontation de combat : la cible n'étant jamais l'auteure du message d'attaque, elle ne peut
+  // pas le mettre à jour elle-même (seuls l'auteur et le Meneur le peuvent) — elle passe par une
+  // requête au Meneur actif, sur le même principe que `co2`.
+  CONFIG.queries["cdg.updateConfrontation"] = ({ messageId, updateData }) => game.messages.get(messageId)?.update(updateData)
 
   // Jets : la carte d'un test est reconstruite à chaque changement, il faut que le message sache
   // restaurer sa propre classe de jet. On enregistre à la suite, pas en tête : le premier de la
@@ -101,3 +113,7 @@ Hooks.once("ready", function () {
 // Les boutons d'une carte de test — choisir son dé, se dépasser — sont branchés à chaque rendu du
 // message : le chat réécrit son contenu à la moindre mise à jour.
 Hooks.on("renderChatMessageHTML", (message, html) => dice.CdgRoll.activateListeners(message, html))
+
+// Même principe pour la carte de confrontation ; les deux hooks ne se marchent pas dessus, chacun
+// ignorant les messages qui ne portent pas son propre drapeau.
+Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgConfrontation.activateListeners(message, html))
