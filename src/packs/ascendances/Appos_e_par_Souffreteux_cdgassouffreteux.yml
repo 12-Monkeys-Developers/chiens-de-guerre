@@ -1,0 +1,29 @@
+_id: cdgassouffreteux
+name: Apposée par Souffreteux
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>Souffreteux est à peine l'ombre de ce qu'il devait être à l'apogée de sa
+    puissance. Profondément affaibli par de puissantes magies incontrôlées, il
+    n'a de cesse que de prolonger à tout prix sa pitoyable existence.
+    Souffreteux a créé et contrôlé de gigantesques hordes de morts-vivants tout
+    au long de la Guerre d'oppression.</p>
+  compulsion: Obsession morbide
+  compulsionDesc: >-
+    <p>Vous êtes obnubilé par la vie, la mort et les maladies. Peut-être en
+    avez-vous peur et avez-vous développé une forme d'hypocondrie, à moins que
+    vous ne cherchiez sans cesse à approfondir vos connaissances du corps humain
+    ? Il n'est pas rare non plus que les individus marqués par Souffreteux
+    soient d'une façon ou d'une autre rongés par le désir d'immortalité...</p>
+  arcanumChoices:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarrejuvnum000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmortem00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmedicatus00
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarinduratus00
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgassouffreteux'

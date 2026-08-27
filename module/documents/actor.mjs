@@ -237,9 +237,86 @@ export default class CdgActor extends Actor {
     return this.deleteEmbeddedDocuments("Item", [item.id, ...granted.map((entry) => entry.id)])
   }
 
-  async revokeAscendance(item){
-
+  async revokeAscendance(item) {
+    if (item.type !== SYSTEM.ITEM_TYPE.ascendance) return
+    if (item.system.arcanumBonus) await this.updateArcanumBonus(item, item.system.arcanumBonus, "")
     return this.deleteEmbeddedDocuments("Item", [item.id])
+  }
+
+  /**
+   * Pose une ascendance sur le personnage.
+   *
+   * Contrairement à un peuple ou une carrière, une ascendance n'accorde ni traits ni équipement :
+   * seul son bonus d'arcanum (`updateArcanumBonus`) a un effet mécanique sur la fiche.
+   * @param {CdgItem} item L'ascendance déposée, encore extérieure au personnage.
+   * @returns {Promise<CdgItem[]|undefined>}
+   */
+  async grantAscendance(item) {
+    if (item.type !== SYSTEM.ITEM_TYPE.ascendance) return
+    const typeLabel = game.i18n.localize(`TYPES.Item.${item.type}`)
+
+    if (this.type !== "character") return ui.notifications.warn(game.i18n.format("CDG.origin.notForAdversaire", { type: typeLabel }))
+
+    const existing = this.ascendance
+    if (existing) return ui.notifications.warn(game.i18n.format("CDG.origin.alreadyPresent", { type: typeLabel, name: existing.name }))
+
+    const [ascendance] = await this.createEmbeddedDocuments("Item", [item.toObject()])
+    if (!ascendance) return
+
+    if (ascendance.system.arcanumBonus) await this.updateArcanumBonus(ascendance, "", ascendance.system.arcanumBonus)
+    return [ascendance]
+  }
+
+  /**
+   * Défait l'ancien choix d'arcanum de l'ascendance, puis applique le nouveau.
+   *
+   * L'arcanum visé est soit déjà possédé (son rang est alors simplement augmenté), soit absent
+   * (il est embarqué au rang minimum) — dans les deux cas un flag `GRANT_FLAG` le relie à
+   * l'ascendance, complété par `ascendanceGranted` pour savoir, au retrait, s'il faut le
+   * supprimer entièrement ou seulement lui rendre son rang d'avant.
+   * @param {CdgItem} ascendance L'ascendance embarquée sur ce personnage.
+   * @param {string} previousUuid Ancien `system.arcanumBonus`, ou "" s'il n'y en avait pas.
+   * @param {string} nextUuid Nouveau `system.arcanumBonus`, ou "" pour ne rien appliquer.
+   */
+  async updateArcanumBonus(ascendance, previousUuid, nextUuid) {
+    if (previousUuid) await this.#revertArcanumBonus(ascendance)
+    if (nextUuid) await this.#grantArcanumBonus(ascendance, nextUuid)
+  }
+
+  /**
+   * Augmente le rang de l'arcanum choisi s'il est déjà possédé, ou l'embarque au rang minimum.
+   * @param {CdgItem} ascendance
+   * @param {string} uuid UUID de l'arcanum choisi.
+   */
+  async #grantArcanumBonus(ascendance, uuid) {
+    const source = await fromUuid(uuid)
+    if (!source) return ui.notifications.warn(game.i18n.format("CDG.origin.missingGrant", { name: ascendance.name, count: 1 }))
+
+    const existing = this.arcanums.find((arcanum) => arcanum.name === source.name)
+    if (existing) {
+      if (existing.system.rank >= SYSTEM.ARCANUM_MAX_RANK) return ui.notifications.warn(game.i18n.format("CDG.origin.arcanumBonusCapped", { name: existing.name }))
+      await existing.update({ "system.rank": existing.system.rank + 1 })
+      return existing.setFlag(SYSTEM.PACKAGE_ID, CdgActor.GRANT_FLAG, ascendance.id)
+    }
+
+    const data = source.toObject()
+    data.system.rank = SYSTEM.ARCANUM_MIN_RANK
+    foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.${CdgActor.GRANT_FLAG}`, ascendance.id)
+    foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.ascendanceGranted`, true)
+    return this.createEmbeddedDocuments("Item", [data])
+  }
+
+  /**
+   * Défait le bonus d'arcanum posé par cette ascendance : supprime l'arcanum s'il avait été créé
+   * pour l'occasion, ou lui rend simplement son rang d'avant s'il était déjà possédé.
+   * @param {CdgItem} ascendance
+   */
+  async #revertArcanumBonus(ascendance) {
+    const bumped = this.grantedBy(ascendance)[0]
+    if (!bumped) return
+    if (bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")) return this.deleteEmbeddedDocuments("Item", [bumped.id])
+    await bumped.update({ "system.rank": Math.max(SYSTEM.ARCANUM_MIN_RANK, bumped.system.rank - 1) })
+    return bumped.unsetFlag(SYSTEM.PACKAGE_ID, CdgActor.GRANT_FLAG)
   }
 
   /**

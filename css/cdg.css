@@ -1249,6 +1249,21 @@ cdg-toggle-switch[checked] thumb {
   flex: 1 1 auto;
   min-height: 0;
 }
+.cdg.item.ascendance .field-line > input[type="text"],
+.cdg.item.ascendance .field-line > select {
+  flex: 0 1 auto;
+  min-width: 6rem;
+}
+.cdg.item.ascendance .field-line > input[type="text"] {
+  field-sizing: content;
+}
+.cdg.item.ascendance .free-text {
+  min-height: 0;
+  overflow: visible;
+}
+.cdg.item.ascendance prose-mirror.content-sized {
+  min-height: 2.5rem;
+}
 .cdg.roll {
   --cdg-font-title: var(--cdg-font-text);
   --cdg-font-label: var(--cdg-font-text);

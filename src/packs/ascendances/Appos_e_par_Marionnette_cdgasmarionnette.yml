@@ -1,0 +1,28 @@
+_id: cdgasmarionnette
+name: Apposée par Marionnette
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>Son visage toujours dissimulé sous un masque de velours, Marionnette
+    (qu'on dit muette) excelle au contrôle mental d'autrui. Sous le joug de son
+    esprit, les volontés se brisent et ses serviteurs rivalisent d'ingéniosité
+    pour s'attirer ses faveurs. Marionnette serait actuellement en Escannie, au
+    service du roi Abdulah IV.</p>
+  compulsion: Luxure
+  compulsionDesc: >-
+    <p>Vous êtes l'hôte de puissants désirs refoulés et immoraux. Les plaisirs
+    de toutes sortes vous attirent. Ces débauches peuvent concerner aussi bien
+    les choses du sexe que les goinfreries de toutes sortes. Des addictions
+    diverses et variées (drogues, alcools, etc.) sont également fréquentes.</p>
+  arcanumChoices:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarimpero00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarsubjugatio0
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarfulmen00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardextem00000
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgasmarionnette'

@@ -52,7 +52,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       rollDamage: CdgBaseActorSheet.#onRollDamage,
       rollSoak: CdgBaseActorSheet.#onRollSoak,
       removeOrigin: CdgBaseActorSheet.#onRemoveOrigin,
-      removeOrigin: CdgBaseActorSheet.#onRemoveAscendance,
+      removeAscendance: CdgBaseActorSheet.#onRemoveAscendance,
       activateArcanum: CdgBaseActorSheet.#onActivateArcanum,
     },
   }
@@ -577,14 +577,12 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     return this.document.revokeOrigin(item)
   }
 
-    static async #onRemoveAscendance(event, target) {
+  static async #onRemoveAscendance(event, target) {
     if (!this.isEditable) return
     const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
     if (!item) return
     return this.document.revokeAscendance(item)
   }
-
-  
 
   // #endregion
 
@@ -632,6 +630,8 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
     // Une origine ne se copie pas telle quelle : elle accorde aussi ce qu'elle référence.
     if (SYSTEM.ORIGIN_TYPES.includes(item.type)) return this.document.grantOrigin(item)
+
+    if (item.type === SYSTEM.ITEM_TYPE.ascendance) return this.document.grantAscendance(item)
 
     return this.document.createEmbeddedDocuments("Item", [item.toObject()])
   }

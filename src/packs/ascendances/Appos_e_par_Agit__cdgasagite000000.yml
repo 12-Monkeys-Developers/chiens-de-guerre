@@ -1,0 +1,28 @@
+_id: cdgasagite000000
+name: Apposée par Agité
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>Excentrique et faste, Agité n'en est pas moins un formidable combattant
+    et un duelliste hors pair. Sa magie lui permet d'altérer le hasard et les
+    fils de la destinée. Après avoir conquis le pays de Tuhée, il en a
+    méthodiquement pillé les richesses et ressources.</p>
+  compulsion: Cupidité
+  compulsionDesc: >-
+    <p>Vous convoitez les richesses, aimez les biens matériels et ne pensez la
+    plupart du temps qu'à l'argent. Ceci peut faire de vous un kleptomane ou un
+    détrousseur sans foi ni loi. Certains deviennent avares à l'excès. D'autres,
+    encore, en arrivent à concevoir un désir incontrôlable pour une chose
+    inaccessible.</p>
+  arcanumChoices:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardelere00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardextem00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardevito00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarprophetiae0
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgasagite000000'

@@ -1,16 +1,42 @@
 <section class="item-body">
+  {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs" classes="content-sized"}}
+
   <div class="field-line">
     <label>{{localize "CDG.label.long.compulsion"}}</label>
-    <input type="text" name="system.compulsion" value="{{compulsion}}" spellcheck="false" />
+    <input type="text" name="system.compulsion" value="{{system.compulsion}}" spellcheck="false" />
   </div>
 
-<section class="description">
-  <div class="free-text">
-    {{formInput systemFields.compulsionDesc value=system.compulsionDesc enriched=enrichedcompulsionDesc
-      name="system.compulsionDesc" toggled=true}}
-  </div>
-</section>
+  <section class="description">
+    <div class="free-text">
+      {{formInput systemFields.compulsionDesc value=system.compulsionDesc enriched=enrichedcompulsionDesc
+        name="system.compulsionDesc" toggled=true classes="content-sized"}}
+    </div>
+  </section>
 
-  {{> "systems/chiens-de-guerre/templates/items/shared/description.hbs"}}
+  <section class="arcanum-choices">
+    <h2 class="section-title">{{localize "CDG.label.long.arcanumChoices"}}</h2>
+    <ul class="item-list">
+      {{#each arcanumChoices as |choice|}}
+        <li class="item-row" data-uuid="{{choice.uuid}}">
+          <img class="item-img" src="{{choice.img}}" data-action="editArcanumChoice" data-uuid="{{choice.uuid}}" />
+          <span class="item-name" data-action="editArcanumChoice" data-uuid="{{choice.uuid}}">{{choice.name}}</span>
+          {{#if @root.isEditable}}
+            <a class="item-control" data-action="removeArcanumChoice" data-uuid="{{choice.uuid}}"
+              data-tooltip="{{localize 'CDG.ui.remove'}}"><i class="fas fa-xmark"></i></a>
+          {{/if}}
+        </li>
+      {{else}}
+        <li class="empty">{{localize "CDG.ui.dropArcanumChoicesHere"}}</li>
+      {{/each}}
+    </ul>
 
+    {{#if arcanumChoices.length}}
+      <div class="field-line">
+        <label>{{localize "CDG.label.long.arcanumBonus"}}</label>
+        <select name="system.arcanumBonus">
+          {{selectOptions arcanumOptions selected=system.arcanumBonus blank="" labelAttr="label" valueAttr="id"}}
+        </select>
+      </div>
+    {{/if}}
+  </section>
 </section>

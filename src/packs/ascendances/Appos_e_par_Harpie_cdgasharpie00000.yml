@@ -1,0 +1,27 @@
+_id: cdgasharpie00000
+name: Apposée par Harpie
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>Harpie, maîtresse de la magie du feu, est tout aussi féroce
+    qu'implacable. Son courroux semble infini. La ruine et la destruction
+    suivent partout où son chemin la mène. Selon les rumeurs, elle se taillerait
+    actuellement un royaume dans les Terres vierges.</p>
+  compulsion: Fureur
+  compulsionDesc: >-
+    <p>Que vous soyez d'un naturel calme ou tumultueux, une terrible colère
+    couve en vous et ne demande qu'à exploser de manière destructrice. Et
+    lorsque cela arrive, vous perdez généralement toute forme de contrôle et
+    provoquez de terribles dégâts.</p>
+  arcanumChoices:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardelere00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarobsidio0000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarvehementer0
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarinduratus00
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgasharpie00000'

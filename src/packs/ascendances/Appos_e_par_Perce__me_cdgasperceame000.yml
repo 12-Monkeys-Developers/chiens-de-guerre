@@ -1,0 +1,26 @@
+_id: cdgasperceame000
+name: Apposée par Perce-âme
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>Perce-âme aurait sondé tant d'esprits, volé tant d'âmes, que sa propre
+    personnalité serait enfouie au milieu de centaines d'autres. Son
+    comportement semble n'avoir aucun sens, aucune forme de continuité.</p>
+  compulsion: Duplicité
+  compulsionDesc: >-
+    <p>Le mensonge, la conspiration et la trahison sont vos passe-temps
+    quotidiens. La duplicité se traduit selon les personnalités par une forte
+    tendance à la mythomanie ou un amour immodéré des complots obscurs et
+    entrelacés.</p>
+  arcanumChoices:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgaracuitus0000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarinspex00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarnebula00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmandatum000
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgasperceame000'

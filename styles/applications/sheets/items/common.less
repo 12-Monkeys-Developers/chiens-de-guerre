@@ -193,3 +193,35 @@
     min-height: 0;
   }
 }
+
+// Fiche d'ascendance : la compulsion (un mot) et l'arcanum bonifié (un nom) sont courts — les
+// étirer sur toute la largeur de la ligne, comme le fait `.field-line` par défaut, laisse un grand
+// vide après le texte. Ils se dimensionnent donc à leur contenu plutôt qu'à la ligne.
+.cdg.item.ascendance {
+  .field-line {
+    > input[type="text"],
+    > select {
+      flex: 0 1 auto;
+      min-width: 6rem;
+    }
+
+    > input[type="text"] {
+      field-sizing: content;
+    }
+  }
+
+  // Les deux éditeurs (compulsion et description) suivent leur contenu (`content-sized`, la classe
+  // que le cœur prévoit pour ça — cf. `character-arcanums.hbs`) plutôt que de garder la hauteur
+  // minimale de 300 px d'un éditeur ordinaire, beaucoup trop grande pour quelques phrases. Le
+  // `<prose-mirror>` lui-même porte cette min-height (300 px, `.cdg.item .prosemirror` plus haut),
+  // pas seulement `.editor-content` : c'est lui qu'il faut recadrer, sans quoi le contenu, correctement
+  // réduit, flotte dans une coquille toujours aussi grande.
+  .free-text {
+    min-height: 0;
+    overflow: visible;
+  }
+
+  prose-mirror.content-sized {
+    min-height: 2.5rem;
+  }
+}

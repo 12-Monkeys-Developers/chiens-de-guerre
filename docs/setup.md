@@ -111,20 +111,20 @@ Deux pièges :
   **en silence** et produit un compendium vide sans le moindre message.
 
 Les identifiants sont fixés d'avance (`cdgtr…` pour un trait, `cdgpe…` pour un peuple, `cdgar…` pour
-un arcanum, `cdgeq…` pour un équipement, `cdgca…` pour une carrière, `cdgea…` pour l'effet
-d'ajustement qu'une origine embarque) pour que les UUID d'une origine vers ce qu'elle accorde restent
-stables d'une compilation à l'autre.
+un arcanum, `cdgeq…` pour un équipement, `cdgca…` pour une carrière, `cdgas…` pour une ascendance,
+`cdgea…` pour l'effet d'ajustement qu'une origine embarque) pour que les UUID d'une origine vers ce
+qu'elle accorde restent stables d'une compilation à l'autre.
 
-### Les carrières, les arcanums et l'équipement sont générés
+### Les carrières, les arcanums, l'équipement et les ascendances sont générés
 
-`peuples` et `traits` ont été écrits à la main. Les trois autres packs sortent d'un générateur, parce
-qu'une carrière n'existe pas seule : elle renvoie par UUID à ses arcanums et à son barda, et saisir
-102 références à la main serait une source d'erreurs muettes.
+`peuples` et `traits` ont été écrits à la main. Les quatre autres packs sortent d'un générateur, parce
+qu'une carrière (ou une ascendance) n'existe pas seule : elle renvoie par UUID à ses arcanums et à
+son barda, et saisir des dizaines de références à la main serait une source d'erreurs muettes.
 
 ```
-npm run build:carrieres                              # src/packs/{arcanums,equipements,carrieres}/ + la macro
-npm run build:carrieres -- --force                   # régénère par-dessus les fichiers existants
-npm run build:carrieres -- --force --only=arcanums   # ... mais un seul pack
+npm run build:compendiums                              # src/packs/{arcanums,equipements,carrieres,ascendances}/ + la macro
+npm run build:compendiums -- --force                   # régénère par-dessus les fichiers existants
+npm run build:compendiums -- --force --only=arcanums   # ... mais un seul pack
 ```
 
 - Les données vivent dans `tools/data/` — c'est là qu'on corrige, jamais dans les YAML produits.
@@ -145,7 +145,7 @@ npm run build:carrieres -- --force --only=arcanums   # ... mais un seul pack
   CLI, elle, accepterait en silence.
 - Chaque carrière embarque son effet d'ajustement de caractéristique, pour la même raison que les
   peuples : `grantOrigin()` n'applique délibérément pas `system.abilityBonus`.
-- Il produit en plus `tools/out/macro-carrieres.js` (non versionné), une macro Foundry autonome qui
+- Il produit en plus `tools/out/macro-compendiums.js` (non versionné), une macro Foundry autonome qui
   crée les mêmes contenus dans des compendiums de monde. Elle n'y réutilise pas les UUID du système :
   elle crée d'abord arcanums et équipements, puis résout les références. Relancer la macro ne
   duplique rien.

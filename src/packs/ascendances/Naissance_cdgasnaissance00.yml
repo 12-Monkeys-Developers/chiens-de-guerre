@@ -1,0 +1,23 @@
+_id: cdgasnaissance00
+name: Naissance
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>Vous êtes né avec la Marque. Horrifiés, la plupart des parents se
+    débarrassent de leur rejeton. Votre vie a été dès le début marquée par le
+    destin.</p><p><strong>Bonus :</strong> +1 dans la caractéristique la plus
+    faible du personnage (en cas d'égalité, le joueur choisit laquelle est
+    augmentée). Ce bonus n'est pas modélisé par cet objet : appliquez-le à la
+    main sur la fiche.</p>
+  compulsion: Au choix
+  compulsionDesc: >-
+    <p>Définissez une compulsion avec le Meneur de jeu, d'une ampleur similaire
+    à celles que procurent les Oblitérés.</p>
+  arcanumChoices: []
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgasnaissance00'

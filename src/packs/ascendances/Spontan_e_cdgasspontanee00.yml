@@ -1,0 +1,18 @@
+_id: cdgasspontanee00
+name: Spontanée
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>La Marque est apparue au cours de votre vie, du jour au lendemain, sans
+    explication. On ne sait quelle signification donner à cet étrange (et
+    rarissime) événement et les théories vont bon train.</p>
+  compulsion: ''
+  compulsionDesc: ''
+  arcanumChoices: []
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgasspontanee00'

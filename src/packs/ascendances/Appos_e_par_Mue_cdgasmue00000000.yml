@@ -1,0 +1,27 @@
+_id: cdgasmue00000000
+name: Apposée par Mue
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>Mue qu'on connaît principalement pour avoir créé les orques est la
+    maîtresse des métamorphoses. On dit d'elle qu'elle collecte les savoirs
+    interdits depuis les siècles et aurait à plusieurs reprises accepté d'aider
+    toutes sortes d'individus pour accéder à des secrets inavouables.</p>
+  compulsion: Omniscience
+  compulsionDesc: >-
+    <p>« Le savoir, c'est le pouvoir. » Tel est le désir insatiable d'engranger
+    des connaissances de toutes sortes qui vous anime. Pour certains, ce sera
+    une vie consacrée à la collecte de savoirs ésotériques. Pour d'autres, il
+    s'agira d'accumuler par tout moyen du pouvoir sur autrui.</p>
+  arcanumChoices:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarmagice00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgaralkemia0000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarprophetiae0
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgariter0000000
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgasmue00000000'

@@ -305,6 +305,7 @@
       "grantSkillRanks": "{count} rang(s) de compétence",
       "grantMoney": "{amount} D",
       "missingGrant": "{name} : {count} élément(s) introuvable(s). Le compendium qui les porte est sans doute absent.",
+      "arcanumBonusCapped": "{name} est déjà au rang maximum : le bonus d'ascendance ne s'applique pas.",
       "removeTitle": "Retirer {type}",
       "removeContent": "<p>Retirer <strong>{name}</strong> et les {count} objet(s) qu'il a accordés ?</p><p class=\"hint\">Les langues apprises et les rangs de compétence resteront : rien ne distingue plus ce qui venait de cette origine de ce que le personnage a gagné depuis.</p>",
       "removeContentAlone": "<p>Retirer <strong>{name}</strong> ?</p>",
@@ -405,6 +406,8 @@
         "solde": "Solde mensuelle",
         "ascendance": "Ascendance",
         "compulsion": "Compulsion",
+        "arcanumChoices": "Arcanums candidats",
+        "arcanumBonus": "Arcanum bonifié",
         "abilities": "Caractéristiques",
         "skills": "Compétences",
         "traits": "Traits de personnalité",
@@ -496,6 +499,8 @@
       "noStartingSkill": "Aucune compétence de départ.",
       "dropFeaturesHere": "Déposez ici les traits accordés par le peuple.",
       "dropArcanumsHere": "Déposez ici les arcanums de départ.",
+      "dropArcanumChoicesHere": "Déposez ici les arcanums candidats (jusqu'à 4).",
+      "tooManyArcanumChoices": "Une ascendance ne propose que 4 arcanums candidats au maximum.",
       "dropEquipmentsHere": "Déposez ici l'équipement de départ.",
       "poolHint": "Réserve courante sur maximum. Cliquez pour dépenser ou rendre un point.",
       "improvementsHint": "Augmentations achetées en expérience (5 XP chacune, 3 au maximum).",
@@ -648,6 +653,25 @@
         },
         "linkedSkill": {
           "label": "Compétence bonifiée"
+        }
+      }
+    },
+    "Ascendance": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "compulsion": {
+          "label": "Compulsion"
+        },
+        "compulsionDesc": {
+          "label": "Description de la compulsion"
+        },
+        "arcanumChoices": {
+          "label": "Arcanums candidats"
+        },
+        "arcanumBonus": {
+          "label": "Arcanum bonifié"
         }
       }
     },

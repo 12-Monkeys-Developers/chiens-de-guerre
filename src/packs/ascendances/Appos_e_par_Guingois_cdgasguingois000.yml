@@ -1,0 +1,27 @@
+_id: cdgasguingois000
+name: Apposée par Guingois
+type: ascendance
+img: icons/magic/unholy/hand-marked-pink.webp
+system:
+  description: >-
+    <p>Le véritable visage de Guingois est inconnu et pour cause : il apparaît
+    chaque jour sous une nouvelle forme. Grand maître des illusions, l'Oblitéré
+    se présente toujours sous les traits d'une exquise beauté. Ses talents sont
+    nombreux et c'est le plus grand stratège parmi les Oblitérés.</p>
+  compulsion: Vanité
+  compulsionDesc: >-
+    <p>Imbu de votre personne, votre orgueil est démesuré. Vous aimez le
+    paraître et avez tendance à vous montrer égocentrique et à vous vanter. Ceci
+    peut fréquemment vous amener à rabaisser les autres, voire les humilier. Il
+    n'est pas rare que votre fierté soit déplacée et dangereuse.</p>
+  arcanumChoices:
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgardevito00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarstratagema0
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarparmae00000
+    - Compendium.chiens-de-guerre.arcanums.Item.cdgarsubjugatio0
+  arcanumBonus: ''
+effects: []
+folder: null
+sort: 0
+flags: {}
+_key: '!items!cdgasguingois000'

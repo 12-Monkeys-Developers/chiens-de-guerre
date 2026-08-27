@@ -39,10 +39,8 @@
             <i class="fas fa-xmark" inert></i>
           </a>
         {{/if}}
-      {{else if unlocked}}
-        <input type="text" name="system.identity.peuple" value="{{identity.peuple}}" spellcheck="false" />
       {{else}}
-        <span class="value">{{identity.peuple}}</span>
+        <span class="value">Déposez un Objet "Peuple"</span>
       {{/if}}
     </div>
     {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
@@ -58,21 +56,19 @@
             <i class="fas fa-xmark" inert></i>
           </a>
         {{/if}}
-      {{else if unlocked}}
-        <input type="text" name="system.identity.carriere" value="{{identity.carriere}}" spellcheck="false" />
       {{else}}
-        <span class="value">{{identity.carriere}}</span>
+        <span class="value">Déposez un Objet "Carrière"</span>
       {{/if}}
     </div>
 
     <div class="field-line origin-line">
       <label>{{localize "CDG.label.long.ascendance"}}</label>
-      {{#if peuple}}
+      {{#if ascendance}}
         <span class="value origin" data-item-id="{{ascendance.id}}">
           <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{ascendance.name}} ({{ascendance.system.compulsion}})</a>
         </span>
         {{#if unlocked}}
-          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{ascendance.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+          <a class="origin-remove" data-action="removeAscendance" data-item-id="{{ascendance.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
             <i class="fas fa-xmark" inert></i>
           </a>
         {{/if}}

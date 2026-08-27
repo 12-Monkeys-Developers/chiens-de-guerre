@@ -1,12 +1,13 @@
 /**
- * Génère les compendiums `arcanums`, `equipements` et `carrieres` à partir de `tools/data/`.
+ * Génère les compendiums `arcanums`, `equipements`, `carrieres` et `ascendances` à partir de
+ * `tools/data/`.
  *
- *     node tools/build-carrieres.mjs [--force]
+ *     node tools/build-compendiums.mjs [--force]
  *
  * Produit deux choses à partir des mêmes données, pour qu'elles ne puissent pas diverger :
  *
  * - les sources YAML de `src/packs/`, à compiler ensuite avec `npm run YMLtoLDB` ;
- * - `tools/out/macro-carrieres.js`, une macro Foundry autonome qui peuple les compendiums d'un
+ * - `tools/out/macro-compendiums.js`, une macro Foundry autonome qui peuple les compendiums d'un
  *   monde sans rien recompiler.
  *
  * Les identifiants sont déterministes (préfixe + slug complété à 16 caractères) : recompiler ne
@@ -29,6 +30,7 @@ import { MAX_RANK } from "../module/config/ranks.mjs"
 import { ARCANUMS } from "./data/arcanums.mjs"
 import { CARRIERES } from "./data/carrieres.mjs"
 import { EQUIPEMENTS } from "./data/equipements.mjs"
+import { ASCENDANCES } from "./data/ascendances.mjs"
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const PACKAGE_ID = "chiens-de-guerre"
@@ -47,11 +49,12 @@ const ONLY = process.argv
   .split(",")
   .filter(Boolean)
 
-/** Les trois packs produits, avec le préfixe d'identifiant de leurs documents. */
+/** Les quatre packs produits, avec le préfixe d'identifiant de leurs documents. */
 const PACKS = {
   arcanums: { label: "Arcanums", prefix: "cdgar" },
   equipements: { label: "Équipement", prefix: "cdgeq" },
   carrieres: { label: "Carrières", prefix: "cdgca" },
+  ascendances: { label: "Ascendances", prefix: "cdgas" },
 }
 
 /** Préfixe de l'effet actif qui porte l'ajustement de caractéristique, comme sur les peuples. */
@@ -272,6 +275,29 @@ function buildCarriere(carriere, arcanumUuid, equipementUuid) {
 }
 
 /**
+ * Une ascendance. `arcanumBonus` part toujours vide : c'est un choix de joueur, fait sur la fiche
+ * une fois l'ascendance posée sur un personnage, jamais figé à l'écriture du compendium.
+ * @param {Object} ascendance
+ * @param {(slug: string) => string} arcanumUuid
+ * @returns {Object}
+ */
+function buildAscendance(ascendance, arcanumUuid) {
+  return itemDocument({
+    id: makeId(PACKS.ascendances.prefix, ascendance.slug),
+    name: ascendance.name,
+    type: "ascendance",
+    img: ascendance.img ?? ITEM_ICONS.ascendance,
+    system: {
+      description: toParagraphs(ascendance.description),
+      compulsion: ascendance.compulsion ?? "",
+      compulsionDesc: ascendance.compulsionDesc ? `<p>${ascendance.compulsionDesc}</p>` : "",
+      arcanumChoices: ascendance.arcanumChoices.map(arcanumUuid),
+      arcanumBonus: "",
+    },
+  })
+}
+
+/**
  * Refuse tout ce que la CLI accepterait en silence pour produire un compendium faux : un rang hors
  * bornes, une compétence qui n'existe pas, deux documents qui se disputent le même identifiant.
  */
@@ -331,6 +357,14 @@ function validate() {
     for (const slug of carriere.equipments) if (!equipementSlugs.has(slug)) errors.push(`Carrière ${carriere.name} : équipement inconnu « ${slug} »`)
   }
 
+  for (const ascendance of ASCENDANCES) {
+    claim(makeId(PACKS.ascendances.prefix, ascendance.slug), `ascendance ${ascendance.name}`)
+    if (ascendance.arcanumChoices.length > 4) errors.push(`Ascendance ${ascendance.name} : ${ascendance.arcanumChoices.length} arcanums candidats, la fiche en plafonne 4`)
+    const duplicateChoices = ascendance.arcanumChoices.filter((slug, index, all) => all.indexOf(slug) !== index)
+    if (duplicateChoices.length) errors.push(`Ascendance ${ascendance.name} : arcanum candidat listé deux fois — ${[...new Set(duplicateChoices)].join(", ")}`)
+    for (const slug of ascendance.arcanumChoices) if (!arcanumSlugs.has(slug)) errors.push(`Ascendance ${ascendance.name} : arcanum inconnu « ${slug} »`)
+  }
+
   if (errors.length) {
     for (const error of errors) console.error(`  ✗ ${error}`)
     throw new Error(`${errors.length} erreur(s) dans tools/data/ — rien n'a été écrit.`)
@@ -383,9 +417,10 @@ async function writePack(pack, documents) {
  * @param {Object[]} arcanums
  * @param {Object[]} equipements
  * @param {Object[]} carrieres
+ * @param {Object[]} ascendances
  * @returns {string}
  */
-function buildMacro(arcanums, equipements, carrieres) {
+function buildMacro(arcanums, equipements, carrieres, ascendances) {
   const strip = (document) => {
     const { _key, ...rest } = document
     if (rest.effects?.length) rest.effects = rest.effects.map(({ _key: _, ...effect }) => effect)
@@ -401,12 +436,18 @@ function buildMacro(arcanums, equipements, carrieres) {
       doc.system = { ...doc.system, arcanums: [], equipments: [] }
       return { doc, arcanums: carriere.arcanums, equipments: carriere.equipments }
     }),
+    ascendances: ASCENDANCES.map((ascendance, index) => {
+      const doc = strip(ascendances[index])
+      doc.system = { ...doc.system, arcanumChoices: [] }
+      return { doc, arcanumChoices: ascendance.arcanumChoices }
+    }),
   }
 
   return `/**
- * Crée les compendiums Arcanums, Équipement et Carrières de Chiens de guerre dans le monde courant.
+ * Crée les compendiums Arcanums, Équipement, Carrières et Ascendances de Chiens de guerre dans le
+ * monde courant.
  *
- * GÉNÉRÉ PAR tools/build-carrieres.mjs — ne pas modifier à la main : toute retouche serait perdue à
+ * GÉNÉRÉ PAR tools/build-compendiums.mjs — ne pas modifier à la main : toute retouche serait perdue à
  * la prochaine génération. Corriger tools/data/ et relancer le script.
  *
  * À coller dans une macro de type script, exécutée par un MJ. Relancer la macro ne crée pas de
@@ -418,6 +459,7 @@ const PACKS = {
   arcanums: { name: "cdg-arcanums", label: "Arcanums (CDG)" },
   equipements: { name: "cdg-equipements", label: "Équipement (CDG)" },
   carrieres: { name: "cdg-carrieres", label: "Carrières (CDG)" },
+  ascendances: { name: "cdg-ascendances", label: "Ascendances (CDG)" },
 }
 
 if (!game.user.isGM) {
@@ -453,6 +495,7 @@ async function createMissing(pack, documents) {
 const arcanumPack = await getPack(PACKS.arcanums)
 const equipementPack = await getPack(PACKS.equipements)
 const carrierePack = await getPack(PACKS.carrieres)
+const ascendancePack = await getPack(PACKS.ascendances)
 
 const counts = { created: 0, skipped: 0 }
 const tally = (result) => {
@@ -477,26 +520,35 @@ const carrieres = DATA.carrieres.map((entry) => {
 })
 tally(await createMissing(carrierePack, carrieres))
 
+const ascendances = DATA.ascendances.map((entry) => {
+  const document = foundry.utils.deepClone(entry.doc)
+  document.system.arcanumChoices = entry.arcanumChoices.map((slug) => uuids.get(slug))
+  return document
+})
+tally(await createMissing(ascendancePack, ascendances))
+
 ui.notifications.info(\`Chiens de guerre : \${counts.created} document(s) créé(s), \${counts.skipped} déjà présent(s).\`)
 `
 }
 
 validate()
-console.log("Génération des compendiums de carrières")
+console.log("Génération des compendiums")
 
 const arcanumDocuments = ARCANUMS.map(buildArcanum)
 const equipementDocuments = EQUIPEMENTS.map(buildEquipement)
 
 const uuidFor = (pack, prefix) => (slug) => `Compendium.${PACKAGE_ID}.${pack}.Item.${makeId(prefix, slug)}`
 const carriereDocuments = CARRIERES.map((carriere) => buildCarriere(carriere, uuidFor("arcanums", PACKS.arcanums.prefix), uuidFor("equipements", PACKS.equipements.prefix)))
+const ascendanceDocuments = ASCENDANCES.map((ascendance) => buildAscendance(ascendance, uuidFor("arcanums", PACKS.arcanums.prefix)))
 
 await writePack("arcanums", arcanumDocuments)
 await writePack("equipements", equipementDocuments)
 await writePack("carrieres", carriereDocuments)
+await writePack("ascendances", ascendanceDocuments)
 
-const macroPath = path.join(ROOT, "tools", "out", "macro-carrieres.js")
+const macroPath = path.join(ROOT, "tools", "out", "macro-compendiums.js")
 await fs.mkdir(path.dirname(macroPath), { recursive: true })
-await fs.writeFile(macroPath, buildMacro(arcanumDocuments, equipementDocuments, carriereDocuments))
+await fs.writeFile(macroPath, buildMacro(arcanumDocuments, equipementDocuments, carriereDocuments, ascendanceDocuments))
 console.log(`  macro        ${path.relative(ROOT, macroPath)}`)
 
 if (!FORCE) console.log("\nLes fichiers déjà présents ont été conservés. Relancer avec --force pour les régénérer.")
