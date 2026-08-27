@@ -138,7 +138,7 @@ export default class CdgConfrontation {
       target,
       weapon,
       attack: CdgRoll.cardContext(state.attackTest),
-      canChooseDefense: !this.#pending(state.attackTest) && !state.defenseTest,
+      canChooseDefense: !state.defenseTest,
       parryBlocked: !!target?.system.combat.parryUsed,
       parryNeedsShield: !!weapon?.system.isRangedWeapon && !target?.shield,
       // La confrontation est close une fois l'encaissement résolu : les phases précédentes se
@@ -202,16 +202,6 @@ export default class CdgConfrontation {
   // #region Sous-jets
 
   /**
-   * Un sous-jet est en attente tant que son dé n'est pas choisi — même logique que pour un test
-   * isolé, rang par rang.
-   * @param {Object} test
-   * @returns {boolean}
-   */
-  static #pending(test) {
-    return test.keptIndex === null || test.keptIndex === undefined
-  }
-
-  /**
    * Fusionne un sous-jet dans l'état de la confrontation, puis recalcule tout ce qui en dépend.
    * @param {ChatMessage} message
    * @param {"attack"|"defense"|"damage"|"soak"} phase
@@ -238,7 +228,7 @@ export default class CdgConfrontation {
    * @param {Object} state
    */
   static #recomputeOpposition(state) {
-    if (!state.attackTest || !state.defenseTest || this.#pending(state.attackTest) || this.#pending(state.defenseTest)) {
+    if (!state.attackTest || !state.defenseTest) {
       state.opposition = null
       return
     }
@@ -267,7 +257,7 @@ export default class CdgConfrontation {
     // case posée — pas seulement s'abstenir d'en cocher une nouvelle.
     const previousAppliedWoundId = state.woundResolved ? state.woundId : null
 
-    if (!state.opposition?.hit || !state.damageTest || !state.soakTest || this.#pending(state.damageTest) || this.#pending(state.soakTest)) {
+    if (!state.opposition?.hit || !state.damageTest || !state.soakTest) {
       state.woundId = null
       state.woundResolved = false
     } else {
@@ -337,7 +327,10 @@ export default class CdgConfrontation {
     if (!state) return
 
     for (const button of html.querySelectorAll("[data-action='keepDie']")) {
-      if (!this.#canAct(button.dataset.phase, state)) continue
+      if (!game.user.isGM) {
+        button.disabled = true
+        continue
+      }
       button.addEventListener("click", (event) => this.#onKeepDie(event, message))
     }
 
@@ -371,19 +364,19 @@ export default class CdgConfrontation {
   }
 
   /**
-   * Conserve le dé cliqué d'un sous-jet et relance les calculs dérivés.
+   * Le Meneur outrepasse le dé conservé d'un sous-jet et relance les calculs dérivés.
    * @param {PointerEvent} event
    * @param {ChatMessage} message
    */
   static async #onKeepDie(event, message) {
     event.preventDefault()
+    if (!game.user.isGM) return
     const button = event.currentTarget
     const phase = button.dataset.phase
     const index = parseInt(button.dataset.index)
     const state = this.getState(message)
-    if (!state || !this.#canAct(phase, state)) return
-    const test = state[`${phase}Test`]
-    if (!test || isNaN(index) || test.keptIndex !== null) return
+    const test = state?.[`${phase}Test`]
+    if (!test || isNaN(index) || index === test.keptIndex) return
 
     state[`${phase}Test`] = { ...test, keptIndex: index }
     this.#recomputeOpposition(state)

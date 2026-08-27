@@ -492,15 +492,20 @@
         border-color: var(--cdg-blood);
         box-shadow: none;
       }
+
+      // Le dé n'est cliquable que pour le Meneur (voir activateListeners) ; pour tout autre
+      // client le bouton reste inerte, sans affordance de clic trompeuse.
+      &:disabled {
+        cursor: default;
+
+        &:hover {
+          border-color: inherit;
+          box-shadow: inherit;
+        }
+      }
     }
 
-    // Avant le choix, le dé le plus avantageux est signalé — sans être imposé.
-    .die.suggested {
-      border-color: var(--cdg-blood);
-      border-width: 3px;
-    }
-
-    // Après le choix, seul le dé conservé compte ; les autres s'effacent sans disparaître.
+    // Le dé conservé est calculé automatiquement ; les autres s'effacent sans disparaître.
     .die.discarded {
       opacity: 0.4;
       font-size: 0.9rem;
@@ -528,13 +533,6 @@
       border-color: var(--cdg-blood-dark);
       color: var(--cdg-parchment);
     }
-  }
-
-  .card-prompt {
-    margin: 0.4rem 0 0 0;
-    font-size: 0.8rem;
-    font-style: italic;
-    color: var(--cdg-blood);
   }
 
   .card-verdict {

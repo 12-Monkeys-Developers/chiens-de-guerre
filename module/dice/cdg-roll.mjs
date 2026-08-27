@@ -8,8 +8,12 @@ import { bestDieIndex, OUTCOMES, outcomeLabel, resolveOutcome, worstDieIndex } f
  * le dé conservé après coup, et Dice So Nice doit faire rouler tous les dés, pas seulement celui
  * qu'on garde. Le dé conservé est donc une donnée de la carte, pas une modification du jet.
  *
+ * Le dé conservé est toujours calculé automatiquement dès le lancer (le meilleur, ou le pire au
+ * rang 0) : le joueur n'a rien à choisir. Seul le Meneur peut ensuite cliquer un autre dé de la
+ * poignée, pour un cas particulier.
+ *
  * Tout l'état du test vit dans un drapeau du message de chat : c'est lui la source unique, puisqu'il
- * évolue quand le joueur choisit son dé ou décide de se dépasser.
+ * évolue quand le Meneur outrepasse le dé conservé ou que le joueur décide de se dépasser.
  */
 export default class CdgRoll extends Roll {
   /** Gabarit de la carte de chat. */
@@ -60,18 +64,19 @@ export default class CdgRoll extends Roll {
   }
 
   /**
-   * Le dé conservé d'office, ou `null` s'il revient au joueur de choisir.
+   * Le dé conservé d'office, calculé dès le lancer : le joueur ne choisit jamais.
    *
    * Un seul dé ne laisse aucun choix ; au rang 0, la règle impose le résultat le moins bon — ce qui
-   * n'est ni le plus grand ni le plus petit, mais celui qui produit la pire issue face au seuil.
+   * n'est ni le plus grand ni le plus petit, mais celui qui produit la pire issue face au seuil ;
+   * partout ailleurs, c'est le dé qui produit la meilleure issue qui est retenu.
    * @param {Object} test
    * @param {number[]} results
-   * @returns {number|null}
+   * @returns {number}
    */
   static #autoKeptIndex(test, results) {
     if (test.keep === "single" || results.length === 1) return 0
     if (test.keep === "worst") return worstDieIndex(results, test.sr)
-    return null
+    return bestDieIndex(results, test.sr)
   }
 
   // #endregion
@@ -90,15 +95,12 @@ export default class CdgRoll extends Roll {
   /**
    * Contexte du gabarit : le test, ses dés interprétés et son verdict.
    *
-   * Chaque dé est résolu individuellement, ce qui permet d'afficher au joueur ce que vaudrait chacun
-   * avant qu'il ne choisisse, et de signaler d'un coup d'œil lequel est le plus avantageux.
+   * Chaque dé est résolu individuellement, ce qui permet d'afficher au joueur ce que vaut chacun,
+   * pas seulement celui qui est retenu — c'est le sel du système de savoir ce qu'on a laissé passer.
    * @param {Object} test
    * @returns {Object}
    */
   static cardContext(test) {
-    const pending = test.keptIndex === null || test.keptIndex === undefined
-    const best = pending ? bestDieIndex(test.results, test.sr) : test.keptIndex
-
     const dice = test.results.map((result, index) => {
       const outcome = resolveOutcome(result, test.sr)
       return {
@@ -107,29 +109,22 @@ export default class CdgRoll extends Roll {
         outcome: outcome.outcome,
         label: game.i18n.localize(outcomeLabel(outcome)),
         kept: index === test.keptIndex,
-        suggested: pending && index === best,
       }
     })
 
-    const context = {
+    const outcome = resolveOutcome(test.results[test.keptIndex], test.sr)
+
+    return {
       test,
       dice,
-      pending,
-      choosable: pending,
       imposed: test.keep === "worst" && test.results.length > 1,
-      canPush: !pending && !test.pushed,
+      canPush: !test.pushed,
+      outcome,
+      outcomeId: outcome.outcome,
+      outcomeLabel: game.i18n.localize(outcomeLabel(outcome)),
+      outcomeIcon: OUTCOMES[outcome.outcome].icon,
       SYSTEM,
     }
-
-    if (!pending) {
-      const outcome = resolveOutcome(test.results[test.keptIndex], test.sr)
-      context.outcome = outcome
-      context.outcomeId = outcome.outcome
-      context.outcomeLabel = game.i18n.localize(outcomeLabel(outcome))
-      context.outcomeIcon = OUTCOMES[outcome.outcome].icon
-    }
-
-    return context
   }
 
   /**
@@ -159,17 +154,25 @@ export default class CdgRoll extends Roll {
 
   /**
    * Branche les boutons de la carte. Appelé sur `renderChatMessageHTML`.
+   *
+   * Les deux boutons n'ont pas la même portée : le dé conservé n'est outrepassable que par le
+   * Meneur (le joueur ne choisit plus rien), alors que se dépasser reste ouvert à l'auteur du test.
    * @param {ChatMessage} message
    * @param {HTMLElement} html
    */
   static activateListeners(message, html) {
     const test = this.getTest(message)
     if (!test) return
-    if (!this.#canInteract(message)) return
 
     for (const button of html.querySelectorAll("[data-action='keepDie']")) {
+      if (!game.user.isGM) {
+        button.disabled = true
+        continue
+      }
       button.addEventListener("click", (event) => this.#onKeepDie(event, message))
     }
+
+    if (!this.#canInteract(message)) return
     for (const button of html.querySelectorAll("[data-action='pushTest']")) {
       button.addEventListener("click", (event) => this.#onPushTest(event, message))
     }
@@ -186,7 +189,8 @@ export default class CdgRoll extends Roll {
   }
 
   /**
-   * Conserve le dé cliqué et résout le test.
+   * Le Meneur outrepasse le dé conservé — la sélection automatique reste la règle, ceci n'est
+   * qu'une exception ponctuelle.
    * @param {PointerEvent} event
    * @param {ChatMessage} message
    */
@@ -194,7 +198,7 @@ export default class CdgRoll extends Roll {
     event.preventDefault()
     const index = parseInt(event.currentTarget.dataset.index)
     const test = this.getTest(message)
-    if (!test || isNaN(index) || test.keptIndex !== null) return
+    if (!test || isNaN(index) || index === test.keptIndex) return
 
     return this.#refresh(message, { ...test, keptIndex: index })
   }

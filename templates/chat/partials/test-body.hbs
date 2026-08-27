@@ -4,6 +4,10 @@
   confrontation (phase="attack"/"defense"/"damage"/"soak"), pour que `keepDie`/`pushTest` sachent
   quel sous-jet du message ils font évoluer.
 
+  Le dé conservé est calculé automatiquement dès le lancer ; les boutons `keepDie` ne restent actifs
+  que pour le Meneur (voir `activateListeners`), qui peut ainsi outrepasser ce choix — pour tout
+  autre client ils sont désactivés côté script, purement affichage ici.
+
   `../` plutôt que `@root` dans la boucle des dés : `@root` désignerait le contexte de la carte
   englobante quand ce partiel est inclus depuis confrontation-card.hbs, pas le sous-jet courant.
 }}
@@ -14,26 +18,18 @@
 <ol class="card-dice">
   {{#each dice as |die|}}
     <li>
-      {{#if ../choosable}}
-        <button type="button" class="die {{die.outcome}}{{#if die.suggested}} suggested{{/if}}" data-action="keepDie" data-phase="{{../phase}}" data-index="{{die.index}}"
-          data-tooltip="{{die.label}}">{{die.result}}</button>
-      {{else}}
-        <span class="die {{die.outcome}}{{#if die.kept}} kept{{else}} discarded{{/if}}" data-tooltip="{{die.label}}">{{die.result}}</span>
-      {{/if}}
+      <button type="button" class="die {{die.outcome}}{{#if die.kept}} kept{{else}} discarded{{/if}}" data-action="keepDie" data-phase="{{../phase}}" data-index="{{die.index}}"
+        data-tooltip="{{die.label}}">{{die.result}}</button>
     </li>
   {{/each}}
 </ol>
 
-{{#if pending}}
-  <p class="card-prompt"><i class="fa-solid fa-hand-pointer" inert></i> {{localize "CDG.roll.chooseDie"}}</p>
-{{else}}
-  <div class="card-verdict">
-    <i class="fa-solid {{outcomeIcon}}" inert></i>
-    <span class="verdict-label">{{outcomeLabel}}</span>
-    {{#if outcome.success}}<span class="verdict-quality">{{localize "CDG.roll.quality"}} {{outcome.quality}}</span>{{/if}}
-  </div>
-  {{#if imposed}}<p class="card-note">{{localize "CDG.roll.imposedNote"}}</p>{{/if}}
-{{/if}}
+<div class="card-verdict">
+  <i class="fa-solid {{outcomeIcon}}" inert></i>
+  <span class="verdict-label">{{outcomeLabel}}</span>
+  {{#if outcome.success}}<span class="verdict-quality">{{localize "CDG.roll.quality"}} {{outcome.quality}}</span>{{/if}}
+</div>
+{{#if imposed}}<p class="card-note">{{localize "CDG.roll.imposedNote"}}</p>{{/if}}
 
 <details class="card-detail">
   <summary>{{localize "CDG.roll.breakdown"}}</summary>

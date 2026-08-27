@@ -4,8 +4,9 @@
  * Le système est « en dessous » : on cherche un résultat inférieur ou égal au seuil de réussite.
  * Attention, « le meilleur dé » n'est pas le plus petit : c'est le plus grand qui reste sous le
  * seuil, puisque la qualité de la réussite est le score du dé (p. 42). Aucun `kh`/`kl` de Foundry ne
- * sait exprimer ça — la poignée est donc lancée brute et le dé conservé est choisi ensuite :
- * imposé par le système au rang 0, laissé au joueur aux rangs 2 et 3.
+ * sait exprimer ça — la poignée est donc lancée brute et le dé conservé est choisi ensuite,
+ * automatiquement : le pire au rang 0, le meilleur aux rangs 2 et 3 (le Meneur peut outrepasser ce
+ * choix depuis la carte de chat).
  */
 export const RANKS = {
   0: {
@@ -29,7 +30,7 @@ export const RANKS = {
     label: "CDG.ranks.2",
     formula: "2d20",
     dice: 2,
-    keep: "choice",
+    keep: "best",
     hint: "CDG.ranks.hint.2",
   },
   3: {
@@ -37,7 +38,7 @@ export const RANKS = {
     label: "CDG.ranks.3",
     formula: "3d20",
     dice: 3,
-    keep: "choice",
+    keep: "best",
     hint: "CDG.ranks.hint.3",
   },
 }

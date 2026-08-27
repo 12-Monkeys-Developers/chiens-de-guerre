@@ -24,7 +24,7 @@
 
   <details class="confrontation-phase phase-attack" {{#unless collapsePriorPhases}}open{{/unless}}>
     <summary class="phase-title">{{localize "CDG.confrontation.attack"}} — {{weapon.name}}</summary>
-    <div class="cdg-roll-card embedded {{#if attack.pending}}pending{{else}}{{attack.outcomeId}}{{/if}}">
+    <div class="cdg-roll-card embedded {{attack.outcomeId}}">
       {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" attack phase="attack"}}
     </div>
   </details>
@@ -44,7 +44,7 @@
   {{#if defense}}
     <details class="confrontation-phase phase-defense" {{#unless collapsePriorPhases}}open{{/unless}}>
       <summary class="phase-title">{{#if (eq defenseMethod "dodge")}}{{localize "CDG.combat.defense.dodge"}}{{else}}{{localize "CDG.combat.defense.parry"}}{{/if}}</summary>
-      <div class="cdg-roll-card embedded {{#if defense.pending}}pending{{else}}{{defense.outcomeId}}{{/if}}">
+      <div class="cdg-roll-card embedded {{defense.outcomeId}}">
         {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" defense phase="defense"}}
       </div>
     </details>
@@ -73,7 +73,7 @@
     {{#if damage}}
       <details class="confrontation-phase phase-damage" {{#unless collapsePriorPhases}}open{{/unless}}>
         <summary class="phase-title">{{localize "CDG.combat.damageTest"}}</summary>
-        <div class="cdg-roll-card embedded {{#if damage.pending}}pending{{else}}{{damage.outcomeId}}{{/if}}">
+        <div class="cdg-roll-card embedded {{damage.outcomeId}}">
           {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" damage phase="damage"}}
         </div>
       </details>
@@ -82,7 +82,7 @@
     {{#if soak}}
       <details class="confrontation-phase phase-soak" open>
         <summary class="phase-title">{{localize "CDG.combat.soakTest"}}</summary>
-        <div class="cdg-roll-card embedded {{#if soak.pending}}pending{{else}}{{soak.outcomeId}}{{/if}}">
+        <div class="cdg-roll-card embedded {{soak.outcomeId}}">
           {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" soak phase="soak"}}
         </div>
       </details>

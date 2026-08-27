@@ -117,7 +117,7 @@
     <p class="handful-hint">
       <i class="fa-solid fa-dice-d20" inert></i>
       {{rankEntry.formula}} —
-      {{#if (eq rankEntry.keep "choice")}}{{localize "CDG.roll.willChoose"}}
+      {{#if (eq rankEntry.keep "best")}}{{localize "CDG.roll.willKeepBest"}}
       {{else if (eq rankEntry.keep "worst")}}{{localize "CDG.roll.willImpose"}}
       {{else}}{{localize "CDG.roll.singleDie"}}{{/if}}
     </p>

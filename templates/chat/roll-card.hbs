@@ -1,9 +1,8 @@
 {{!
-  Carte d'un test. Deux états : en attente, tant que le joueur n'a pas désigné le dé qu'il conserve ;
-  résolue ensuite. Les dés écartés restent affichés — c'est le sel du système de savoir ce qu'on a
-  laissé passer.
+  Carte d'un test : le dé conservé est calculé automatiquement dès le lancer. Les dés écartés
+  restent affichés — c'est le sel du système de savoir ce qu'on a laissé passer.
 }}
-<div class="cdg-roll-card {{#if pending}}pending{{else}}{{outcomeId}}{{/if}}">
+<div class="cdg-roll-card {{outcomeId}}">
 
   <header class="card-header">
     <span class="test-name">

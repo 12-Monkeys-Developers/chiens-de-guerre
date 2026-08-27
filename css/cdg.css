@@ -1661,9 +1661,12 @@ cdg-toggle-switch[checked] thumb {
   border-color: var(--cdg-blood);
   box-shadow: none;
 }
-.cdg-roll-card .card-dice .die.suggested {
-  border-color: var(--cdg-blood);
-  border-width: 3px;
+.cdg-roll-card .card-dice button.die:disabled {
+  cursor: default;
+}
+.cdg-roll-card .card-dice button.die:disabled:hover {
+  border-color: inherit;
+  box-shadow: inherit;
 }
 .cdg-roll-card .card-dice .die.discarded {
   opacity: 0.4;
@@ -1687,12 +1690,6 @@ cdg-toggle-switch[checked] thumb {
   background: var(--cdg-blood);
   border-color: var(--cdg-blood-dark);
   color: var(--cdg-parchment);
-}
-.cdg-roll-card .card-prompt {
-  margin: 0.4rem 0 0 0;
-  font-size: 0.8rem;
-  font-style: italic;
-  color: var(--cdg-blood);
 }
 .cdg-roll-card .card-verdict {
   display: flex;
