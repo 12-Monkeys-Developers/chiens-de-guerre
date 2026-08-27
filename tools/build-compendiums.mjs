@@ -1,5 +1,5 @@
 /**
- * Génère les compendiums `arcanums`, `equipements`, `carrieres` et `ascendances` à partir de
+ * Génère les compendiums `arcanums`, `equipements`, `carrieres`, `ascendances` et `pnjs` à partir de
  * `tools/data/`.
  *
  *     node tools/build-compendiums.mjs [--force]
@@ -31,15 +31,16 @@ import { ARCANUMS } from "./data/arcanums.mjs"
 import { CARRIERES } from "./data/carrieres.mjs"
 import { EQUIPEMENTS } from "./data/equipements.mjs"
 import { ASCENDANCES } from "./data/ascendances.mjs"
+import { PNJS } from "./data/pnjs.mjs"
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const PACKAGE_ID = "chiens-de-guerre"
 const FORCE = process.argv.includes("--force")
 
 /**
- * Packs à réécrire, quand on ne veut pas les trois.
+ * Packs à réécrire, quand on ne veut pas tout régénérer.
  *
- * `--force` seul écrase les trois packs, y compris ce qui a été retouché dans Foundry puis
+ * `--force` seul écrase tous les packs générés, y compris ce qui a été retouché dans Foundry puis
  * réextrait par `LDBtoYML`. Reprendre un seul chapitre du livre ne doit pas coûter ce travail-là :
  * `--only=arcanums` limite la casse au pack visé.
  */
@@ -49,12 +50,13 @@ const ONLY = process.argv
   .split(",")
   .filter(Boolean)
 
-/** Les quatre packs produits, avec le préfixe d'identifiant de leurs documents. */
+/** Les cinq packs produits, avec le préfixe d'identifiant de leurs documents. */
 const PACKS = {
   arcanums: { label: "Arcanums", prefix: "cdgar" },
   equipements: { label: "Équipement", prefix: "cdgeq" },
   carrieres: { label: "Carrières", prefix: "cdgca" },
   ascendances: { label: "Ascendances", prefix: "cdgas" },
+  pnjs: { label: "Bestiaire — PNJ / Créatures", prefix: "cdgpn" },
 }
 
 /** Préfixe de l'effet actif qui porte l'ajustement de caractéristique, comme sur les peuples. */
@@ -80,6 +82,22 @@ function makeId(prefix, slug) {
     .toLowerCase()
     .replace(/[^a-z0-9]/g, "")
   return (prefix + normalized.slice(0, ID_LENGTH - prefix.length)).padEnd(ID_LENGTH, "0")
+}
+
+/**
+ * ID d'acteur lisible complété par une empreinte, pour distinguer les variantes de même préfixe.
+ * @param {string} slug
+ * @returns {string}
+ */
+function makePnjId(slug) {
+  const normalized = slug
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "")
+  let hash = 2166136261
+  for (const character of normalized) hash = Math.imul(hash ^ character.charCodeAt(0), 16777619)
+  return `${PACKS.pnjs.prefix}${normalized.slice(0, 7).padEnd(7, "0")}${(hash >>> 0).toString(36).slice(-4).padStart(4, "0")}`
 }
 
 /**
@@ -127,6 +145,161 @@ function carriereDescription(carriere) {
  */
 function itemDocument({ id, name, type, img, system }) {
   return { _id: id, name, type, img, system, effects: [], folder: null, sort: 0, flags: {}, _key: `!items!${id}` }
+}
+
+/**
+ * Retire les clés LevelDB avant d'embarquer un objet dans un acteur.
+ * @param {Object} document
+ * @param {string} actorId
+ * @param {number} index
+ * @returns {Object}
+ */
+function embeddedDocument(document, actorId, index) {
+  const id = makeId("cdgpi", `${actorId.slice(5, 12)}${index.toString(36).padStart(4, "0")}`)
+  const { _key: unused, ...embedded } = document
+  embedded._id = id
+  embedded._key = `!actors.items!${actorId}.${id}`
+  return embedded
+}
+
+/**
+ * Normalise le texte riche d'un profil.
+ * @param {string|string[]} value
+ * @returns {string}
+ */
+function normalizeDescription(value) {
+  if (Array.isArray(value)) return toParagraphs(value)
+  return value ?? ""
+}
+
+/**
+ * Construit un équipement embarqué depuis sa notation compacte.
+ * @param {Object} entry
+ * @returns {Object}
+ */
+function equipmentFromPnj(entry) {
+  const category = entry.category ?? ""
+  const defaults = EQUIPMENT_CATEGORIES[entry.subtype]?.[category] ?? {}
+  return buildEquipement({
+    ...defaults,
+    ...entry,
+    slug: entry.slug ?? entry.name,
+    description: normalizeDescription(entry.description),
+    damage: entry.damage ?? defaults.damage ?? 0,
+    protection: entry.protection ?? defaults.protection ?? 0,
+    blockBonus: entry.blockBonus ?? defaults.blockBonus ?? 0,
+    initMalus: entry.initMalus ?? defaults.initMalus ?? 0,
+    attack:
+      typeof entry.attack === "string"
+        ? { ability: defaults.ability ?? "vivacite", skill: entry.attack }
+        : (entry.attack ?? (defaults.ability && defaults.skill ? { ability: defaults.ability, skill: defaults.skill } : undefined)),
+    price: entry.price ?? { ducat: defaults.price ?? 0, denier: 0 },
+  })
+}
+
+/**
+ * Construit ou reprend un Arcanum destiné à être embarqué.
+ * @param {Object|string} entry
+ * @returns {Object}
+ */
+function arcanumFromPnj(entry) {
+  const descriptor = typeof entry === "string" ? { slug: entry } : entry
+  const source = ARCANUMS.find((arcanum) => arcanum.slug === descriptor.slug)
+  const document = source
+    ? buildArcanum(source)
+    : buildArcanum({
+        slug: descriptor.slug ?? descriptor.name,
+        name: descriptor.name,
+        description: normalizeDescription(descriptor.description),
+        arcanumType: descriptor.arcanumType ?? "physique",
+        linkedSkill: descriptor.linkedSkill ?? "",
+      })
+  document.system.rank = descriptor.rank ?? 1
+  return document
+}
+
+/**
+ * Construit un Actor adversaire autonome, objets inclus.
+ * @param {Object} pnj
+ * @returns {Object}
+ */
+function buildPnj(pnj) {
+  const id = makePnjId(pnj.slug)
+  const skills = Object.fromEntries(Object.keys(SKILLS).map((skill) => [skill, { rank: 0, bonuses: { sheet: 0 } }]))
+  const listedSkills = Array.isArray(pnj.skills) ? pnj.skills.map(({ skill, rank }) => [skill, rank]) : Object.entries(pnj.skills ?? {})
+  for (const [skill, rank] of listedSkills) skills[skill].rank = rank
+
+  const equipmentEntries = pnj.equipments ??
+    pnj.equipment ?? [
+      ...(pnj.weapons ?? []).map((entry) => ({ subtype: "weapon", ...entry })),
+      ...(pnj.armor ? [{ subtype: "armor", ...pnj.armor }] : []),
+      ...(pnj.shield ? [{ subtype: "shield", ...pnj.shield }] : []),
+    ]
+  const equipment = equipmentEntries.map((entry) => {
+    const document = equipmentFromPnj(entry)
+    document.system.equipped = entry.equipped ?? true
+    return document
+  })
+  // Une seule arme tenue évite d'activer artificiellement le combat à deux armes.
+  let heldWeapon = false
+  for (const item of equipment) {
+    if (item.system.subtype !== "weapon") continue
+    item.system.equipped = !heldWeapon && item.system.equipped
+    heldWeapon ||= item.system.equipped
+  }
+  const arcanums = (pnj.arcanums ?? []).map(arcanumFromPnj)
+  const items = [...equipment, ...arcanums].map((item, index) => embeddedDocument(item, id, index))
+  const equipmentInitiative = equipment
+    .filter((item) => item.system.equipped && ["armor", "shield"].includes(item.system.subtype))
+    .reduce((total, item) => total + (item.system.initMalus ?? 0), 0)
+
+  const abilities = Object.fromEntries(
+    Object.keys(ABILITIES).map((ability) => {
+      const value = pnj.abilities[ability]
+      return [ability, { value, max: value, improvements: 0, bonuses: { sheet: 0 }, restBonus: 0 }]
+    }),
+  )
+  return {
+    _id: id,
+    name: pnj.name,
+    type: "adversaire",
+    img: pnj.img ?? "icons/svg/mystery-man.svg",
+    system: {
+      abilities,
+      skills,
+      wounds: Object.fromEntries(["legere", "grave", "mortelle"].map((level) => [level, { value: 0, bonus: 0 }])),
+      combat: { initiative: { bonus: pnj.initiative - equipmentInitiative }, dodgesUsed: 0, parryUsed: false },
+      major: pnj.major ?? false,
+      details: { description: normalizeDescription(pnj.description), notes: "", special: normalizeDescription(pnj.special) },
+    },
+    prototypeToken: { actorLink: false, disposition: -1 },
+    items,
+    effects: [],
+    folder: null,
+    sort: 0,
+    ownership: { default: 0 },
+    flags: { [PACKAGE_ID]: { sourcePage: pnj.page } },
+    _key: `!actors!${id}`,
+  }
+}
+
+/**
+ * Vérifie les invariants du document final, après normalisation des objets embarqués.
+ * @param {Object[]} documents
+ */
+function validatePnjDocuments(documents) {
+  const errors = []
+  for (const [index, actor] of documents.entries()) {
+    const source = PNJS[index]
+    const embeddedIds = actor.items.map((item) => item._id)
+    if (new Set(embeddedIds).size !== embeddedIds.length) errors.push(`${actor.name} : identifiant d'objet embarqué en double`)
+    const equipmentMalus = actor.items
+      .filter((item) => item.type === "equipment" && item.system.equipped && ["armor", "shield"].includes(item.system.subtype))
+      .reduce((total, item) => total + item.system.initMalus, 0)
+    const finalInitiative = actor.system.combat.initiative.bonus + equipmentMalus
+    if (finalInitiative !== source.initiative) errors.push(`${actor.name} : initiative finale ${finalInitiative}, attendue ${source.initiative}`)
+  }
+  if (errors.length) throw new Error(`Bestiaire invalide :\n${errors.map((error) => `  ✗ ${error}`).join("\n")}`)
 }
 
 /**
@@ -365,6 +538,32 @@ function validate() {
     for (const slug of ascendance.arcanumChoices) if (!arcanumSlugs.has(slug)) errors.push(`Ascendance ${ascendance.name} : arcanum inconnu « ${slug} »`)
   }
 
+  if (PNJS.length !== 44) errors.push(`Bestiaire : ${PNJS.length} profils au lieu de 44`)
+  for (const pnj of PNJS) {
+    claim(makePnjId(pnj.slug), `PNJ ${pnj.name}`)
+    if (!Number.isInteger(pnj.page) || pnj.page < 49 || pnj.page > 75) errors.push(`PNJ ${pnj.name} : page source invalide`)
+    if (!Number.isInteger(pnj.initiative)) errors.push(`PNJ ${pnj.name} : initiative imprimée invalide`)
+    for (const ability of Object.keys(ABILITIES)) {
+      if (!Number.isInteger(pnj.abilities?.[ability]) || pnj.abilities[ability] < 0) errors.push(`PNJ ${pnj.name} : caractéristique ${ability} invalide`)
+    }
+    const listedSkills = Array.isArray(pnj.skills) ? pnj.skills.map(({ skill, rank }) => [skill, rank]) : Object.entries(pnj.skills ?? {})
+    for (const [skill, rank] of listedSkills) {
+      if (!(skill in SKILLS)) errors.push(`PNJ ${pnj.name} : compétence inconnue « ${skill} »`)
+      if (!Number.isInteger(rank) || rank < 0 || rank > MAX_RANK) errors.push(`PNJ ${pnj.name} : rang hors bornes pour ${skill}`)
+    }
+    const equipment = pnj.equipments ?? pnj.equipment ?? [...(pnj.weapons ?? []), ...(pnj.armor ? [pnj.armor] : []), ...(pnj.shield ? [pnj.shield] : [])]
+    for (const entry of equipment) {
+      if (!entry.name) errors.push(`PNJ ${pnj.name} : équipement sans nom`)
+      if (entry.category && !categoryIds.has(entry.category)) errors.push(`PNJ ${pnj.name} : catégorie inconnue « ${entry.category} »`)
+    }
+    for (const entry of pnj.arcanums ?? []) {
+      const descriptor = typeof entry === "string" ? { slug: entry, rank: 1 } : entry
+      if (!arcanumSlugs.has(descriptor.slug) && !descriptor.name) errors.push(`PNJ ${pnj.name} : arcanum inconnu « ${descriptor.slug} »`)
+      if (!Number.isInteger(descriptor.rank) || descriptor.rank < ARCANUM_MIN_RANK || descriptor.rank > ARCANUM_MAX_RANK) errors.push(`PNJ ${pnj.name} : rang d'arcanum invalide`)
+    }
+    if (!pnj.description) errors.push(`PNJ ${pnj.name} : description absente`)
+  }
+
   if (errors.length) {
     for (const error of errors) console.error(`  ✗ ${error}`)
     throw new Error(`${errors.length} erreur(s) dans tools/data/ — rien n'a été écrit.`)
@@ -418,12 +617,14 @@ async function writePack(pack, documents) {
  * @param {Object[]} equipements
  * @param {Object[]} carrieres
  * @param {Object[]} ascendances
+ * @param {Object[]} pnjs
  * @returns {string}
  */
-function buildMacro(arcanums, equipements, carrieres, ascendances) {
+function buildMacro(arcanums, equipements, carrieres, ascendances, pnjs) {
   const strip = (document) => {
     const { _key, ...rest } = document
     if (rest.effects?.length) rest.effects = rest.effects.map(({ _key: _, ...effect }) => effect)
+    if (rest.items?.length) rest.items = rest.items.map(({ _key: _, ...item }) => item)
     return rest
   }
   const payload = {
@@ -441,11 +642,12 @@ function buildMacro(arcanums, equipements, carrieres, ascendances) {
       doc.system = { ...doc.system, arcanumChoices: [] }
       return { doc, arcanumChoices: ascendance.arcanumChoices }
     }),
+    pnjs: pnjs.map(strip),
   }
 
   return `/**
- * Crée les compendiums Arcanums, Équipement, Carrières et Ascendances de Chiens de guerre dans le
- * monde courant.
+ * Crée les compendiums Arcanums, Équipement, Carrières, Ascendances et PNJ de Chiens de guerre
+ * dans le monde courant.
  *
  * GÉNÉRÉ PAR tools/build-compendiums.mjs — ne pas modifier à la main : toute retouche serait perdue à
  * la prochaine génération. Corriger tools/data/ et relancer le script.
@@ -460,6 +662,7 @@ const PACKS = {
   equipements: { name: "cdg-equipements", label: "Équipement (CDG)" },
   carrieres: { name: "cdg-carrieres", label: "Carrières (CDG)" },
   ascendances: { name: "cdg-ascendances", label: "Ascendances (CDG)" },
+  pnjs: { name: "cdg-pnjs", label: "Bestiaire — PNJ / Créatures (CDG)", type: "Actor" },
 }
 
 if (!game.user.isGM) {
@@ -474,7 +677,7 @@ if (!game.user.isGM) {
  */
 async function getPack(descriptor) {
   let pack = game.packs.get(\`world.\${descriptor.name}\`)
-  if (!pack) pack = await foundry.documents.collections.CompendiumCollection.createCompendium({ type: "Item", name: descriptor.name, label: descriptor.label })
+  if (!pack) pack = await foundry.documents.collections.CompendiumCollection.createCompendium({ type: descriptor.type ?? "Item", name: descriptor.name, label: descriptor.label })
   if (pack.locked) await pack.configure({ locked: false })
   return pack
 }
@@ -485,10 +688,10 @@ async function getPack(descriptor) {
  * @param {Object[]} documents
  * @returns {Promise<{created: number, skipped: number}>}
  */
-async function createMissing(pack, documents) {
+async function createMissing(pack, documents, implementation = Item.implementation) {
   const index = await pack.getIndex()
   const missing = documents.filter((document) => !index.has(document._id))
-  if (missing.length) await Item.implementation.createDocuments(missing, { pack: pack.collection, keepId: true })
+  if (missing.length) await implementation.createDocuments(missing, { pack: pack.collection, keepId: true })
   return { created: missing.length, skipped: documents.length - missing.length }
 }
 
@@ -496,6 +699,7 @@ const arcanumPack = await getPack(PACKS.arcanums)
 const equipementPack = await getPack(PACKS.equipements)
 const carrierePack = await getPack(PACKS.carrieres)
 const ascendancePack = await getPack(PACKS.ascendances)
+const pnjPack = await getPack(PACKS.pnjs)
 
 const counts = { created: 0, skipped: 0 }
 const tally = (result) => {
@@ -526,8 +730,41 @@ const ascendances = DATA.ascendances.map((entry) => {
   return document
 })
 tally(await createMissing(ascendancePack, ascendances))
+tally(await createMissing(pnjPack, DATA.pnjs, Actor.implementation))
 
 ui.notifications.info(\`Chiens de guerre : \${counts.created} document(s) créé(s), \${counts.skipped} déjà présent(s).\`)
+`
+}
+
+/**
+ * Produit la macro autonome consacrée au bestiaire.
+ * @param {Object[]} pnjs
+ * @returns {string}
+ */
+function buildPnjMacro(pnjs) {
+  const documents = pnjs.map((document) => {
+    const actor = structuredClone(document)
+    delete actor._key
+    actor.items = actor.items.map((item) => {
+      delete item._key
+      return item
+    })
+    return actor
+  })
+  return `/** Macro générée : crée le bestiaire Chiens de guerre dans le monde courant. */
+const DATA = ${JSON.stringify(documents, null, 2)}
+if (!game.user.isGM) {
+  ui.notifications.error("Seul un MJ peut créer le bestiaire.")
+  return
+}
+const descriptor = { type: "Actor", name: "cdg-pnjs", label: "Bestiaire — PNJ / Créatures (CDG)" }
+let pack = game.packs.get(\`world.\${descriptor.name}\`)
+if (!pack) pack = await foundry.documents.collections.CompendiumCollection.createCompendium(descriptor)
+if (pack.locked) await pack.configure({ locked: false })
+const index = await pack.getIndex()
+const missing = DATA.filter((document) => !index.has(document._id))
+if (missing.length) await Actor.implementation.createDocuments(missing, { pack: pack.collection, keepId: true })
+ui.notifications.info(\`Chiens de guerre : \${missing.length} PNJ créé(s), \${DATA.length - missing.length} déjà présent(s).\`)
 `
 }
 
@@ -540,16 +777,22 @@ const equipementDocuments = EQUIPEMENTS.map(buildEquipement)
 const uuidFor = (pack, prefix) => (slug) => `Compendium.${PACKAGE_ID}.${pack}.Item.${makeId(prefix, slug)}`
 const carriereDocuments = CARRIERES.map((carriere) => buildCarriere(carriere, uuidFor("arcanums", PACKS.arcanums.prefix), uuidFor("equipements", PACKS.equipements.prefix)))
 const ascendanceDocuments = ASCENDANCES.map((ascendance) => buildAscendance(ascendance, uuidFor("arcanums", PACKS.arcanums.prefix)))
+const pnjDocuments = PNJS.map(buildPnj)
+validatePnjDocuments(pnjDocuments)
 
 await writePack("arcanums", arcanumDocuments)
 await writePack("equipements", equipementDocuments)
 await writePack("carrieres", carriereDocuments)
 await writePack("ascendances", ascendanceDocuments)
+await writePack("pnjs", pnjDocuments)
 
 const macroPath = path.join(ROOT, "tools", "out", "macro-compendiums.js")
 await fs.mkdir(path.dirname(macroPath), { recursive: true })
-await fs.writeFile(macroPath, buildMacro(arcanumDocuments, equipementDocuments, carriereDocuments, ascendanceDocuments))
+await fs.writeFile(macroPath, buildMacro(arcanumDocuments, equipementDocuments, carriereDocuments, ascendanceDocuments, pnjDocuments))
 console.log(`  macro        ${path.relative(ROOT, macroPath)}`)
+const pnjMacroPath = path.join(ROOT, "tools", "out", "macro-pnjs.js")
+await fs.writeFile(pnjMacroPath, buildPnjMacro(pnjDocuments))
+console.log(`  macro        ${path.relative(ROOT, pnjMacroPath)}`)
 
 if (!FORCE) console.log("\nLes fichiers déjà présents ont été conservés. Relancer avec --force pour les régénérer.")
 if (ONLY) console.log(`Seul(s) le(s) pack(s) ${ONLY.join(", ")} ont été considérés.`)

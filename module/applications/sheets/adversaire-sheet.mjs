@@ -25,7 +25,6 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
   static PARTS = {
     header: { template: `${SYSTEM.PATH}/templates/actors/adversaire-header.hbs` },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
-    competences: { template: `${SYSTEM.PATH}/templates/actors/character-competences.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
     combat: { template: `${SYSTEM.PATH}/templates/actors/adversaire-combat.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
     description: { template: `${SYSTEM.PATH}/templates/actors/adversaire-description.hbs`, scrollable: [""] },
   }
@@ -33,7 +32,7 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
   /** @override */
   static TABS = {
     primary: {
-      tabs: [{ id: "competences" }, { id: "combat" }, { id: "description" }],
+      tabs: [{ id: "combat" }, { id: "description" }],
       initial: "combat",
       labelPrefix: "CDG.sheet.tabs",
     },
@@ -45,7 +44,13 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
     const enrichHTML = foundry.applications.ux.TextEditor.implementation.enrichHTML
 
     context.enrichedDescription = await enrichHTML(this.document.system.details.description)
+    context.enrichedSpecial = await enrichHTML(this.document.system.details.special)
     context.enrichedNotes = await enrichHTML(this.document.system.details.notes)
+    context.hasSpecial = !!this.document.system.details.special?.trim()
+
+    const visible = this.isEditMode ? () => true : (skill) => this.document.system.skills[skill.id].rank > 0
+    context.skillColumns = [1, 2].map((column) => Object.values(SYSTEM.SKILLS).filter((skill) => skill.column === column && visible(skill)))
+    context.hasSkills = context.skillColumns.some((column) => column.length > 0)
 
     return context
   }

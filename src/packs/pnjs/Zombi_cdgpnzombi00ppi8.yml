@@ -1,0 +1,255 @@
+_id: cdgpnzombi00ppi8
+name: Zombi
+type: adversaire
+img: icons/creatures/undead/zombie-worn-green.webp
+system:
+  abilities:
+    corps:
+      value: 14
+      max: 14
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    vivacite:
+      value: 6
+      max: 6
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    esprit:
+      value: 1
+      max: 1
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+  skills:
+    acrobatie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    artsArtisanats:
+      rank: 0
+      bonuses:
+        sheet: 0
+    athletisme:
+      rank: 0
+      bonuses:
+        sheet: 0
+    autorite:
+      rank: 0
+      bonuses:
+        sheet: 0
+    baratin:
+      rank: 0
+      bonuses:
+        sheet: 0
+    blocage:
+      rank: 0
+      bonuses:
+        sheet: 0
+    commerce:
+      rank: 0
+      bonuses:
+        sheet: 0
+    discretion:
+      rank: 0
+      bonuses:
+        sheet: 0
+    eloquence:
+      rank: 0
+      bonuses:
+        sheet: 0
+    empathie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    equitation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    erudition:
+      rank: 0
+      bonuses:
+        sheet: 0
+    escamotage:
+      rank: 0
+      bonuses:
+        sheet: 0
+    esquive:
+      rank: 0
+      bonuses:
+        sheet: 0
+    etiquette:
+      rank: 0
+      bonuses:
+        sheet: 0
+    ingenierie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    investigation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    medecine:
+      rank: 0
+      bonuses:
+        sheet: 0
+    melee:
+      rank: 1
+      bonuses:
+        sheet: 0
+    portArmures:
+      rank: 0
+      bonuses:
+        sheet: 0
+    religionsLegendes:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sciencesNaturelles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensCombat:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensBatailles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensDuels:
+      rank: 0
+      bonuses:
+        sheet: 0
+    survie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tactique:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tir:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigilance:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigueur:
+      rank: 0
+      bonuses:
+        sheet: 0
+    volonte:
+      rank: 0
+      bonuses:
+        sheet: 0
+  wounds:
+    legere:
+      value: 0
+      bonus: 0
+    grave:
+      value: 0
+      bonus: 0
+    mortelle:
+      value: 0
+      bonus: 0
+  combat:
+    initiative:
+      bonus: 0
+    dodgesUsed: 0
+    parryUsed: false
+  major: false
+  details:
+    description: >-
+      <p>Les cadavres réanimés par les sombres arts de la nécromancie sont des
+      visions d’horreur. Décérébrés, lents, ils font preuve d’une force
+      surnaturelle et sont virtuellement infatigables. Certains sont créés par
+      l’Arcanum Mortem. Une poignée de zombis ne forme pas une grande menace
+      pour des combattants aguerris, mais ils peuvent s’avérer redoutables en
+      grands groupes.</p>
+    notes: ''
+    special: >-
+      <p>Face à tout dommage non tranchant (dégâts contondants ou perforants,
+      par exemple), la protection d’un zombi passe à 3.</p>
+prototypeToken:
+  actorLink: false
+  disposition: -1
+items:
+  - _id: cdgpizombi000000
+    name: Poings et morsure
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: weapon
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 1
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: naturelle
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnzombi00ppi8.cdgpizombi000000'
+  - _id: cdgpizombi000001
+    name: Aucune
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: armor
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 0
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: aucune
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnzombi00ppi8.cdgpizombi000001'
+effects: []
+folder: null
+sort: 0
+ownership:
+  default: 0
+flags:
+  chiens-de-guerre:
+    sourcePage: 75
+_key: '!actors!cdgpnzombi00ppi8'

@@ -1,0 +1,413 @@
+_id: cdgpnungys00i64r
+name: Ungys
+type: adversaire
+img: icons/creatures/reptiles/dragon-winged-blue.webp
+system:
+  abilities:
+    corps:
+      value: 12
+      max: 12
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    vivacite:
+      value: 13
+      max: 13
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    esprit:
+      value: 2
+      max: 2
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+  skills:
+    acrobatie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    artsArtisanats:
+      rank: 0
+      bonuses:
+        sheet: 0
+    athletisme:
+      rank: 0
+      bonuses:
+        sheet: 0
+    autorite:
+      rank: 0
+      bonuses:
+        sheet: 0
+    baratin:
+      rank: 0
+      bonuses:
+        sheet: 0
+    blocage:
+      rank: 0
+      bonuses:
+        sheet: 0
+    commerce:
+      rank: 0
+      bonuses:
+        sheet: 0
+    discretion:
+      rank: 0
+      bonuses:
+        sheet: 0
+    eloquence:
+      rank: 0
+      bonuses:
+        sheet: 0
+    empathie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    equitation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    erudition:
+      rank: 0
+      bonuses:
+        sheet: 0
+    escamotage:
+      rank: 0
+      bonuses:
+        sheet: 0
+    esquive:
+      rank: 2
+      bonuses:
+        sheet: 0
+    etiquette:
+      rank: 0
+      bonuses:
+        sheet: 0
+    ingenierie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    investigation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    medecine:
+      rank: 0
+      bonuses:
+        sheet: 0
+    melee:
+      rank: 1
+      bonuses:
+        sheet: 0
+    portArmures:
+      rank: 0
+      bonuses:
+        sheet: 0
+    religionsLegendes:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sciencesNaturelles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensCombat:
+      rank: 1
+      bonuses:
+        sheet: 0
+    sensBatailles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensDuels:
+      rank: 0
+      bonuses:
+        sheet: 0
+    survie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tactique:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tir:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigilance:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigueur:
+      rank: 0
+      bonuses:
+        sheet: 0
+    volonte:
+      rank: 0
+      bonuses:
+        sheet: 0
+  wounds:
+    legere:
+      value: 0
+      bonus: 0
+    grave:
+      value: 0
+      bonus: 0
+    mortelle:
+      value: 0
+      bonus: 0
+  combat:
+    initiative:
+      bonus: 0
+    dodgesUsed: 0
+    parryUsed: false
+  major: false
+  details:
+    description: >-
+      <p>Les ungys sont des créatures volantes créées de toutes pièces par
+      Tol-Amoth, à l’instar des orques et des trolls. Les ungys ont servi de
+      montures ailées aux Oblitérés et à quelques rares Marqués pendant la
+      Guerre d’oppression. Un ungys adulte ressemble à un lézard géant doté
+      d’ailes membraneuses, pour une envergure d’environ 6 mètres, au corps
+      plutôt fin, doté d’un bec garni de dents et à la couleur variant entre le
+      gris cendré et le noir de jais. Sa longue queue se termine par un dard
+      empoisonné. Ces animaux sont difficiles à dresser et particulièrement
+      traîtres. La grande majorité de l’espèce a été massacrée et il n’en reste
+      que de rares (et précieux) spécimens.</p>
+    notes: ''
+    special: >-
+      <p>Les Arcanums d’un ungys ne s’appliquent que pendant le vol (ou le
+      piqué).</p><p>Le dard d’un ungys peut délivrer environ une fois par jour
+      un poison mortel. La victime doit alors faire un test de Corps / Vigueur
+      :</p><ul><li><strong>Réussite critique :</strong> le personnage coche une
+      case de blessure légère.</li><li><strong>Réussite :</strong> le personnage
+      coche une case de blessure grave.</li><li><strong>Échec :</strong> le
+      personnage coche une case de blessure grave et se met à convulser. S’il ne
+      reçoit pas les soins nécessaires dans la minute qui suit (réussite d’un
+      test d’Esprit / Médecine), il coche en plus une case de blessure
+      mortelle.</li><li><strong>Échec critique :</strong> le personnage coche
+      une case de blessure mortelle et se met à convulser… s’il vit encore
+      (mêmes effets supplémentaires après une minute que l’échec
+      ci-dessus).</li></ul>
+prototypeToken:
+  actorLink: false
+  disposition: -1
+items:
+  - _id: cdgpiungys000000
+    name: Bec acéré
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: weapon
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 2
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: naturelle
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnungys00i64r.cdgpiungys000000'
+  - _id: cdgpiungys000001
+    name: Dard empoisonné
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: weapon
+      equipped: false
+      quantity: 1
+      damage:
+        rank: 1
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: naturelle
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnungys00i64r.cdgpiungys000001'
+  - _id: cdgpiungys000002
+    name: Cuir épais
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: armor
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 0
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: naturelle
+      protection:
+        rank: 1
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnungys00i64r.cdgpiungys000002'
+  - _id: cdgpiungys000003
+    name: Devito
+    type: arcanum
+    img: icons/magic/symbols/runes-star-blue.webp
+    system:
+      description: >-
+        <p>L’Arcanum Devito se concentre sur l’art de la dérobade en se basant
+        sur le leurre et sur des prouesses physiques surnaturelles, telles que
+        des sauts périlleux, des esquives acrobatiques ou des roulés-boulés.
+        Pour chaque rang possédé dans cet Arcanum, le personnage bénéficie d’un
+        + 2 à tous les tests d’esquive.</p><h4>Lumière / Balance</h4><p>Le
+        Marqué gagne en outre un bonus de + 1 par rang sur tous les tests
+        d’Acrobatie, tels que les sauts périlleux, les pirouettes ou le maintien
+        de l’équilibre. Ce bonus s’applique en particulier aux tests visant à
+        limiter les dégâts d’une chute.</p><h4>Obscurité</h4><p>Le Marqué
+        bénéficie par ailleurs d’un bonus de + 1 par rang sur tous les tests de
+        discrétion, que ce soit pour passer inaperçu ou pour dissimuler un objet
+        sur lui.</p>
+      arcanumType: physique
+      rank: 2
+      rankData:
+        name1: Rang 1
+        cost1:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect1: ''
+        label1a: Lumière / Balance
+        effect1a: ''
+        label1b: Obscurité
+        effect1b: ''
+        name2: Rang 2
+        cost2:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect2: ''
+        label2a: Lumière / Balance
+        effect2a: ''
+        label2b: Obscurité
+        effect2b: ''
+        name3: Rang 3
+        cost3:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect3: ''
+        label3a: Lumière / Balance
+        effect3a: ''
+        label3b: Obscurité
+        effect3b: ''
+      linkedSkill: esquive
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnungys00i64r.cdgpiungys000003'
+  - _id: cdgpiungys000004
+    name: Fulmen
+    type: arcanum
+    img: icons/magic/symbols/runes-star-blue.webp
+    system:
+      description: >-
+        <p>L’Arcanum Fulmen octroie une vitesse d’action hors du commun. Le
+        personnage devient capable de réaliser des mouvements à une vitesse
+        surnaturelle ; ses réflexes deviennent prodigieux. Pour chaque rang
+        possédé dans cet Arcanum, le personnage bénéficie d’un + 2 à tous les
+        tests d’initiative.</p><h4>Lumière / Balance</h4><p>Le Marqué bénéficie
+        par ailleurs d’un bonus de + 1 par rang sur tous les tests de course sur
+        de courtes distances (sprint) : il est rapide, mais pas forcément
+        endurant.</p><h4>Obscurité</h4><p>Le Marqué bénéficie par ailleurs d’un
+        bonus de + 1 par rang sur tous les tests visant à éviter d’être pris par
+        surprise : ses réflexes sont extraordinaires.</p>
+      arcanumType: physique
+      rank: 2
+      rankData:
+        name1: Rang 1
+        cost1:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect1: ''
+        label1a: Lumière / Balance
+        effect1a: ''
+        label1b: Obscurité
+        effect1b: ''
+        name2: Rang 2
+        cost2:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect2: ''
+        label2a: Lumière / Balance
+        effect2a: ''
+        label2b: Obscurité
+        effect2b: ''
+        name3: Rang 3
+        cost3:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect3: ''
+        label3a: Lumière / Balance
+        effect3a: ''
+        label3b: Obscurité
+        effect3b: ''
+      linkedSkill: ''
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnungys00i64r.cdgpiungys000004'
+effects: []
+folder: null
+sort: 0
+ownership:
+  default: 0
+flags:
+  chiens-de-guerre:
+    sourcePage: 72
+_key: '!actors!cdgpnungys00i64r'

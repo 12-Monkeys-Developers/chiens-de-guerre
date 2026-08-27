@@ -52,7 +52,7 @@
       <input id="cdg-roll-modifier" class="free-modifier" type="number" name="modifier" value="{{draft.modifier}}" step="1" data-dtype="Number" />
     </div>
 
-    <div class="field-line effort-line">
+    {{#if canUseEffort}}<div class="field-line effort-line">
       <label>{{localize "CDG.roll.effort"}}</label>
       <div class="effort-steps" data-tooltip="{{localize 'CDG.roll.hint.effort'}}">
         {{#each effortSteps as |step|}}
@@ -62,7 +62,7 @@
         {{/each}}
       </div>
       {{#if (eq effortMax 0)}}<span class="hint warning">{{localize "CDG.roll.hint.noEffortLeft"}}</span>{{/if}}
-    </div>
+    </div>{{/if}}
 
     {{#if passion.available}}
       <div class="field-line passion-line">

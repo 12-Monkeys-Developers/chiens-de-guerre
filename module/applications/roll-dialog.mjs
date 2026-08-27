@@ -203,7 +203,8 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
 
     // « Un joueur ne peut jamais décider volontairement d'utiliser ainsi le dernier point d'une
     // réserve et tomber à zéro. »
-    const effortMax = Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1))
+    const canUseEffort = this.#actor.type === "character" || this.#actor.system.major
+    const effortMax = canUseEffort ? Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1)) : 0
     draft.effort = Math.clamp(draft.effort, 0, effortMax)
 
     const difficulty = SYSTEM.DIFFICULTIES[draft.difficulty] ?? SYSTEM.DIFFICULTIES[SYSTEM.DEFAULT_DIFFICULTY]
@@ -242,6 +243,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       difficultyChoices: Object.values(SYSTEM.DIFFICULTIES)
         .sort((a, b) => a.order - b.order)
         .map((entry) => ({ id: entry.id, label: `${game.i18n.localize(entry.label)} (${signed(entry.modifier)})` })),
+      canUseEffort,
       effortMax,
       effortSteps: Array.fromRange(SYSTEM.MAX_EFFORT + 1).map((step) => ({
         value: step,

@@ -16,6 +16,8 @@ export default class CdgAdversaireData extends CdgActorData {
     const requiredInteger = { required: true, nullable: false, integer: true }
     const schema = {}
 
+    schema.major = new fields.BooleanField({ required: true, nullable: false, initial: false })
+
     schema.combat = new fields.SchemaField({
       initiative: new fields.SchemaField({
         bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
@@ -27,6 +29,7 @@ export default class CdgAdversaireData extends CdgActorData {
     schema.details = new fields.SchemaField({
       // Ce qui tient lieu de fiche de créature : nature, tactique, faiblesses.
       description: new fields.HTMLField(),
+      special: new fields.HTMLField(),
       notes: new fields.HTMLField(),
     })
 

@@ -1,0 +1,250 @@
+_id: cdgpnduellis73h7
+name: Duelliste (faible)
+type: adversaire
+img: icons/weapons/swords/rapier-guard-blue.webp
+system:
+  abilities:
+    corps:
+      value: 9
+      max: 9
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    vivacite:
+      value: 11
+      max: 11
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    esprit:
+      value: 10
+      max: 10
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+  skills:
+    acrobatie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    artsArtisanats:
+      rank: 0
+      bonuses:
+        sheet: 0
+    athletisme:
+      rank: 0
+      bonuses:
+        sheet: 0
+    autorite:
+      rank: 0
+      bonuses:
+        sheet: 0
+    baratin:
+      rank: 0
+      bonuses:
+        sheet: 0
+    blocage:
+      rank: 1
+      bonuses:
+        sheet: 0
+    commerce:
+      rank: 0
+      bonuses:
+        sheet: 0
+    discretion:
+      rank: 0
+      bonuses:
+        sheet: 0
+    eloquence:
+      rank: 0
+      bonuses:
+        sheet: 0
+    empathie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    equitation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    erudition:
+      rank: 0
+      bonuses:
+        sheet: 0
+    escamotage:
+      rank: 0
+      bonuses:
+        sheet: 0
+    esquive:
+      rank: 1
+      bonuses:
+        sheet: 0
+    etiquette:
+      rank: 0
+      bonuses:
+        sheet: 0
+    ingenierie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    investigation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    medecine:
+      rank: 0
+      bonuses:
+        sheet: 0
+    melee:
+      rank: 1
+      bonuses:
+        sheet: 0
+    portArmures:
+      rank: 0
+      bonuses:
+        sheet: 0
+    religionsLegendes:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sciencesNaturelles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensCombat:
+      rank: 1
+      bonuses:
+        sheet: 0
+    sensBatailles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensDuels:
+      rank: 2
+      bonuses:
+        sheet: 0
+    survie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tactique:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tir:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigilance:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigueur:
+      rank: 0
+      bonuses:
+        sheet: 0
+    volonte:
+      rank: 0
+      bonuses:
+        sheet: 0
+  wounds:
+    legere:
+      value: 0
+      bonus: 0
+    grave:
+      value: 0
+      bonus: 0
+    mortelle:
+      value: 0
+      bonus: 0
+  combat:
+    initiative:
+      bonus: 0
+    dodgesUsed: 0
+    parryUsed: false
+  major: false
+  details:
+    description: >-
+      <p>Ce profil convient aussi bien aux professionnels des duels qui louent
+      leurs services qu’aux combattants plutôt axés sur l’agilité et la
+      rapidité.</p>
+    notes: ''
+    special: ''
+prototypeToken:
+  actorLink: false
+  disposition: -1
+items:
+  - _id: cdgpiduellis0000
+    name: Arme de corps-à-corps moyenne
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: weapon
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 2
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: moyenne
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 10
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnduellis73h7.cdgpiduellis0000'
+  - _id: cdgpiduellis0001
+    name: Aucune
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: armor
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 0
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: aucune
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnduellis73h7.cdgpiduellis0001'
+effects: []
+folder: null
+sort: 0
+ownership:
+  default: 0
+flags:
+  chiens-de-guerre:
+    sourcePage: 57
+_key: '!actors!cdgpnduellis73h7'

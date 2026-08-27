@@ -1,0 +1,283 @@
+_id: cdgpnbrigand4eqj
+name: Brigand (faible)
+type: adversaire
+img: icons/environment/people/infantry-armored.webp
+system:
+  abilities:
+    corps:
+      value: 10
+      max: 10
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    vivacite:
+      value: 11
+      max: 11
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    esprit:
+      value: 8
+      max: 8
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+  skills:
+    acrobatie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    artsArtisanats:
+      rank: 0
+      bonuses:
+        sheet: 0
+    athletisme:
+      rank: 0
+      bonuses:
+        sheet: 0
+    autorite:
+      rank: 0
+      bonuses:
+        sheet: 0
+    baratin:
+      rank: 0
+      bonuses:
+        sheet: 0
+    blocage:
+      rank: 0
+      bonuses:
+        sheet: 0
+    commerce:
+      rank: 0
+      bonuses:
+        sheet: 0
+    discretion:
+      rank: 0
+      bonuses:
+        sheet: 0
+    eloquence:
+      rank: 0
+      bonuses:
+        sheet: 0
+    empathie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    equitation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    erudition:
+      rank: 0
+      bonuses:
+        sheet: 0
+    escamotage:
+      rank: 0
+      bonuses:
+        sheet: 0
+    esquive:
+      rank: 1
+      bonuses:
+        sheet: 0
+    etiquette:
+      rank: 0
+      bonuses:
+        sheet: 0
+    ingenierie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    investigation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    medecine:
+      rank: 0
+      bonuses:
+        sheet: 0
+    melee:
+      rank: 1
+      bonuses:
+        sheet: 0
+    portArmures:
+      rank: 0
+      bonuses:
+        sheet: 0
+    religionsLegendes:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sciencesNaturelles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensCombat:
+      rank: 1
+      bonuses:
+        sheet: 0
+    sensBatailles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensDuels:
+      rank: 1
+      bonuses:
+        sheet: 0
+    survie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tactique:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tir:
+      rank: 1
+      bonuses:
+        sheet: 0
+    vigilance:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigueur:
+      rank: 0
+      bonuses:
+        sheet: 0
+    volonte:
+      rank: 0
+      bonuses:
+        sheet: 0
+  wounds:
+    legere:
+      value: 0
+      bonus: 0
+    grave:
+      value: 0
+      bonus: 0
+    mortelle:
+      value: 0
+      bonus: 0
+  combat:
+    initiative:
+      bonus: 0
+    dodgesUsed: 0
+    parryUsed: false
+  major: false
+  details:
+    description: >-
+      <p>Voleurs, bandits, écorcheurs… la plupart de ces viles personnes sont
+      des déserteurs, des mercenaires désabusés ou des canailles issues des
+      bas-fonds. Quoique leur entraînement puisse laisser à désirer, il serait
+      suicidaire de ne pas prendre au sérieux la dangerosité qu’une bande de
+      brigands motivée représente.</p>
+    notes: ''
+    special: ''
+prototypeToken:
+  actorLink: false
+  disposition: -1
+items:
+  - _id: cdgpibrigand0000
+    name: Arme de corps-à-corps légère
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: weapon
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 1
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: legere
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 1
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnbrigand4eqj.cdgpibrigand0000'
+  - _id: cdgpibrigand0001
+    name: Arme à distance légère
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: weapon
+      equipped: false
+      quantity: 1
+      damage:
+        rank: 1
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: tir
+      category: tirLegere
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 1
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnbrigand4eqj.cdgpibrigand0001'
+  - _id: cdgpibrigand0002
+    name: Aucune
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: armor
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 0
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: aucune
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnbrigand4eqj.cdgpibrigand0002'
+effects: []
+folder: null
+sort: 0
+ownership:
+  default: 0
+flags:
+  chiens-de-guerre:
+    sourcePage: 54
+_key: '!actors!cdgpnbrigand4eqj'

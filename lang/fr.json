@@ -2,7 +2,7 @@
   "TYPES": {
     "Actor": {
       "character": "Personnage",
-      "adversaire": "Adversaire"
+      "adversaire": "PNJ / Créature"
     },
     "Item": {
       "equipment": "Équipement",
@@ -19,7 +19,7 @@
     },
     "sheet": {
       "character": "Fiche de personnage",
-      "adversaire": "Fiche d'adversaire",
+      "adversaire": "Fiche de PNJ / créature",
       "equipment": "Fiche d'équipement",
       "arcanum": "Fiche d'arcanum",
       "ascendance": "Fiche d'ascendance",
@@ -486,7 +486,9 @@
         "creationGrants": "Accordé à la création",
         "customizationPoints": "Points de personnalisation",
         "freeSkillRanks": "Compétences au rang 1",
-        "situationalModifiers": "Bonus circonstanciels"
+        "situationalModifiers": "Bonus circonstanciels",
+        "majorNpc": "PNJ majeur",
+        "special": "Spécial"
       },
       "short": {
         "init": "Init.",
@@ -511,6 +513,7 @@
       "addSkill": "Ajouter une compétence",
       "noGear": "Aucun objet.",
       "noArcanum": "Aucun arcanum.",
+      "noSkill": "Aucune compétence.",
       "noStartingSkill": "Aucune compétence de départ.",
       "dropFeaturesHere": "Déposez ici les traits accordés par le peuple.",
       "dropArcanumsHere": "Déposez ici les arcanums de départ.",
@@ -609,9 +612,15 @@
     },
     "Adversaire": {
       "FIELDS": {
+        "major": {
+          "label": "PNJ majeur"
+        },
         "details": {
           "description": {
             "label": "Description"
+          },
+          "special": {
+            "label": "Spécial"
           },
           "notes": {
             "label": "Notes"

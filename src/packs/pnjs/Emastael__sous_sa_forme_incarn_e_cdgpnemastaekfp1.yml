@@ -1,0 +1,468 @@
+_id: cdgpnemastaekfp1
+name: Emastael, sous sa forme incarnée
+type: adversaire
+img: icons/creatures/unholy/demon-horned-winged-laughing.webp
+system:
+  abilities:
+    corps:
+      value: 14
+      max: 14
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    vivacite:
+      value: 22
+      max: 22
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+    esprit:
+      value: 17
+      max: 17
+      improvements: 0
+      bonuses:
+        sheet: 0
+      restBonus: 0
+  skills:
+    acrobatie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    artsArtisanats:
+      rank: 0
+      bonuses:
+        sheet: 0
+    athletisme:
+      rank: 0
+      bonuses:
+        sheet: 0
+    autorite:
+      rank: 0
+      bonuses:
+        sheet: 0
+    baratin:
+      rank: 0
+      bonuses:
+        sheet: 0
+    blocage:
+      rank: 1
+      bonuses:
+        sheet: 0
+    commerce:
+      rank: 0
+      bonuses:
+        sheet: 0
+    discretion:
+      rank: 0
+      bonuses:
+        sheet: 0
+    eloquence:
+      rank: 0
+      bonuses:
+        sheet: 0
+    empathie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    equitation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    erudition:
+      rank: 0
+      bonuses:
+        sheet: 0
+    escamotage:
+      rank: 0
+      bonuses:
+        sheet: 0
+    esquive:
+      rank: 2
+      bonuses:
+        sheet: 0
+    etiquette:
+      rank: 0
+      bonuses:
+        sheet: 0
+    ingenierie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    investigation:
+      rank: 0
+      bonuses:
+        sheet: 0
+    medecine:
+      rank: 0
+      bonuses:
+        sheet: 0
+    melee:
+      rank: 2
+      bonuses:
+        sheet: 0
+    portArmures:
+      rank: 0
+      bonuses:
+        sheet: 0
+    religionsLegendes:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sciencesNaturelles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensCombat:
+      rank: 2
+      bonuses:
+        sheet: 0
+    sensBatailles:
+      rank: 0
+      bonuses:
+        sheet: 0
+    sensDuels:
+      rank: 0
+      bonuses:
+        sheet: 0
+    survie:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tactique:
+      rank: 0
+      bonuses:
+        sheet: 0
+    tir:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigilance:
+      rank: 0
+      bonuses:
+        sheet: 0
+    vigueur:
+      rank: 0
+      bonuses:
+        sheet: 0
+    volonte:
+      rank: 0
+      bonuses:
+        sheet: 0
+  wounds:
+    legere:
+      value: 0
+      bonus: 0
+    grave:
+      value: 0
+      bonus: 0
+    mortelle:
+      value: 0
+      bonus: 0
+  combat:
+    initiative:
+      bonus: 0
+    dodgesUsed: 0
+    parryUsed: false
+  major: false
+  details:
+    description: >-
+      <p>Emastael cherche pour victimes des hommes ou des femmes respectables,
+      amoureux, fidèles et vertueux. Il exacerbe en eux les désirs charnels
+      inavoués et leur confère une attraction sans précédent. Il se délecte du
+      lent effritement de leurs principes moraux jusqu’au jour où ils se livrent
+      enfin à l’adultère. La victime s’enfonce alors chaque jour plus
+      profondément dans la lubricité tout en maintenant son ancienne façade de
+      respectabilité. Lorsqu’elle n’est guère plus que le jouet de ses propres
+      pulsions, le Daemon la pousse à fonder une société secrète dédiée aux
+      plaisirs charnels et interdits.</p><p>Bientôt le groupuscule finit par
+      vouer un culte à Emastael qui, en retour, leur procure réussite sociale et
+      succès en amour. Lorsque la communauté est suffisamment établie, le Daemon
+      s’incarne au cours d’une orgie rituelle. Dès lors, il ne subsiste que par
+      l’absorption de l’énergie sexuelle de ses fidèles, ce qui leur est fatal.
+      Plus le temps passe et plus il devient gourmand en vies, ce qui finit
+      invariablement par le forcer à se retirer du monde physique, faute de
+      sacrifices suffisants. Sous sa forme matérielle, Emastael se présente
+      comme un individu androgyne à la beauté troublante, doté de griffes
+      rétractiles et d’une queue de scorpion.</p>
+    notes: ''
+    special: >-
+      <p>Le dard d’Emastael peut délivrer un poison, à l’instar d’un ungys (cf.
+      p. 72).</p>
+prototypeToken:
+  actorLink: false
+  disposition: -1
+items:
+  - _id: cdgpiemastae0000
+    name: Griffes
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: weapon
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 2
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: naturelle
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnemastaekfp1.cdgpiemastae0000'
+  - _id: cdgpiemastae0001
+    name: Dard empoisonné
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: weapon
+      equipped: false
+      quantity: 1
+      damage:
+        rank: 1
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: naturelle
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnemastaekfp1.cdgpiemastae0001'
+  - _id: cdgpiemastae0002
+    name: Aucune
+    type: equipment
+    img: icons/containers/bags/pack-leather-brown.webp
+    system:
+      description: ''
+      subtype: armor
+      equipped: true
+      quantity: 1
+      damage:
+        rank: 0
+        bonuses:
+          sheet: 0
+      attack:
+        ability: vivacite
+        skill: melee
+      category: aucune
+      protection:
+        rank: 0
+        bonuses:
+          sheet: 0
+      blockBonus: 0
+      initMalus: 0
+      price:
+        ducat: 0
+        denier: 0
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnemastaekfp1.cdgpiemastae0002'
+  - _id: cdgpiemastae0003
+    name: Devito
+    type: arcanum
+    img: icons/magic/symbols/runes-star-blue.webp
+    system:
+      description: >-
+        <p>L’Arcanum Devito se concentre sur l’art de la dérobade en se basant
+        sur le leurre et sur des prouesses physiques surnaturelles, telles que
+        des sauts périlleux, des esquives acrobatiques ou des roulés-boulés.
+        Pour chaque rang possédé dans cet Arcanum, le personnage bénéficie d’un
+        + 2 à tous les tests d’esquive.</p><h4>Lumière / Balance</h4><p>Le
+        Marqué gagne en outre un bonus de + 1 par rang sur tous les tests
+        d’Acrobatie, tels que les sauts périlleux, les pirouettes ou le maintien
+        de l’équilibre. Ce bonus s’applique en particulier aux tests visant à
+        limiter les dégâts d’une chute.</p><h4>Obscurité</h4><p>Le Marqué
+        bénéficie par ailleurs d’un bonus de + 1 par rang sur tous les tests de
+        discrétion, que ce soit pour passer inaperçu ou pour dissimuler un objet
+        sur lui.</p>
+      arcanumType: physique
+      rank: 2
+      rankData:
+        name1: Rang 1
+        cost1:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect1: ''
+        label1a: Lumière / Balance
+        effect1a: ''
+        label1b: Obscurité
+        effect1b: ''
+        name2: Rang 2
+        cost2:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect2: ''
+        label2a: Lumière / Balance
+        effect2a: ''
+        label2b: Obscurité
+        effect2b: ''
+        name3: Rang 3
+        cost3:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect3: ''
+        label3a: Lumière / Balance
+        effect3a: ''
+        label3b: Obscurité
+        effect3b: ''
+      linkedSkill: esquive
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnemastaekfp1.cdgpiemastae0003'
+  - _id: cdgpiemastae0004
+    name: Dextem
+    type: arcanum
+    img: icons/magic/symbols/runes-star-blue.webp
+    system:
+      description: >-
+        <p>Les Marqués qui développent Dextem bénéficient d’une précision hors
+        norme lors des combats : leurs coups sont parfaitement ajustés et
+        capables de trouver la moindre faille dans les défenses de leurs
+        adversaires. Pour chaque rang possédé dans cet Arcanum, le personnage
+        bénéficie d’un + 2 à tous les tests d’attaque au corps-à-corps, que ce
+        soit avec une arme ou à mains nues.</p><h4>Lumière / Balance</h4><p>Le
+        Marqué gagne en outre un bonus de + 1 par rang sur tous les tests
+        créatifs ou bénéfiques mettant en jeu le doigté. C’est typiquement le
+        cas pour l’artisanat et les premiers soins.</p><h4>Obscurité</h4><p>Le
+        Marqué bénéficie par ailleurs d’un bonus de + 1 par rang sur tous les
+        tests (autres que ceux d’attaque) visant à détruire, détériorer ou nuire
+        et impliquant principalement la dextérité, comme le pickpocket, le
+        crochetage de serrures ou le désamorçage de pièges.</p>
+      arcanumType: physique
+      rank: 2
+      rankData:
+        name1: Rang 1
+        cost1:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect1: ''
+        label1a: Lumière / Balance
+        effect1a: ''
+        label1b: Obscurité
+        effect1b: ''
+        name2: Rang 2
+        cost2:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect2: ''
+        label2a: Lumière / Balance
+        effect2a: ''
+        label2b: Obscurité
+        effect2b: ''
+        name3: Rang 3
+        cost3:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect3: ''
+        label3a: Lumière / Balance
+        effect3a: ''
+        label3b: Obscurité
+        effect3b: ''
+      linkedSkill: melee
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnemastaekfp1.cdgpiemastae0004'
+  - _id: cdgpiemastae0005
+    name: Fulmen
+    type: arcanum
+    img: icons/magic/symbols/runes-star-blue.webp
+    system:
+      description: >-
+        <p>L’Arcanum Fulmen octroie une vitesse d’action hors du commun. Le
+        personnage devient capable de réaliser des mouvements à une vitesse
+        surnaturelle ; ses réflexes deviennent prodigieux. Pour chaque rang
+        possédé dans cet Arcanum, le personnage bénéficie d’un + 2 à tous les
+        tests d’initiative.</p><h4>Lumière / Balance</h4><p>Le Marqué bénéficie
+        par ailleurs d’un bonus de + 1 par rang sur tous les tests de course sur
+        de courtes distances (sprint) : il est rapide, mais pas forcément
+        endurant.</p><h4>Obscurité</h4><p>Le Marqué bénéficie par ailleurs d’un
+        bonus de + 1 par rang sur tous les tests visant à éviter d’être pris par
+        surprise : ses réflexes sont extraordinaires.</p>
+      arcanumType: physique
+      rank: 3
+      rankData:
+        name1: Rang 1
+        cost1:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect1: ''
+        label1a: Lumière / Balance
+        effect1a: ''
+        label1b: Obscurité
+        effect1b: ''
+        name2: Rang 2
+        cost2:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect2: ''
+        label2a: Lumière / Balance
+        effect2a: ''
+        label2b: Obscurité
+        effect2b: ''
+        name3: Rang 3
+        cost3:
+          obscurite: 0
+          balance: 0
+          lumiere: 0
+        effect3: ''
+        label3a: Lumière / Balance
+        effect3a: ''
+        label3b: Obscurité
+        effect3b: ''
+      linkedSkill: ''
+    effects: []
+    folder: null
+    sort: 0
+    flags: {}
+    _key: '!actors.items!cdgpnemastaekfp1.cdgpiemastae0005'
+effects: []
+folder: null
+sort: 0
+ownership:
+  default: 0
+flags:
+  chiens-de-guerre:
+    sourcePage: 67
+_key: '!actors!cdgpnemastaekfp1'

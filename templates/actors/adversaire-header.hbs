@@ -13,6 +13,10 @@
         <span class="value name">{{actor.name}}</span>
       {{/if}}
     </div>
+    {{#if (or unlocked system.major)}}<label class="major-npc">
+      <input type="checkbox" name="system.major" {{checked system.major}} {{#unless unlocked}}disabled{{/unless}} />
+      {{localize "CDG.label.long.majorNpc"}}
+    </label>{{/if}}
   </div>
 
   <section class="abilities">

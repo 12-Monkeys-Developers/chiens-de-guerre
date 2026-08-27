@@ -91,9 +91,10 @@ chaque change, via `extendFields` — et non en reconstruisant le schéma, ce qu
 
 ## Les compendiums
 
-Cinq packs livrés avec le système : `peuples` (8 objets), `traits` (17 objets, les traits partagés
-n'étant écrits qu'une fois), `arcanums` (22), `equipements` (25) et `carrieres` (15). Les sources
-YAML de `src/packs/` sont la référence versionnée ; `packs/` est un produit de compilation, ignoré
+Sept packs livrés avec le système : `peuples` (8 objets), `traits` (17 objets, les traits partagés
+n'étant écrits qu'une fois), `arcanums` (22), `equipements` (25), `carrieres` (15), `ascendances` (9)
+et `pnjs` (44). Les sources YAML de `src/packs/` sont la référence versionnée ; `pnjs` rassemble les 44 profils
+autonomes du bestiaire (p. 50–75). `packs/` est un produit de compilation, ignoré
 par git.
 
 ```
@@ -117,14 +118,15 @@ qu'elle accorde restent stables d'une compilation à l'autre.
 
 ### Les carrières, les arcanums, l'équipement et les ascendances sont générés
 
-`peuples` et `traits` ont été écrits à la main. Les quatre autres packs sortent d'un générateur, parce
+`peuples` et `traits` ont été écrits à la main. Les cinq autres packs sortent d'un générateur, parce
 qu'une carrière (ou une ascendance) n'existe pas seule : elle renvoie par UUID à ses arcanums et à
 son barda, et saisir des dizaines de références à la main serait une source d'erreurs muettes.
 
 ```
-npm run build:compendiums                              # src/packs/{arcanums,equipements,carrieres,ascendances}/ + la macro
+npm run build:compendiums                              # src/packs/{arcanums,equipements,carrieres,ascendances,pnjs}/ + les macros
 npm run build:compendiums -- --force                   # régénère par-dessus les fichiers existants
 npm run build:compendiums -- --force --only=arcanums   # ... mais un seul pack
+npm run build:compendiums -- --force --only=pnjs       # régénère seulement le bestiaire
 ```
 
 - Les données vivent dans `tools/data/` — c'est là qu'on corrige, jamais dans les YAML produits.
@@ -149,6 +151,14 @@ npm run build:compendiums -- --force --only=arcanums   # ... mais un seul pack
   crée les mêmes contenus dans des compendiums de monde. Elle n'y réutilise pas les UUID du système :
   elle crée d'abord arcanums et équipements, puis résout les références. Relancer la macro ne
   duplique rien.
+- Le bestiaire est généré depuis `tools/data/pnjs.mjs`. Chaque acteur embarque son équipement et ses
+  Arcanums : il reste donc utilisable sans les packs d'objets. Le bonus d'initiative stocké compense
+  les malus de l'armure et du bouclier équipés afin que le total final soit exactement celui du PDF.
+  La page source est conservée dans `flags.chiens-de-guerre.sourcePage`.
+- `tools/out/macro-pnjs.js` est la macro autonome dédiée au bestiaire. Elle exige un MJ, crée un
+  compendium Actor de monde et conserve tout acteur déjà présent avec le même identifiant ; les
+  retouches faites en jeu ne sont donc jamais écrasées lors d'une seconde exécution. La macro globale
+  `macro-compendiums.js` crée également ce pack.
 
 ## Habillage
 

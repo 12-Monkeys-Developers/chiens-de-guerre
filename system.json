@@ -64,6 +64,14 @@
       "path": "packs/ascendances",
       "type": "Item",
       "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "pnjs",
+      "label": "Bestiaire — PNJ / Créatures",
+      "system": "chiens-de-guerre",
+      "path": "packs/pnjs",
+      "type": "Actor",
+      "ownership": { "PLAYER": "NONE", "ASSISTANT": "NONE" }
     }
   ],
   "languages": [
@@ -81,7 +89,7 @@
   "documentTypes": {
     "Actor": {
       "character": { "htmlFields": ["specialTraits", "details.biography"] },
-      "adversaire": { "htmlFields": ["details.description", "details.notes"] }
+      "adversaire": { "htmlFields": ["details.description", "details.special", "details.notes"] }
     },
     "Item": {
       "equipment": { "htmlFields": ["description"] },

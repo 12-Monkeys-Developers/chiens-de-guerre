@@ -2,6 +2,19 @@
 
 ## Non publié
 
+### PNJ et bestiaire
+
+- Le type technique `adversaire` est désormais présenté comme **PNJ / Créature**. Sa fiche reprend
+  le bloc de statistiques du livre : compétences renseignées, Arcanums, équipement et initiative,
+  blessures et règles spéciales sur un même écran.
+- En édition, les 31 compétences restent accessibles ; en lecture, seules celles dont le rang est
+  non nul sont affichées.
+- La distinction **PNJ majeur** applique la règle d'effort du bestiaire : les autres PNJ ne peuvent
+  investir aucun point de caractéristique.
+- Un compendium de 44 profils autonomes des *Chroniques du meneur* (p. 50 à 75) est généré avec son
+  équipement, ses Arcanums et ses textes. Une macro autonome permet de créer le même bestiaire dans
+  un monde.
+
 ### Traits spéciaux et effets actifs
 
 - Les bonus des traits passent désormais par les effets actifs de Foundry V14. Un modèle de données

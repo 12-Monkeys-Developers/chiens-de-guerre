@@ -496,3 +496,30 @@
     }
   }
 }
+
+// Bloc de statistiques compact des PNJ et créatures : lecture verticale proche du bestiaire.
+.cdg.actor.adversaire {
+  .tab-combat > section,
+  .npc-combat-tracking {
+    margin-bottom: 0.9rem;
+  }
+
+  .npc-combat-tracking {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .npc-equipment .init-bonus {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.25rem 0;
+
+    input {
+      width: 3.5rem;
+    }
+  }
+
+  .npc-special .free-text {
+    min-height: 4rem;
+  }
+}

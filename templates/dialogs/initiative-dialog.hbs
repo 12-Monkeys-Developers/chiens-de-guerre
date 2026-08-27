@@ -11,7 +11,7 @@
 
   <section class="roll-section">
     <h2>{{localize "CDG.roll.modifiers"}}</h2>
-    <div class="effort-row">
+    {{#if canUseEffort}}<div class="effort-row">
       <label>{{localize "CDG.roll.effort"}}</label>
       <div class="effort-steps">
         {{#each effortSteps as |step|}}
@@ -20,7 +20,7 @@
           </button>
         {{/each}}
       </div>
-    </div>
+    </div>{{/if}}
 
     {{#if passion.available}}
       <div class="form-group">

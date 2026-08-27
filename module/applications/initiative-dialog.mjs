@@ -95,7 +95,8 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     const rank = system.skills[skillId]?.rank ?? 0
     const rankEntry = SYSTEM.RANKS[rank] ?? SYSTEM.RANKS[0]
     const pool = system.abilities.vivacite
-    const effortMax = Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1))
+    const canUseEffort = actor.type === "character" || actor.system.major
+    const effortMax = canUseEffort ? Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1)) : 0
     draft.effort = Math.clamp(parseInt(draft.effort) || 0, 0, effortMax)
 
     const passion = this.#passion(actor, draft)
@@ -124,6 +125,7 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
       rankEntry,
       rankName: game.i18n.localize(rankEntry.label),
       pool,
+      canUseEffort,
       effort: draft.effort,
       effortMax,
       effortSteps: Array.fromRange(SYSTEM.MAX_EFFORT + 1).map((value) => ({

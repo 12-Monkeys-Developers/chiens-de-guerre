@@ -707,6 +707,19 @@ cdg-toggle-switch[checked] thumb {
   border: 2px solid var(--cdg-ink);
   border-radius: var(--cdg-radius);
 }
+.cdg.actor.adversaire .sheet-header .major-npc {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+  color: var(--cdg-label);
+  font-size: 0.8rem;
+}
+.cdg.actor.adversaire .sheet-header .major-npc input {
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0;
+}
 .cdg .identity .origin-line .origin {
   flex: 1 1 auto;
 }
@@ -1108,6 +1121,25 @@ cdg-toggle-switch[checked] thumb {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+}
+.cdg.actor.adversaire .tab-combat > section,
+.cdg.actor.adversaire .npc-combat-tracking {
+  margin-bottom: 0.9rem;
+}
+.cdg.actor.adversaire .npc-combat-tracking {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.cdg.actor.adversaire .npc-equipment .init-bonus {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+.cdg.actor.adversaire .npc-equipment .init-bonus input {
+  width: 3.5rem;
+}
+.cdg.actor.adversaire .npc-special .free-text {
+  min-height: 4rem;
 }
 .cdg.item .prosemirror {
   min-height: 300px;
