@@ -60,7 +60,7 @@ effects:
     disabled: false
     system:
       changes:
-        - key: system.abilities.vivacite.max
+        - key: system.abilities.vivacite.bonus
           type: add
           value: 1
           phase: initial

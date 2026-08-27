@@ -288,7 +288,8 @@
       "damageTest": "Dégâts",
       "soakTest": "Encaissement",
       "weapon": {
-        "toggleHeld": "Tenir ou ranger l'arme"
+        "toggleHeld": "Tenir ou ranger l'arme",
+        "notEquipped": "Cette arme n'est pas tenue en main."
       }
     },
     "confrontation": {
@@ -321,7 +322,9 @@
       "removeTitle": "Retirer {type}",
       "removeContent": "<p>Retirer <strong>{name}</strong> et les {count} objet(s) qu'il a accordés ?</p><p class=\"hint\">Les langues apprises et les rangs de compétence resteront : rien ne distingue plus ce qui venait de cette origine de ce que le personnage a gagné depuis.</p>",
       "removeContentAlone": "<p>Retirer <strong>{name}</strong> ?</p>",
-      "removeMoney": "<p class=\"hint\">La bourse vaut encore exactement les {amount} D versés par cette carrière : ils seront repris.</p>"
+      "removeMoney": "<p class=\"hint\">La bourse vaut encore exactement les {amount} D versés par cette carrière : ils seront repris.</p>",
+      "removeAscendanceGranted": "<p>Retirer <strong>{name}</strong> ?</p><p class=\"hint\">L'arcanum <strong>{arcanum}</strong>, qu'elle avait accordé, sera retiré avec elle.</p>",
+      "removeAscendanceBumped": "<p>Retirer <strong>{name}</strong> ?</p><p class=\"hint\">Le rang qu'elle avait accordé à <strong>{arcanum}</strong> sera repris.</p>"
     },
     "rest": {
       "execrables": "Conditions exécrables",
@@ -541,7 +544,7 @@
       "effectNotTransferred": "Cet effet ne s'applique pas au porteur de l'objet.",
       "noSituationalModifier": "Aucun bonus circonstanciel.",
       "situationalHint": "Ces bonus ne s'appliquent pas d'office : le meneur juge si la situation s'y prête.",
-      "lockedByEffect": "Valeur imposée par un effet actif."
+      "abilityBonusSource": "Bonus d'un effet actif :"
     },
     "settings": {
       "debugMode": {

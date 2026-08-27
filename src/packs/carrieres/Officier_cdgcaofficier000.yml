@@ -65,7 +65,7 @@ effects:
     disabled: false
     system:
       changes:
-        - key: system.abilities.corps.max
+        - key: system.abilities.corps.bonus
           type: add
           value: 1
           phase: initial

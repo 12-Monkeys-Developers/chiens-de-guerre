@@ -17,7 +17,7 @@
         <li class="item-row draggable" data-item-id="{{item.id}}"
           {{#if item.system.hasDescription}}data-tooltip-html="{{item.system.description}}" data-tooltip-direction="UP"{{/if}}>
           <img class="item-img" src="{{item.img}}" data-action="editItem" />
-          <span class="item-name" data-action="editItem">{{item.name}}</span>
+          <span class="item-name">{{item.name}}</span>
           <span class="item-quantity">×{{item.system.quantity}}</span>
           {{#if @root.unlocked}}
             <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>

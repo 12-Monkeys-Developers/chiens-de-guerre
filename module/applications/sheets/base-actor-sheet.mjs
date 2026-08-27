@@ -148,11 +148,6 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.fields = this.document.schema.fields
     context.systemFields = this.document.system.schema.fields
 
-    // Les chemins pilotés par un effet actif. `overrides` est peuplé par applyActiveEffects : un
-    // champ qui s'y trouve serait réécrit à la préparation suivante, autant l'afficher verrouillé
-    // plutôt que de laisser le joueur saisir une valeur qui ne tiendra pas.
-    context.overrides = foundry.utils.flattenObject(this.document.overrides ?? {})
-
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
     context.viewLimited = this.isLimitedView
@@ -180,7 +175,6 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.features = this.document.features
 
     // Peuple et carrière ne sont pas de l'inventaire : ils s'affichent sur leur ligne de l'en-tête.
-    
     context.ascendance = this.document.ascendance
     context.peuple = this.document.peuple
     context.carriere = this.document.carriere
@@ -191,12 +185,12 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
   }
 
   /**
-   * Dit d'où vient chaque maximum de caractéristique imposé par un effet actif.
+   * Dit d'où vient le badge de bonus affiché à côté du maximum de chaque caractéristique.
    *
-   * « Valeur imposée par un effet actif » laisse le joueur chercher lequel : l'ajustement d'une
-   * carrière, celui d'un peuple et un effet posé à la main se ressemblent tous une fois appliqués.
-   * L'origine qui parle est donc l'objet porteur — « Aumônier (Carrière) », et non le nom de
-   * l'effet, qui vaut « Ajustement de caractéristique » sur les quinze carrières.
+   * Le badge à lui seul ne dit pas d'où il vient : l'ajustement d'une carrière, celui d'un peuple
+   * et un effet posé à la main se ressemblent tous une fois appliqués. L'origine qui parle est donc
+   * l'objet porteur — « Aumônier (Carrière) », et non le nom de l'effet, qui vaut « Ajustement de
+   * caractéristique » sur les quinze carrières.
    * @returns {Record<string, string>} Une info-bulle HTML par caractéristique concernée.
    */
   _prepareAbilityMaxTooltips() {
@@ -210,7 +204,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       const kind = item ? ` (${game.i18n.localize(`TYPES.Item.${item.type}`)})` : ""
 
       for (const change of effect.system.changes) {
-        const ability = change.key?.match(/^system\.abilities\.(\w+)\.max$/)?.[1]
+        const ability = change.key?.match(/^system\.abilities\.(\w+)\.bonus$/)?.[1]
         if (!(ability in SYSTEM.ABILITIES)) continue
 
         const value = Number(change.value)
@@ -221,8 +215,8 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       }
     }
 
-    const locked = game.i18n.localize("CDG.ui.lockedByEffect")
-    return Object.fromEntries(Object.entries(lines).map(([ability, sources]) => [ability, `${locked}<br>${sources.join("<br>")}`]))
+    const header = game.i18n.localize("CDG.ui.abilityBonusSource")
+    return Object.fromEntries(Object.entries(lines).map(([ability, sources]) => [ability, `${header}<br>${sources.join("<br>")}`]))
   }
 
   /**
@@ -474,6 +468,9 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
   static async #onRollWeapon(event, target) {
     const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
     if (!weapon?.system.isWeapon) return
+    // L'icône n'apparaît que sur une arme tenue en main ; ce garde-fou couvre un client qui aurait
+    // gardé une carte ou un DOM périmé, l'affichage n'étant qu'un premier filtre.
+    if (!weapon.system.equipped) return ui.notifications.warn("CDG.combat.weapon.notEquipped", { localize: true })
     return CdgConfrontation.start(this.document, weapon)
   }
 
@@ -503,6 +500,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
   static async #onRollDamage(event, target) {
     const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
     if (!weapon?.system.isWeapon) return
+    if (!weapon.system.equipped) return ui.notifications.warn("CDG.combat.weapon.notEquipped", { localize: true })
     return CdgRollDialog.open(this.document, {
       abilityId: "corps",
       rank: weapon.system.damage.rank,
@@ -621,9 +619,10 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     const item = await Item.implementation.fromDropData(data)
     if (!item) return
 
-    // Peuple et carrière appartiennent à la création du personnage : contrairement aux objets
-    // manipulés en cours de partie, ils ne peuvent être posés qu'en mode édition.
-    if (SYSTEM.ORIGIN_TYPES.includes(item.type) && !this.isEditMode) return
+    // Peuple, carrière, ascendance et équipement ne se déposent qu'en mode édition (écriture) :
+    // modifier l'inventaire d'un personnage n'est pas un geste de consultation.
+    const dropRequiresEditMode = SYSTEM.ORIGIN_TYPES.includes(item.type) || item.type === SYSTEM.ITEM_TYPE.ascendance || item.type === SYSTEM.ITEM_TYPE.equipment
+    if (dropRequiresEditMode && !this.isEditMode) return
 
     // Réorganisation interne : l'objet appartient déjà à cet acteur, il n'y a rien à copier.
     if (item.parent?.uuid === this.document.uuid) return

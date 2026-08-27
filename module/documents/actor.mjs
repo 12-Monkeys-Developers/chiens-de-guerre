@@ -80,7 +80,7 @@ export default class CdgActor extends Actor {
    * sache les retirer ensemble.
    *
    * L'ajustement de caractéristique n'est **pas** appliqué ici : les objets de compendium portent
-   * déjà un effet actif `transfer: true` sur `abilities.<x>.max`, et `system.abilityBonus` n'est
+   * déjà un effet actif `transfer: true` sur `abilities.<x>.bonus`, et `system.abilityBonus` n'est
    * plus qu'un mémo pour l'assistant de création. Le lire doublerait le bonus.
    * @param {CdgItem} item L'origine déposée, encore extérieure au personnage.
    * @returns {Promise<CdgItem|undefined>} L'origine embarquée.
@@ -237,8 +237,28 @@ export default class CdgActor extends Actor {
     return this.deleteEmbeddedDocuments("Item", [item.id, ...granted.map((entry) => entry.id)])
   }
 
+  /**
+   * Retire une ascendance, après confirmation — comme `revokeOrigin`, mais le seul effet à
+   * défaire est le bonus d'arcanum, pas une liste d'objets accordés.
+   * @param {CdgItem} item L'ascendance embarquée à retirer.
+   * @returns {Promise<CdgItem[]|undefined>}
+   */
   async revokeAscendance(item) {
     if (item.type !== SYSTEM.ITEM_TYPE.ascendance) return
+
+    const bumped = this.grantedBy(item)[0]
+    const content = bumped
+      ? bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")
+        ? game.i18n.format("CDG.origin.removeAscendanceGranted", { name: item.name, arcanum: bumped.name })
+        : game.i18n.format("CDG.origin.removeAscendanceBumped", { name: item.name, arcanum: bumped.name })
+      : game.i18n.format("CDG.origin.removeContentAlone", { name: item.name })
+
+    const confirmed = await foundry.applications.api.DialogV2.confirm({
+      window: { title: game.i18n.format("CDG.origin.removeTitle", { type: game.i18n.localize(`TYPES.Item.${item.type}`) }) },
+      content,
+    })
+    if (!confirmed) return
+
     if (item.system.arcanumBonus) await this.updateArcanumBonus(item, item.system.arcanumBonus, "")
     return this.deleteEmbeddedDocuments("Item", [item.id])
   }

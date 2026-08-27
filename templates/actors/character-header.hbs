@@ -106,18 +106,18 @@
           <li class="ability" data-ability="{{id}}">
             <span class="ability-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
 
-            <div class="pool" data-tooltip="{{localize 'CDG.ui.poolHint'}}">
+            <div class="pool">
               <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
-              <span class="pool-value">{{pool.value}}</span>
+              <span class="pool-value" data-tooltip="{{localize 'CDG.ui.poolHint'}}">{{pool.value}}</span>
               <span class="pool-separator">/</span>
-              {{!-- Un maximum imposé par un effet reste en lecture seule même en mode édition :
-                    le champ affiche la valeur dérivée, la ressaisir écrirait le bonus en dur. --}}
-              {{#if (lookup @root.overrides (concat "system.abilities." id ".max"))}}
-                <span class="pool-max overridden" data-tooltip-html="{{#if (lookup @root.abilityMaxTooltips id)}}{{lookup @root.abilityMaxTooltips id}}{{else}}{{localize 'CDG.ui.lockedByEffect'}}{{/if}}">{{pool.max}}</span>
-              {{else if @root.unlocked}}
-                <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.max}}" min="0" data-dtype="Number" />
+              {{!-- La fiche n'édite jamais que la base : le bonus d'effet (peuple, carrière…)
+                    s'ajoute à part, jamais écrit en dur dans le champ — seule l'infobulle du
+                    maximum en dit la source, sans marque visuelle à part. --}}
+              {{#if @root.unlocked}}
+                <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.baseMax}}" min="0" data-dtype="Number"
+                  {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips id}}"{{/if}} />
               {{else}}
-                <span class="pool-max">{{pool.max}}</span>
+                <span class="pool-max" {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips id}}"{{/if}}>{{pool.max}}</span>
               {{/if}}
               <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="1"><i class="fas fa-plus"></i></a>
             </div>

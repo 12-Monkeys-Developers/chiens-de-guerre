@@ -60,7 +60,22 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
   /** @override */
   prepareDerivedData() {
     this.slug = this.parent.name.slugify({ strict: true })
+    this.#prepareAbilities()
     this.#prepareWounds()
+  }
+
+  /**
+   * Ajoute au maximum de chaque caractéristique le bonus posé par les effets actifs.
+   *
+   * `max` reste la base éditable par le joueur — un effet ne la réécrit jamais, il vise `bonus`
+   * (voir `PoolValue`). La base est gardée de côté sous `baseMax` avant d'être augmentée, pour que
+   * la fiche puisse toujours l'éditer sans jamais resaisir le total déjà bonifié.
+   */
+  #prepareAbilities() {
+    for (const ability of Object.values(this.abilities)) {
+      ability.baseMax = ability.max
+      ability.max = ability.baseMax + ability.bonus
+    }
   }
 
   /**

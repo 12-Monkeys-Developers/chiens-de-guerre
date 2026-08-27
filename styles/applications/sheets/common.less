@@ -112,6 +112,15 @@
     }
   }
 
+  // Armes et protections, équipement, arcanums et traits spéciaux : seule l'icône ouvre la fiche
+  // de l'objet, pas son nom.
+  .gear-combat .item-name,
+  .gear-list .item-name,
+  .arcanum-list .item-name,
+  .special-traits .item-name {
+    cursor: default;
+  }
+
   // En-tête des fiches d'objet.
   .item-header {
     display: flex;

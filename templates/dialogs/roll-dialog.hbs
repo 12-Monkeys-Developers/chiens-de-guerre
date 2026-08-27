@@ -21,7 +21,7 @@
         <li>
           <button type="button" class="ability {{#if ability.selected}}selected{{/if}}" data-action="setAbility" data-ability="{{ability.id}}" {{#if @root.lockedPair}}disabled{{/if}}>
             <span class="ability-name">{{ability.name}}</span>
-            <span class="ability-score">{{ability.pool.value}}<span class="max">/{{ability.pool.max}}</span></span>
+            <span class="ability-score">{{ability.pool.value}} <span class="max">/ {{ability.pool.max}}</span></span>
           </button>
         </li>
       {{/each}}

@@ -27,24 +27,6 @@ export default class Utils {
   }
 
   /**
-   * Nom localisé d'une caractéristique.
-   * @param {string} ability
-   * @returns {string}
-   */
-  static getAbilityName(ability) {
-    return game.i18n.localize(SYSTEM.ABILITIES[ability]?.label ?? ability)
-  }
-
-  /**
-   * Nom localisé d'une compétence.
-   * @param {string} skill
-   * @returns {string}
-   */
-  static getSkillName(skill) {
-    return game.i18n.localize(SYSTEM.SKILLS[skill]?.label ?? skill)
-  }
-
-  /**
    * État déplié d'une section, mémorisé d'une ouverture de fiche à l'autre.
    * @param {string} key
    * @param {boolean} [defaultValue]
@@ -70,19 +52,6 @@ export default class Utils {
       localStorage.setItem(key, JSON.stringify({ expanded }))
     } catch {
       // Sans localStorage, l'état n'est pas mémorisé — sans conséquence sur l'affichage courant.
-    }
-  }
-
-  /**
-   * Convertit un montant en deniers vers un couple ducats / deniers.
-   * @param {number} deniers
-   * @returns {{ducat: number, denier: number}}
-   */
-  static splitCurrency(deniers) {
-    const total = Math.max(0, Math.round(deniers))
-    return {
-      ducat: Math.floor(total / SYSTEM.DENIERS_PER_DUCAT),
-      denier: total % SYSTEM.DENIERS_PER_DUCAT,
     }
   }
 }

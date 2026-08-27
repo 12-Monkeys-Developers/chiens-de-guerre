@@ -330,6 +330,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
+      // Seul ce bloc doit céder de la place : les boutons gardent leur taille propre, quitte à
+      // ce que l'état du seuil se replie sur deux lignes plutôt que d'écraser « Lancer les dés ».
+      min-width: 0;
 
       &.ok {
         color: var(--cdg-muted);
@@ -348,6 +351,7 @@
     .controls {
       display: flex;
       gap: 0.4rem;
+      flex: 0 0 auto;
     }
 
     button {
@@ -358,6 +362,7 @@
       letter-spacing: 0.04em;
       border-radius: var(--cdg-radius);
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .cancel {

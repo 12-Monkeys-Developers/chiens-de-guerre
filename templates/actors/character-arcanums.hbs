@@ -13,7 +13,7 @@
       {{#each arcanums as |arcanum|}}
         <li class="item-row draggable" data-item-id="{{arcanum.id}}">
           <img class="item-img" src="{{arcanum.img}}" data-action="editItem" />
-          <span class="item-name" data-action="editItem">{{arcanum.name}}</span>
+          <span class="item-name">{{arcanum.name}}</span>
           {{!-- Un arcanum mystique se lance rang par rang : chaque rang maîtrisé est un tour
                 distinct, avec son propre coût en Esprit. Un arcanum physique n'a rien à activer. --}}
           {{#each arcanum.system.activations as |activation|}}
@@ -50,7 +50,7 @@
         {{#each group.features as |feature|}}
           <li class="item-row draggable" data-item-id="{{feature.id}}">
             <img class="item-img" src="{{feature.img}}" data-action="editItem" />
-            <span class="item-name" data-action="editItem">{{feature.name}}</span>
+            <span class="item-name">{{feature.name}}</span>
             {{#if feature.system.hasSuspicion}}
               <span class="suspicion suspicion-{{feature.system.suspicion}}">
                 {{localize (concat "CDG.feature.suspicions." feature.system.suspicion)}}

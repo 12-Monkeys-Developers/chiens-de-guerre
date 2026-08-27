@@ -26,9 +26,10 @@
               <span class="pool-value">{{pool.value}}</span>
               <span class="pool-separator">/</span>
               {{#if @root.unlocked}}
-                <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.max}}" min="0" data-dtype="Number" />
+                <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.baseMax}}" min="0" data-dtype="Number"
+                  {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips id}}"{{/if}} />
               {{else}}
-                <span class="pool-max">{{pool.max}}</span>
+                <span class="pool-max" {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips id}}"{{/if}}>{{pool.max}}</span>
               {{/if}}
               <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="1"><i class="fas fa-plus"></i></a>
             </div>

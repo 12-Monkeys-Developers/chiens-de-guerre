@@ -502,6 +502,12 @@ cdg-toggle-switch[checked] thumb {
   color: var(--cdg-blood);
   text-shadow: none;
 }
+.cdg .gear-combat .item-name,
+.cdg .gear-list .item-name,
+.cdg .arcanum-list .item-name,
+.cdg .special-traits .item-name {
+  cursor: default;
+}
 .cdg .item-header {
   display: flex;
   align-items: center;
@@ -1516,6 +1522,7 @@ cdg-toggle-switch[checked] thumb {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  min-width: 0;
 }
 .cdg.roll .roll-footer .roll-state.ok {
   color: var(--cdg-muted);
@@ -1530,6 +1537,7 @@ cdg-toggle-switch[checked] thumb {
 .cdg.roll .roll-footer .controls {
   display: flex;
   gap: 0.4rem;
+  flex: 0 0 auto;
 }
 .cdg.roll .roll-footer button {
   width: auto;
@@ -1539,6 +1547,7 @@ cdg-toggle-switch[checked] thumb {
   letter-spacing: 0.04em;
   border-radius: var(--cdg-radius);
   cursor: pointer;
+  white-space: nowrap;
 }
 .cdg.roll .roll-footer .cancel {
   background: transparent;
