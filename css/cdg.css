@@ -1153,6 +1153,16 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor.adversaire .npc-equipment .init-bonus input {
   width: 3.5rem;
 }
+.cdg.actor.adversaire .wound-name {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.cdg.actor.adversaire .wound-name input {
+  width: 3.5rem;
+  height: 1.5rem;
+  text-align: center;
+}
 .cdg.actor.adversaire .npc-special .free-text {
   min-height: 4rem;
 }

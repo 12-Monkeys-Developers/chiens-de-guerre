@@ -83,22 +83,32 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
   }
 
   /**
-   * Calcule le nombre de cases de blessure disponibles à partir du rang de Vigueur, puis le malus
-   * global infligé par la blessure la plus grave cochée.
+   * Nombre de cases de blessure accordées par les règles propres au type d'acteur.
+   * Les adversaires surchargent cette méthode pour utiliser les valeurs saisies sur leur fiche.
+   * @returns {{legere: number, grave: number, mortelle: number}}
+   * @protected
+   */
+  _getWoundSlots() {
+    const vigueur = this.skills.vigueur?.rank ?? 0
+    return SYSTEM.WOUND_SLOTS_BY_VIGUEUR[vigueur] ?? SYSTEM.WOUND_SLOTS_BY_VIGUEUR[0]
+  }
+
+  /**
+   * Calcule le nombre de cases de blessure disponibles selon le type d'acteur, puis le malus global
+   * infligé par la blessure la plus grave cochée.
    *
    * Le malus ne se cumule pas d'un niveau à l'autre : seule la gravité la plus élevée compte.
    */
   #prepareWounds() {
-    const vigueur = this.skills.vigueur?.rank ?? 0
-    const slots = SYSTEM.WOUND_SLOTS_BY_VIGUEUR[vigueur] ?? SYSTEM.WOUND_SLOTS_BY_VIGUEUR[0]
+    const slots = this._getWoundSlots()
 
     let worst = null
     for (const level of Object.values(SYSTEM.WOUND_LEVELS)) {
       const wound = this.wounds[level.id]
       // `bonus` est posé par les effets en phase `initial`, donc avant ce calcul : les cases
-      // accordées par un trait s'ajoutent à celles de la Vigueur avant que `value` soit rognée.
+      // accordées par un trait s'ajoutent à la capacité de base avant que `value` soit rognée.
       wound.max = slots[level.id] + wound.bonus
-      // Une baisse du rang de Vigueur peut laisser plus de cases cochées que disponibles.
+      // Une baisse de capacité peut laisser plus de cases cochées que disponibles.
       wound.value = Math.min(wound.value, wound.max)
       if (wound.value > 0 && (worst === null || level.order > worst.order)) worst = level
     }

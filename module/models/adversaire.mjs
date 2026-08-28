@@ -1,6 +1,8 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgActorData from "./actor.mjs"
 
+const DEFAULT_WOUND_SLOTS = { legere: 2, grave: 1, mortelle: 1 }
+
 /**
  * Adversaire : caractéristiques, compétences et blessures, sans la comptabilité du personnage
  * joueur (traits de personnalité, karma, passion, expérience, bourse).
@@ -18,6 +20,13 @@ export default class CdgAdversaireData extends CdgActorData {
 
     schema.major = new fields.BooleanField({ required: true, nullable: false, initial: false })
 
+    schema.woundSlots = new fields.SchemaField(
+      Object.values(SYSTEM.WOUND_LEVELS).reduce((obj, level) => {
+        obj[level.id] = new fields.NumberField({ ...requiredInteger, initial: DEFAULT_WOUND_SLOTS[level.id], min: 0 })
+        return obj
+      }, {}),
+    )
+
     schema.combat = new fields.SchemaField({
       initiative: new fields.SchemaField({
         bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
@@ -34,6 +43,11 @@ export default class CdgAdversaireData extends CdgActorData {
     })
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
+  }
+
+  /** @override */
+  _getWoundSlots() {
+    return this.woundSlots
   }
 
   /** @inheritDoc */
