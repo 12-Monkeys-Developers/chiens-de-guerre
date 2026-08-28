@@ -398,6 +398,7 @@
       },
       "armorCategories": {
         "aucune": "Aucune armure",
+        "naturelle": "Armure naturelle",
         "legere": "Légère",
         "moyenne": "Moyenne",
         "lourde": "Lourde"

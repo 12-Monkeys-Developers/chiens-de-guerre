@@ -267,6 +267,7 @@ function buildPnj(pnj) {
     system: {
       abilities,
       skills,
+      woundSlots: structuredClone(pnj.woundSlots),
       wounds: Object.fromEntries(["legere", "grave", "mortelle"].map((level) => [level, { value: 0, bonus: 0 }])),
       combat: { initiative: { bonus: pnj.initiative - equipmentInitiative }, dodgesUsed: 0, parryUsed: false },
       major: pnj.major ?? false,
@@ -298,6 +299,11 @@ function validatePnjDocuments(documents) {
       .reduce((total, item) => total + item.system.initMalus, 0)
     const finalInitiative = actor.system.combat.initiative.bonus + equipmentMalus
     if (finalInitiative !== source.initiative) errors.push(`${actor.name} : initiative finale ${finalInitiative}, attendue ${source.initiative}`)
+    for (const level of ["legere", "grave", "mortelle"]) {
+      if (actor.system.woundSlots[level] !== source.woundSlots[level]) {
+        errors.push(`${actor.name} : nombre de blessures ${level} ${actor.system.woundSlots[level]}, attendu ${source.woundSlots[level]}`)
+      }
+    }
   }
   if (errors.length) throw new Error(`Bestiaire invalide :\n${errors.map((error) => `  ✗ ${error}`).join("\n")}`)
 }
@@ -543,6 +549,9 @@ function validate() {
     claim(makePnjId(pnj.slug), `PNJ ${pnj.name}`)
     if (!Number.isInteger(pnj.page) || pnj.page < 49 || pnj.page > 75) errors.push(`PNJ ${pnj.name} : page source invalide`)
     if (!Number.isInteger(pnj.initiative)) errors.push(`PNJ ${pnj.name} : initiative imprimée invalide`)
+    for (const level of ["legere", "grave", "mortelle"]) {
+      if (!Number.isInteger(pnj.woundSlots?.[level]) || pnj.woundSlots[level] < 0) errors.push(`PNJ ${pnj.name} : nombre de blessures ${level} invalide`)
+    }
     for (const ability of Object.keys(ABILITIES)) {
       if (!Number.isInteger(pnj.abilities?.[ability]) || pnj.abilities[ability] < 0) errors.push(`PNJ ${pnj.name} : caractéristique ${ability} invalide`)
     }

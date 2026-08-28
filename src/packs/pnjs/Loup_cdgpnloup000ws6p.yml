@@ -150,6 +150,10 @@ system:
       rank: 0
       bonuses:
         sheet: 0
+  woundSlots:
+    legere: 1
+    grave: 1
+    mortelle: 1
   wounds:
     legere:
       value: 0

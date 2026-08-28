@@ -12,6 +12,7 @@ export const EQUIPMENT_SUBTYPES = {
  */
 export const ARMOR_CATEGORIES = {
   aucune: { id: "aucune", label: "CDG.equipment.armorCategories.aucune", requiredRank: 0, protection: 0, initMalus: 0, price: 0 },
+  naturelle: { id: "naturelle", label: "CDG.equipment.armorCategories.naturelle", requiredRank: 0, protection: 0, initMalus: 0, price: 0 },
   legere: { id: "legere", label: "CDG.equipment.armorCategories.legere", requiredRank: 1, protection: 1, initMalus: -1, price: 20 },
   moyenne: { id: "moyenne", label: "CDG.equipment.armorCategories.moyenne", requiredRank: 2, protection: 2, initMalus: -3, price: 100 },
   lourde: { id: "lourde", label: "CDG.equipment.armorCategories.lourde", requiredRank: 3, protection: 3, initMalus: -5, price: 300 },
