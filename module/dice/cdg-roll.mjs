@@ -118,7 +118,7 @@ export default class CdgRoll extends Roll {
       test,
       dice,
       imposed: test.keep === "worst" && test.results.length > 1,
-      canPush: !test.pushed,
+      canPush: !test.pushed && !test.noPush,
       outcome,
       outcomeId: outcome.outcome,
       outcomeLabel: game.i18n.localize(outcomeLabel(outcome)),
@@ -215,7 +215,7 @@ export default class CdgRoll extends Roll {
   static async #onPushTest(event, message) {
     event.preventDefault()
     const test = this.getTest(message)
-    if (!test || test.pushed) return
+    if (!test || test.pushed || test.noPush) return
 
     const actor = await fromUuid(test.actorUuid)
     if (!actor) return ui.notifications.warn(game.i18n.localize("CDG.roll.notif.actorMissing"))

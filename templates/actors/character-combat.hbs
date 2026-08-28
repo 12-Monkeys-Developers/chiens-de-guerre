@@ -71,7 +71,14 @@
         {{localize "CDG.label.long.currentWoundMalus"}} <strong>{{signed wounds.malus}}</strong>
       </p>
       {{#if system.isDying}}
-        <p class="warning">{{localize "CDG.ui.dying"}}</p>
+        <a class="dying-toggle {{#unless wounds.dying}}cleared{{/unless}}" data-action="toggleDying"
+          data-tooltip="{{localize 'CDG.ui.toggleDying'}}">
+          {{#if wounds.dying}}
+            <i class="fas fa-skull"></i> {{localize "CDG.ui.dying"}}
+          {{else}}
+            <i class="fas fa-heart-pulse"></i> {{localize "CDG.ui.stabilized"}}
+          {{/if}}
+        </a>
       {{/if}}
     </div>
   </div>

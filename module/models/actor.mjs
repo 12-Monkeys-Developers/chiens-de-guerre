@@ -28,8 +28,8 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
 
     // Nombre de cases cochées par gravité. Le nombre de cases disponibles est dérivé du rang de
     // Vigueur (cf. prepareDerivedData), il n'est donc pas stocké.
-    schema.wounds = new fields.SchemaField(
-      Object.values(SYSTEM.WOUND_LEVELS).reduce((obj, level) => {
+    schema.wounds = new fields.SchemaField({
+      ...Object.values(SYSTEM.WOUND_LEVELS).reduce((obj, level) => {
         obj[level.id] = new fields.SchemaField({
           value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 }),
           // Cases accordées en plus de celles que donne la Vigueur. Cible d'effet : le trait
@@ -38,7 +38,11 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
         })
         return obj
       }, {}),
-    )
+      // Distinct du fait que la case mortelle soit cochée (`isDying`) : ce drapeau ne gouverne que
+      // le rappel de fin de round, posé automatiquement quand la case mortelle se coche, mais
+      // décochable à la main (stabilisation) sans que la blessure elle-même ne guérisse.
+      dying: new fields.BooleanField({ required: true, nullable: false, initial: false }),
+    })
 
     return schema
   }
@@ -110,5 +114,26 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
    */
   get isDying() {
     return this.wounds.mortelle.value > 0
+  }
+
+  /**
+   * Pose ou retire le statut Foundry « Inconscient » dès que la case de blessure mortelle change
+   * d'état, et initialise/efface au passage le drapeau `wounds.dying` qui gouverne le rappel de
+   * fin de round — quel que soit le chemin d'écriture (automatique ou case cochée à la main
+   * sur la fiche), pour n'avoir qu'un seul endroit qui porte cette règle.
+   *
+   * @override
+   */
+  async _preUpdate(changes, options, user) {
+    const allowed = await super._preUpdate(changes, options, user)
+    if (allowed === false) return false
+    if (!foundry.utils.hasProperty(changes, "system.wounds.mortelle.value")) return
+
+    const wasMortal = this.wounds.mortelle.value > 0
+    const isMortal = foundry.utils.getProperty(changes, "system.wounds.mortelle.value") > 0
+    if (wasMortal === isMortal) return
+
+    await this.parent.toggleStatusEffect("unconscious", { active: isMortal })
+    await this.parent.update({ "system.wounds.dying": isMortal })
   }
 }

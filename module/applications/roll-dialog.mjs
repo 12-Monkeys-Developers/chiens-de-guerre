@@ -82,6 +82,12 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   #targetUuid = null
 
   /**
+   * Test restreint (jet de survie, p. 46) : ni effort, ni passion, ni dépassement — le personnage
+   * ne peut rien engager pour améliorer ce jet précis.
+   */
+  #restricted = false
+
+  /**
    * Prépare le brouillon du test à partir de la présélection reçue de la fiche.
    * @param {CdgActor} actor
    * @param {Object} [seed] Présélection : `abilityId`, `skillId`.
@@ -106,6 +112,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
     this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
     this.#targetUuid = seed.targetUuid ?? null
+    this.#restricted = !!seed.restricted
   }
 
   /**
@@ -149,6 +156,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
     this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
     this.#targetUuid = seed.targetUuid ?? null
+    this.#restricted = !!seed.restricted
   }
 
   /** @override */
@@ -203,7 +211,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
 
     // « Un joueur ne peut jamais décider volontairement d'utiliser ainsi le dernier point d'une
     // réserve et tomber à zéro. »
-    const canUseEffort = this.#actor.type === "character" || this.#actor.system.major
+    const canUseEffort = !this.#restricted && (this.#actor.type === "character" || this.#actor.system.major)
     const effortMax = canUseEffort ? Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1)) : 0
     draft.effort = Math.clamp(draft.effort, 0, effortMax)
 
@@ -284,7 +292,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
    */
   #computePassion() {
     const draft = this.#draft
-    if (!this.hasPassion) return { available: false, choices: [], selected: null, value: 0 }
+    if (!this.hasPassion || this.#restricted) return { available: false, choices: [], selected: null, value: 0 }
 
     const system = this.#actor.system
     const invoked = new Set(system.passion.invokedThisSession)
@@ -469,6 +477,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
         ? { pairId: derived.passion.selected.id, label: derived.passion.selected.label, value: derived.passion.value, mode: draft.passionMode }
         : null,
       pushed: false,
+      noPush: this.#restricted,
     }
 
     const updates = {}

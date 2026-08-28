@@ -284,6 +284,25 @@
     }
   }
 
+  // Même gabarit que .parry-toggle : un lien coloré qui s'atténue une fois décoché (stabilisé).
+  .dying-toggle {
+    display: inline-block;
+    margin: 0.3rem 0 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--cdg-blood);
+
+    &.cleared {
+      color: var(--cdg-muted);
+      font-weight: 400;
+    }
+
+    &:hover {
+      color: var(--cdg-blood);
+      text-shadow: none;
+    }
+  }
+
   // Une seule colonne : armures, boucliers et armes se lisent d'affilée sous un bandeau unique.
   .combat-gear {
     display: grid;

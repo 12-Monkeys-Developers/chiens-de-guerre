@@ -83,6 +83,7 @@ export default class CdgConfrontation {
       damageTest: null,
       soakTest: null,
       woundId: null,
+      appliedWoundId: null,
       woundResolved: false,
     }
 
@@ -164,7 +165,12 @@ export default class CdgConfrontation {
 
     if (state.woundResolved) {
       context.woundResolved = true
-      context.woundLabel = state.woundId ? game.i18n.localize(SYSTEM.WOUND_LEVELS[state.woundId].label) : game.i18n.localize("CDG.confrontation.noWound")
+      context.woundLabel = state.appliedWoundId
+        ? game.i18n.localize(SYSTEM.WOUND_LEVELS[state.appliedWoundId].label)
+        : state.woundId
+          ? game.i18n.localize("CDG.confrontation.woundSaturated")
+          : game.i18n.localize("CDG.confrontation.noWound")
+      context.woundOverflowed = !!state.appliedWoundId && state.appliedWoundId !== state.woundId
     }
 
     return context
@@ -255,7 +261,8 @@ export default class CdgConfrontation {
     // `woundId` calculé : un dépassement tardif sur l'attaque ou la défense peut faire retomber
     // une confrontation déjà résolue (et déjà appliquée) à un raté, et il faut alors libérer la
     // case posée — pas seulement s'abstenir d'en cocher une nouvelle.
-    const previousAppliedWoundId = state.woundResolved ? state.woundId : null
+    const previousAppliedWoundId = state.woundResolved ? state.appliedWoundId : null
+    const previousRawWoundId = state.woundResolved ? state.woundId : null
 
     if (!state.opposition?.hit || !state.damageTest || !state.soakTest) {
       state.woundId = null
@@ -267,32 +274,26 @@ export default class CdgConfrontation {
       state.woundResolved = true
     }
 
-    const newAppliedWoundId = state.woundResolved ? state.woundId : null
-    if (newAppliedWoundId !== previousAppliedWoundId) await this.#applyWound(previousAppliedWoundId, newAppliedWoundId, state.targetUuid)
+    const newRawWoundId = state.woundResolved ? state.woundId : null
+    if (newRawWoundId === previousRawWoundId) return // Rien n'a changé depuis la dernière application
+
+    state.appliedWoundId = await this.#applyWound(previousAppliedWoundId, newRawWoundId, state.targetUuid)
   }
 
   /**
-   * Coche la nouvelle case de blessure sur la cible et libère l'ancienne, quand l'une ou l'autre
-   * (ou les deux) existent — un dépassement peut aussi bien changer la gravité que faire
-   * disparaître une blessure déjà posée.
-   * @param {string|null} previousWoundId
-   * @param {string|null} newWoundId
+   * Coche la nouvelle case de blessure sur la cible (avec débordement, voir
+   * `CdgActor#applyWoundOverflow`) et libère l'ancienne, quand l'une ou l'autre (ou les deux)
+   * existent — un dépassement peut aussi bien changer la gravité que faire disparaître une
+   * blessure déjà posée.
+   * @param {string|null} previousWoundId Case réellement cochée à libérer (débordement compris).
+   * @param {string|null} newWoundId Gravité brute résolue par `resolveWound`.
    * @param {string} targetUuid
+   * @returns {Promise<string|null>} La case réellement cochée pour `newWoundId`.
    */
   static async #applyWound(previousWoundId, newWoundId, targetUuid) {
     const target = await fromUuid(targetUuid)
-    if (!target) return
-
-    const updates = {}
-    if (previousWoundId) {
-      const wound = target.system.wounds[previousWoundId]
-      updates[`system.wounds.${previousWoundId}.value`] = Math.max(0, wound.value - 1)
-    }
-    if (newWoundId) {
-      const wound = target.system.wounds[newWoundId]
-      updates[`system.wounds.${newWoundId}.value`] = Math.min(wound.max, wound.value + 1)
-    }
-    if (!foundry.utils.isEmpty(updates)) await target.update(updates)
+    if (!target) return null
+    return target.applyWoundOverflow(previousWoundId, newWoundId)
   }
 
   // #endregion

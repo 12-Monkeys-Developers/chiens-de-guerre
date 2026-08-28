@@ -362,6 +362,44 @@ export default class CdgActor extends Actor {
   }
 
   /**
+   * Coche une case de blessure en tenant compte du débordement (p. 45-46) : si toutes les cases du
+   * niveau demandé sont déjà cochées, la blessure est surclassée au niveau supérieur — jusqu'à
+   * mortelle, qui ne déborde nulle part. Libère aussi une case précédemment appliquée (un
+   * dépassement tardif peut changer la gravité retenue), dans la même mise à jour.
+   *
+   * Le calcul se fait sur une copie clonée des blessures avant d'écrire quoi que ce soit : la case
+   * libérée par `previousLevelId` doit compter comme de la place disponible pour `newLevelId` avant
+   * de décider s'il y a débordement — sinon un recalcul après un dépassement tardif, à gravité
+   * inchangée, surclasserait à tort une case qu'on est justement en train de libérer.
+   * @param {string|null} previousLevelId Niveau réellement coché à libérer (déjà résolu, débordement compris).
+   * @param {string|null} newLevelId Niveau de blessure demandé à cocher.
+   * @returns {Promise<string|null>} Le niveau réellement coché pour `newLevelId`, à mémoriser par
+   *   l'appelant pour pouvoir le libérer au prochain recalcul ; `null` si rien n'a pu être coché
+   *   (toutes les cases jusqu'à mortelle étaient déjà pleines) ou si `newLevelId` était `null`.
+   */
+  async applyWoundOverflow(previousLevelId, newLevelId) {
+    const wounds = foundry.utils.deepClone(this.system.wounds)
+    if (previousLevelId) wounds[previousLevelId].value = Math.max(0, wounds[previousLevelId].value - 1)
+
+    let appliedLevelId = null
+    if (newLevelId) {
+      const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
+      const start = levels.findIndex((entry) => entry.id === newLevelId)
+      for (let index = start; index !== -1 && index < levels.length && !appliedLevelId; index++) {
+        const level = levels[index]
+        if (wounds[level.id].value < wounds[level.id].max) appliedLevelId = level.id
+      }
+      if (appliedLevelId) wounds[appliedLevelId].value += 1
+    }
+
+    const updates = {}
+    if (previousLevelId) updates[`system.wounds.${previousLevelId}.value`] = wounds[previousLevelId].value
+    if (appliedLevelId) updates[`system.wounds.${appliedLevelId}.value`] = wounds[appliedLevelId].value
+    if (!foundry.utils.isEmpty(updates)) await this.update(updates)
+    return appliedLevelId
+  }
+
+  /**
    * Remet à zéro les compteurs qui ne valent que pour un round : esquives utilisées et parade.
    * Appelé à chaque fin de round par CdgCombat.
    * @returns {Promise<CdgActor|undefined>}

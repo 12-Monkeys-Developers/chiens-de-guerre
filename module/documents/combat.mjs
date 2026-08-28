@@ -1,5 +1,6 @@
 import CdgInitiativeDialog from "../applications/initiative-dialog.mjs"
 import { SYSTEM } from "../config/system.mjs"
+import CdgDyingPrompt from "../combat/dying-prompt.mjs"
 import Utils from "../helpers/utils.mjs"
 
 /** Combat Foundry adapté aux cadences d'escarmouche et de duel. */
@@ -173,9 +174,11 @@ export default class CdgCombat extends Combat {
   /** @override */
   async _onEndRound(context) {
     await super._onEndRound(context)
-    if (!game.settings.get(SYSTEM.PACKAGE_ID, "autoResetRoundCounters")) return
-    for (const combatant of this.combatants) await combatant.actor?.resetRoundCounters()
-    if (CONFIG.debug.cdg?.combat) console.debug(Utils.log("Fin de round : esquives et parade réinitialisées"))
+    if (game.settings.get(SYSTEM.PACKAGE_ID, "autoResetRoundCounters")) {
+      for (const combatant of this.combatants) await combatant.actor?.resetRoundCounters()
+      if (CONFIG.debug.cdg?.combat) console.debug(Utils.log("Fin de round : esquives et parade réinitialisées"))
+    }
+    await CdgDyingPrompt.postForCombat(this)
   }
 
   #warnDuelConfiguration() {

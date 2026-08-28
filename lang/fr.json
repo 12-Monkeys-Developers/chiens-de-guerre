@@ -287,9 +287,14 @@
       },
       "damageTest": "Dégâts",
       "soakTest": "Encaissement",
+      "survivalTest": "Test de survie (Corps / Vigueur)",
       "weapon": {
         "toggleHeld": "Tenir ou ranger l'arme",
         "notEquipped": "Cette arme n'est pas tenue en main."
+      },
+      "dying": {
+        "chatMessage": "{name} est mourant : un test de Corps / Vigueur est requis pour ne pas succomber.",
+        "rollButton": "Jet de survie"
       }
     },
     "confrontation": {
@@ -298,6 +303,8 @@
       "miss": "Raté",
       "ignoreArmor": "Armure ignorée",
       "noWound": "Aucune blessure",
+      "woundOverflow": "Débordée depuis une case pleine",
+      "woundSaturated": "Sans effet — case déjà au maximum",
       "notif": {
         "needSingleTarget": "Désignez exactement une cible avant d'attaquer.",
         "noGM": "Aucun Meneur de jeu connecté : impossible de faire progresser cette confrontation."
@@ -533,6 +540,8 @@
       "parryAvailable": "Disponible",
       "parryUsed": "Utilisée",
       "dying": "Mourant : un test de Corps / Vigueur est requis à chaque round.",
+      "toggleDying": "Basculer l'état mourant — à décocher une fois stabilisé",
+      "stabilized": "Stabilisé",
       "currencyHint": "1 ducat vaut 100 deniers.",
       "restHint": "Chaque réserve regagne ce nombre de points, sans dépasser son maximum.",
       "languagesHint": "L'écrit dépend du rang en Érudition : 0 analphabète, 1 sa langue et le stygien avec peine, 2 parfaitement, 3 toutes ses langues parlées.",

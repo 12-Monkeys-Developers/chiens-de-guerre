@@ -1,19 +1,5 @@
 import { ARMOR_CATEGORIES, EQUIPMENT_SUBTYPES, SHIELD_CATEGORIES, WEAPON_CATEGORIES } from "../../module/config/equipment.mjs"
 
-/**
- * L'équipement générique auquel renvoient les carrières (p. 84 à 89).
- *
- * Le livre n'y nomme jamais un objet précis : il écrit « arme de corps-à-corps moyenne (dégâts 2) »
- * ou « armure légère (protection 1, init - 1) ». Ces objets sont donc **construits à partir des
- * tables de `module/config/equipment.mjs`** plutôt que recopiés : dégâts, protection, malus
- * d'initiative, couple caractéristique / compétence et prix viennent de la config, exactement comme
- * `CdgItem#_preUpdate` les applique quand on change la catégorie sur une fiche. Rien à resaisir le
- * jour où le tableau d'équipement bouge.
- *
- * Le matériel divers, lui, est nommé en clair par les carrières. La v0.1 du livre n'a pas encore de
- * chapitre équipement : ni contenu de paquetage, ni prix. Ils restent donc à 0.
- */
-
 /** Nom affiché et identifiant de chaque catégorie d'arme. `naturelle` n'est pas un objet qu'on porte. */
 const WEAPON_ITEMS = {
   legere: { slug: "armeccleg", name: "Arme de corps-à-corps légère", img: "icons/weapons/daggers/dagger-simple.webp" },

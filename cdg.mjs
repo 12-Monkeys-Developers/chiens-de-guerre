@@ -117,3 +117,6 @@ Hooks.on("renderChatMessageHTML", (message, html) => dice.CdgRoll.activateListen
 // Même principe pour la carte de confrontation ; les deux hooks ne se marchent pas dessus, chacun
 // ignorant les messages qui ne portent pas son propre drapeau.
 Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgConfrontation.activateListeners(message, html))
+
+// Et pour le rappel de fin de round d'un personnage mourant.
+Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgDyingPrompt.activateListeners(message, html))

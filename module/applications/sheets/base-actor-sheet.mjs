@@ -44,6 +44,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       setWound: CdgBaseActorSheet.#onSetWound,
       setDodges: CdgBaseActorSheet.#onSetDodges,
       toggleParry: CdgBaseActorSheet.#onToggleParry,
+      toggleDying: CdgBaseActorSheet.#onToggleDying,
       adjustPool: CdgBaseActorSheet.#onAdjustPool,
       toggleLanguage: CdgBaseActorSheet.#onToggleLanguage,
       rest: CdgBaseActorSheet.#onRest,
@@ -388,6 +389,17 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     const current = this.document.system.combat.dodgesUsed
     const value = current === clicked ? clicked - 1 : clicked
     return this.document.update({ "system.combat.dodgesUsed": Math.max(0, value) })
+  }
+
+  /**
+   * Bascule le drapeau « mourant » — décochable à la main une fois le personnage stabilisé, sans
+   * que la case de blessure mortelle elle-même ne soit affectée.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onToggleDying(event, target) {
+    if (!this.isEditable) return
+    return this.document.update({ "system.wounds.dying": !this.document.system.wounds.dying })
   }
 
   /**

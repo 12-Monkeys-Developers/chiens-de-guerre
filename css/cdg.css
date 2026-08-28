@@ -961,6 +961,21 @@ cdg-toggle-switch[checked] thumb {
   color: var(--cdg-blood);
   font-size: 1rem;
 }
+.cdg.actor .dying-toggle {
+  display: inline-block;
+  margin: 0.3rem 0 0 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--cdg-blood);
+}
+.cdg.actor .dying-toggle.cleared {
+  color: var(--cdg-muted);
+  font-weight: 400;
+}
+.cdg.actor .dying-toggle:hover {
+  color: var(--cdg-blood);
+  text-shadow: none;
+}
 .cdg.actor .combat-gear {
   display: grid;
   grid-template-columns: 1fr;
@@ -1918,7 +1933,9 @@ cdg-toggle-switch[checked] thumb {
   font-size: 1rem;
 }
 .cdg-confrontation-card .confrontation-verdict .ignore-armor,
-.cdg-confrontation-card .confrontation-wound .ignore-armor {
+.cdg-confrontation-card .confrontation-wound .ignore-armor,
+.cdg-confrontation-card .confrontation-verdict .wound-overflow,
+.cdg-confrontation-card .confrontation-wound .wound-overflow {
   font-family: var(--cdg-font-label);
   font-size: 0.75rem;
   font-style: italic;
