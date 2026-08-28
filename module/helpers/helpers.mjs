@@ -62,4 +62,12 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("includes", function (array, value) {
     return Array.isArray(array) && array.includes(value)
   })
+
+  Handlebars.registerHelper("formulabreakdown", function (parts) {
+    let stringFormula = ""
+    for (let part of parts) {
+      stringFormula += part.label + " " + part.value + " "
+    }
+    return stringFormula
+  })
 }

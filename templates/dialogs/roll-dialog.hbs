@@ -14,21 +14,7 @@
   {{/if}}
 
   <section class="roll-pair">
-    <h2 class="section-title">{{localize "CDG.roll.pair"}}</h2>
-
-    <ol class="ability-choice">
-      {{#each abilities as |ability|}}
-        <li>
-          <button type="button" class="ability {{#if ability.selected}}selected{{/if}}" data-action="setAbility" data-ability="{{ability.id}}" {{#if @root.lockedPair}}disabled{{/if}}>
-            <span class="ability-name">{{ability.name}}</span>
-            <span class="ability-score">{{ability.pool.value}} <span class="max">/ {{ability.pool.max}}</span></span>
-          </button>
-        </li>
-      {{/each}}
-    </ol>
-
     <div class="field-line skill-line">
-      <label for="cdg-roll-skill">{{localize "CDG.roll.skill"}}</label>
       {{#if lockedPair}}
         <strong>{{#if testLabel}}{{testLabel}}{{else if skill}}{{localize skill.label}}{{else}}{{localize "CDG.roll.noSkill"}}{{/if}}</strong>
       {{else}}
@@ -36,13 +22,22 @@
           {{selectOptions skillChoices selected=draft.skillId blank=(localize "CDG.roll.noSkill") valueAttr="id" labelAttr="label"}}
         </select>
       {{/if}}
-      <span class="hint handful" data-tooltip="{{rankHint}}">{{rankName}} — {{rankEntry.formula}}</span>
+      
     </div>
+    <ol class="ability-choice">
+      {{#each abilities as |ability|}}
+        <li>
+          <button type="button" class="ability {{#if ability.selected}}selected{{/if}}" data-action="setAbility" data-ability="{{ability.id}}" {{#if @root.lockedPair}}disabled{{/if}}>
+            <span class="ability-name">{{ability.name}}  ({{ability.pool.value}})</span>
+          </button>
+        </li>
+      {{/each}}
+    </ol>
   </section>
 
   <section class="roll-modifiers">
-    <h2 class="section-title">{{localize "CDG.roll.modifiers"}}</h2>
-
+<details>
+  <summary>{{localize "CDG.roll.modifiers"}}</summary>
     <div class="field-line">
       <label for="cdg-roll-difficulty">{{localize "CDG.roll.difficulty"}}</label>
       <select id="cdg-roll-difficulty" name="difficulty">
@@ -99,22 +94,16 @@
         {{/each}}
       </ul>
     {{/if}}
+</details>
   </section>
 
   <section class="roll-summary">
-    <div class="sr">
+    <div class="sr"
+     data-tooltip="{{formulabreakdown parts}}">
       <span class="sr-label">{{localize "CDG.roll.sr"}}</span>
       <span class="sr-value">{{sr}}</span>
     </div>
-    <ul class="breakdown">
-      {{#each parts as |part|}}
-        <li class="part {{#if part.base}}base{{/if}}">
-          <span class="part-label">{{part.label}}</span>
-          <span class="part-value">{{#if part.base}}{{part.value}}{{else}}{{signed part.value}}{{/if}}</span>
-        </li>
-      {{/each}}
-    </ul>
-    <p class="handful-hint">
+    <p>
       <i class="fa-solid fa-dice-d20" inert></i>
       {{rankEntry.formula}} —
       {{#if (eq rankEntry.keep "best")}}{{localize "CDG.roll.willKeepBest"}}

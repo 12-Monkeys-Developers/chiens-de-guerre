@@ -30,7 +30,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     tag: "form",
     classes: ["cdg", "roll"],
     position: {
-      width: 620,
+      width: 500,
       height: "auto",
     },
     window: {

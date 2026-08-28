@@ -10,7 +10,7 @@ export default class CdgCharacterSheet extends CdgBaseActorSheet {
   static DEFAULT_OPTIONS = {
     classes: ["character"],
     position: {
-      width: 900,
+      width: 800,
       height: 940,
     },
     window: {

@@ -1461,8 +1461,23 @@ cdg-toggle-switch[checked] thumb {
   min-width: 0;
   margin-left: 0.6rem;
 }
+.cdg.roll .roll-modifiers .field-line {
+  margin: 15px 0px;
+}
 .cdg.roll .free-modifier {
   width: 3rem;
+}
+.cdg.roll .skill-line {
+  background: url("../assets/ui/images/sang3.webp");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.cdg.roll .skill-line select {
+  font-size: 2rem;
+  height: 2.5rem;
+  margin: 15px;
+  text-align: center;
 }
 .cdg.roll .effort-steps,
 .cdg.roll .passion-modes {
