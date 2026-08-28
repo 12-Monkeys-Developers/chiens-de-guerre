@@ -1141,6 +1141,25 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor.adversaire .npc-combat-tracking {
   margin-bottom: 0.9rem;
 }
+.cdg.actor.adversaire .npc-skills-initiative {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.7fr);
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+.cdg.actor.adversaire .npc-skills-initiative.editing {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cdg.actor.adversaire .npc-skills-initiative.editing .skill-columns {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  justify-content: stretch;
+  gap: 0 0.8rem;
+}
+.cdg.actor.adversaire .npc-initiative .init-bonus .value {
+  width: 3.5rem;
+  padding: 0 0.2rem;
+  text-align: center;
+}
 .cdg.actor.adversaire .npc-combat-tracking {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }

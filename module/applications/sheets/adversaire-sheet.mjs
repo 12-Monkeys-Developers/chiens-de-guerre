@@ -48,8 +48,13 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
     context.enrichedNotes = await enrichHTML(this.document.system.details.notes)
     context.hasSpecial = !!this.document.system.details.special?.trim()
 
-    const visible = this.isEditMode ? () => true : (skill) => this.document.system.skills[skill.id].rank > 0
-    context.skillColumns = [1, 2].map((column) => Object.values(SYSTEM.SKILLS).filter((skill) => skill.column === column && visible(skill)))
+    const skills = Object.values(SYSTEM.SKILLS)
+    if (this.isEditMode) {
+      const columnSize = Math.ceil(skills.length / 4)
+      context.skillColumns = Array.from({ length: 4 }, (_, column) => skills.slice(column * columnSize, (column + 1) * columnSize))
+    } else {
+      context.skillColumns = [1, 2].map((column) => skills.filter((skill) => skill.column === column && this.document.system.skills[skill.id].rank > 0))
+    }
     context.hasSkills = context.skillColumns.some((column) => column.length > 0)
 
     return context
