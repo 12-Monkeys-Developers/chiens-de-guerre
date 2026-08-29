@@ -1,0 +1,47 @@
+// Contenu de l'onglet du système dans la barre latérale. La pastille de la barre d'onglets est une
+// glyphe FontAwesome : le logo est un bandeau de titre, illisible réduit à 28 pixels de côté.
+.cdg-sidebar {
+  flex-direction: column;
+  overflow-y: auto;
+
+  &.active {
+    // Le mode replié (popout) n'a pas besoin de cette mise en page.
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    h4.divider {
+      margin: 0;
+    }
+  }
+
+  .info {
+    .logo {
+      width: 100%;
+      height: auto;
+      border: none;
+      object-fit: contain;
+    }
+
+    .subtitle {
+      margin: -0.4rem 0 0;
+      color: var(--color-text-subtle);
+      text-align: center;
+      font-size: var(--font-size-13);
+    }
+  }
+
+  .tools button.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex: 0 0 2rem;
+  }
+}

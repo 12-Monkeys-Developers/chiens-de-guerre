@@ -2396,6 +2396,127 @@ cdg-toggle-switch[checked] thumb {
   --color-text-emphatic: #000;
   color: var(--color-text-primary);
 }
+.cdg-sidebar {
+  flex-direction: column;
+  overflow-y: auto;
+}
+.cdg-sidebar.active {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+.cdg-sidebar section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.cdg-sidebar section h4.divider {
+  margin: 0;
+}
+.cdg-sidebar .info .logo {
+  width: 100%;
+  height: auto;
+  border: none;
+  object-fit: contain;
+}
+.cdg-sidebar .info .subtitle {
+  margin: -0.4rem 0 0;
+  color: var(--color-text-subtle);
+  text-align: center;
+  font-size: var(--font-size-13);
+}
+.cdg-sidebar .tools button.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  flex: 0 0 2rem;
+}
+.cdg.party-sheet .window-content {
+  padding: 0.6rem 0.8rem;
+}
+.cdg.party-sheet .party-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.cdg.party-sheet .party-table th,
+.cdg.party-sheet .party-table td {
+  padding: 0.3rem 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+}
+.cdg.party-sheet .party-table thead th {
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  color: var(--cdg-label);
+  border-bottom: 2px solid var(--cdg-ink);
+}
+.cdg.party-sheet .party-table tbody tr:nth-child(even) {
+  background: rgba(122, 16, 16, 0.06);
+}
+.cdg.party-sheet .party-table tbody tr:hover {
+  background: rgba(122, 16, 16, 0.1);
+}
+.cdg.party-sheet .party-table .col-player,
+.cdg.party-sheet .party-table .col-character {
+  text-align: left;
+  white-space: nowrap;
+}
+.cdg.party-sheet .user-color {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+  border: 1px solid var(--cdg-ink);
+  vertical-align: middle;
+}
+.cdg.party-sheet .col-character .character-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.cdg.party-sheet .col-character .character-cell .portrait {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border: 1px solid var(--cdg-ink);
+  border-radius: var(--cdg-radius);
+  cursor: pointer;
+}
+.cdg.party-sheet .col-character .character-cell a {
+  color: var(--cdg-ink);
+  text-decoration: none;
+}
+.cdg.party-sheet .col-character .character-cell a:hover {
+  color: var(--cdg-blood);
+  text-shadow: none;
+}
+.cdg.party-sheet .col-passion i {
+  color: var(--cdg-blood);
+}
+.cdg.party-sheet .col-wounds .wound-summary {
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem;
+}
+.cdg.party-sheet .col-wounds .wound-group {
+  display: inline-flex;
+  gap: 1px;
+}
+.cdg.party-sheet .col-wounds .wound-malus {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--cdg-blood);
+}
+.cdg.party-sheet .empty {
+  padding: 0.8rem;
+  font-style: italic;
+  color: var(--cdg-muted);
+}
 #pause > img {
   content: url("../assets/ui/images/epee-crane.webp");
   height: auto;

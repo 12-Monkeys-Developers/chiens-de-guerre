@@ -18,6 +18,22 @@
     "notif": {
       "ready": "Prêt à en découdre."
     },
+    "sidebar": {
+      "title": "Chiens de guerre",
+      "version": "Version {version}",
+      "menu": "Menu",
+      "partyOverviewTooltip": "Ouvrir le tableau de bord des joueurs."
+    },
+    "party": {
+      "title": "Tableau de bord des joueurs",
+      "empty": "Aucun joueur connecté avec un personnage assigné.",
+      "columns": {
+        "player": "Joueur",
+        "character": "Personnage",
+        "passion": "Passion",
+        "wounds": "Blessures"
+      }
+    },
     "macro": {
       "ability": "Jet de caractéristique ({name})",
       "skill": "Jet de compétence ({name})",

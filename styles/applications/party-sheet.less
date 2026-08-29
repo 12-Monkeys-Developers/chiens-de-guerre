@@ -1,0 +1,111 @@
+// Tableau de bord des joueurs — sur le principe de la fiche de groupe de co2, purement informatif
+// ici (aucun jet ne se lance depuis ce tableau).
+.cdg.party-sheet {
+  .window-content {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .party-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+
+    th,
+    td {
+      padding: 0.3rem 0.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--cdg-parchment-line);
+    }
+
+    thead th {
+      font-family: var(--cdg-font-label);
+      font-variant: small-caps;
+      letter-spacing: 0.03em;
+      color: var(--cdg-label);
+      border-bottom: 2px solid var(--cdg-ink);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgb(122 16 16 / 6%);
+    }
+
+    tbody tr:hover {
+      background: rgb(122 16 16 / 10%);
+    }
+
+    .col-player,
+    .col-character {
+      text-align: left;
+      white-space: nowrap;
+    }
+  }
+
+  .user-color {
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    margin-right: 0.3rem;
+    border: 1px solid var(--cdg-ink);
+    vertical-align: middle;
+  }
+
+  // `display: flex` directement sur le `<td>` le sortirait du calcul d'alignement vertical de la
+  // ligne (les cellules voisines restent des `table-cell` classiques, centrées par défaut) : la
+  // ligne se décalait vers le haut. La mise en page flex vit sur un `<div>` interne, la cellule
+  // elle-même reste une cellule de tableau normale.
+  .col-character .character-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    .portrait {
+      width: 28px;
+      height: 28px;
+      object-fit: cover;
+      border: 1px solid var(--cdg-ink);
+      border-radius: var(--cdg-radius);
+      cursor: pointer;
+    }
+
+    a {
+      color: var(--cdg-ink);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--cdg-blood);
+        text-shadow: none;
+      }
+    }
+  }
+
+  .col-passion i {
+    color: var(--cdg-blood);
+  }
+
+  .col-wounds {
+    .wound-summary {
+      display: flex;
+      justify-content: center;
+      gap: 0.9rem;
+    }
+
+    .wound-group {
+      display: inline-flex;
+      gap: 1px;
+    }
+
+    .wound-malus {
+      display: block;
+      margin-top: 0.15rem;
+      font-size: 0.75rem;
+      color: var(--cdg-blood);
+    }
+  }
+
+  .empty {
+    padding: 0.8rem;
+    font-style: italic;
+    color: var(--cdg-muted);
+  }
+}

@@ -1,0 +1,53 @@
+<table class="party-table">
+  <thead>
+    <tr>
+      <th class="col-player">{{localize "CDG.party.columns.player"}}</th>
+      <th class="col-character">{{localize "CDG.party.columns.character"}}</th>
+      {{#each abilityColumns as |ability|}}
+        <th class="col-ability">{{ability.name}}</th>
+      {{/each}}
+      <th class="col-passion">{{localize "CDG.party.columns.passion"}}</th>
+      <th class="col-wounds">{{localize "CDG.party.columns.wounds"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each members as |member|}}
+      <tr>
+        <td class="col-player">
+          <span class="user-color" style="background-color: {{member.userColor}};"></span>
+          {{member.userName}}
+        </td>
+        <td class="col-character" data-actor-id="{{member.actorId}}">
+          <div class="character-cell">
+            <img class="portrait" src="{{member.img}}" data-action="openSheet" data-tooltip="{{localize 'CDG.origin.open'}}" />
+            <a data-action="openSheet">{{member.name}}</a>
+          </div>
+        </td>
+        {{#each member.abilities as |ability|}}
+          <td class="col-ability" data-tooltip="{{ability.name}}">{{ability.pool.value}} / {{ability.pool.max}}</td>
+        {{/each}}
+        <td class="col-passion">
+          <i class="fa-solid fa-fire" data-tooltip="{{localize 'CDG.label.long.passion'}}"></i> {{member.passion.tokens}}
+        </td>
+        <td class="col-wounds">
+          <div class="wound-summary">
+            {{#each @root.woundLevels as |level|}}
+              {{#with (lookup member.wounds level.id) as |wound|}}
+                <span class="wound-group" data-tooltip="{{localize level.label}}">
+                  {{#each (range 1 wound.max) as |box|}}
+                    <span class="shield {{#if (gte wound.value box)}}filled{{/if}}"></span>
+                  {{/each}}
+                </span>
+              {{/with}}
+            {{/each}}
+          </div>
+          {{#if member.wounds.malus}}<span class="wound-malus">{{signed member.wounds.malus}}</span>{{/if}}
+        </td>
+      </tr>
+    {{else}}
+      <tr>
+        <td class="empty" colspan="7">{{localize "CDG.party.empty"}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

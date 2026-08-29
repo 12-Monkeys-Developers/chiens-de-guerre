@@ -102,6 +102,16 @@ Hooks.once("init", async function () {
     decimals: 0,
   }
 
+  // Onglet du système dans la barre latérale : pour l'instant, la seule porte d'entrée du tableau
+  // de bord des joueurs. « Chiens de guerre » désigne des mercenaires, pas des chiens au sens
+  // propre : des épées croisées illustrent l'onglet, pas un animal.
+  CONFIG.ui.sidebar.TABS.cdg = {
+    active: false,
+    icon: "fa-solid fa-swords",
+    tooltip: SYSTEM.SYSTEM_DESCRIPTION,
+  }
+  CONFIG.ui.cdg = applications.CdgSidebarMenu
+
   helpers.registerHandlebarsHelpers()
   helpers.registerSystemSettings()
 
@@ -114,6 +124,10 @@ Hooks.once("ready", function () {
     sheets: debug,
     combat: debug,
   }
+
+  // Tableau de bord des joueurs : un singleton, jamais ouvert d'office — seul le bouton de la
+  // barre latérale le fait apparaître.
+  game.system.partySheet = new applications.CdgPartySheet()
 
   console.info(helpers.Utils.log(game.i18n.localize("CDG.notif.ready")))
 })

@@ -1,0 +1,14 @@
+<section class="cdg info flexcol">
+  <img class="logo" src="systems/chiens-de-guerre/ui/logo_cdg.webp" alt="{{localize 'CDG.sidebar.title'}}" />
+  <p class="subtitle version">{{version}}</p>
+</section>
+
+{{#if isGM}}
+  <section class="cdg tools flexcol">
+    <h4 class="divider">{{localize "CDG.sidebar.menu"}}</h4>
+    <button type="button" class="button" data-action="openApp" data-app="party" data-tooltip="{{localize 'CDG.sidebar.partyOverviewTooltip'}}">
+      <i class="fa-solid fa-users" inert></i>
+      {{localize "CDG.party.title"}}
+    </button>
+  </section>
+{{/if}}
