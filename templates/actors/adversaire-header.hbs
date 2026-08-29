@@ -21,21 +21,21 @@
 
   <section class="abilities">
     <ol class="ability-list">
-      {{#each SYSTEM.ABILITIES as |ability id|}}
-        {{#with (lookup @root.abilities id) as |pool|}}
-          <li class="ability" data-ability="{{id}}">
+      {{#each adversaireAbilities as |ability|}}
+        {{#with (lookup @root.abilities ability.id) as |pool|}}
+          <li class="ability" data-ability="{{ability.id}}">
             <span class="ability-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
             <div class="pool">
-              <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
+              <a class="pool-step" data-action="adjustPool" data-ability="{{ability.id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
               <span class="pool-value">{{pool.value}}</span>
               <span class="pool-separator">/</span>
               {{#if @root.unlocked}}
-                <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.baseMax}}" min="0" data-dtype="Number"
-                  {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips id}}"{{/if}} />
+                <input class="pool-max" type="number" name="system.abilities.{{ability.id}}.max" value="{{pool.baseMax}}" min="0" data-dtype="Number"
+                  {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips ability.id}}"{{/if}} />
               {{else}}
-                <span class="pool-max" {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips id}}"{{/if}}>{{pool.max}}</span>
+                <span class="pool-max" {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips ability.id}}"{{/if}}>{{pool.max}}</span>
               {{/if}}
-              <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="1"><i class="fas fa-plus"></i></a>
+              <a class="pool-step" data-action="adjustPool" data-ability="{{ability.id}}" data-delta="1"><i class="fas fa-plus"></i></a>
             </div>
           </li>
         {{/with}}

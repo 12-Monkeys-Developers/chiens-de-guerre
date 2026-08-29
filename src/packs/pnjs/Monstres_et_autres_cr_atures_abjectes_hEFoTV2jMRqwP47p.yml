@@ -1,0 +1,20 @@
+type: Actor
+folder: null
+name: Monstres et autres créatures abjectes
+color: null
+sorting: m
+_id: hEFoTV2jMRqwP47p
+description: ''
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: chiens-de-guerre
+  systemVersion: '#{VERSION}#'
+  createdTime: 1788019229304
+  modifiedTime: 1788019229304
+  lastModifiedBy: 2HmIAdGXgpWAT7mT
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+_key: '!folders!hEFoTV2jMRqwP47p'

@@ -157,11 +157,9 @@ export const WOUND_LEVELS = {
  * Nombre de cases de blessure par gravité, selon le rang dans la compétence Vigueur.
  *
  * Le personnage part de 1 case de chaque, auxquelles la Vigueur ajoute des cases légères et graves.
- * À vérifier en jeu : le guide d'intégration et les cases imprimées sur la fiche ne se recoupent
- * pas exactement. Toute correction de règle se fait ici, en une ligne.
  */
 export const WOUND_SLOTS_BY_VIGUEUR = {
-  0: { legere: 2, grave: 1, mortelle: 1 },
+  0: { legere: 1, grave: 1, mortelle: 1 },
   1: { legere: 2, grave: 1, mortelle: 1 },
   2: { legere: 2, grave: 2, mortelle: 1 },
   3: { legere: 3, grave: 2, mortelle: 1 },

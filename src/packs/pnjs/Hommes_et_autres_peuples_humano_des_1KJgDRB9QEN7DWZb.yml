@@ -1,0 +1,20 @@
+type: Actor
+folder: null
+name: Hommes et autres peuples humanoïdes
+color: null
+sorting: m
+_id: 1KJgDRB9QEN7DWZb
+description: ''
+sort: 0
+flags: {}
+_stats:
+  coreVersion: '14.367'
+  systemId: chiens-de-guerre
+  systemVersion: '#{VERSION}#'
+  createdTime: 1788019210104
+  modifiedTime: 1788019210104
+  lastModifiedBy: 2HmIAdGXgpWAT7mT
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+_key: '!folders!1KJgDRB9QEN7DWZb'

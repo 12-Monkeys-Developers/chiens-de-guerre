@@ -47,6 +47,7 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
     context.enrichedSpecial = await enrichHTML(this.document.system.details.special)
     context.enrichedNotes = await enrichHTML(this.document.system.details.notes)
     context.hasSpecial = !!this.document.system.details.special?.trim()
+    context.adversaireAbilities = [SYSTEM.ABILITIES.corps, SYSTEM.ABILITIES.esprit, SYSTEM.ABILITIES.vivacite]
 
     const skills = Object.values(SYSTEM.SKILLS)
     if (this.isEditMode) {
