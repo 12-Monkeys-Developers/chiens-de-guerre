@@ -252,7 +252,8 @@
         "equipment": "Équipement et bonus",
         "dualWield": "Combat à deux armes",
         "chatTitle": "Jet d'initiative",
-        "kept": "dé conservé"
+        "kept": "dé conservé",
+        "notStarted": "L'initiative ne peut être lancée qu'après le début du combat."
       },
       "skirmish": {
         "endAction": "Fin action",

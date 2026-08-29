@@ -66,6 +66,7 @@ export default class CdgCombatTracker extends CoreCombatTracker {
       duelIsPlaisance: combat.cdgMode === SYSTEM.COMBAT_MODES.duel.id && settings.type === SYSTEM.DUEL_TYPES.plaisance.id,
       duelParticipantWarning: combat.cdgMode === SYSTEM.COMBAT_MODES.duel.id && combat.activeCombatants.length !== 2,
       cdgCanAdvance: hasCurrentAction && (game.user.isGM || combat.combatant?.isOwner),
+      combatStarted: combat.started,
       combatModeEditable: game.user.isGM && !combat.started,
       combatModes: Object.values(SYSTEM.COMBAT_MODES),
       duelTypes: Object.values(SYSTEM.DUEL_TYPES),

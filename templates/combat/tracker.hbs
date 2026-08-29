@@ -32,7 +32,7 @@
         {{#if turn.initiative includeZero=true}}
           <input type="text" class="initiative-input" inputmode="numeric" pattern="^[+=\-]?\d*" value="{{turn.initiative}}" aria-label="{{localize 'COMBATANT.FIELDS.initiative.label'}}" {{#unless @root.user.isGM}}readonly{{/unless}}>
         {{else if turn.isOwner}}
-          <button type="button" class="combatant-control roll" data-action="rollInitiative" data-tooltip aria-label="{{localize 'COMBAT.InitiativeRoll'}}" style="--initiative-icon: url('{{@root.initiativeIcon.icon}}'); --initiative-icon-hover: url('{{@root.initiativeIcon.hover}}');"></button>
+          <button type="button" class="combatant-control roll" data-action="rollInitiative" data-tooltip aria-label="{{localize 'COMBAT.InitiativeRoll'}}" {{#unless @root.combatStarted}}disabled{{/unless}} style="--initiative-icon: url('{{@root.initiativeIcon.icon}}'); --initiative-icon-hover: url('{{@root.initiativeIcon.hover}}');"></button>
         {{/if}}
       </div>
     </li>

@@ -107,6 +107,10 @@ export default class CdgCombat extends Combat {
 
   /** @override */
   async rollInitiative(ids) {
+    if (!this.started) {
+      ui.notifications.warn("CDG.combat.initiative.notStarted", { localize: true })
+      return this
+    }
     const individual = typeof ids === "string"
     ids = typeof ids === "string" ? [ids] : ids
     const combatants = ids.map((id) => this.combatants.get(id)).filter((combatant) => combatant?.isOwner && combatant.actor)

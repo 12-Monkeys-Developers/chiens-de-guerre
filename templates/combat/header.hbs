@@ -23,8 +23,8 @@
   <div class="encounter-controls {{#if hasCombat}}combat{{/if}}">
     <div class="control-buttons left flexrow">
       {{#if user.isGM}}
-        <button type="button" class="inline-control combat-control icon fa-solid fa-users" data-action="rollAll" {{#unless combat.turns.length}}disabled{{/unless}} data-tooltip="COMBAT.RollAll"></button>
-        <button type="button" class="inline-control combat-control icon fa-solid fa-users-cog" data-action="rollNPC" {{#unless combat.turns.length}}disabled{{/unless}} data-tooltip="COMBAT.RollNPC"></button>
+        <button type="button" class="inline-control combat-control icon fa-solid fa-users" data-action="rollAll" {{#unless (and combatStarted combat.turns.length)}}disabled{{/unless}} data-tooltip="COMBAT.RollAll"></button>
+        <button type="button" class="inline-control combat-control icon fa-solid fa-users-cog" data-action="rollNPC" {{#unless (and combatStarted combat.turns.length)}}disabled{{/unless}} data-tooltip="COMBAT.RollNPC"></button>
       {{/if}}
     </div>
     <strong class="encounter-title">{{#if combats.length}}{{#if combat.round}}{{localize "COMBAT.Round" round=combat.round}}{{else}}{{localize "COMBAT.NotStarted"}}{{/if}}{{else}}{{localize "COMBAT.None"}}{{/if}}</strong>
