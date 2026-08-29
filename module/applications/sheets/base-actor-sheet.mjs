@@ -1,5 +1,5 @@
 import { SYSTEM } from "../../config/system.mjs"
-import CdgConfrontation from "../../combat/confrontation.mjs"
+import CdgMacros from "../../helpers/macros.mjs"
 import Utils from "../../helpers/utils.mjs"
 import CdgRollDialog from "../roll-dialog.mjs"
 
@@ -51,6 +51,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       rollTest: CdgBaseActorSheet.#onRollTest,
       rollWeapon: CdgBaseActorSheet.#onRollWeapon,
       rollDefense: CdgBaseActorSheet.#onRollDefense,
+      rollInitiative: CdgBaseActorSheet.#onRollInitiative,
       rollDamage: CdgBaseActorSheet.#onRollDamage,
       rollSoak: CdgBaseActorSheet.#onRollSoak,
       removeOrigin: CdgBaseActorSheet.#onRemoveOrigin,
@@ -466,11 +467,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    * @param {HTMLElement} target Porte, ou est contenu dans, un `data-skill` ou un `data-ability`.
    */
   static async #onRollTest(event, target) {
-    return CdgRollDialog.open(this.document, {
-      skillId: target.closest("[data-skill]")?.dataset.skill ?? null,
-      abilityId: target.closest("[data-ability]")?.dataset.ability ?? null,
-      qualityDomain: "skill",
-    })
+    return CdgMacros.rollTest(target.closest("[data-ability]")?.dataset.ability ?? null, target.closest("[data-skill]")?.dataset.skill ?? null, this.document)
   }
 
   /**
@@ -483,10 +480,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
   static async #onRollWeapon(event, target) {
     const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
     if (!weapon?.system.isWeapon) return
-    // L'icône n'apparaît que sur une arme tenue en main ; ce garde-fou couvre un client qui aurait
-    // gardé une carte ou un DOM périmé, l'affichage n'étant qu'un premier filtre.
-    if (!weapon.system.equipped) return ui.notifications.warn("CDG.combat.weapon.notEquipped", { localize: true })
-    return CdgConfrontation.start(this.document, weapon)
+    return CdgMacros.rollWeapon(weapon.uuid, weapon.name)
   }
 
   /**
@@ -495,17 +489,12 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    * @param {HTMLElement} target
    */
   static async #onRollDefense(event, target) {
-    const defense = target.dataset.defense
-    if (!["dodge", "parry"].includes(defense)) return
-    if (defense === "parry" && this.document.system.combat.parryUsed) ui.notifications.warn("CDG.combat.defense.parryAlreadyUsed", { localize: true })
-    const dodgeCount = this.document.system.combat.dodgesUsed
-    return CdgRollDialog.open(this.document, {
-      abilityId: defense === "dodge" ? "vivacite" : "corps",
-      skillId: defense === "dodge" ? "esquive" : "blocage",
-      lockedPair: true,
-      qualityDomain: defense === "parry" ? "parry" : null,
-      afterRoll: () => (defense === "dodge" ? this.document.update({ "system.combat.dodgesUsed": dodgeCount + 1 }) : this.document.update({ "system.combat.parryUsed": true })),
-    })
+    return CdgMacros.rollDefense(target.dataset.defense, this.document)
+  }
+
+  /** Ouvre l'initiative du combattant correspondant à cette fiche. */
+  static async #onRollInitiative() {
+    return CdgMacros.rollInitiative(this.document)
   }
 
   /**
@@ -516,14 +505,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
   static async #onRollDamage(event, target) {
     const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
     if (!weapon?.system.isWeapon) return
-    if (!weapon.system.equipped) return ui.notifications.warn("CDG.combat.weapon.notEquipped", { localize: true })
-    return CdgRollDialog.open(this.document, {
-      abilityId: "corps",
-      rank: weapon.system.damage.rank,
-      label: "CDG.combat.damageTest",
-      lockedPair: true,
-      qualityDomain: "damage",
-    })
+    return CdgMacros.rollDamage(weapon.uuid, weapon.name)
   }
 
   /**
@@ -568,14 +550,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
   /** Lance Corps / Protection avec l'armure actuellement portée. */
   static async #onRollSoak() {
-    return CdgRollDialog.open(this.document, {
-      abilityId: "corps",
-      rank: this.document.armor?.system.protection.rank ?? 0,
-      label: "CDG.combat.soakTest",
-      lockedPair: true,
-      qualityDomain: "soak",
-      toggles: { wound: false },
-    })
+    return CdgMacros.rollSoak(this.document)
   }
 
   /**
@@ -617,10 +592,40 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    * @param {DragEvent} event
    */
   _onDragStart(event) {
+    const target = event.currentTarget
+    const macroType = target.dataset.cdgMacro
+    if (macroType === "test") {
+      event.dataTransfer.setData(
+        "text/plain",
+        JSON.stringify({
+          type: "cdg.macro",
+          cdgMacro: "test",
+          abilityId: target.closest("[data-ability]")?.dataset.ability ?? null,
+          skillId: target.closest("[data-skill]")?.dataset.skill ?? null,
+        }),
+      )
+      return
+    }
+    if (macroType === "defense") {
+      event.dataTransfer.setData("text/plain", JSON.stringify({ type: "cdg.macro", cdgMacro: "defense", defense: target.dataset.defense }))
+      return
+    }
+    if (macroType === "initiative") {
+      event.dataTransfer.setData("text/plain", JSON.stringify({ type: "cdg.macro", cdgMacro: "initiative" }))
+      return
+    }
+    if (macroType === "soak") {
+      event.dataTransfer.setData("text/plain", JSON.stringify({ type: "cdg.macro", cdgMacro: "soak" }))
+      return
+    }
+
     const itemId = event.currentTarget.closest("[data-item-id]")?.dataset.itemId
     const item = this.document.items.get(itemId)
     if (!item) return
-    event.dataTransfer.setData("text/plain", JSON.stringify(item.toDragData()))
+    const dragData = item.toDragData()
+    // Le type Item reste intact afin qu'une arme puisse toujours être déposée sur une autre fiche.
+    if (item.system.isWeapon) Object.assign(dragData, { cdgMacro: "weapon", name: item.name, img: item.img })
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData))
   }
 
   _onDragOver(event) {}

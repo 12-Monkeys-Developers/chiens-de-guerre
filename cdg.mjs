@@ -26,6 +26,7 @@ Hooks.once("init", async function () {
     helpers,
     dice,
     combat,
+    macros: helpers.CdgMacros,
     // Raccourci de macro : `game.system.api.roll(actor)` ouvre la fenêtre de test.
     roll: (actor, seed) => applications.CdgRollDialog.open(actor, seed),
   }
@@ -121,3 +122,10 @@ Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgConfrontation.act
 
 // Et pour le rappel de fin de round d'un personnage mourant.
 Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgDyingPrompt.activateListeners(message, html))
+
+// Les payloads enrichis par les fiches deviennent des macros de jet dans la barre utilisateur.
+Hooks.on("hotbarDrop", (bar, data, slot) => {
+  if (!data?.cdgMacro) return true
+  helpers.CdgMacros.createMacro(data, slot)
+  return false
+})

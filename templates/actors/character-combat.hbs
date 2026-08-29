@@ -7,6 +7,9 @@
           déjà les deux en vrai juste en dessous. }}
       <h2 class="section-title section-title-art" data-bandeau="initiative">
         <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/initiative.webp" alt="{{localize 'CDG.label.long.initiative'}}" />
+        <span class="title-actions">
+          <a class="draggable" data-action="rollInitiative" data-cdg-macro="initiative" data-tooltip="{{localize 'CDG.combat.initiative.roll'}}"><i class="fa-solid fa-stopwatch"></i></a>
+        </span>
       </h2>
       <div class="init-modifier">
         <label>{{localize "CDG.label.long.initiativeModifier"}}</label>
@@ -32,8 +35,8 @@
         <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/esquives.webp" alt="{{localize 'CDG.label.long.dodgesUsed'}}" />
       </h2>
       <div class="combat-quick-actions">
-        <button type="button" data-action="rollDefense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button>
-        <button type="button" data-action="rollDefense" data-defense="parry"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}</button>
+        <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button>
+        <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="parry"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}</button>
       </div>
       <div class="dodge-track">
         {{#each SYSTEM.DODGE_MALUS as |malus index|}}
@@ -97,7 +100,7 @@
       <h2 class="section-title section-title-art" data-bandeau="armes">
         <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/armes.webp" alt="{{localize 'CDG.label.long.weaponsAndProtections'}}" />
         <span class="title-actions">
-          <a class="item-control" data-action="rollSoak" data-tooltip="{{localize 'CDG.combat.soakTest'}}"><i class="fa-solid fa-helmet-battle"></i></a>
+          <a class="item-control draggable" data-action="rollSoak" data-cdg-macro="soak" data-tooltip="{{localize 'CDG.combat.soakTest'}}"><i class="fa-solid fa-helmet-battle"></i></a>
           {{#if isEditable}}
             {{! Trois icônes distinctes : réunis sous un seul titre, trois `fa-plus` identiques
                 ne se distingueraient plus que par leur infobulle. }}

@@ -24,7 +24,7 @@
       {{#each adversaireAbilities as |ability|}}
         {{#with (lookup @root.abilities ability.id) as |pool|}}
           <li class="ability" data-ability="{{ability.id}}">
-            <span class="ability-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
+            <span class="ability-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
             <div class="pool">
               <a class="pool-step" data-action="adjustPool" data-ability="{{ability.id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
               <span class="pool-value">{{pool.value}}</span>
