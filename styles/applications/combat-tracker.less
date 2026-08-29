@@ -79,6 +79,14 @@
     .remaining {
       opacity: 0.75;
     }
+
+    // Le cœur applique à ce champ une couleur pensée pour le thème clair. La variable sémantique
+    // suit le thème Foundry et garde donc la valeur lisible sur les fonds sombres comme clairs.
+    .token-initiative .initiative-input {
+      color: var(--color-text-primary);
+      caret-color: currentcolor;
+      font-weight: 700;
+    }
   }
 
   .duel-touches {

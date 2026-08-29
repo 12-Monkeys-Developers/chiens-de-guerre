@@ -39,6 +39,7 @@ Hooks.once("init", async function () {
   // pas le mettre à jour elle-même (seuls l'auteur et le Meneur le peuvent) — elle passe par une
   // requête au Meneur actif, sur le même principe que `co2`.
   CONFIG.queries["cdg.updateConfrontation"] = ({ messageId, updateData }) => game.messages.get(messageId)?.update(updateData)
+  CONFIG.queries["cdg.applyWound"] = combat.CdgConfrontation.handleApplyWoundQuery
 
   // Jets : la carte d'un test est reconstruite à chaque changement, il faut que le message sache
   // restaurer sa propre classe de jet. On enregistre à la suite, pas en tête : le premier de la

@@ -2186,6 +2186,11 @@ cdg-toggle-switch[checked] thumb {
 .cdg-combat-tracker .combatant .remaining {
   opacity: 0.75;
 }
+.cdg-combat-tracker .combatant .token-initiative .initiative-input {
+  color: var(--color-text-primary);
+  caret-color: currentcolor;
+  font-weight: 700;
+}
 .cdg-combat-tracker .duel-touches {
   display: flex;
   align-items: center;

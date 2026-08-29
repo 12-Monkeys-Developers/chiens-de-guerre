@@ -203,6 +203,28 @@ export default class CdgConfrontation {
     return game.users.activeGM.query("cdg.updateConfrontation", { messageId: message.id, updateData })
   }
 
+  /**
+   * Point d'entrée de la requête exécutée par le Meneur pour appliquer une blessure à un acteur
+   * que le joueur ne possède pas (typiquement le PNJ synthétique d'un token non lié).
+   *
+   * Les niveaux sont vérifiés avant de toucher au document : une requête fabriquée à la main ne
+   * doit pas pouvoir transformer des identifiants arbitraires en chemins de mise à jour.
+   * @param {Object} request
+   * @param {string} request.targetUuid
+   * @param {string|null} request.previousWoundId
+   * @param {string|null} request.newWoundId
+   * @returns {Promise<string|null>}
+   */
+  static async handleApplyWoundQuery({ targetUuid, previousWoundId = null, newWoundId = null } = {}) {
+    if (!game.user.isGM || typeof targetUuid !== "string") return null
+    const validLevels = new Set(Object.keys(SYSTEM.WOUND_LEVELS))
+    if ((previousWoundId !== null && !validLevels.has(previousWoundId)) || (newWoundId !== null && !validLevels.has(newWoundId))) return null
+
+    const target = await fromUuid(targetUuid)
+    if (!(target instanceof Actor)) return null
+    return target.applyWoundOverflow(previousWoundId, newWoundId)
+  }
+
   // #endregion
 
   // #region Sous-jets
@@ -293,7 +315,12 @@ export default class CdgConfrontation {
   static async #applyWound(previousWoundId, newWoundId, targetUuid) {
     const target = await fromUuid(targetUuid)
     if (!target) return null
-    return target.applyWoundOverflow(previousWoundId, newWoundId)
+    if (game.user.isGM || target.isOwner) return target.applyWoundOverflow(previousWoundId, newWoundId)
+    if (!game.users.activeGM) {
+      ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
+      return null
+    }
+    return game.users.activeGM.query("cdg.applyWound", { targetUuid, previousWoundId, newWoundId })
   }
 
   // #endregion
