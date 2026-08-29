@@ -201,7 +201,6 @@
       "willKeepBest": "le meilleur résultat sera conservé automatiquement.",
       "willImpose": "le résultat le moins bon sera imposé.",
       "singleDie": "un seul dé, rien à choisir.",
-      "imposedNote": "Rang 0 : le résultat le moins bon a été imposé.",
       "pushedNote": "Second jet, obtenu en se dépassant.",
       "push": "Se dépasser",
       "effortSpent": "Effort investi :",
@@ -304,7 +303,10 @@
       "miss": "Raté",
       "ignoreArmor": "Armure ignorée",
       "noWound": "Aucune blessure",
-      "woundOverflow": "Débordée depuis une case pleine",
+      "woundOverflow": {
+        "grave": "{wound} devenue grave",
+        "mortelle": "{wound} devenue mortelle"
+      },
       "woundSaturated": "Sans effet — case déjà au maximum",
       "notif": {
         "needSingleTarget": "Désignez exactement une cible avant d'attaquer.",

@@ -860,13 +860,15 @@ cdg-toggle-switch[checked] thumb {
   margin-bottom: 0.8rem;
 }
 .cdg.actor .initiative-block .init-modifier,
-.cdg.actor .initiative-block .init-bonus {
+.cdg.actor .initiative-block .init-bonus,
+.cdg.actor .initiative-block .init-dual-wield {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 0.4rem;
 }
-.cdg.actor .initiative-block .init-modifier .value {
+.cdg.actor .initiative-block .init-modifier .value,
+.cdg.actor .initiative-block .init-dual-wield .value {
   width: 3.5rem;
   padding: 0 0.2rem;
   font-family: var(--cdg-font-text);
@@ -2206,6 +2208,12 @@ cdg-toggle-switch[checked] thumb {
 .cdg-combat-tracker .combat-controls .cdg-end-combat {
   flex: 1 1 50%;
   min-width: 0;
+}
+.sidebar-popout.cdg-combat-tracker .window-content {
+  --color-text-primary: #191813;
+  --color-text-secondary: #4b463f;
+  --color-text-emphatic: #000;
+  color: var(--color-text-primary);
 }
 #pause > img {
   content: url("../assets/ui/images/epee-crane.webp");

@@ -117,7 +117,6 @@ export default class CdgRoll extends Roll {
     return {
       test,
       dice,
-      imposed: test.keep === "worst" && test.results.length > 1,
       canPush: !test.pushed && !test.noPush,
       outcome,
       outcomeId: outcome.outcome,

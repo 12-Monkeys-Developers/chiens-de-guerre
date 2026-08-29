@@ -25,7 +25,7 @@ export const DUEL_TYPES = {
 /** Objectifs autorisés pour un duel de plaisance. */
 export const DUEL_TOUCH_TARGETS = [1, 2, 3]
 
-/** Bonus d'initiative lorsque deux armes sont effectivement tenues. */
+/** Bonus d'initiative lorsque deux armes de mêlée légères ou moyennes sont effectivement tenues. */
 export const DUAL_WIELD_INITIATIVE_BONUS = [0, 0, 1, 2]
 
 /** Un personnage ne peut tenter qu'une seule parade (blocage) par round. */

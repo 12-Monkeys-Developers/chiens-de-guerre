@@ -102,11 +102,8 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     const passion = this.#passion(actor, draft)
     const wound = draft.wound !== false ? (system.wounds?.malus ?? 0) : 0
     const equipment = draft.equipment !== false ? (system.combat?.initiative?.modifier ?? 0) : 0
-    const heldWeapons = actor.heldWeapons ?? []
-    const dualWield =
-      mode === SYSTEM.COMBAT_MODES.skirmish.id && draft.dualWield !== false && heldWeapons.length === 2 && !actor.shield
-        ? (SYSTEM.DUAL_WIELD_INITIATIVE_BONUS[system.skills.sensDuels?.rank ?? 0] ?? 0)
-        : 0
+    const dualWieldEligible = actor.canDualWield
+    const dualWield = mode === SYSTEM.COMBAT_MODES.skirmish.id && draft.dualWield !== false && dualWieldEligible ? actor.dualWieldInitiativeBonus : 0
     const free = Number(draft.modifier) || 0
 
     const parts = [{ label: game.i18n.localize("CDG.abilities.long.vivacite"), value: pool.value }]
@@ -141,8 +138,8 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
       woundValue: system.wounds?.malus ?? 0,
       hasEquipment: !!system.combat?.initiative?.modifier,
       equipmentValue: system.combat?.initiative?.modifier ?? 0,
-      hasDualWield: mode === SYSTEM.COMBAT_MODES.skirmish.id && heldWeapons.length === 2 && !actor.shield,
-      dualWieldValue: SYSTEM.DUAL_WIELD_INITIATIVE_BONUS[system.skills.sensDuels?.rank ?? 0] ?? 0,
+      hasDualWield: mode === SYSTEM.COMBAT_MODES.skirmish.id && dualWieldEligible,
+      dualWieldValue: actor.dualWieldInitiativeBonus,
     }
   }
 
@@ -196,7 +193,10 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     const breakdown = data.parts.map((part) => `<li><span>${part.label}</span><strong>${part.value > 0 ? "+" : ""}${part.value}</strong></li>`).join("")
     const name = foundry.utils.escapeHTML(combatant.name)
     const content = `<section class="cdg chat-card initiative-card"><header><h3>${game.i18n.localize("CDG.combat.initiative.chatTitle")}</h3><strong>${name}</strong></header><p>${data.initiativeSkillLabel} (${data.rankName}) : ${results.join(", ")} — ${game.i18n.localize("CDG.combat.initiative.kept")} <strong>${kept}</strong></p><ul>${breakdown}</ul><div class="initiative-total">${game.i18n.localize("CDG.label.long.initiative")} <strong>${total}</strong></div></section>`
-    const whisper = combatant.hidden ? ChatMessage.getWhisperRecipients("GM").map((user) => user.id) : []
+    // L'initiative d'un PNJ reste une information réservée au Meneur, que son combattant soit
+    // masqué ou visible dans le tracker. Un combattant masqué conserve la même confidentialité
+    // quel que soit son type d'acteur.
+    const whisper = actor.type === "adversaire" || combatant.hidden ? ChatMessage.getWhisperRecipients("GM").map((user) => user.id) : []
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content, rolls: [roll], whisper, flags: { "core.initiativeRoll": true } })
     await combatant.combat?.activateHighestInitiative()
     return total

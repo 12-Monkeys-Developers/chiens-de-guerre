@@ -168,7 +168,8 @@
 
   .initiative-block {
     .init-modifier,
-    .init-bonus {
+    .init-bonus,
+    .init-dual-wield {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
@@ -176,7 +177,8 @@
     }
 
     // Le modificateur total est calculé, pas saisi : même traitement que l'expérience disponible.
-    .init-modifier .value {
+    .init-modifier .value,
+    .init-dual-wield .value {
       .cdg-derived-value();
     }
   }

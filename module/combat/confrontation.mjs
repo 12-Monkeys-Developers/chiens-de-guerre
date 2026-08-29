@@ -132,14 +132,16 @@ export default class CdgConfrontation {
     const attacker = fromUuidSync(state.attackerUuid)
     const target = fromUuidSync(state.targetUuid)
     const weapon = fromUuidSync(state.weaponUuid)
+    const attack = CdgRoll.cardContext(state.attackTest)
 
     const context = {
       state,
       attacker,
       target,
       weapon,
-      attack: CdgRoll.cardContext(state.attackTest),
-      canChooseDefense: !state.defenseTest,
+      attack,
+      // Une attaque échouée ne porte pas : la cible n'a donc aucun jet de défense à effectuer.
+      canChooseDefense: attack.outcome.success && !state.defenseTest,
       parryBlocked: !!target?.system.combat.parryUsed,
       parryNeedsShield: !!weapon?.system.isRangedWeapon && !target?.shield,
       // La confrontation est close une fois l'encaissement résolu : les phases précédentes se
@@ -165,12 +167,16 @@ export default class CdgConfrontation {
 
     if (state.woundResolved) {
       context.woundResolved = true
-      context.woundLabel = state.appliedWoundId
-        ? game.i18n.localize(SYSTEM.WOUND_LEVELS[state.appliedWoundId].label)
-        : state.woundId
-          ? game.i18n.localize("CDG.confrontation.woundSaturated")
-          : game.i18n.localize("CDG.confrontation.noWound")
-      context.woundOverflowed = !!state.appliedWoundId && state.appliedWoundId !== state.woundId
+      const woundOverflowed = !!state.appliedWoundId && state.appliedWoundId !== state.woundId
+      context.woundLabel = woundOverflowed
+        ? game.i18n.format(`CDG.confrontation.woundOverflow.${state.appliedWoundId}`, {
+            wound: game.i18n.localize(SYSTEM.WOUND_LEVELS[state.woundId].label),
+          })
+        : state.appliedWoundId
+          ? game.i18n.localize(SYSTEM.WOUND_LEVELS[state.appliedWoundId].label)
+          : state.woundId
+            ? game.i18n.localize("CDG.confrontation.woundSaturated")
+            : game.i18n.localize("CDG.confrontation.noWound")
     }
 
     return context
@@ -461,6 +467,8 @@ export default class CdgConfrontation {
 
     const state = this.getState(message)
     if (!state || !this.#canAct("defense", state)) return
+    const attackOutcome = resolveOutcome(state.attackTest.results[state.attackTest.keptIndex], state.attackTest.sr)
+    if (!attackOutcome.success) return
     const target = await fromUuid(state.targetUuid)
     if (!target) return
 

@@ -159,6 +159,8 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.wounds = this.document.system.wounds
     context.combat = this.document.system.combat
     context.initiativeModifierTooltip = this._prepareInitiativeModifierTooltip()
+    context.canDualWield = this.document.canDualWield
+    context.dualWieldInitiativeBonus = this.document.dualWieldInitiativeBonus
     context.abilityMaxTooltips = this._prepareAbilityMaxTooltips()
     context.details = this.document.system.details
 

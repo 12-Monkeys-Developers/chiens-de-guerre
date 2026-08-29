@@ -108,3 +108,14 @@
     min-width: 0;
   }
 }
+
+// Dans la barre latérale, le tracker hérite légitimement des couleurs claires du thème sombre.
+// Son popout conserve toutefois le fond clair d'une fenêtre : on y rétablit donc des couleurs de
+// texte sombres, sans modifier la version intégrée à la barre latérale.
+.sidebar-popout.cdg-combat-tracker .window-content {
+  --color-text-primary: #191813;
+  --color-text-secondary: #4b463f;
+  --color-text-emphatic: #000;
+
+  color: var(--color-text-primary);
+}

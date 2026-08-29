@@ -16,6 +16,19 @@ export default class CdgActor extends Actor {
     return this.weapons.filter((item) => item.system.equipped)
   }
 
+  /** Deux armes compatibles avec le bonus d'initiative de l'escarmouche sont effectivement tenues. */
+  get canDualWield() {
+    return (
+      this.heldWeapons.length === 2 && !this.shield && this.heldWeapons.every((weapon) => !weapon.system.isRangedWeapon && ["legere", "moyenne"].includes(weapon.system.category))
+    )
+  }
+
+  /** Bonus potentiel du combat à deux armes, déterminé par le rang de Sens du duel. */
+  get dualWieldInitiativeBonus() {
+    if (!this.canDualWield) return 0
+    return SYSTEM.DUAL_WIELD_INITIATIVE_BONUS[this.system.skills?.sensDuels?.rank ?? 0] ?? 0
+  }
+
   /**
    * L'armure portée. Un personnage n'en porte qu'une : s'il en a plusieurs d'équipées, la première
    * fait foi, et c'est à la fiche d'éviter d'en arriver là.

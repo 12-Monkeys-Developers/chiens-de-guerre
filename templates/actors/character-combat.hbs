@@ -16,6 +16,12 @@
         <label>{{localize "CDG.label.long.initiativeBonus"}}</label>
         <input type="number" name="system.combat.initiative.bonus" value="{{combat.initiative.bonus}}" data-dtype="Number" />
       </div>
+      {{#if canDualWield}}
+        <div class="init-dual-wield">
+          <label>{{localize "CDG.combat.initiative.dualWield"}}</label>
+          <span class="value">{{signed dualWieldInitiativeBonus}}</span>
+        </div>
+      {{/if}}
       {{#if combat.armorOverloaded}}
         <p class="warning">{{localize "CDG.ui.armorOverloaded"}}</p>
       {{/if}}
