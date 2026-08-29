@@ -50,6 +50,7 @@ export default class CdgConfrontation {
       return CdgRollDialog.open(actor, {
         abilityId: weapon.system.attack.ability,
         skillId: weapon.system.attack.skill,
+        qualityDomain: "attack",
       })
     }
 
@@ -57,6 +58,7 @@ export default class CdgConfrontation {
       abilityId: weapon.system.attack.ability,
       skillId: weapon.system.attack.skill,
       lockedPair: true,
+      qualityDomain: "attack",
       targetUuid: target.uuid,
       postHandler: (test) => this.#postAttack(test, actor, target, weapon),
     })
@@ -481,6 +483,7 @@ export default class CdgConfrontation {
       abilityId: defense === "dodge" ? "vivacite" : "corps",
       skillId: defense === "dodge" ? "esquive" : "blocage",
       lockedPair: true,
+      qualityDomain: defense === "parry" ? "parry" : null,
       postHandler: async (test) => {
         await this.#mergeSubTest(message, "defense", test, { defenseMethod: defense })
         return defense === "dodge" ? target.update({ "system.combat.dodgesUsed": dodgeCount + 1 }) : target.update({ "system.combat.parryUsed": true })
@@ -504,6 +507,7 @@ export default class CdgConfrontation {
       rank: weapon.system.damage.rank,
       label: "CDG.combat.damageTest",
       lockedPair: true,
+      qualityDomain: "damage",
       postHandler: (test) => this.#mergeSubTest(message, "damage", test),
     })
   }
@@ -524,6 +528,7 @@ export default class CdgConfrontation {
       rank: state.opposition?.ignoreArmor ? 0 : (target.armor?.system.protection.rank ?? 0),
       label: "CDG.combat.soakTest",
       lockedPair: true,
+      qualityDomain: "soak",
       toggles: { wound: false },
       postHandler: (test) => this.#mergeSubTest(message, "soak", test),
     })

@@ -31,6 +31,8 @@ export default class CdgEquipmentSheet extends CdgBaseItemSheet {
     context.choiceCategories = SYSTEM.EQUIPMENT_CATEGORIES[this.document.system.subtype] ?? {}
     context.choiceAbilities = Object.values(SYSTEM.ABILITIES)
     context.choiceSkills = Object.values(SYSTEM.SKILLS)
+    context.choiceExceptionalDomains = Object.values(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS)
+    context.hasExceptionalSkill = this.document.system.exceptionalQuality && this.document.system.exceptionalBonus === "skill"
     context.currencies = Object.values(SYSTEM.CURRENCIES)
 
     return context

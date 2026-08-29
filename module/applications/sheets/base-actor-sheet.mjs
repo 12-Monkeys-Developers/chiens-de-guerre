@@ -469,6 +469,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     return CdgRollDialog.open(this.document, {
       skillId: target.closest("[data-skill]")?.dataset.skill ?? null,
       abilityId: target.closest("[data-ability]")?.dataset.ability ?? null,
+      qualityDomain: "skill",
     })
   }
 
@@ -502,6 +503,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       abilityId: defense === "dodge" ? "vivacite" : "corps",
       skillId: defense === "dodge" ? "esquive" : "blocage",
       lockedPair: true,
+      qualityDomain: defense === "parry" ? "parry" : null,
       afterRoll: () => (defense === "dodge" ? this.document.update({ "system.combat.dodgesUsed": dodgeCount + 1 }) : this.document.update({ "system.combat.parryUsed": true })),
     })
   }
@@ -520,6 +522,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       rank: weapon.system.damage.rank,
       label: "CDG.combat.damageTest",
       lockedPair: true,
+      qualityDomain: "damage",
     })
   }
 
@@ -570,6 +573,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       rank: this.document.armor?.system.protection.rank ?? 0,
       label: "CDG.combat.soakTest",
       lockedPair: true,
+      qualityDomain: "soak",
       toggles: { wound: false },
     })
   }

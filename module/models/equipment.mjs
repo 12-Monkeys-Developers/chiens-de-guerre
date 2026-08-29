@@ -22,6 +22,15 @@ export default class CdgEquipmentData extends CdgItemData {
     schema.equipped = new fields.BooleanField({ required: true, initial: false })
     schema.quantity = new fields.NumberField({ ...requiredInteger, initial: 1, min: 0 })
 
+    schema.exceptionalQuality = new fields.BooleanField({ required: true, initial: false })
+    schema.exceptionalBonus = new fields.StringField({
+      required: true,
+      blank: true,
+      initial: "",
+      choices: ["", ...Object.keys(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS)],
+    })
+    schema.exceptionalSkill = new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...Object.keys(SYSTEM.SKILLS)] })
+
     // Arme : les dégâts sont un rang de 0 à 3, comme une compétence — ce sont les dés opposés lors
     // de la résolution des dommages.
     schema.damage = new fields.EmbeddedDataField(RankValue, { nullable: false })

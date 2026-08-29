@@ -6,6 +6,15 @@ export const EQUIPMENT_SUBTYPES = {
   misc: { id: "misc", label: "CDG.equipment.subtypes.misc" },
 }
 
+/** Domaine unique auquel un objet de qualité exceptionnelle accorde son bonus de +1. */
+export const EXCEPTIONAL_BONUS_DOMAINS = {
+  skill: { id: "skill", label: "CDG.equipment.exceptionalDomains.skill" },
+  attack: { id: "attack", label: "CDG.equipment.exceptionalDomains.attack" },
+  parry: { id: "parry", label: "CDG.equipment.exceptionalDomains.parry" },
+  damage: { id: "damage", label: "CDG.equipment.exceptionalDomains.damage" },
+  soak: { id: "soak", label: "CDG.equipment.exceptionalDomains.soak" },
+}
+
 /**
  * Catégories d'armure. La valeur `requiredRank` est le rang exigé dans la compétence Port d'armures
  * pour porter l'armure sans pénalité : en dessous, le malus d'initiative de l'armure est doublé.

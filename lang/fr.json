@@ -393,6 +393,17 @@
       }
     },
     "equipment": {
+      "exceptionalQuality": "Qualité exceptionnelle",
+      "exceptionalBonus": "Bonus de qualité",
+      "exceptionalSkill": "Compétence bonifiée",
+      "exceptionalModifierHint": "Bonus de +1 accordé par la qualité exceptionnelle de cet objet. Un seul bonus de qualité peut s'appliquer au même test.",
+      "exceptionalDomains": {
+        "skill": "Compétence",
+        "attack": "Attaque",
+        "parry": "Parade",
+        "damage": "Dégâts",
+        "soak": "Encaissement"
+      },
       "subtypes": {
         "weapon": "Arme",
         "armor": "Armure",
@@ -654,6 +665,15 @@
         },
         "quantity": {
           "label": "Quantité"
+        },
+        "exceptionalQuality": {
+          "label": "Qualité exceptionnelle"
+        },
+        "exceptionalBonus": {
+          "label": "Bonus de qualité"
+        },
+        "exceptionalSkill": {
+          "label": "Compétence bonifiée"
         },
         "attack": {
           "ability": {

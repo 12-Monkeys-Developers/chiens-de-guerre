@@ -81,6 +81,9 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   /** Acteur ciblé, affiché en tête de fenêtre pour un test d'attaque. */
   #targetUuid = null
 
+  /** Nature du test pour rechercher les objets de qualité exceptionnelle applicables. */
+  #qualityDomain = null
+
   /**
    * Test restreint (jet de survie, p. 46) : ni effort, ni passion, ni dépassement — le personnage
    * ne peut rien engager pour améliorer ce jet précis.
@@ -112,6 +115,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
     this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
     this.#targetUuid = seed.targetUuid ?? null
+    this.#qualityDomain = Object.hasOwn(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS, seed.qualityDomain) ? seed.qualityDomain : null
     this.#restricted = !!seed.restricted
   }
 
@@ -156,6 +160,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
     this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
     this.#targetUuid = seed.targetUuid ?? null
+    this.#qualityDomain = Object.hasOwn(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS, seed.qualityDomain) ? seed.qualityDomain : null
     this.#restricted = !!seed.restricted
   }
 
@@ -333,9 +338,9 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     const draft = this.#draft
     const list = []
 
-    const add = (id, label, value, hint, defaultActive) => {
+    const add = (id, label, value, hint, defaultActive, group = null) => {
       if (!value) return
-      list.push({ id, label, value, hint, active: draft.toggles[id] ?? defaultActive })
+      list.push({ id, label, value, hint, group, active: draft.toggles[id] ?? defaultActive })
     }
 
     if (system.wounds.worst) {
@@ -358,6 +363,27 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       const situation = SYSTEM.SITUATIONS?.[modifier.situation]
       const label = situation ? `${modifier.label} (${game.i18n.localize(situation.label)})` : modifier.label
       add(`situation.${index}`, label, modifier.value, game.i18n.localize("CDG.roll.hint.situational"), modifier.skills?.includes(draft.skillId) ?? false)
+    })
+
+    const exceptional = actor.equipments.filter((item) => {
+      const equipment = item.system
+      if (!equipment.exceptionalQuality || equipment.exceptionalBonus !== this.#qualityDomain) return false
+      if (this.#qualityDomain === "skill" && (!draft.skillId || equipment.exceptionalSkill !== draft.skillId)) return false
+      return equipment.isWeapon || equipment.isArmor || equipment.isShield ? equipment.equipped : equipment.quantity > 0
+    })
+    const exceptionalIds = exceptional.map((item) => `exceptional.${item.id}`)
+    const hasExplicitChoice = exceptionalIds.some((id) => Object.hasOwn(draft.toggles, id))
+    const selectedExceptionalId = exceptionalIds.find((id) => draft.toggles[id] === true) ?? (hasExplicitChoice ? null : exceptionalIds[0])
+    exceptional.forEach((item, index) => {
+      const id = exceptionalIds[index]
+      list.push({
+        id,
+        label: item.name,
+        value: 1,
+        hint: game.i18n.localize("CDG.equipment.exceptionalModifierHint"),
+        group: "exceptional",
+        active: id === selectedExceptionalId,
+      })
     })
 
     return list
@@ -437,7 +463,13 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   static async #onToggleModifier(event, target) {
     const id = target.dataset.id
     if (!id) return
-    this.#draft.toggles[id] = target.dataset.active !== "true"
+    const activating = target.dataset.active !== "true"
+    if (id.startsWith("exceptional.") && activating) {
+      for (const modifier of this.#derived.modifiers.filter((entry) => entry.group === "exceptional")) {
+        this.#draft.toggles[modifier.id] = false
+      }
+    }
+    this.#draft.toggles[id] = activating
     this.render()
   }
 
