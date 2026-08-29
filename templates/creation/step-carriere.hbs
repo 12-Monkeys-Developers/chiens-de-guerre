@@ -1,0 +1,68 @@
+{{!
+  Étape 3 — Carrière et rang social.
+  La carrière peut elle aussi être un objet du monde : elle accorde alors un bonus de
+  caractéristique, des rangs de compétences plancher et un paquetage de départ.
+}}
+<section class="creation-step step-carriere">
+  <h2 class="section-title">{{localize "CDG.creation.steps.carriere"}}</h2>
+  <p class="intro">{{localize "CDG.creation.carriere.intro"}}</p>
+
+  <div class="block">
+    <h3>{{localize "CDG.label.long.carriere"}}</h3>
+    <div class="field-line">
+      <label for="creation-carriere-name">{{localize "CDG.creation.carriere.name"}}</label>
+      <input id="creation-carriere-name" type="text" name="carriere.name" value="{{draft.carriere.name}}" spellcheck="false" />
+    </div>
+    <div class="field-line">
+      <label for="creation-carriere-uuid">{{localize "CDG.creation.carriere.item"}}</label>
+      <select id="creation-carriere-uuid" name="carriere.uuid">
+        <option value="">{{localize "CDG.creation.noItem"}}</option>
+        {{#each carriereChoices as |choice|}}
+          <option value="{{choice.uuid}}" {{#if (eq choice.uuid @root.draft.carriere.uuid)}}selected{{/if}}>{{choice.name}}</option>
+        {{/each}}
+      </select>
+      {{#if carriereItem}}
+        <button type="button" class="inline-control" data-action="clearCarriere" data-tooltip="{{localize 'CDG.creation.detach'}}">
+          <i class="fa-solid fa-link-slash" inert></i>
+        </button>
+      {{/if}}
+    </div>
+    {{#if carriereItem}}
+      <div class="granted">{{{enrichedCarriere}}}</div>
+    {{else}}
+      <p class="hint">{{localize "CDG.creation.carriere.hint"}}</p>
+    {{/if}}
+    {{#each originWarnings as |warning|}}<p class="warning"><i class="fa-solid fa-triangle-exclamation" inert></i> {{warning}}</p>{{/each}}
+  </div>
+
+  <div class="block">
+    <h3>{{localize "CDG.label.long.grade"}}</h3>
+    <ol class="grade-cards">
+      {{#each grades as |grade|}}
+        <li class="grade-card {{#if grade.selected}}selected{{/if}} {{#if grade.unavailable}}unavailable{{/if}}">
+          <label data-tooltip="{{#if grade.unavailable}}{{localize 'CDG.creation.carriere.gradeUnavailable'}}{{else if grade.creationCost}}{{localize 'CDG.creation.carriere.gradeCost' cost=grade.creationCost}}{{else}}{{localize 'CDG.creation.carriere.gradeFree'}}{{/if}}">
+            <input
+              type="radio"
+              name="grade"
+              value="{{grade.id}}"
+              {{checked grade.selected}}
+              {{disabled (or grade.unavailable (and grade.tooExpensive (not grade.selected)))}}
+            />
+            <span class="grade-name">{{localize grade.label}}</span>
+          </label>
+          <span class="grade-price">
+            {{#if grade.unavailable}}
+              <em>{{localize "CDG.creation.carriere.gradeOutOfReach"}}</em>
+            {{else if grade.creationCost}}
+              {{localize "CDG.creation.competences.points" points=grade.creationCost}}
+            {{else}}
+              {{localize "CDG.creation.carriere.gradeFreeShort"}}
+            {{/if}}
+          </span>
+          <span class="pay">{{grade.pay}} {{localize "CDG.currency.ducatShort"}} / {{localize "CDG.label.short.month"}}</span>
+        </li>
+      {{/each}}
+    </ol>
+    <p class="hint">{{localize "CDG.creation.carriere.gradeHint"}} {{localize "CDG.ui.currencyHint"}}</p>
+  </div>
+</section>

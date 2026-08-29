@@ -1,0 +1,76 @@
+{{!
+  Étape 1 — Caractéristiques fondamentales.
+  Une enveloppe de points à répartir, des bornes par caractéristique, et par-dessus les bonus du
+  peuple et de la carrière, affichés à part pour qu'on voie d'où vient chaque point.
+}}
+<section class="creation-step step-abilities">
+  <h2 class="section-title section-title-art" data-bandeau="caracs">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/caracs.webp" alt="{{localize 'CDG.creation.steps.abilities'}}" />
+  </h2>
+  <p class="intro">{{localize "CDG.creation.abilities.intro" total=SYSTEM.ABILITY_POINTS_TOTAL min=SYSTEM.ABILITY_MIN max=SYSTEM.ABILITY_MAX}}</p>
+
+  <div class="budget {{#if (gt derived.pointsRemaining 0)}}pending{{/if}} {{#if (lt derived.pointsRemaining 0)}}over{{/if}}">
+    <span class="budget-label">{{localize "CDG.creation.abilities.budget"}}</span>
+    <span class="budget-count"><strong>{{derived.pointsSpent}}</strong> / {{SYSTEM.ABILITY_POINTS_TOTAL}}</span>
+    <span class="budget-remaining">
+      {{#if (gt derived.pointsRemaining 0)}}
+        {{localize "CDG.creation.abilities.remaining" points=derived.pointsRemaining}}
+      {{else if (lt derived.pointsRemaining 0)}}
+        {{localize "CDG.creation.abilities.over" points=derived.pointsOver}}
+      {{else}}
+        <i class="fa-solid fa-check" inert></i> {{localize "CDG.creation.abilities.allSpent"}}
+      {{/if}}
+    </span>
+  </div>
+
+  <ol class="ability-cards">
+    {{#each abilities as |ability|}}
+      <li class="ability-card">
+        <h3>{{localize ability.label}}</h3>
+        <p class="description">{{localize (concat "CDG.creation.abilities.hint." ability.id)}}</p>
+
+        <div class="ability-input">
+          <button
+            type="button"
+            class="stepper"
+            data-action="adjustAbility"
+            data-ability="{{ability.id}}"
+            data-delta="-1"
+            {{disabled (lte (lookup @root.draft.abilities ability.id) @root.SYSTEM.ABILITY_MIN)}}
+          ><i class="fa-solid fa-minus" inert></i></button>
+
+          <input
+            type="number"
+            name="abilities.{{ability.id}}"
+            value="{{lookup @root.draft.abilities ability.id}}"
+            min="{{@root.SYSTEM.ABILITY_MIN}}"
+            max="{{@root.SYSTEM.ABILITY_MAX}}"
+            step="1"
+            data-dtype="Number"
+          />
+
+          <button
+            type="button"
+            class="stepper"
+            data-action="adjustAbility"
+            data-ability="{{ability.id}}"
+            data-delta="1"
+            {{disabled (or (gte (lookup @root.draft.abilities ability.id) @root.SYSTEM.ABILITY_MAX) (lte @root.derived.pointsRemaining 0))}}
+          ><i class="fa-solid fa-plus" inert></i></button>
+
+          {{#with (lookup @root.derived.abilityBonuses ability.id) as |bonus|}}
+            {{#if bonus}}
+              <span class="bonus" data-tooltip="{{localize 'CDG.creation.abilities.bonusHint'}}">+{{bonus}}</span>
+            {{/if}}
+          {{/with}}
+
+          <span class="final" data-tooltip="{{localize 'CDG.creation.abilities.finalHint'}}">
+            = {{lookup @root.derived.abilities ability.id}}
+          </span>
+        </div>
+      </li>
+    {{/each}}
+  </ol>
+
+  <p class="hint">{{localize "CDG.creation.abilities.range" min=SYSTEM.ABILITY_MIN max=SYSTEM.ABILITY_MAX}}</p>
+</section>

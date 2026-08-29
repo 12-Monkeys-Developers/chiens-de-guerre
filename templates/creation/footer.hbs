@@ -1,0 +1,36 @@
+{{!
+  Pied de l'assistant : navigation, état de l'étape courante, et le bouton qui écrit enfin l'acteur.
+}}
+<footer class="creation-footer">
+  <div class="step-state">
+    {{#if status.complete}}
+      <span class="ok"><i class="fa-solid fa-check" inert></i> {{localize "CDG.creation.stepComplete"}}</span>
+    {{else}}
+      <span class="todo"><i class="fa-solid fa-triangle-exclamation" inert></i> {{status.message}}</span>
+    {{/if}}
+  </div>
+
+  <div class="controls">
+    <button type="button" class="reset" data-action="reset" data-tooltip="{{localize 'CDG.creation.resetTooltip'}}">
+      <i class="fa-solid fa-rotate-left" inert></i>
+      {{localize "CDG.creation.reset"}}
+    </button>
+
+    <button type="button" data-action="previousStep" {{disabled isFirstStep}}>
+      <i class="fa-solid fa-chevron-left" inert></i>
+      {{localize "CDG.creation.previous"}}
+    </button>
+
+    {{#if isLastStep}}
+      <button type="button" class="create" data-action="create" {{disabled creating}}>
+        <i class="fa-solid fa-hammer-war" inert></i>
+        {{localize "CDG.creation.create"}}
+      </button>
+    {{else}}
+      <button type="button" class="next" data-action="nextStep">
+        {{localize "CDG.creation.next"}}
+        <i class="fa-solid fa-chevron-right" inert></i>
+      </button>
+    {{/if}}
+  </div>
+</footer>

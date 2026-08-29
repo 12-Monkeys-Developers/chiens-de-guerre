@@ -1,0 +1,87 @@
+{{!
+  Étape 6 — Traits de personnalité, karma et allégeance.
+  Même grille que l'onglet Personnalité de la fiche, avec les quotas de la création en tête :
+  un dominant par couple, 5 à 10 traits poussés au rang 2, dont 0 à 2 jusqu'au rang 3.
+}}
+<section class="creation-step step-traits">
+  <h2 class="section-title section-title-art" data-bandeau="personnalite">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/personnalite.webp" alt="{{localize 'CDG.label.long.traits'}}" />
+  </h2>
+  <p class="intro">{{localize "CDG.creation.traits.intro"}}</p>
+
+  <div class="quotas">
+    <div class="quota {{#if derived.traitsMissing}}pending{{else}}done{{/if}}">
+      <span class="quota-label">{{localize "CDG.creation.traits.quotaDominant"}}</span>
+      <span class="quota-count"><strong>{{derived.traitCount}}</strong> / {{derived.traitsTotal}}</span>
+    </div>
+
+    <div class="quota {{#unless (and (gte derived.traitsPromoted SYSTEM.TRAIT_RANK2_MIN) (lte derived.traitsPromoted SYSTEM.TRAIT_RANK2_MAX))}}pending{{else}}done{{/unless}}">
+      <span class="quota-label">{{localize "CDG.creation.traits.quotaRank2"}}</span>
+      <span class="quota-count"><strong>{{derived.traitsPromoted}}</strong></span>
+      <span class="quota-range">{{localize "CDG.creation.traits.range" min=SYSTEM.TRAIT_RANK2_MIN max=SYSTEM.TRAIT_RANK2_MAX}}</span>
+    </div>
+
+    <div class="quota {{#if (gt derived.traitsMastered SYSTEM.TRAIT_RANK3_MAX)}}pending{{else}}done{{/if}}">
+      <span class="quota-label">{{localize "CDG.creation.traits.quotaRank3"}}</span>
+      <span class="quota-count"><strong>{{derived.traitsMastered}}</strong></span>
+      <span class="quota-range">{{localize "CDG.creation.traits.max" max=SYSTEM.TRAIT_RANK3_MAX}}</span>
+    </div>
+  </div>
+
+  <ul class="trait-pairs">
+    {{#each traitPairs as |pair|}}
+      <li class="trait-pair {{#unless pair.dominant}}unset{{/unless}}" data-pair="{{pair.id}}">
+        <span class="trait-label vice {{#if pair.isVice}}dominant{{/if}}">{{localize pair.vice}}</span>
+
+        {{! La colonne des vices est retournée par la feuille de style : la case 1 reste collée au
+            libellé, comme sur la fiche papier. }}
+        <div class="trait-boxes vice">
+          {{#each pair.viceBoxes as |box|}}
+            <button
+              type="button"
+              class="shield {{#if box.filled}}filled{{/if}}"
+              data-action="setTrait"
+              data-pair="{{../id}}"
+              data-side="{{box.side}}"
+              data-value="{{box.value}}"
+              data-tooltip="{{box.tooltip}}"
+              {{disabled box.disabled}}
+            ></button>
+          {{/each}}
+        </div>
+
+        <div class="trait-boxes virtue">
+          {{#each pair.virtueBoxes as |box|}}
+            <button
+              type="button"
+              class="shield {{#if box.filled}}filled{{/if}}"
+              data-action="setTrait"
+              data-pair="{{../id}}"
+              data-side="{{box.side}}"
+              data-value="{{box.value}}"
+              data-tooltip="{{box.tooltip}}"
+              {{disabled box.disabled}}
+            ></button>
+          {{/each}}
+        </div>
+
+        <span class="trait-label virtue {{#if pair.isVirtue}}dominant{{/if}}">{{localize pair.virtue}}</span>
+      </li>
+    {{/each}}
+  </ul>
+
+  <div class="karma-block">
+    <div class="totals">
+      <span class="total vices">{{localize "CDG.label.long.vicesTotal"}} <strong>{{derived.karma.vices}}</strong></span>
+      <span class="total virtues">{{localize "CDG.label.long.virtuesTotal"}} <strong>{{derived.karma.virtues}}</strong></span>
+    </div>
+    <div class="karma">
+      <label>{{localize "CDG.label.long.karma"}}</label>
+      <strong>{{signed derived.karma.value}}</strong>
+    </div>
+    <div class="allegiance">
+      <label>{{localize "CDG.label.long.allegiance"}}</label>
+      <strong>{{localize derived.karma.allegianceLabel}}</strong>
+    </div>
+  </div>
+</section>

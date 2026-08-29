@@ -1,0 +1,32 @@
+{{!
+  Bandeau de progression : les neuf étapes du guide, l'étape courante en évidence, les étapes
+  franchies cochées et cliquables. Les suivantes restent inertes tant qu'on ne les a pas atteintes.
+}}
+<nav class="creation-steps">
+  <ol class="step-list">
+    {{#each steps as |entry|}}
+      <li class="step {{#if entry.active}}active{{/if}} {{#if entry.complete}}complete{{/if}} {{#unless entry.reachable}}locked{{/unless}}">
+        {{#if entry.reachable}}
+          <button type="button" class="step-button" data-action="goToStep" data-step="{{entry.index}}" data-tooltip="{{localize entry.label}}">
+            <span class="step-badge">
+              {{#if entry.complete}}<i class="fa-solid fa-check" inert></i>{{else}}{{entry.number}}{{/if}}
+            </span>
+            <span class="step-label">{{localize entry.label}}</span>
+          </button>
+        {{else}}
+          <span class="step-button" data-tooltip="{{localize entry.label}}">
+            <span class="step-badge">{{entry.number}}</span>
+            <span class="step-label">{{localize entry.label}}</span>
+          </span>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ol>
+
+  <div class="progress">
+    <div class="progress-bar" style="width: {{progress}}%"></div>
+    <span class="progress-text">
+      {{localize "CDG.creation.progress" step=stepNumber count=stepCount done=completedCount}}
+    </span>
+  </div>
+</nav>

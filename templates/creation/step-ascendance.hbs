@@ -1,0 +1,50 @@
+{{!
+  Étape 4 — Ascendance et compulsion.
+  Comme le peuple et la carrière, l'ascendance est un objet du monde qu'on choisit dans la liste ou
+  qu'on dépose directement sur la fenêtre : elle porte sa propre compulsion, fixe.
+}}
+<section class="creation-step step-ascendance">
+  <h2 class="section-title">{{localize "CDG.creation.steps.ascendance"}}</h2>
+  <p class="intro">{{localize "CDG.creation.ascendance.intro"}}</p>
+
+  <div class="block">
+    <h3>{{localize "CDG.label.long.ascendance"}}</h3>
+    <div class="field-line">
+      <label for="creation-ascendance-name">{{localize "CDG.creation.ascendance.name"}}</label>
+      <input id="creation-ascendance-name" type="text" name="ascendance.name" value="{{draft.ascendance.name}}" spellcheck="false" />
+    </div>
+    <div class="field-line">
+      <label for="creation-ascendance-uuid">{{localize "CDG.creation.ascendance.item"}}</label>
+      <select id="creation-ascendance-uuid" name="ascendance.uuid">
+        <option value="">{{localize "CDG.creation.noItem"}}</option>
+        {{#each ascendanceChoices as |choice|}}
+          <option value="{{choice.uuid}}" {{#if (eq choice.uuid @root.draft.ascendance.uuid)}}selected{{/if}}>{{choice.name}}</option>
+        {{/each}}
+      </select>
+      {{#if ascendanceItem}}
+        <button type="button" class="inline-control" data-action="clearAscendance" data-tooltip="{{localize 'CDG.creation.detach'}}">
+          <i class="fa-solid fa-link-slash" inert></i>
+        </button>
+      {{/if}}
+    </div>
+    {{#if ascendanceItem}}
+      <div class="granted">{{{enrichedAscendance}}}</div>
+      <div class="field-line">
+        <label>{{localize "CDG.label.long.compulsion"}}</label>
+        <span class="value">{{ascendanceItem.system.compulsion}}</span>
+      </div>
+      {{#if enrichedCompulsion}}<div class="granted">{{{enrichedCompulsion}}}</div>{{/if}}
+    {{else}}
+      <p class="hint">{{localize "CDG.creation.ascendance.hint"}}</p>
+    {{/if}}
+  </div>
+
+  <div class="block">
+    <h3>{{localize "CDG.label.long.passion"}}</h3>
+    <div class="field-line">
+      <label for="creation-passion">{{localize "CDG.creation.ascendance.startingTokens"}}</label>
+      <input id="creation-passion" type="number" name="passionTokens" value="{{draft.passionTokens}}" min="0" step="1" data-dtype="Number" />
+    </div>
+    <p class="hint">{{localize "CDG.creation.ascendance.passionHint"}}</p>
+  </div>
+</section>

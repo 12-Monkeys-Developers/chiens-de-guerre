@@ -1,0 +1,1157 @@
+// Assistant de création de personnage : bandeau d'étapes en haut, corps de l'étape au milieu,
+// navigation en bas. Le corps est la seule zone qui défile, pour que la progression reste toujours
+// sous les yeux.
+//
+// Police standard partout (`--font-sans`, celle du cœur de Foundry) plutôt que les fontes de
+// caractère de la fiche imprimée : c'est un formulaire dense à remplir, pas un objet à contempler.
+// `.section-title`/`h3` viennent de `styles/typo.less`, commun à toute la fiche — sans cette
+// surcharge locale, ils resteraient en "darka" ici aussi.
+.cdg.creation {
+  font-family: var(--font-sans);
+
+  .section-title,
+  h3 {
+    font-family: var(--font-sans);
+  }
+
+  // Cartes à choisir : religions, grades, ascendances. Une bordure de sang marque le choix fait.
+  // Définies ici, au niveau de la fenêtre, pour rester visibles depuis chaque étape.
+  .card-grid() {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .card() {
+    border: 1px solid var(--cdg-parchment-line);
+    border-radius: var(--cdg-radius);
+    background: rgb(255 255 255 / 30%);
+    padding: 0.4rem 0.6rem;
+
+    &.selected {
+      border-color: var(--cdg-blood);
+      box-shadow: inset 3px 0 0 var(--cdg-blood);
+      background: rgb(255 255 255 / 55%);
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+  }
+
+  .creation-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  // ---------------------------------------------------------------- Bandeau de progression
+  .creation-steps {
+    flex: 0 0 auto;
+    padding: 0.5rem 0.8rem 0.4rem;
+    background: linear-gradient(180deg, rgb(26 21 18 / 92%) 0%, rgb(58 50 44 / 92%) 100%);
+    border-bottom: 2px solid var(--cdg-blood);
+
+    .step-list {
+      display: flex;
+      align-items: stretch;
+      gap: 0.15rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .step {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .step-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      width: 100%;
+      height: 100%;
+      padding: 0.2rem 0.1rem;
+      background: none;
+      border: none;
+      border-radius: var(--cdg-radius);
+      color: var(--cdg-parchment-dark);
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .step-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      border: 2px solid var(--cdg-parchment-line);
+      border-radius: 50%;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    .step-label {
+      font-size: 0.74rem;
+      font-variant: small-caps;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    // Une étape achevée porte la coche sanglante ; l'étape courante est ceinte de sang.
+    .step.complete .step-badge {
+      background: var(--cdg-blood);
+      border-color: var(--cdg-blood-light);
+      color: var(--cdg-parchment);
+    }
+
+    .step.active .step-button {
+      background: rgb(242 236 224 / 12%);
+      color: #ffffff;
+    }
+
+    .step.active .step-badge {
+      border-color: var(--cdg-blood-light);
+      box-shadow: 0 0 0 2px rgb(168 50 50 / 45%);
+    }
+
+    .step.locked .step-button {
+      opacity: 0.45;
+      cursor: default;
+    }
+
+    button.step-button:hover:not(:disabled) {
+      background: rgb(242 236 224 / 18%);
+      box-shadow: none;
+    }
+
+    .progress {
+      position: relative;
+      height: 1rem;
+      margin-top: 0.4rem;
+      background: rgb(0 0 0 / 35%);
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cdg-blood-dark), var(--cdg-blood-light));
+      transition: width 200ms ease-out;
+    }
+
+    .progress-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-variant: small-caps;
+      letter-spacing: 0.04em;
+      color: var(--cdg-parchment);
+      text-shadow: 0 0 3px rgb(0 0 0 / 80%);
+    }
+  }
+
+  // ---------------------------------------------------------------- Corps de l'étape
+  [data-application-part="body"] {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+
+  .creation-step {
+    padding: 0.7rem 0.9rem 1rem;
+
+    .intro {
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--cdg-ink-soft);
+      margin: 0 0 0.7rem;
+    }
+
+    .block {
+      margin-bottom: 0.9rem;
+    }
+
+    textarea {
+      width: 100%;
+      background: rgb(255 255 255 / 35%);
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      color: var(--cdg-text);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      padding: 0.3rem 0.5rem;
+      resize: vertical;
+
+      &:focus {
+        border-color: var(--cdg-blood);
+        box-shadow: none;
+        outline: none;
+      }
+    }
+
+    .inline-control {
+      flex: 0 0 auto;
+      width: 1.6rem;
+      background: none;
+      border: none;
+      color: var(--cdg-ink-soft);
+      cursor: pointer;
+
+      &:hover {
+        color: var(--cdg-blood);
+      }
+    }
+
+    .granted {
+      font-size: 0.8rem;
+      border-left: 3px solid var(--cdg-blood);
+      padding-left: 0.5rem;
+      margin-top: 0.3rem;
+      color: var(--cdg-ink-soft);
+    }
+
+    .warning {
+      color: var(--cdg-blood);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+  }
+
+  // Compteur d'enveloppe, partagé par les caractéristiques et les compétences : neutre tant qu'il
+  // reste des points, sanglant en cas de dépassement, discret une fois l'enveloppe épuisée —
+  // c'est alors que l'étape est bonne.
+  .budget {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--cdg-parchment-line);
+    border-left: 4px solid var(--cdg-label);
+    border-radius: var(--cdg-radius);
+    background: rgb(255 255 255 / 40%);
+
+    .budget-label {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-variant: small-caps;
+      color: var(--cdg-label);
+    }
+
+    .budget-count {
+      font-family: var(--font-sans);
+      font-size: 1.1rem;
+
+      strong {
+        font-size: 1.3rem;
+      }
+    }
+
+    .budget-remaining {
+      margin-left: auto;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    &.pending {
+      border-left-color: var(--cdg-blood-light);
+
+      .budget-remaining {
+        color: var(--cdg-blood-light);
+      }
+    }
+
+    &.over {
+      border-left-color: var(--cdg-blood);
+      background: rgb(122 16 16 / 10%);
+
+      .budget-count strong,
+      .budget-remaining {
+        color: var(--cdg-blood);
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- Étape 1 : caractéristiques
+  .step-abilities {
+    .ability-cards {
+      .card-grid();
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .ability-card {
+      .card();
+
+      h3 {
+        margin-bottom: 0.2rem;
+      }
+
+      .description {
+        font-size: 0.75rem;
+        color: var(--cdg-muted);
+        margin: 0 0 0.4rem;
+        min-height: 3.2rem;
+      }
+    }
+
+    .ability-input {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      button.stepper {
+        flex: 0 0 auto;
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: 0;
+        line-height: 1;
+        background: none;
+        border: 1px solid var(--cdg-parchment-line);
+        border-radius: var(--cdg-radius);
+        color: var(--cdg-ink-soft);
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+          border-color: var(--cdg-blood);
+          color: var(--cdg-blood);
+          box-shadow: none;
+        }
+
+        &:disabled {
+          opacity: 0.35;
+          cursor: default;
+        }
+      }
+
+      input[type="number"] {
+        width: 2.6rem;
+      }
+
+      .bonus {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--cdg-blood);
+      }
+
+      .final {
+        font-family: var(--font-sans);
+        font-size: 1.1rem;
+        margin-left: auto;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- Étape 2 : origine
+  .step-origine {
+    .religion-cards {
+      .card-grid();
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .religion-card {
+      .card();
+
+      .religion-name {
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      p {
+        margin: 0.2rem 0 0;
+        font-size: 0.75rem;
+      }
+
+      .gods {
+        color: var(--cdg-ink-soft);
+      }
+
+      .values {
+        color: var(--cdg-label);
+        font-variant: small-caps;
+      }
+
+      .credo {
+        font-style: italic;
+        color: var(--cdg-muted);
+      }
+
+      // « Aucune » n'a ni panthéon ni credo : une ligne à part entière plutôt qu'une carte orpheline
+      // aussi haute que ses trois voisines pour rien.
+      &.none {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+
+        .hint {
+          margin: 0;
+        }
+      }
+    }
+
+    .language-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.2rem;
+    }
+
+    button.language {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--cdg-ink-soft);
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-align: left;
+      padding: 0.1rem 0.2rem;
+
+      &.known {
+        color: var(--cdg-text);
+        font-weight: 600;
+      }
+
+      // Une langue offerte par le peuple ne se décoche pas : elle est marquée, pas cliquable.
+      &.granted {
+        color: var(--cdg-blood);
+        cursor: default;
+      }
+
+      &:hover:not(.granted) {
+        color: var(--cdg-blood);
+        box-shadow: none;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- Étape 3 : carrière
+  .step-carriere {
+    .grade-cards {
+      .card-grid();
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grade-card {
+      .card();
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+
+      .grade-name {
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+      }
+
+      .pay {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--cdg-blood);
+        white-space: nowrap;
+      }
+
+      .grade-price {
+        font-size: 0.72rem;
+        color: var(--cdg-muted);
+        white-space: nowrap;
+      }
+
+      &.unavailable {
+        opacity: 0.45;
+      }
+    }
+  }
+
+  // Les écussons de l'assistant sont des boutons, là où la fiche pose des liens (`<a class=
+  // "shield">`) : `.cdg .shield` (styles/elements/rank-shields.less) pose bien width/height/image,
+  // mais le blason restait pris dans le bouton natif du cœur Foundry (`button { border,
+  // min-height: var(--button-size), display: flex, background: ... }`, `styles/foundry2.css`) —
+  // aucune de ces propriétés n'était rejouée ici, d'où la puce minuscule flottant dans un bouton
+  // encadré. Il faut démonter le bouton au grand complet, pas seulement son fond.
+  // Partagé par les compétences et les arcanums.
+  .rank-shields button.shield {
+    display: inline-block;
+    width: 13px;
+    height: 16px;
+    min-height: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background-color: transparent;
+      box-shadow: none;
+      filter: drop-shadow(0 0 2px var(--cdg-blood-light));
+    }
+
+    // Rang accordé par la carrière : acquis, mais hors de portée du clic. Un halo plutôt qu'une
+    // bordure : la puce n'a pas de fond sur lequel poser un trait continu.
+    &.locked {
+      cursor: default;
+      outline: 1px solid var(--cdg-blood);
+      outline-offset: 1px;
+    }
+
+    // Rang réservé aux points de personnalisation, ou fermé en début de partie.
+    &.reserved {
+      cursor: default;
+      outline: 1px dashed var(--cdg-blood-light);
+      outline-offset: 1px;
+    }
+
+    &:disabled:not(.locked):not(.reserved) {
+      cursor: default;
+      opacity: 0.4;
+    }
+  }
+
+  // Boutons pas-à-pas, partagés par les caractéristiques et le pécule.
+  button.stepper {
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    line-height: 1;
+    background: none;
+    border: 1px solid var(--cdg-parchment-line);
+    border-radius: var(--cdg-radius);
+    color: var(--cdg-ink-soft);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      border-color: var(--cdg-blood);
+      color: var(--cdg-blood);
+      box-shadow: none;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+  }
+
+  // Étape 4 (ascendance) : plus de mise en page propre depuis que l'ascendance est un objet du
+  // monde — elle reprend telle quelle celle de la carrière (`.block`/`.field-line`/`.granted`).
+
+  // ---------------------------------------------------------------- Étape 5 : compétences
+  .step-competences {
+    .reference {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 0.6rem;
+      margin-bottom: 0.7rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      background: rgb(255 255 255 / 30%);
+
+      caption {
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--cdg-blood);
+        text-align: left;
+        padding-bottom: 0.15rem;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--cdg-parchment-line);
+        padding: 0.1rem 0.35rem;
+        text-align: left;
+        font-weight: 400;
+      }
+
+      .formula,
+      .modifier {
+        text-align: center;
+        font-weight: 700;
+      }
+    }
+
+    .skill-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .skill-row {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.1rem 0;
+      border-bottom: 1px dotted var(--cdg-parchment-line);
+
+      .skill-name {
+        flex: 1 1 auto;
+        font-size: 0.8rem;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      // Largeur fixe même vide : sinon la ligne sans rappel de carrière n'occupe pas la même
+      // largeur totale que celle qui en porte un, et les blasons qui la précèdent
+      // (`.rank-shields`, avant ce rappel dans le flux) ne s'alignent plus d'une ligne à l'autre.
+      .granted-mark {
+        flex: 0 0 1.6rem;
+        font-size: 0.68rem;
+        color: var(--cdg-blood);
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- Étape 6 : traits
+  .step-traits {
+    // Les trois quotas de la procédure, côte à côte : tant qu'ils ne sont pas tenus, ils saignent.
+    .quotas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .quota {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--cdg-parchment-line);
+      border-left: 4px solid var(--cdg-label);
+      border-radius: var(--cdg-radius);
+      background: rgb(255 255 255 / 40%);
+
+      .quota-label {
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        font-variant: small-caps;
+        color: var(--cdg-label);
+      }
+
+      .quota-count {
+        margin-left: auto;
+        font-family: var(--font-sans);
+        font-size: 1.05rem;
+      }
+
+      .quota-range {
+        font-size: 0.7rem;
+        color: var(--cdg-muted);
+        white-space: nowrap;
+      }
+
+      &.pending {
+        border-left-color: var(--cdg-blood-light);
+
+        .quota-count strong {
+          color: var(--cdg-blood);
+        }
+      }
+    }
+
+    // Un couple encore sans dominant reste discrètement signalé : il en faut un partout.
+    .trait-pair.unset .trait-label {
+      opacity: 0.6;
+    }
+
+    .trait-pairs {
+      list-style: none;
+      margin: 0 0 0.7rem;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0 1.2rem;
+    }
+
+    .trait-pair {
+      display: grid;
+      grid-template-columns: 1fr auto auto 1fr;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.1rem 0;
+      border-bottom: 1px dotted var(--cdg-parchment-line);
+    }
+
+    .trait-label {
+      font-size: 0.78rem;
+      color: var(--cdg-ink-soft);
+
+      &.vice {
+        text-align: right;
+      }
+
+      &.dominant {
+        font-weight: 700;
+        color: var(--cdg-blood);
+      }
+    }
+
+    .trait-boxes {
+      display: flex;
+      gap: 0.15rem;
+
+      // Côté vice, la case 1 doit rester collée au libellé : on retourne la rangée.
+      &.vice {
+        flex-direction: row-reverse;
+      }
+    }
+
+    // Même blason que sur la fiche de personnage (`character-competences.hbs` pose déjà `class=
+    // "shield"` sur ses cases de trait) — démonter le bouton natif du cœur en entier (border,
+    // min-height, display), pas seulement son fond : cf. le commentaire equivalent plus haut sur
+    // `.rank-shields button.shield`.
+    button.shield {
+      display: inline-block;
+      width: 13px;
+      height: 16px;
+      min-height: 0;
+      padding: 0;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        background-color: transparent;
+        box-shadow: none;
+        filter: drop-shadow(0 0 2px var(--cdg-blood-light));
+      }
+
+      // Case hors quota : éteinte plutôt que refusée en silence au clic.
+      &:disabled {
+        cursor: default;
+        opacity: 0.3;
+      }
+    }
+
+    .karma-block {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 0.4rem 0.6rem;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      background: rgb(255 255 255 / 30%);
+
+      .totals {
+        display: flex;
+        gap: 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .karma,
+      .allegiance {
+        display: flex;
+        align-items: baseline;
+        gap: 0.3rem;
+      }
+
+      .allegiance strong {
+        color: var(--cdg-blood);
+        font-family: var(--font-sans);
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- Étape 7 : personnalisation
+  .step-personnalisation {
+    // Le relevé des dépenses : les postes à zéro s'effacent, ceux qui coûtent ressortent.
+    .spendings {
+      list-style: none;
+      margin: 0 0 0.8rem;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.15rem 0.8rem;
+
+      li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        padding: 0.05rem 0.3rem;
+        border-bottom: 1px dotted var(--cdg-parchment-line);
+        font-size: 0.78rem;
+        color: var(--cdg-muted);
+      }
+
+      .spending-label {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .spending-cost {
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+      }
+
+      li.spent {
+        color: var(--cdg-text);
+
+        .spending-cost {
+          color: var(--cdg-blood);
+        }
+      }
+    }
+
+    .improvement-list {
+      list-style: none;
+      margin: 0.2rem 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.3rem;
+    }
+
+    .improvement {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      button.improvement-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        width: auto;
+        flex: 1 1 auto;
+        padding: 0.1rem 0.3rem;
+        background: none;
+        border: none;
+        color: var(--cdg-ink-soft);
+        font-size: 0.82rem;
+        text-align: left;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+          color: var(--cdg-blood);
+          box-shadow: none;
+        }
+
+        &:disabled {
+          opacity: 0.4;
+          cursor: default;
+        }
+      }
+
+      &.bought button.improvement-toggle {
+        color: var(--cdg-blood);
+        font-weight: 600;
+      }
+
+      .score {
+        font-family: var(--font-sans);
+        font-size: 1rem;
+      }
+
+      .cost {
+        font-size: 0.7rem;
+        color: var(--cdg-muted);
+        white-space: nowrap;
+      }
+    }
+
+    // Les compétences reprennent la grille de l'étape 5.
+    .skill-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .skill-row {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.1rem 0;
+      border-bottom: 1px dotted var(--cdg-parchment-line);
+
+      .skill-name {
+        flex: 1 1 auto;
+        font-size: 0.8rem;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .arcanum-list .rank-shields {
+      flex: 0 0 auto;
+    }
+
+    // Bonus d'ascendance : un seul candidat choisi, un autre fermé s'il romprait le plafond de
+    // rang de la création.
+    .arcanum-list .item-row {
+      &.selected {
+        box-shadow: inset 3px 0 0 var(--cdg-blood);
+        background: rgb(255 255 255 / 30%);
+      }
+
+      &.disabled {
+        opacity: 0.5;
+      }
+
+      .inline-control.active {
+        color: var(--cdg-blood);
+      }
+    }
+
+    .money-points {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      .label {
+        font-family: var(--font-sans);
+        font-size: 0.78rem;
+        font-variant: small-caps;
+        color: var(--cdg-label);
+      }
+
+      .value {
+        font-family: var(--font-sans);
+        font-size: 1.05rem;
+        min-width: 1.2rem;
+        text-align: center;
+      }
+
+      .gain {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--cdg-blood);
+      }
+    }
+
+    .purse {
+      display: flex;
+      gap: 1.2rem;
+    }
+  }
+
+  // ---------------------------------------------------------------- Étape 8 : combat
+  .step-combat {
+    .combat-card {
+      width: 250px;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      background: rgb(255 255 255 / 30%);
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .wound-slots {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8rem;
+      }
+
+      .level {
+        flex: 0 0 5rem;
+        font-variant: small-caps;
+        color: var(--cdg-label);
+      }
+
+      .slots {
+        display: flex;
+        gap: 0.15rem;
+        flex: 1 1 auto;
+      }
+
+      .malus {
+        font-weight: 700;
+        color: var(--cdg-blood);
+      }
+    }
+
+    .drop-zone {
+      margin: 0.4rem 0 0;
+      padding: 0.5rem;
+      border: 1px dashed var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      text-align: center;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--cdg-muted);
+    }
+  }
+
+  // ---------------------------------------------------------------- Étape 9 : identité
+  .step-identite {
+    .identity-block {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .portrait img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border: 2px solid var(--cdg-ink);
+      border-radius: var(--cdg-radius);
+      cursor: pointer;
+    }
+
+    .required {
+      color: var(--cdg-blood);
+    }
+
+    // Un bloc comme les autres (Marque, Origine et histoire) : pas de cadre à part, juste un
+    // titre suivi de son contenu.
+    .recap {
+      dl {
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0 1rem;
+      }
+
+      .recap-line {
+        display: flex;
+        gap: 0.4rem;
+        border-bottom: 1px dotted var(--cdg-parchment-line);
+        padding: 0.15rem 0;
+      }
+
+      // Petites capitales sur fond vert atténué : peu lisible à cette taille. Un intitulé en
+      // gras, plus sombre, se détache mieux du parchemin.
+      dt {
+        flex: 0 0 7rem;
+        font-family: var(--font-sans);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        color: var(--cdg-ink-soft);
+      }
+
+      dd {
+        margin: 0;
+        font-size: 0.85rem;
+        min-width: 0;
+      }
+
+      .pill {
+        display: inline-block;
+        margin: 0 0.2rem;
+        padding: 0 0.35rem;
+        border: 1px solid var(--cdg-blood);
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 400;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- Pied de page
+  .creation-footer {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.8rem;
+    background: rgb(222 212 194 / 75%);
+    border-top: 2px solid var(--cdg-ink);
+
+    .step-state {
+      flex: 1 1 auto;
+      font-size: 0.78rem;
+      min-width: 0;
+
+      .ok {
+        color: var(--cdg-label);
+      }
+
+      .todo {
+        color: var(--cdg-blood);
+        font-weight: 600;
+      }
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.4rem;
+      flex: 0 0 auto;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      width: auto;
+      padding: 0.2rem 0.7rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    button.create {
+      background: var(--cdg-blood);
+      border-color: var(--cdg-blood-dark);
+      color: var(--cdg-parchment);
+
+      &:hover {
+        background: var(--cdg-blood-light);
+        box-shadow: none;
+      }
+    }
+
+    button.reset {
+      color: var(--cdg-muted);
+    }
+  }
+}

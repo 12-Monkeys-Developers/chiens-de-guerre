@@ -1,0 +1,62 @@
+{{!
+  Étape 9 — Historique et identité.
+  Le surnom devient le nom de l'acteur ; le vrai nom reste enfoui sous la boue des charniers.
+  Le récapitulatif rappelle ce qui a été décidé avant de forger le Marqué.
+}}
+<section class="creation-step step-identite">
+  <h2 class="section-title">{{localize "CDG.creation.steps.identite"}}</h2>
+  <p class="intro">{{localize "CDG.creation.identite.intro"}}</p>
+
+  <div class="identity-block">
+    <div class="portrait">
+      <img src="{{draft.img}}" alt="{{draft.name}}" data-action="pickImage" data-tooltip="{{localize 'CDG.creation.identite.pickImage'}}" />
+    </div>
+
+    <div class="fields">
+      <div class="field-line">
+        <label for="creation-name">{{localize "CDG.label.long.surnom"}} <span class="required">*</span></label>
+        <input id="creation-name" type="text" name="name" value="{{draft.name}}" spellcheck="false" />
+      </div>
+      <div class="field-line">
+        <label for="creation-vrainom">{{localize "CDG.label.long.vraiNom"}}</label>
+        <input id="creation-vrainom" type="text" name="vraiNom" value="{{draft.vraiNom}}" spellcheck="false" />
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>{{localize "CDG.creation.identite.marque"}}</h3>
+    <textarea name="marque" rows="3" spellcheck="false" placeholder="{{localize 'CDG.creation.identite.marquePlaceholder'}}">{{draft.marque}}</textarea>
+    <p class="hint">{{localize "CDG.creation.identite.marqueHint"}}</p>
+  </div>
+
+  <div class="block">
+    <h3>{{localize "CDG.creation.identite.histoire"}}</h3>
+    <textarea name="histoire" rows="5" spellcheck="false" placeholder="{{localize 'CDG.creation.identite.histoirePlaceholder'}}">{{draft.histoire}}</textarea>
+    <p class="hint">{{localize "CDG.creation.identite.histoireHint"}}</p>
+  </div>
+
+  <div class="block recap">
+    <h3>{{localize "CDG.creation.recap.title"}}</h3>
+    <dl>
+      {{#each recap as |line|}}
+        <div class="recap-line">
+          <dt>{{localize line.label}}</dt>
+          <dd>{{line.value}}</dd>
+        </div>
+      {{/each}}
+    </dl>
+    {{#if incompleteSteps.length}}
+      <p class="warning">
+        {{localize "CDG.creation.recap.incomplete"}}
+        {{#each incompleteSteps as |step|}}<span class="pill">{{localize step.label}}</span>{{/each}}
+      </p>
+    {{/if}}
+    {{#if originWarnings.length}}
+      <p class="warning">{{localize "CDG.creation.recap.originWarnings"}}</p>
+      <ul class="warning">
+        {{#each originWarnings as |warning|}}<li>{{warning}}</li>{{/each}}
+      </ul>
+    {{/if}}
+  </div>
+</section>

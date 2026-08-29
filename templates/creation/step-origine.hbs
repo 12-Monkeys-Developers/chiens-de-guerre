@@ -1,0 +1,107 @@
+{{!
+  Étape 2 — Origine, religion et langues.
+  Le peuple peut être un simple nom ou un objet du monde : dans ce second cas, il apporte son bonus
+  de caractéristique, ses traits et ses langues, rappelés ici.
+}}
+<section class="creation-step step-origine">
+  <h2 class="section-title">{{localize "CDG.creation.steps.origine"}}</h2>
+  <p class="intro">{{localize "CDG.creation.origine.intro"}}</p>
+
+  <div class="block">
+    <h3>{{localize "CDG.label.long.peuple"}}</h3>
+    <div class="field-line">
+      <label for="creation-peuple-name">{{localize "CDG.creation.origine.peupleName"}}</label>
+      <input id="creation-peuple-name" type="text" name="peuple.name" value="{{draft.peuple.name}}" spellcheck="false" />
+    </div>
+    <div class="field-line">
+      <label for="creation-peuple-uuid">{{localize "CDG.creation.origine.peupleItem"}}</label>
+      <select id="creation-peuple-uuid" name="peuple.uuid">
+        <option value="">{{localize "CDG.creation.noItem"}}</option>
+        {{#each peupleChoices as |choice|}}
+          <option value="{{choice.uuid}}" {{#if (eq choice.uuid @root.draft.peuple.uuid)}}selected{{/if}}>{{choice.name}}</option>
+        {{/each}}
+      </select>
+      {{#if peupleItem}}
+        <button type="button" class="inline-control" data-action="clearPeuple" data-tooltip="{{localize 'CDG.creation.detach'}}">
+          <i class="fa-solid fa-link-slash" inert></i>
+        </button>
+      {{/if}}
+    </div>
+    {{#if peupleItem}}
+      <div class="granted">{{{enrichedPeuple}}}</div>
+
+      {{! Même en-tête que le début de la fiche de peuple : caractéristique augmentée, puis traits
+          accordés — juste un aperçu, rien à cocher ici. }}
+      <div class="field-line">
+        <label>{{localize "CDG.label.long.abilityBonus"}}</label>
+        <span class="value">{{peupleAbilityBonusLabel}}</span>
+      </div>
+      <div class="origin-features">
+        <h3>{{localize "CDG.label.long.grantedFeatures"}}</h3>
+        <ul class="item-list">
+          {{#each originFeatures as |feature|}}
+            <li class="item-row">
+              <img class="item-img" src="{{feature.img}}" alt="{{feature.name}}" {{#if feature.system.hasDescription}}data-tooltip-html="{{feature.system.description}}"{{/if}} />
+              <span class="item-name">{{feature.name}}</span>
+            </li>
+          {{else}}
+            <li class="empty">{{localize "CDG.creation.origine.noFeatures"}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{else}}
+      <p class="hint">{{localize "CDG.creation.origine.peupleHint"}}</p>
+    {{/if}}
+    {{#each originWarnings as |warning|}}<p class="warning"><i class="fa-solid fa-triangle-exclamation" inert></i> {{warning}}</p>{{/each}}
+  </div>
+
+  <div class="block">
+    <h3>{{localize "CDG.label.long.religion"}}</h3>
+    <ol class="religion-cards">
+      {{#each religions as |religion|}}
+        <li class="religion-card {{#if (eq religion.id @root.draft.religion)}}selected{{/if}}">
+          <label>
+            <input type="radio" name="religion" value="{{religion.id}}" {{checked (eq religion.id @root.draft.religion)}} />
+            <span class="religion-name">{{localize religion.label}}</span>
+          </label>
+          <p class="gods">{{localize religion.gods}}</p>
+          <p class="values">{{localize religion.values}}</p>
+          <p class="credo">« {{localize religion.credo}} »</p>
+        </li>
+      {{/each}}
+      {{! Un Marqué peut aussi n'avoir aucune allégeance spirituelle : une carte à part, sans
+          panthéon ni credo, plutôt qu'une case à cocher perdue au milieu des trois cultes. }}
+      <li class="religion-card none {{#if (eq 'aucune' @root.draft.religion)}}selected{{/if}}">
+        <label>
+          <input type="radio" name="religion" value="aucune" {{checked (eq 'aucune' @root.draft.religion)}} />
+          <span class="religion-name">{{localize "CDG.creation.origine.noReligion"}}</span>
+        </label>
+        <p class="hint">{{localize "CDG.creation.origine.noReligionHint"}}</p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3 class="section-title section-title-art" data-bandeau="langues">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/langues.webp" alt="{{localize 'CDG.label.long.languages'}}" />
+    </h3>
+    <ol class="language-list">
+      {{#each languages as |language|}}
+        <li>
+          <button
+            type="button"
+            class="language {{#if language.known}}known{{/if}} {{#if language.granted}}granted{{/if}}"
+            data-action="toggleLanguage"
+            data-language="{{language.id}}"
+            data-tooltip="{{#if language.granted}}{{localize 'CDG.creation.origine.grantedLanguage'}}{{else}}{{localize 'CDG.creation.origine.languageCost' cost=@root.languageCost}}{{/if}}"
+            {{disabled language.disabled}}
+          >
+            <i class="fa-{{#if language.known}}solid fa-square-check{{else}}regular fa-square{{/if}}" inert></i>
+            {{localize language.label}}
+          </button>
+        </li>
+      {{/each}}
+    </ol>
+    <p class="hint">{{localize "CDG.creation.origine.languagesPriceHint" cost=languageCost}} {{localize "CDG.ui.languagesHint"}}</p>
+  </div>
+</section>

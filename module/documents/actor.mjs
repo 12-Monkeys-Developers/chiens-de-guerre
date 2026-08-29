@@ -96,9 +96,12 @@ export default class CdgActor extends Actor {
    * déjà un effet actif `transfer: true` sur `abilities.<x>.bonus`, et `system.abilityBonus` n'est
    * plus qu'un mémo pour l'assistant de création. Le lire doublerait le bonus.
    * @param {CdgItem} item L'origine déposée, encore extérieure au personnage.
+   * @param {Object} [options] Options d'affichage.
+   * @param {boolean} [options.notifySuccess=true] Afficher le compte rendu de succès — l'assistant
+   *   de création le tait, un peuple ou une carrière déposés à la main sur la fiche le montrent.
    * @returns {Promise<CdgItem|undefined>} L'origine embarquée.
    */
-  async grantOrigin(item) {
+  async grantOrigin(item, { notifySuccess = true } = {}) {
     if (!SYSTEM.ORIGIN_TYPES.includes(item.type)) return
     const typeLabel = game.i18n.localize(`TYPES.Item.${item.type}`)
 
@@ -147,11 +150,13 @@ export default class CdgActor extends Actor {
     if (!foundry.utils.isEmpty(updates)) await this.update(updates)
 
     if (missing > 0) ui.notifications.warn(game.i18n.format("CDG.origin.missingGrant", { name: item.name, count: missing }))
-    ui.notifications.info(
-      details.length > 0
-        ? game.i18n.format("CDG.origin.appliedWith", { name: item.name, details: details.join(", ") })
-        : game.i18n.format("CDG.origin.applied", { name: item.name }),
-    )
+    if (notifySuccess) {
+      ui.notifications.info(
+        details.length > 0
+          ? game.i18n.format("CDG.origin.appliedWith", { name: item.name, details: details.join(", ") })
+          : game.i18n.format("CDG.origin.applied", { name: item.name }),
+      )
+    }
     return origin
   }
 

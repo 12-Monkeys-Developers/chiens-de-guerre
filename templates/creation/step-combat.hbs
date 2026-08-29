@@ -1,0 +1,65 @@
+{{!
+  Étape 8 — Calculs de combat et survie.
+  Rien à saisir ici sinon l'équipement : tout le reste découle des étapes précédentes et se lit
+  avant l'impact.
+}}
+<section class="creation-step step-combat">
+  <h2 class="section-title">{{localize "CDG.creation.steps.combat"}}</h2>
+
+  <div class="combat-card">
+    <h3 class="section-title section-title-art" data-bandeau="blessures">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/blessures.webp" alt="{{localize 'CDG.label.long.wounds'}}" />
+    </h3>
+    <ul class="wound-slots">
+      {{#each woundLevels as |level|}}
+        <li>
+          <span class="level">{{localize level.label}}</span>
+          <span class="slots">
+            {{#each (range 1 (lookup @root.derived.woundSlots level.id)) as |box|}}
+              <span class="shield"></span>
+            {{/each}}
+          </span>
+          <span class="malus">{{signed level.malus}}</span>
+        </li>
+      {{/each}}
+    </ul>
+    <p class="hint">{{localize "CDG.creation.combat.woundsHint" rank=derived.skills.vigueur}}</p>
+    {{#if derived.effectBonuses.hasWoundBonuses}}<p class="hint">{{localize "CDG.creation.combat.effectsIncluded"}}</p>{{/if}}
+  </div>
+
+  <div class="block">
+    <h3>{{localize "CDG.creation.combat.startingGear"}}</h3>
+    {{#if carriereEquipments.length}}
+      <ul class="item-list">
+        {{#each carriereEquipments as |item|}}
+          <li class="item-row">
+            <img class="item-img" src="{{item.img}}" alt="{{item.name}}" />
+            <span class="item-name">{{item.name}}</span>
+            <span class="item-label">{{localize "CDG.label.long.carriere"}}</span>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+    {{#if items.length}}
+      <ul class="item-list">
+        {{#each items as |item|}}
+          <li class="item-row">
+            <img class="item-img" src="{{item.img}}" alt="{{item.name}}" />
+            <span class="item-name">{{item.name}}</span>
+            <span class="item-label">{{localize (concat "TYPES.Item." item.type)}}</span>
+            <button type="button" class="item-control" data-action="removeItem" data-uuid="{{item.uuid}}" data-tooltip="{{localize 'CDG.ui.remove'}}">
+              <i class="fa-solid fa-xmark" inert></i>
+            </button>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+    {{#unless (or carriereEquipments.length items.length)}}
+      <p class="empty">{{localize "CDG.creation.combat.noGear"}}</p>
+    {{/unless}}
+    <p class="drop-zone">
+      <i class="fa-solid fa-hand-holding-box" inert></i>
+      {{localize "CDG.creation.combat.dropHint"}}
+    </p>
+  </div>
+</section>

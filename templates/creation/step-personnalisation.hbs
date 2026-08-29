@@ -1,0 +1,213 @@
+{{!
+  Étape 7 — Points de personnalisation et effort.
+  Une bourse de 15 points aux emplois multiples. Les langues et le grade se décident aux étapes 2
+  et 3 : ils sont rappelés ici avec leur prix, et un bouton y ramène.
+}}
+<section class="creation-step step-personnalisation">
+  <h2 class="section-title">{{localize "CDG.creation.steps.personnalisation"}}</h2>
+  <p class="intro">{{localize "CDG.creation.personnalisation.intro" total=derived.customizationTotal}}</p>
+
+  <div class="budget {{#if (gt derived.customizationRemaining 0)}}pending{{/if}} {{#if (lt derived.customizationRemaining 0)}}over{{/if}}">
+    <span class="budget-label">{{localize "CDG.creation.personnalisation.budget"}}</span>
+    <span class="budget-count"><strong>{{derived.customizationSpent}}</strong> / {{derived.customizationTotal}}</span>
+    <span class="budget-remaining">
+      {{#if (gt derived.customizationRemaining 0)}}
+        {{localize "CDG.creation.abilities.remaining" points=derived.customizationRemaining}}
+      {{else if (lt derived.customizationRemaining 0)}}
+        {{localize "CDG.creation.abilities.over" points=derived.customizationOver}}
+      {{else}}
+        <i class="fa-solid fa-check" inert></i> {{localize "CDG.creation.abilities.allSpent"}}
+      {{/if}}
+    </span>
+  </div>
+
+  {{#if derived.creationGrants.customizationPoints}}
+    <p class="hint">{{localize "CDG.creation.personnalisation.originBonus" points=derived.creationGrants.customizationPoints}}</p>
+  {{/if}}
+
+  <ul class="spendings">
+    {{#each spendings as |line|}}
+      <li class="{{#if line.cost}}spent{{/if}}">
+        <span class="spending-label">{{localize line.label}}</span>
+        <span class="spending-cost">{{line.cost}}</span>
+        {{#if line.step}}
+          <button type="button" class="inline-control" data-action="goToStep" data-step="{{line.step}}" data-tooltip="{{localize 'CDG.creation.personnalisation.backToStep'}}">
+            <i class="fa-solid fa-arrow-turn-up" inert></i>
+          </button>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+
+  <div class="block">
+    <h3>{{localize "CDG.creation.personnalisation.abilitiesTitle"}}</h3>
+    <ol class="improvement-list">
+      {{#each abilities as |ability|}}
+        <li class="improvement {{#if ability.bought}}bought{{/if}}">
+          <button
+            type="button"
+            class="improvement-toggle"
+            data-action="toggleImprovement"
+            data-ability="{{ability.id}}"
+            data-tooltip="{{localize 'CDG.creation.personnalisation.improvementTooltip' cost=@root.costs.abilityImprovement}}"
+            {{disabled ability.disabled}}
+          >
+            <i class="fa-{{#if ability.bought}}solid fa-square-check{{else}}regular fa-square{{/if}}" inert></i>
+            {{localize ability.label}}
+          </button>
+          <span class="score">{{ability.score}}</span>
+          <span class="cost">{{localize "CDG.creation.competences.points" points=@root.costs.abilityImprovement}}</span>
+        </li>
+      {{/each}}
+    </ol>
+    <p class="hint">{{localize "CDG.creation.personnalisation.abilitiesHint"}}</p>
+  </div>
+
+  <div class="block">
+    <h3>{{localize "CDG.creation.personnalisation.skillsTitle"}}</h3>
+    <p class="hint">{{localize "CDG.creation.personnalisation.skillsHint" max=SYSTEM.CREATION_MAX_RANK3_SKILLS}}</p>
+    <div class="skill-columns">
+      {{#each skillColumns as |column|}}
+        <ol class="skill-list">
+          {{#each column as |skill|}}
+            <li class="skill-row {{#if skill.granted}}granted{{/if}}">
+              <span class="skill-name">{{localize skill.label}}</span>
+              <div class="rank-shields">
+                {{#each skill.shields as |shield|}}
+                  <button
+                    type="button"
+                    class="shield {{#if shield.filled}}filled{{/if}} {{#if shield.floor}}locked{{/if}}"
+                    data-action="setSkillRank"
+                    data-skill="{{../id}}"
+                    data-rank="{{shield.step}}"
+                    data-tooltip="{{shield.tooltip}}"
+                    {{disabled shield.disabled}}
+                  ></button>
+                {{/each}}
+              </div>
+            </li>
+          {{/each}}
+        </ol>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="block">
+    <h3 class="section-title section-title-art" data-bandeau="arcanums">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/arcanums.webp" alt="{{localize 'CDG.label.long.arcanums'}}" />
+    </h3>
+
+    {{! Une seule liste pour tous les arcanums déjà en main, achetés ou offerts par la carrière :
+        ceux de la carrière portent un plancher verrouillé (leur rang gratuit) mais restent
+        libres d'être montés avec des points, exactement comme une compétence accordée. }}
+    {{#if arcanums.length}}
+      <ul class="item-list arcanum-list">
+        {{#each arcanums as |arcanum|}}
+          <li class="item-row">
+            <img class="item-img" src="{{arcanum.img}}" alt="{{arcanum.name}}" />
+            <span class="item-name">{{arcanum.name}}</span>
+            <span class="item-label">{{#unless arcanum.removable}}{{localize "CDG.label.long.carriere"}}{{else}}{{arcanum.type}}{{/unless}}</span>
+            <div class="rank-shields">
+              {{#each arcanum.shields as |shield|}}
+                <button
+                  type="button"
+                  class="shield {{#if shield.filled}}filled{{/if}} {{#if shield.floor}}locked{{/if}}"
+                  data-action="setArcanumRank"
+                  data-uuid="{{../uuid}}"
+                  data-rank="{{shield.step}}"
+                  data-tooltip="{{shield.tooltip}}"
+                  {{disabled shield.disabled}}
+                ></button>
+              {{/each}}
+            </div>
+            <span class="item-value">{{arcanum.cost}}</span>
+            {{#if arcanum.removable}}
+              <button type="button" class="item-control" data-action="removeItem" data-uuid="{{arcanum.uuid}}" data-tooltip="{{localize 'CDG.ui.remove'}}">
+                <i class="fa-solid fa-xmark" inert></i>
+              </button>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p class="empty">{{localize "CDG.ui.noArcanum"}}</p>
+    {{/if}}
+
+    {{! Le bonus d'ascendance (p. 123) est gratuit et distinct de l'achat qui précède : un seul
+        candidat parmi ceux de l'ascendance choisie, monté d'un rang s'il est déjà possédé, acquis
+        au rang 1 sinon — jamais au rang 3 à la création. }}
+    {{#if ascendanceArcanumOptions.length}}
+      <h3>{{localize "CDG.creation.personnalisation.ascendanceArcanumTitle"}}</h3>
+      <ul class="item-list arcanum-list">
+        {{#each ascendanceArcanumOptions as |option|}}
+          <li class="item-row {{#if option.selected}}selected{{/if}} {{#if option.capped}}disabled{{/if}}">
+            <img class="item-img" src="{{option.img}}" alt="{{option.name}}" />
+            <span class="item-name">{{option.name}}</span>
+            <span class="item-label">
+              {{#if option.capped}}
+                {{localize "CDG.creation.personnalisation.ascendanceArcanumCapped"}}
+              {{else if option.owned}}
+                {{localize "CDG.creation.personnalisation.ascendanceArcanumOwned"}}
+              {{else}}
+                {{localize "CDG.creation.personnalisation.ascendanceArcanumNew"}}
+              {{/if}}
+            </span>
+            <button
+              type="button"
+              class="inline-control {{#if option.selected}}active{{/if}}"
+              data-action="setAscendanceArcanumBonus"
+              data-uuid="{{option.uuid}}"
+              data-tooltip="{{#if option.capped}}{{localize 'CDG.creation.personnalisation.ascendanceArcanumRank3'}}{{else}}{{localize 'CDG.creation.personnalisation.ascendanceArcanumPick'}}{{/if}}"
+              {{disabled (and option.capped (not option.selected))}}
+            >
+              <i class="fa-{{#if option.selected}}solid fa-square-check{{else}}regular fa-square{{/if}}" inert></i>
+            </button>
+          </li>
+        {{/each}}
+      </ul>
+      <p class="hint">{{localize "CDG.creation.personnalisation.ascendanceArcanumHint"}}</p>
+    {{/if}}
+
+    <div class="field-line">
+      <select name="arcanumPicker">
+        <option value="">{{localize "CDG.creation.noItem"}}</option>
+        {{#each arcanumChoices as |choice|}}
+          <option value="{{choice.uuid}}">{{choice.name}}</option>
+        {{/each}}
+      </select>
+      <button type="button" class="inline-control" data-action="addArcanum" data-tooltip="{{localize 'CDG.ui.addArcanum'}}">
+        <i class="fa-solid fa-plus" inert></i>
+      </button>
+    </div>
+    <p class="hint">{{localize "CDG.creation.personnalisation.arcanumHint" cost=costs.arcanumRank}}</p>
+  </div>
+
+  <div class="block">
+    <h3 class="section-title section-title-art" data-bandeau="bourse">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/bourse.webp" alt="{{localize 'CDG.label.long.purse'}}" />
+    </h3>
+    <div class="purse">
+      <div class="field-line">
+        <label for="creation-wealth-ducat">{{localize "CDG.currency.ducat"}}</label>
+        <input id="creation-wealth-ducat" type="number" name="wealth.ducat" value="{{draft.wealth.ducat}}" min="0" step="1" data-dtype="Number" />
+      </div>
+      <div class="field-line">
+        <label for="creation-wealth-denier">{{localize "CDG.currency.denier"}}</label>
+        <input id="creation-wealth-denier" type="number" name="wealth.denier" value="{{draft.wealth.denier}}" min="0" step="1" data-dtype="Number" />
+      </div>
+
+      <div class="money-points">
+        <span class="label">{{localize "CDG.creation.personnalisation.moneyPoints"}}</span>
+        <button type="button" class="stepper" data-action="adjustMoney" data-delta="-1" {{disabled (lte draft.moneyPoints 0)}}><i class="fa-solid fa-minus" inert></i></button>
+        <span class="value">{{draft.moneyPoints}}</span>
+        <button type="button" class="stepper" data-action="adjustMoney" data-delta="1" {{disabled (lte derived.customizationRemaining 0)}}><i class="fa-solid fa-plus" inert></i></button>
+        <span class="gain">+{{derived.boughtDucats}} {{localize "CDG.currency.ducatShort"}}</span>
+      </div>
+    </div>
+    <p class="hint">
+      {{localize "CDG.creation.personnalisation.moneyHint" ducats=costs.ducatsPerPoint}}
+      {{localize "CDG.creation.personnalisation.purseTotal" ducat=derived.wealth.ducat denier=derived.wealth.denier}}
+    </p>
+  </div>
+
+</section>

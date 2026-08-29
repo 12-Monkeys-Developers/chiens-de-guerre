@@ -3,12 +3,20 @@
   <p class="subtitle version">{{version}}</p>
 </section>
 
-{{#if isGM}}
-  <section class="cdg tools flexcol">
-    <h4 class="divider">{{localize "CDG.sidebar.menu"}}</h4>
+<section class="cdg tools flexcol">
+  <h4 class="divider">{{localize "CDG.sidebar.menu"}}</h4>
+  {{#if isGM}}
     <button type="button" class="button" data-action="openApp" data-app="party" data-tooltip="{{localize 'CDG.sidebar.partyOverviewTooltip'}}">
       <i class="fa-solid fa-users" inert></i>
       {{localize "CDG.party.title"}}
     </button>
-  </section>
-{{/if}}
+  {{/if}}
+  {{#if canCreateActor}}
+    <button type="button" class="button" data-action="openApp" data-app="character-creation" data-tooltip="{{localize 'CDG.sidebar.characterCreationTooltip'}}">
+      <i class="fa-solid fa-user-plus" inert></i>
+      {{localize "CDG.creation.title"}}
+    </button>
+  {{else}}
+    <p class="hint">{{localize "CDG.sidebar.noCreatePermission"}}</p>
+  {{/if}}
+</section>

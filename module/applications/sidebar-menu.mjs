@@ -1,11 +1,12 @@
 import { SYSTEM } from "../config/system.mjs"
+import CdgCharacterCreation from "./character-creation.mjs"
 
 const { HandlebarsApplicationMixin } = foundry.applications.api
 const { AbstractSidebarTab } = foundry.applications.sidebar
 
 /**
- * L'onglet du système dans la barre latérale : pour l'instant, la seule porte d'entrée du tableau
- * de bord des joueurs.
+ * L'onglet du système dans la barre latérale : porte d'entrée du tableau de bord des joueurs (MJ
+ * seulement) et de l'assistant de création de personnage (tout compte pouvant créer un acteur).
  */
 export default class CdgSidebarMenu extends HandlebarsApplicationMixin(AbstractSidebarTab) {
   /** @override */
@@ -40,7 +41,12 @@ export default class CdgSidebarMenu extends HandlebarsApplicationMixin(AbstractS
    * @param {HTMLElement} target Porte `data-app`.
    */
   static async #onOpenApp(event, target) {
-    if (target.dataset.app === "party") game.system.partySheet.render({ force: true })
+    switch (target.dataset.app) {
+      case "party":
+        return game.system.partySheet.render({ force: true })
+      case "character-creation":
+        return CdgCharacterCreation.open()
+    }
   }
 
   /** @inheritDoc */
@@ -49,6 +55,8 @@ export default class CdgSidebarMenu extends HandlebarsApplicationMixin(AbstractS
     return Object.assign(context, {
       version: game.i18n.format("CDG.sidebar.version", { version: game.system.version }),
       isGM: game.user.isGM,
+      // Un joueur sans droit de création d'acteur verrait l'assistant échouer au dernier bouton.
+      canCreateActor: game.user.can("ACTOR_CREATE"),
     })
   }
 }

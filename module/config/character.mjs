@@ -123,11 +123,17 @@ export const ALLEGIANCES = {
   lumiere: { id: "lumiere", label: "CDG.allegiance.lumiere", max: null },
 }
 
-/** Grades de la compagnie et solde mensuelle associée, en ducats. */
+/**
+ * Grades de la compagnie, solde mensuelle en ducats, et prix en points de personnalisation pour
+ * commencer la partie à ce grade.
+ *
+ * On entre dans la Compagnie comme duplicator ; la promotion au grade de sergent s'achète.
+ * `creationCost` nul signifie que le grade n'est pas accessible à la création.
+ */
 export const GRADES = {
-  duplicator: { id: "duplicator", label: "CDG.grades.duplicator", pay: 12 },
-  sergent: { id: "sergent", label: "CDG.grades.sergent", pay: 18 },
-  lieutenant: { id: "lieutenant", label: "CDG.grades.lieutenant", pay: 24 },
+  duplicator: { id: "duplicator", label: "CDG.grades.duplicator", pay: 12, creationCost: 0 },
+  sergent: { id: "sergent", label: "CDG.grades.sergent", pay: 18, creationCost: 5 },
+  lieutenant: { id: "lieutenant", label: "CDG.grades.lieutenant", pay: 24, creationCost: null },
 }
 
 /** Langues du monde de jeu, dans l'ordre des deux colonnes de la fiche. */
@@ -182,6 +188,79 @@ export const REST_CONDITIONS = {
 /** Bornes de saisie d'une caractéristique à la création. */
 export const ABILITY_MIN = 8
 export const ABILITY_MAX = 12
+
+/**
+ * Enveloppe de points à répartir entre les trois caractéristiques à la création.
+ *
+ * Les bonus accordés par le peuple et la carrière viennent par-dessus : ils ne se prennent pas sur
+ * ces points.
+ */
+export const ABILITY_POINTS_TOTAL = 32
+
+/**
+ * Enveloppe de points à dépenser dans les compétences à la création, en plus des rangs que la
+ * carrière accorde d'office. Ces rangs-là sont gratuits : le budget ne paie que ce qui les dépasse.
+ */
+export const SKILL_POINTS_TOTAL = 10
+
+/**
+ * Coût d'un cran de compétence : ce que coûte le passage AU rang indiqué, depuis le rang inférieur.
+ *
+ * Les coûts se cumulent — ouvrir une compétence au rang 2 depuis rien coûte 1 + 2 = 3 points.
+ * La même table sert aux 10 points de l'étape des compétences et aux points de personnalisation ;
+ * seul le rang 3 échappe à la première, qui s'arrête au rang 2.
+ */
+export const SKILL_RANK_COST = {
+  1: 1,
+  2: 2,
+  3: 4,
+}
+
+/**
+ * Rang maximum qu'une compétence peut atteindre à l'étape d'attribution.
+ * Le rang 3 n'est ouvert qu'aux points de personnalisation, plus tard dans la création.
+ */
+export const CREATION_MAX_SKILL_RANK = 2
+
+/**
+ * Enveloppe de points de personnalisation, dépensée après les compétences.
+ *
+ * Ces points se comportent comme de l'expérience, à deux exceptions près : la promotion au grade de
+ * sergent et l'achat de pécule, qui n'ont pas d'équivalent en cours de partie.
+ */
+export const CUSTOMIZATION_POINTS_TOTAL = 15
+
+/** Ce que coûte chaque emploi des points de personnalisation. */
+export const CUSTOMIZATION_COSTS = {
+  /** +1 à une caractéristique, une seule fois par caractéristique. */
+  abilityImprovement: 5,
+  /** Par rang d'arcanum, à l'acquisition comme à la montée. */
+  arcanumRank: 7,
+  /** Une langue supplémentaire, au-delà de celles que le peuple accorde. */
+  language: 2,
+  /** Ducats obtenus par point investi dans le pécule de départ. */
+  ducatsPerPoint: 10,
+}
+
+/** Nombre d'augmentations de caractéristique achetables à la création, par caractéristique. */
+export const CREATION_MAX_ABILITY_IMPROVEMENTS = 1
+
+/** Rang maximum d'un arcanum en début de partie : on ne commence pas au rang 3. */
+export const CREATION_MAX_ARCANUM_RANK = 2
+
+/** Nombre de compétences pouvant atteindre le rang 3 à l'issue de la création. */
+export const CREATION_MAX_RANK3_SKILLS = 1
+
+/**
+ * Quotas des traits de personnalité à la création.
+ *
+ * Chaque couple reçoit d'abord un dominant au rang 1 — il n'y a pas de couple neutre. Puis 5 à 10
+ * de ces traits montent au rang 2, et 0 à 2 des traits au rang 2 poussent jusqu'au rang 3. Un trait
+ * au rang 3 compte donc aussi dans les 5 à 10 : il est passé par le rang 2.
+ */
+export const TRAIT_RANK2_MIN = 5
+export const TRAIT_RANK2_MAX = 10
+export const TRAIT_RANK3_MAX = 2
 
 /** Nombre d'augmentations possibles d'une caractéristique par rapport à son score de départ. */
 export const ABILITY_MAX_IMPROVEMENTS = 3

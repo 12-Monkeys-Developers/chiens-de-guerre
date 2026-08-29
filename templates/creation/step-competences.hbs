@@ -1,0 +1,97 @@
+{{!
+  Étape 5 — Attribution des compétences.
+  Une enveloppe de points à dépenser au-dessus de ce que la carrière accorde. Les rangs qu'elle
+  donne sont gratuits et verrouillés ; le rang 3 attend les points de personnalisation.
+}}
+<section class="creation-step step-competences">
+  <h2 class="section-title section-title-art" data-bandeau="comps">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/comps.webp" alt="{{localize 'CDG.creation.steps.competences'}}" />
+  </h2>
+  <p class="intro">{{localize "CDG.creation.competences.intro" total=SYSTEM.SKILL_POINTS_TOTAL}}</p>
+
+  <div class="budget {{#if (gt derived.skillPointsRemaining 0)}}pending{{/if}}">
+    <span class="budget-label">{{localize "CDG.creation.competences.budget"}}</span>
+    <span class="budget-count"><strong>{{derived.skillEnvelopeUsed}}</strong> / {{SYSTEM.SKILL_POINTS_TOTAL}}</span>
+    <span class="budget-remaining">
+      {{#if (gt derived.skillPointsRemaining 0)}}
+        {{localize "CDG.creation.abilities.remaining" points=derived.skillPointsRemaining}}
+      {{else if derived.skillOverflow}}
+        <i class="fa-solid fa-check" inert></i> {{localize "CDG.creation.competences.overflow" points=derived.skillOverflow}}
+      {{else}}
+        <i class="fa-solid fa-check" inert></i> {{localize "CDG.creation.abilities.allSpent"}}
+      {{/if}}
+    </span>
+  </div>
+
+  {{#if derived.creationGrants.freeSkillRanks}}
+    <p class="hint">
+      {{localize "CDG.creation.competences.freeRanks" used=derived.freeSkillRanksUsed total=derived.creationGrants.freeSkillRanks}}
+    </p>
+  {{/if}}
+
+  <div class="reference">
+    <table class="costs">
+      <caption>{{localize "CDG.creation.competences.costTable"}}</caption>
+      <tbody>
+        {{#each rankCosts as |entry|}}
+          <tr>
+            <th scope="row">{{localize "CDG.creation.competences.toRank" rank=entry.rank}}</th>
+            <td class="modifier">
+              {{#if entry.reserved}}
+                <em>{{localize "CDG.creation.competences.reserved"}}</em>
+              {{else}}
+                {{localize "CDG.creation.competences.points" points=entry.cost}}
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <table class="ranks">
+      <caption>{{localize "CDG.creation.competences.rankTable"}}</caption>
+      <tbody>
+        {{#each ranks as |rank|}}
+          <tr>
+            <th scope="row">{{rank.id}} — {{localize rank.label}}</th>
+            <td>{{localize rank.hint}}</td>
+            <td class="formula">{{rank.formula}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="skill-columns">
+    {{#each skillColumns as |column|}}
+      <ol class="skill-list">
+        {{#each column as |skill|}}
+          <li class="skill-row {{#if skill.granted}}granted{{/if}}">
+            <span class="skill-name">{{localize skill.label}}</span>
+            <div class="rank-shields">
+              {{#each skill.shields as |shield|}}
+                <button
+                  type="button"
+                  class="shield {{#if shield.filled}}filled{{/if}} {{#if shield.floor}}locked{{/if}} {{#if shield.reserved}}reserved{{/if}}"
+                  data-action="setSkillRank"
+                  data-skill="{{../id}}"
+                  data-rank="{{shield.step}}"
+                  data-tooltip="{{shield.tooltip}}"
+                  {{disabled shield.disabled}}
+                ></button>
+              {{/each}}
+            </div>
+            {{! Toujours rendu, même vide : le blason doit rester à la même position que la ligne
+                porte ou non ce rappel, sans quoi son absence laisse le nom de compétence grandir
+                et décale les blasons vers la gauche par rapport aux lignes non accordées. }}
+            <span class="granted-mark {{#unless skill.granted}}empty{{/unless}}" {{#if skill.granted}}data-tooltip="{{localize 'CDG.creation.competences.grantedHint'}}"{{/if}}>
+              {{#if skill.granted}}<i class="fa-solid fa-lock" inert></i>{{skill.granted}}{{/if}}
+            </span>
+          </li>
+        {{/each}}
+      </ol>
+    {{/each}}
+  </div>
+
+  <p class="hint">{{localize "CDG.creation.competences.trained" count=derived.trainedCount}} {{localize "CDG.creation.competences.hint"}}</p>
+</section>
