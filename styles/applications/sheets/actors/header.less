@@ -211,6 +211,84 @@
   }
 }
 
+// La compagnie franche réutilise le même vocabulaire que l'adversaire (pas d'étendard), avec un
+// seul champ d'identité (Nom) — pas de peuple, de carrière ni d'ascendance à afficher.
+//
+// Disposition propre à cet en-tête, à deux rangées plutôt que les trois colonnes du personnage :
+// icône, nom puis Blessés tout au bout sur la première ligne (`.header-top`), Caractéristiques et
+// Compétences côte à côte en dessous (`.header-groups`).
+.cdg.actor.compagnie .sheet-header {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  background-image: none;
+
+  // Deux enfants seulement (`.header-identity`, `.wounds-block`) : `space-between` colle le
+  // second tout à droite sans dépendre d'une largeur fixe ni d'une marge auto qui laisserait du
+  // vide si le contenu de Blessés est plus étroit que prévu.
+  .header-top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+
+  .header-identity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+  }
+
+  .portrait .actor-img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border: 2px solid var(--cdg-ink);
+    border-radius: var(--cdg-radius);
+  }
+
+  // Blessés est collé au coin supérieur droit de la fenêtre — les marges négatives compensent le
+  // padding du `.sheet-header` (0.6rem en haut, 0.8rem à droite, hérités du socle commun) que ce
+  // bloc n'a pas à respecter. Son bandeau composé en CSS (`.section-title`, pas `-art`) n'a pas
+  // l'éclaboussure débordante des bandeaux illustrés : rien ne serait rogné en le collant ainsi.
+  // Largeur au contenu (`flex: 0 0 auto`), pas une largeur fixe qui laisserait du vide à sa droite.
+  .header-top .wounds-block {
+    align-self: flex-start;
+    flex: 0 0 auto;
+    margin-top: -0.6rem;
+    margin-right: -0.8rem;
+    padding-right: 0.4rem;
+
+    .wound-levels {
+      margin: 0;
+    }
+  }
+
+  .header-groups {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 1rem;
+  }
+
+  // Calibré pour la fiche de personnage, où « Caractéristiques » ouvre la première colonne du
+  // haut de fenêtre : ici la rangée du nom la précède déjà, la lame n'a plus besoin d'autant de
+  // dégagement.
+  .abilities {
+    flex: 0 0 210px;
+    margin-top: 0.3rem;
+  }
+
+  .section-skills {
+    flex: 1 1 auto;
+    margin-top: 0.3rem;
+  }
+}
+
 // Ligne d'origine — peuple et carrière. Quand l'objet est là, la ligne cesse d'être un champ à
 // remplir pour devenir un lien vers sa fiche, suivi d'une croix discrète pour le retirer.
 .cdg .identity .origin-line {

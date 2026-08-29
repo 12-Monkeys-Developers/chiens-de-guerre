@@ -1,0 +1,54 @@
+<div class="compagnie-body">
+
+  <div class="compagnie-top">
+    <section class="roster-pj" data-roster="pj">
+      <h2 class="section-title">
+        {{localize "CDG.label.long.rosterPJ"}}
+        {{#if unlocked}}<a data-action="addRosterEntry" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
+      </h2>
+      <ul class="item-list">
+        {{#each rosterPJ as |entry|}}
+          {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-roster-row.hbs" entry=entry roster="pj"}}
+        {{else}}
+          <li class="empty">{{localize "CDG.company.noRoster"}}</li>
+        {{/each}}
+      </ul>
+    </section>
+
+    <section class="roster-pnj" data-roster="pnj">
+      <h2 class="section-title">
+        {{localize "CDG.label.long.rosterPNJ"}}
+        {{#if unlocked}}<a data-action="addRosterEntry" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
+      </h2>
+      <ul class="item-list">
+        {{#each rosterPNJ as |entry|}}
+          {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-roster-row.hbs" entry=entry roster="pnj"}}
+        {{else}}
+          <li class="empty">{{localize "CDG.company.noRoster"}}</li>
+        {{/each}}
+      </ul>
+    </section>
+  </div>
+
+  <section class="chronicles">
+    <h2 class="section-title">
+      {{localize "CDG.label.long.chronicles"}}
+      {{#if unlocked}}<a data-action="addChronicle" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
+    </h2>
+    <ul class="item-list">
+      {{#each chronicles as |chronicle|}}
+        {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-chronicle-row.hbs" entry=chronicle}}
+      {{else}}
+        <li class="empty">{{localize "CDG.company.noChronicles"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section class="notes-section">
+    <h2 class="section-title">{{localize "CDG.label.long.notes"}}</h2>
+    <div class="free-text">
+      {{formInput systemFields.notes value=system.notes enriched=enrichedNotes name="system.notes" toggled=true}}
+    </div>
+  </section>
+
+</div>

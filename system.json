@@ -89,7 +89,8 @@
   "documentTypes": {
     "Actor": {
       "character": { "htmlFields": ["specialTraits", "details.biography"] },
-      "adversaire": { "htmlFields": ["details.description", "details.special", "details.notes"] }
+      "adversaire": { "htmlFields": ["details.description", "details.special", "details.notes"] },
+      "compagnie": { "htmlFields": ["notes"] }
     },
     "Item": {
       "equipment": { "htmlFields": ["description"] },

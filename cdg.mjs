@@ -59,6 +59,7 @@ Hooks.once("init", async function () {
   CONFIG.Actor.dataModels = {
     character: models.CdgCharacterData,
     adversaire: models.CdgAdversaireData,
+    compagnie: models.CdgCompagnieData,
   }
 
   foundry.documents.collections.Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet)
@@ -67,6 +68,11 @@ Hooks.once("init", async function () {
     types: ["adversaire"],
     makeDefault: true,
     label: "CDG.sheet.adversaire",
+  })
+  foundry.documents.collections.Actors.registerSheet(SYSTEM.PACKAGE_ID, applications.CdgCompagnieSheet, {
+    types: ["compagnie"],
+    makeDefault: true,
+    label: "CDG.sheet.compagnie",
   })
 
   // Objets

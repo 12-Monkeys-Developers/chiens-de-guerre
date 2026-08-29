@@ -91,6 +91,19 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   #restricted = false
 
   /**
+   * Les caractéristiques et compétences de l'acteur qui teste — celles du personnage/adversaire, ou
+   * celles, propres, de la compagnie franche (p. 123). Jamais `SYSTEM.ABILITIES`/`SYSTEM.SKILLS` en
+   * dur : la fenêtre de jet doit rester correcte quel que soit le type d'acteur qui l'ouvre.
+   */
+  get #abilities() {
+    return this.#actor.system.constructor.ABILITIES
+  }
+
+  get #skills() {
+    return this.#actor.system.constructor.SKILLS
+  }
+
+  /**
    * Prépare le brouillon du test à partir de la présélection reçue de la fiche.
    * @param {CdgActor} actor
    * @param {Object} [seed] Présélection : `abilityId`, `skillId`.
@@ -100,7 +113,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     super(options)
     this.#actor = actor
     this.#draft = {
-      abilityId: seed.abilityId ?? SYSTEM.SKILL_DEFAULT_ABILITY[seed.skillId] ?? Object.keys(SYSTEM.ABILITIES)[0],
+      abilityId: seed.abilityId ?? SYSTEM.SKILL_DEFAULT_ABILITY[seed.skillId] ?? Object.keys(this.#abilities)[0],
       skillId: seed.skillId ?? "",
       difficulty: SYSTEM.DEFAULT_DIFFICULTY,
       modifier: 0,
@@ -149,10 +162,10 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
    */
   #applySeed(seed) {
     const skillId = seed.skillId ?? ""
-    if (!skillId || SYSTEM.SKILLS[skillId]) this.#draft.skillId = skillId
+    if (!skillId || this.#skills[skillId]) this.#draft.skillId = skillId
 
     const abilityId = seed.abilityId ?? SYSTEM.SKILL_DEFAULT_ABILITY[skillId]
-    if (SYSTEM.ABILITIES[abilityId]) this.#draft.abilityId = abilityId
+    if (this.#abilities[abilityId]) this.#draft.abilityId = abilityId
     this.#draft.rankOverride = Number.isInteger(seed.rank) ? seed.rank : null
     this.#draft.labelOverride = seed.label ?? null
     this.#draft.lockedPair = !!seed.lockedPair
@@ -205,9 +218,9 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     const system = this.#actor.system
     const draft = this.#draft
 
-    const ability = SYSTEM.ABILITIES[draft.abilityId]
+    const ability = this.#abilities[draft.abilityId]
     const pool = system.abilities[draft.abilityId]
-    const skill = draft.skillId ? SYSTEM.SKILLS[draft.skillId] : null
+    const skill = draft.skillId ? this.#skills[draft.skillId] : null
 
     // « Il peut arriver qu'aucune compétence ne soit pertinente. Dans ce cas, la poignée de dés sera
     // composée d'un unique d20, exactement comme si le test se faisait avec une compétence de rang 1. »
@@ -216,7 +229,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
 
     // « Un joueur ne peut jamais décider volontairement d'utiliser ainsi le dernier point d'une
     // réserve et tomber à zéro. »
-    const canUseEffort = !this.#restricted && (this.#actor.type === "character" || this.#actor.system.major)
+    const canUseEffort = !this.#restricted && (this.#actor.type === "character" || this.#actor.type === "compagnie" || this.#actor.system.major)
     const effortMax = canUseEffort ? Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1)) : 0
     draft.effort = Math.clamp(draft.effort, 0, effortMax)
 
@@ -238,7 +251,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     return {
       ability,
       pool,
-      abilities: Object.values(SYSTEM.ABILITIES).map((entry) => ({
+      abilities: Object.values(this.#abilities).map((entry) => ({
         ...entry,
         name: game.i18n.localize(entry.label),
         pool: system.abilities[entry.id],
@@ -280,7 +293,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
    */
   #skillChoices() {
     const system = this.#actor.system
-    return Object.values(SYSTEM.SKILLS)
+    return Object.values(this.#skills)
       .map((entry) => {
         const name = game.i18n.localize(entry.label)
         return { id: entry.id, name, rank: system.skills[entry.id].rank, label: `${name} (${system.skills[entry.id].rank})` }
@@ -426,7 +439,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
    */
   static async #onSetAbility(event, target) {
     const abilityId = target.dataset.ability
-    if (!SYSTEM.ABILITIES[abilityId]) return
+    if (!this.#abilities[abilityId]) return
     this.#draft.abilityId = abilityId
     this.render()
   }

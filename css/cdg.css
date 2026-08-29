@@ -723,6 +723,58 @@ cdg-toggle-switch[checked] thumb {
   width: auto;
   margin: 0;
 }
+.cdg.actor.compagnie .sheet-header {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  background-image: none;
+}
+.cdg.actor.compagnie .sheet-header .header-top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.cdg.actor.compagnie .sheet-header .header-identity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+.cdg.actor.compagnie .sheet-header .portrait .actor-img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border: 2px solid var(--cdg-ink);
+  border-radius: var(--cdg-radius);
+}
+.cdg.actor.compagnie .sheet-header .header-top .wounds-block {
+  align-self: flex-start;
+  flex: 0 0 auto;
+  margin-top: -0.6rem;
+  margin-right: -0.8rem;
+  padding-right: 0.4rem;
+}
+.cdg.actor.compagnie .sheet-header .header-top .wounds-block .wound-levels {
+  margin: 0;
+}
+.cdg.actor.compagnie .sheet-header .header-groups {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 1rem;
+}
+.cdg.actor.compagnie .sheet-header .abilities {
+  flex: 0 0 210px;
+  margin-top: 0.3rem;
+}
+.cdg.actor.compagnie .sheet-header .section-skills {
+  flex: 1 1 auto;
+  margin-top: 0.3rem;
+}
 .cdg .identity .origin-line .origin {
   flex: 1 1 auto;
 }
@@ -1189,6 +1241,132 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.actor.adversaire .npc-special .free-text {
   min-height: 4rem;
+}
+.cdg.actor.compagnie .compagnie-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem 1rem;
+}
+.cdg.actor.compagnie .compagnie-top,
+.cdg.actor.compagnie .chronicles {
+  flex: 0 0 auto;
+}
+.cdg.actor.compagnie .compagnie-top {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+  align-items: start;
+}
+.cdg.actor.compagnie .compagnie-top > section {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.cdg.actor.compagnie .notes-section {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 8rem;
+  margin-bottom: 0;
+}
+.cdg.actor.compagnie .notes-section .free-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.cdg.actor.compagnie .notes-section .free-text .prosemirror,
+.cdg.actor.compagnie .notes-section .free-text prose-mirror {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.cdg.actor.compagnie .notes-section .free-text .prosemirror > .editor-container,
+.cdg.actor.compagnie .notes-section .free-text prose-mirror > .editor-container {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.cdg.actor.compagnie .skill-columns {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 0.8rem;
+}
+.cdg.actor.compagnie .skill-column-header {
+  font-family: "cinzel";
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cdg-blood);
+  padding: 0.1rem 0 0.2rem;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+  margin-bottom: 0.15rem;
+}
+.cdg.actor.compagnie .roster-row .item-img {
+  cursor: pointer;
+}
+.cdg.actor.compagnie .roster-row input[type="text"] {
+  font-size: 0.8rem;
+  min-width: 0;
+}
+.cdg.actor.compagnie .roster-row .roster-name {
+  flex: 1 1 auto;
+}
+.cdg.actor.compagnie .roster-row .roster-grade {
+  flex: 0 1 5rem;
+}
+.cdg.actor.compagnie .roster-row .roster-notes {
+  flex: 1 1 auto;
+}
+.cdg.actor.compagnie .roster-row span.roster-name,
+.cdg.actor.compagnie .roster-row span.roster-grade,
+.cdg.actor.compagnie .roster-row span.roster-notes {
+  font-size: 0.82rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cdg.actor.compagnie .chronicle-row input[type="text"] {
+  font-size: 0.8rem;
+}
+.cdg.actor.compagnie .chronicle-row .chronicle-date {
+  flex: 0 1 6rem;
+}
+.cdg.actor.compagnie .chronicle-row .chronicle-event {
+  flex: 1 1 auto;
+}
+.cdg.actor.compagnie .wounds-block .wound-levels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cdg.actor.compagnie .wounds-block .wound-level {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: flex-end;
+  padding: 0.1rem 0;
+}
+.cdg.actor.compagnie .wounds-block .wound-name {
+  font-size: 0.8rem;
+  color: var(--cdg-label);
+}
+.cdg.actor.compagnie .wounds-block .wound-boxes {
+  display: flex;
+  gap: 2px;
+}
+.cdg.actor.compagnie .wounds-block .wound-malus {
+  font-size: 0.78rem;
+  color: var(--cdg-blood);
+  min-width: 1.6rem;
+  text-align: right;
+}
+.cdg.actor.compagnie .wounds-block .current-malus {
+  text-align: right;
+  font-size: 0.8rem;
 }
 .cdg.item .prosemirror {
   min-height: 300px;

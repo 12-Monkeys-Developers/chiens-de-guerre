@@ -8,19 +8,30 @@ import { RankValue } from "./schemas/rank-value.mjs"
  * karma, bourse, expérience) vit dans CdgCharacterData.
  */
 export default class CdgActorData extends foundry.abstract.TypeDataModel {
+  /**
+   * Les caractéristiques et compétences du type d'acteur courant.
+   *
+   * Personnage et adversaire partagent le triptyque Corps/Vivacité/Esprit ; la compagnie franche
+   * (p. 123) a le sien (Effectifs/Logistique/Moral) et ses propres compétences. Surcharger ces deux
+   * accesseurs suffit à faire varier `defineSchema()` sans dupliquer le reste du socle.
+   */
+  static ABILITIES = SYSTEM.ABILITIES
+
+  static SKILLS = SYSTEM.SKILLS
+
   static defineSchema() {
     const fields = foundry.data.fields
     const schema = {}
 
     schema.abilities = new fields.SchemaField(
-      Object.values(SYSTEM.ABILITIES).reduce((obj, ability) => {
+      Object.values(this.ABILITIES).reduce((obj, ability) => {
         obj[ability.id] = new fields.EmbeddedDataField(PoolValue, { label: ability.label, nullable: false })
         return obj
       }, {}),
     )
 
     schema.skills = new fields.SchemaField(
-      Object.values(SYSTEM.SKILLS).reduce((obj, skill) => {
+      Object.values(this.SKILLS).reduce((obj, skill) => {
         obj[skill.id] = new fields.EmbeddedDataField(RankValue, { label: skill.label, nullable: false })
         return obj
       }, {}),

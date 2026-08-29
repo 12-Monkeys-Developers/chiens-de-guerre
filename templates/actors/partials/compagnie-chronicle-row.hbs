@@ -1,0 +1,11 @@
+{{! Une ligne du journal : `entry` porte `index`, `date` et `event`. }}
+<li class="item-row chronicle-row" data-index="{{entry.index}}">
+  {{#if @root.unlocked}}
+    <input type="text" class="chronicle-date" name="system.chronicles.{{entry.index}}.date" value="{{entry.date}}" placeholder="{{localize 'CDG.label.long.date'}}" spellcheck="false" />
+    <input type="text" class="chronicle-event" name="system.chronicles.{{entry.index}}.event" value="{{entry.event}}" placeholder="{{localize 'CDG.label.long.event'}}" spellcheck="false" />
+    <a class="item-control" data-action="removeChronicle" data-index="{{entry.index}}" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
+  {{else}}
+    <span class="chronicle-date">{{entry.date}}</span>
+    <span class="chronicle-event">{{entry.event}}</span>
+  {{/if}}
+</li>

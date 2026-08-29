@@ -209,7 +209,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
       for (const change of effect.system.changes) {
         const ability = change.key?.match(/^system\.abilities\.(\w+)\.bonus$/)?.[1]
-        if (!(ability in SYSTEM.ABILITIES)) continue
+        if (!(ability in this.document.system.abilities)) continue
 
         const value = Number(change.value)
         // Seul un bonus se signe ; une valeur imposée s'écrit telle quelle, précédée du signe égal.
@@ -225,10 +225,14 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
   /**
    * Explique le modificateur avec les mêmes objets et la même règle de surcharge que le modèle.
-   * @returns {string}
+   *
+   * La compagnie franche n'a pas de schéma `combat` (pas d'initiative, ni d'armes) : rien à
+   * expliquer, et ses gabarits ne lisent d'ailleurs jamais `initiativeModifierTooltip`.
+   * @returns {string|null}
    */
   _prepareInitiativeModifierTooltip() {
     const actor = this.document
+    if (!actor.system.combat) return null
     const signed = (value) => (value > 0 ? `+${value}` : `${value}`)
     const lines = [`${game.i18n.localize("CDG.label.long.initiativeBonus")} : <strong>${signed(actor.system.combat.initiative.bonus)}</strong>`]
 

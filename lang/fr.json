@@ -2,12 +2,13 @@
   "TYPES": {
     "Actor": {
       "character": "Personnage",
-      "adversaire": "PNJ / Créature"
+      "adversaire": "PNJ / Créature",
+      "compagnie": "Compagnie franche"
     },
     "Item": {
       "equipment": "Équipement",
       "arcanum": "Arcanum",
-      "ascendance":"Ascendance",
+      "ascendance": "Ascendance",
       "feature": "Trait spécial",
       "peuple": "Peuple",
       "carriere": "Carrière"
@@ -30,6 +31,7 @@
     "sheet": {
       "character": "Fiche de personnage",
       "adversaire": "Fiche de PNJ / créature",
+      "compagnie": "Fiche de compagnie",
       "equipment": "Fiche d'équipement",
       "arcanum": "Fiche d'arcanum",
       "ascendance": "Fiche d'ascendance",
@@ -93,6 +95,39 @@
       "vigilance": "Vigilance",
       "vigueur": "Vigueur",
       "volonte": "Volonté"
+    },
+    "company": {
+      "abilities": {
+        "long": {
+          "effectifs": "Effectifs",
+          "logistique": "Logistique",
+          "moral": "Moral"
+        }
+      },
+      "skills": {
+        "bataille": "Bataille",
+        "ingenierie": "Ingénierie",
+        "savoirs": "Savoirs",
+        "magie": "Magie",
+        "soins": "Soins",
+        "tactique": "Tactique",
+        "approvisionnement": "Approvisionnement",
+        "equipements": "Équipements",
+        "mobilite": "Mobilité",
+        "montures": "Montures",
+        "reperage": "Repérage",
+        "richesses": "Richesses",
+        "cohesion": "Cohésion",
+        "discipline": "Discipline",
+        "informateurs": "Informateurs",
+        "negociation": "Négociation",
+        "ruse": "Ruse",
+        "surveillance": "Surveillance"
+      },
+      "dissolved": "Compagnie dissoute : les effectifs sont réduits à néant.",
+      "unlinkActor": "Délier cet acteur",
+      "noRoster": "Aucun nom.",
+      "noChronicles": "Aucun événement consigné."
     },
     "traits": {
       "blase": "Blasé",
@@ -521,7 +556,16 @@
         "freeSkillRanks": "Compétences au rang 1",
         "situationalModifiers": "Bonus circonstanciels",
         "majorNpc": "PNJ majeur",
-        "special": "Spécial"
+        "special": "Spécial",
+        "companyName": "Nom de la compagnie",
+        "rosterPJ": "Personnages joueurs",
+        "rosterPNJ": "Personnages non joueurs",
+        "chronicles": "Chroniques",
+        "woundsCompany": "Blessés",
+        "name": "Nom",
+        "notes": "Notes",
+        "date": "Date",
+        "event": "Événement"
       },
       "short": {
         "init": "Init.",
@@ -533,6 +577,7 @@
       "newItem": "Nouvel objet : {type}",
       "delete": "Supprimer",
       "remove": "Retirer",
+      "add": "Ajouter",
       "deleteItemTitle": "Supprimer l'objet",
       "deleteItemContent": "Supprimer définitivement <strong>{name}</strong> ?",
       "toggleEquipped": "Équiper ou déséquiper",
@@ -660,6 +705,13 @@
           "notes": {
             "label": "Notes"
           }
+        }
+      }
+    },
+    "Compagnie": {
+      "FIELDS": {
+        "notes": {
+          "label": "Notes"
         }
       }
     },

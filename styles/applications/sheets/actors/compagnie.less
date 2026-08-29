@@ -1,0 +1,169 @@
+// Corps de la fiche de compagnie franche (p. 171) : une seule page, pas d'onglets. Ligne 1 : roster
+// PJ/PNJ côte à côte. Puis Chroniques et Notes, chacune sur toute la largeur.
+.cdg.actor.compagnie {
+  // Le corps tient dans la fenêtre plutôt que de la faire défiler en entier (même motif que la
+  // fiche de carrière, `styles/applications/sheets/items/common.less`) : roster et chroniques
+  // gardent leur hauteur naturelle, Notes prend tout ce qui reste et suit le redimensionnement.
+  .compagnie-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    gap: 0.6rem;
+    padding: 0.6rem 0.8rem 1rem;
+  }
+
+  .compagnie-top,
+  .chronicles {
+    flex: 0 0 auto;
+  }
+
+  .compagnie-top {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    align-items: start;
+
+    > section {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+
+  .notes-section {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 8rem;
+    margin-bottom: 0;
+  }
+
+  .notes-section .free-text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .notes-section .free-text .prosemirror,
+  .notes-section .free-text prose-mirror {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .notes-section .free-text .prosemirror > .editor-container,
+  .notes-section .free-text prose-mirror > .editor-container {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  // Les trois colonnes de compétences de compagnie, chacune sous le nom de sa caractéristique —
+  // à la différence du personnage, dont les colonnes suivent la seule mise en page imprimée.
+  .skill-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 0.8rem;
+  }
+
+  .skill-column-header {
+    // `--cdg-font-title` (darka) est une fonte d'affichage taillée pour les grands bandeaux, pas
+    // pour un petit intitulé de colonne : on reprend plutôt "cinzel", déjà utilisée pour le nom des
+    // caractéristiques dans l'en-tête (`.ability-name`).
+    font-family: "cinzel";
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cdg-blood);
+    padding: 0.1rem 0 0.2rem;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+    margin-bottom: 0.15rem;
+  }
+
+  // Roster : chaque ligne accepte un acteur lié (portrait + nom cliquable) ou du texte libre.
+  .roster-row {
+    .item-img {
+      cursor: pointer;
+    }
+
+    input[type="text"] {
+      font-size: 0.8rem;
+      min-width: 0;
+    }
+
+    .roster-name {
+      flex: 1 1 auto;
+    }
+
+    .roster-grade {
+      flex: 0 1 5rem;
+    }
+
+    .roster-notes {
+      flex: 1 1 auto;
+    }
+
+    span.roster-name,
+    span.roster-grade,
+    span.roster-notes {
+      font-size: 0.82rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .chronicle-row {
+    input[type="text"] {
+      font-size: 0.8rem;
+    }
+
+    .chronicle-date {
+      flex: 0 1 6rem;
+    }
+
+    .chronicle-event {
+      flex: 1 1 auto;
+    }
+  }
+
+  .wounds-block {
+    .wound-levels {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .wound-level {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      justify-content: flex-end;
+      padding: 0.1rem 0;
+    }
+
+    .wound-name {
+      font-size: 0.8rem;
+      color: var(--cdg-label);
+    }
+
+    .wound-boxes {
+      display: flex;
+      gap: 2px;
+    }
+
+    .wound-malus {
+      font-size: 0.78rem;
+      color: var(--cdg-blood);
+      min-width: 1.6rem;
+      text-align: right;
+    }
+
+    .current-malus {
+      text-align: right;
+      font-size: 0.8rem;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 export { default as CdgActorData } from "./actor.mjs"
 export { default as CdgCharacterData } from "./character.mjs"
 export { default as CdgAdversaireData } from "./adversaire.mjs"
+export { default as CdgCompagnieData } from "./compagnie.mjs"
 
 export { default as CdgActiveEffectData } from "./active-effect.mjs"
 

@@ -437,9 +437,9 @@ export default class CdgActor extends Actor {
     if (!condition) return
 
     const updates = {}
-    for (const ability of Object.values(SYSTEM.ABILITIES)) {
-      const pool = this.system.abilities[ability.id]
-      updates[`system.abilities.${ability.id}.value`] = Math.min(pool.max, pool.value + condition.recovery + pool.restBonus)
+    for (const abilityId of Object.keys(this.system.abilities)) {
+      const pool = this.system.abilities[abilityId]
+      updates[`system.abilities.${abilityId}.value`] = Math.min(pool.max, pool.value + condition.recovery + pool.restBonus)
     }
     return this.update(updates)
   }

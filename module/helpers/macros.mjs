@@ -101,11 +101,15 @@ export default class CdgMacros {
    * @param {string|null} abilityId
    * @param {string|null} skillId
    * @param {Actor|null} actor
+   * @param {Object} [options]
+   * @param {boolean} [options.lockedPair] Empêche de changer de caractéristique — les compétences
+   *   de compagnie franche (p. 124) n'ont, à la différence de celles du personnage, qu'un seul
+   *   couple possible.
    */
-  static async rollTest(abilityId = null, skillId = null, actor = null) {
+  static async rollTest(abilityId = null, skillId = null, actor = null, { lockedPair = false } = {}) {
     actor ??= this.selectedActor()
     if (!actor) return null
-    return CdgRollDialog.open(actor, { abilityId, skillId, qualityDomain: "skill" })
+    return CdgRollDialog.open(actor, { abilityId, skillId, qualityDomain: "skill", lockedPair })
   }
 
   /**
