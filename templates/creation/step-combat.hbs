@@ -33,7 +33,8 @@
       <ul class="item-list">
         {{#each carriereEquipments as |item|}}
           <li class="item-row">
-            <img class="item-img" src="{{item.img}}" alt="{{item.name}}" />
+            <img class="item-img" src="{{item.img}}" alt="{{item.name}}" data-action="editItem" data-uuid="{{item.uuid}}"
+              {{#if item.system.hasDescription}}data-tooltip-html="{{item.system.description}}"{{/if}} />
             <span class="item-name">{{item.name}}</span>
             <span class="item-label">{{localize "CDG.label.long.carriere"}}</span>
           </li>
@@ -44,7 +45,8 @@
       <ul class="item-list">
         {{#each items as |item|}}
           <li class="item-row">
-            <img class="item-img" src="{{item.img}}" alt="{{item.name}}" />
+            <img class="item-img" src="{{item.img}}" alt="{{item.name}}" data-action="editItem" data-uuid="{{item.uuid}}"
+              {{#if item.system.hasDescription}}data-tooltip-html="{{item.system.description}}"{{/if}} />
             <span class="item-name">{{item.name}}</span>
             <span class="item-label">{{localize (concat "TYPES.Item." item.type)}}</span>
             <button type="button" class="item-control" data-action="removeItem" data-uuid="{{item.uuid}}" data-tooltip="{{localize 'CDG.ui.remove'}}">

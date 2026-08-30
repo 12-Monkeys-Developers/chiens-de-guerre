@@ -57,6 +57,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       setTrait: CdgCharacterCreation.#onSetTrait,
       toggleLanguage: CdgCharacterCreation.#onToggleLanguage,
       pickImage: CdgCharacterCreation.#onPickImage,
+      editItem: CdgCharacterCreation.#onEditItem,
       removeItem: CdgCharacterCreation.#onRemoveItem,
       clearPeuple: CdgCharacterCreation.#onClearPeuple,
       clearCarriere: CdgCharacterCreation.#onClearCarriere,
@@ -191,6 +192,9 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       // Rang de chaque arcanum acquis, indexé par UUID. Ceux qu'accorde la carrière n'y figurent
       // pas : ils sont offerts et gardent le rang inscrit sur leur fiche.
       arcanumRanks: {},
+      // Sélection courante du menu « Ajouter un arcanum » — un champ de formulaire comme un autre,
+      // donc reflété dans le brouillon pour survivre au rendu qu'entraîne son propre `change`.
+      arcanumPicker: "",
       // Points de personnalisation investis dans le pécule de départ.
       moneyPoints: 0,
       wealth: Object.keys(SYSTEM.CURRENCIES).reduce((obj, id) => {
@@ -304,10 +308,14 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       case "carriere":
         context.grades = Object.values(SYSTEM.GRADES).map((grade) => ({
           ...grade,
+          creationCost: this.#gradeCost(grade.id),
           selected: this.#draft.grade === grade.id,
-          // Un grade sans prix de création n'est pas accessible ; un grade payant exige les points.
-          unavailable: grade.creationCost === null,
-          tooExpensive: grade.creationCost > this.#derived.customizationRemaining + this.#derived.gradeCost,
+          // Un grade sans prix de création n'est pas accessible, sauf déblocage par la carrière
+          // (Officier / Lieutenant) ; un grade payant exige les points.
+          unavailable: grade.creationCost === null && !this.#isGradeUnlocked(grade.id),
+          // En dessous du grade honorifique offert par la carrière : on ne peut pas le refuser.
+          belowFloor: this.#isBelowGradeFloor(grade.id),
+          tooExpensive: this.#gradeCost(grade.id) > this.#derived.customizationRemaining + this.#derived.gradeCost,
         }))
         context.carriereChoices = await this.#itemChoices(SYSTEM.ITEM_TYPE.carriere)
         context.carriereItem = this.#carriereItem
@@ -379,7 +387,9 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       case "combat":
         context.woundLevels = Object.values(SYSTEM.WOUND_LEVELS)
         context.carriereEquipments = this.#carriereEquipments
-        context.items = this.#droppedItems
+        // `#droppedItems` porte tout ce que le brouillon a accumulé (arcanums, traits...), pas
+        // seulement l'équipement déposé sur cet écran.
+        context.items = this.#droppedItems.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment)
         break
 
       case "identite":
@@ -417,6 +427,10 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     this.#peupleItem = this.#draft.peuple.uuid ? await this.#resolveDocument(this.#draft.peuple.uuid) : null
     this.#carriereItem = this.#draft.carriere.uuid ? await this.#resolveDocument(this.#draft.carriere.uuid) : null
     this.#ascendanceItem = this.#draft.ascendance.uuid ? await this.#resolveDocument(this.#draft.ascendance.uuid) : null
+
+    // Un grade honorifique de carrière (Chroniqueur, Émissaire...) relève le plancher : jamais
+    // rabaissé une fois atteint, comme un rang de compétence accordé.
+    if (this.#isBelowGradeFloor(this.#draft.grade)) this.#draft.grade = this.#gradeFloor()
 
     const features = await Promise.all((this.#peupleItem?.system.features ?? []).map((uuid) => this.#resolveDocument(uuid)))
     this.#originFeatures = features.filter((item) => item?.type === SYSTEM.ITEM_TYPE.feature)
@@ -699,6 +713,51 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   }
 
   /**
+   * Grade honorifique offert par la carrière (Chroniqueur, Émissaire...), ou "" si elle n'en
+   * accorde aucun — la Compagnie s'entre alors toujours comme duplicator.
+   * @returns {string}
+   */
+  #gradeFloor() {
+    return this.#carriereItem?.system.startingGrade || ""
+  }
+
+  /**
+   * Un grade est-il strictement en dessous du plancher offert par la carrière ? On ne redescend
+   * jamais sous un grade honorifique déjà accordé.
+   * @param {string} gradeId
+   * @returns {boolean}
+   */
+  #isBelowGradeFloor(gradeId) {
+    const floor = this.#gradeFloor()
+    if (!floor) return false
+    const order = Object.keys(SYSTEM.GRADES)
+    return order.indexOf(gradeId) < order.indexOf(floor)
+  }
+
+  /**
+   * Ce grade est-il ouvert à la création par la carrière elle-même, alors qu'il ne le serait pas
+   * autrement (Officier, qui donne accès à Lieutenant) ?
+   * @param {string} gradeId
+   * @returns {boolean}
+   */
+  #isGradeUnlocked(gradeId) {
+    return !!gradeId && this.#carriereItem?.system.gradeUnlock?.grade === gradeId
+  }
+
+  /**
+   * Coût en points de personnalisation pour tenir ce grade, compte tenu du plancher de la
+   * carrière (gratuit une fois atteint) et d'un déblocage propre à la carrière (Officier / grade
+   * de Lieutenant, sinon hors de portée à la création).
+   * @param {string} gradeId
+   * @returns {number|null} `null` si le grade reste hors de portée à la création.
+   */
+  #gradeCost(gradeId) {
+    if (gradeId === this.#gradeFloor()) return 0
+    if (this.#isGradeUnlocked(gradeId)) return this.#carriereItem.system.gradeUnlock.cost
+    return SYSTEM.GRADES[gradeId]?.creationCost ?? null
+  }
+
+  /**
    * Les candidats du bonus d'arcanum de l'ascendance (p. 123, `system.arcanumChoices`) : gratuit,
    * distinct des arcanums achetés plus haut sur ce même écran. Chaque candidat déjà possédé (par
    * la carrière ou par un achat) propose de monter d'un rang plutôt que de l'acquérir au rang 1 —
@@ -767,7 +826,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     derived.arcanumCost = arcanumCost
 
     derived.improvementCount = Object.values(this.#draft.improvements).reduce((total, count) => total + count, 0)
-    derived.gradeCost = SYSTEM.GRADES[this.#draft.grade]?.creationCost ?? 0
+    derived.gradeCost = this.#gradeCost(this.#draft.grade) ?? 0
 
     derived.customization = {
       abilities: derived.improvementCount * costs.abilityImprovement,
@@ -944,7 +1003,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
       case "carriere":
         if (!this.#draft.carriere.name) return missing("carriere")
-        if (SYSTEM.GRADES[this.#draft.grade]?.creationCost === null) return missing("gradeUnavailable")
+        if (this.#gradeCost(this.#draft.grade) === null) return missing("gradeUnavailable")
         return done
 
       case "ascendance":
@@ -1001,7 +1060,13 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
           .map((ability) => `${game.i18n.localize(ability.label)} ${this.#derived.abilities[ability.id]}`)
           .join(" · "),
       },
-      { label: "CDG.label.long.skills", value: game.i18n.format("CDG.creation.recap.trainedSkills", { count: this.#derived.trainedCount }) },
+      {
+        label: "CDG.label.long.skills",
+        value: Object.entries(this.#derived.skills)
+          .filter(([, rank]) => rank > 0)
+          .map(([id, rank]) => `${game.i18n.localize(SYSTEM.SKILLS[id].label)} ${rank}`)
+          .join(" · "),
+      },
       {
         label: "CDG.creation.recap.freeSkillRanks",
         value: this.#derived.creationGrants.freeSkillRanks
@@ -1014,7 +1079,13 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       {
         label: "CDG.creation.recap.customizationBonus",
         value: this.#derived.creationGrants.customizationPoints
-          ? game.i18n.format("CDG.creation.recap.customizationBonusValue", { points: this.#derived.creationGrants.customizationPoints })
+          ? game.i18n.format("CDG.creation.recap.customizationBonusValue", {
+              points: this.#derived.creationGrants.customizationPoints,
+              sources: this.#originFeatures
+                .filter((feature) => feature.system.creationGrants.customizationPoints > 0)
+                .map((feature) => `${feature.name} (+${feature.system.creationGrants.customizationPoints})`)
+                .join(", "),
+            })
           : "",
       },
       { label: "CDG.label.long.karma", value: `${this.#derived.karma.value} — ${game.i18n.localize(this.#derived.karma.allegianceLabel)}` },
@@ -1054,12 +1125,13 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       if (item) data.ascendance.name = item.name
     }
 
-    // Le grade est le seul champ de formulaire à coûter des points : un grade hors d'atteinte ou
-    // trop cher est refusé ici, et pas seulement grisé dans le gabarit.
+    // Le grade est le seul champ de formulaire à coûter des points : un grade hors d'atteinte,
+    // trop cher, ou en dessous du plancher honorifique de la carrière est refusé ici, et pas
+    // seulement grisé dans le gabarit.
     if (data.grade !== undefined && data.grade !== this.#draft.grade) {
-      const cost = SYSTEM.GRADES[data.grade]?.creationCost
+      const cost = this.#gradeCost(data.grade)
       const budget = this.#derived.customizationRemaining + this.#derived.gradeCost
-      if (cost === null || cost === undefined || cost > budget) delete data.grade
+      if (cost === null || cost === undefined || cost > budget || this.#isBelowGradeFloor(data.grade)) delete data.grade
     }
 
     foundry.utils.mergeObject(this.#draft, data)
@@ -1144,6 +1216,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
     this.#draft.items.push(uuid)
     this.#draft.arcanumRanks[uuid] = SYSTEM.ARCANUM_MIN_RANK
+    this.#draft.arcanumPicker = ""
     this.render()
   }
 
@@ -1333,6 +1406,18 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       left: this.position.left + 10,
     })
     return fp.browse()
+  }
+
+  /**
+   * Ouvre la fiche d'un objet référencé par UUID — carrière ou déposé, jamais encore embarqué sur
+   * un acteur à ce stade.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte `data-uuid`.
+   */
+  static async #onEditItem(event, target) {
+    const uuid = target.dataset.uuid
+    const item = uuid ? await this.#resolveDocument(uuid) : null
+    return item?.sheet.render(true)
   }
 
   /**

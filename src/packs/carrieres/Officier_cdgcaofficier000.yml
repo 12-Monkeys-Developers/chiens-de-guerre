@@ -17,6 +17,10 @@ system:
     un coût de 10 points de personnalisation lors de la création de
     personnage.</p>
   abilityBonus: corps
+  startingGrade: sergent
+  gradeUnlock:
+    grade: lieutenant
+    cost: 10
   startingMoney: 60
   skills:
     - skill: autorite

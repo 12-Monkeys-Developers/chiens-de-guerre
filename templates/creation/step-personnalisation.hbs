@@ -170,9 +170,9 @@
 
     <div class="field-line">
       <select name="arcanumPicker">
-        <option value="">{{localize "CDG.creation.noItem"}}</option>
+        <option value="" {{#if (eq "" @root.draft.arcanumPicker)}}selected{{/if}}>{{localize "CDG.creation.noItem"}}</option>
         {{#each arcanumChoices as |choice|}}
-          <option value="{{choice.uuid}}">{{choice.name}}</option>
+          <option value="{{choice.uuid}}" {{#if (eq choice.uuid @root.draft.arcanumPicker)}}selected{{/if}}>{{choice.name}}</option>
         {{/each}}
       </select>
       <button type="button" class="inline-control" data-action="addArcanum" data-tooltip="{{localize 'CDG.ui.addArcanum'}}">

@@ -16,6 +16,7 @@ system:
     nain.</li></ul><h4>Spécial</h4><p>Vous commencez avec le grade de
     Sergent.</p>
   abilityBonus: esprit
+  startingGrade: sergent
   startingMoney: 60
   skills:
     - skill: artsArtisanats

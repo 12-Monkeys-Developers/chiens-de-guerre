@@ -756,7 +756,9 @@
         "gradeFreeShort": "Gratuit",
         "gradeCost": "Promotion : {cost} points de personnalisation.",
         "gradeUnavailable": "Ce grade ne s'obtient pas à la création.",
-        "gradeOutOfReach": "Hors de portée"
+        "gradeOutOfReach": "Hors de portée",
+        "gradeBelowFloor": "Cette carrière commence à un grade supérieur — offert, pas à payer.",
+        "gradeBelowFloorShort": "Inférieur au grade de départ"
       },
       "ascendance": {
         "intro": "La Marque n'est jamais gratuite. Tout Marqué est lié à une origine surnaturelle qui engendre une faille morale irrépressible : chaque ascendance est une fiche du monde, qui porte sa propre compulsion.",
@@ -851,11 +853,10 @@
       "recap": {
         "title": "Résumé",
         "incomplete": "Étapes laissées en plan :",
-        "trainedSkills": "{count} entraînées",
         "freeSkillRanks": "Ouvertures gratuites",
         "freeSkillRanksValue": "{used} utilisée(s) sur {total}",
         "customizationBonus": "Bonus de personnalisation",
-        "customizationBonusValue": "+{points} point(s)",
+        "customizationBonusValue": "+{points} point(s) — {sources}",
         "originWarnings": "Avertissements sur les origines :"
       }
     },

@@ -16,6 +16,7 @@ system:
     légère (dégâts 1) <em>ou</em> arme de corps-à-corps moyenne (dégâts
     2).</li></ul><h4>Spécial</h4><p>Vous commencez avec le grade de Sergent.</p>
   abilityBonus: esprit
+  startingGrade: sergent
   startingMoney: 30
   skills:
     - skill: autorite

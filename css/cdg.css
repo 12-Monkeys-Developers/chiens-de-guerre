@@ -3361,6 +3361,9 @@ cdg-toggle-switch[checked] thumb {
   font-style: italic;
   color: var(--cdg-muted);
 }
+.cdg.creation .step-combat .item-img {
+  cursor: pointer;
+}
 .cdg.creation .step-identite .identity-block {
   display: grid;
   grid-template-columns: 120px 1fr;

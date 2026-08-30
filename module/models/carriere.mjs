@@ -18,6 +18,18 @@ export default class CdgCarriereData extends CdgItemData {
 
     schema.abilityBonus = new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...Object.keys(SYSTEM.ABILITIES)] })
 
+    // Un grade d'entrée (Chroniqueur, Émissaire, Officier) : offert, pas un plancher payant
+    // comme un rang de compétence — la création doit donc le distinguer d'un achat.
+    schema.startingGrade = new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...Object.keys(SYSTEM.GRADES)] })
+
+    // Certaines carrières (Officier) ouvrent l'accès à un grade normalement hors de portée à la
+    // création — Lieutenant, dont `creationCost` vaut `null` dans `SYSTEM.GRADES` — moyennant un
+    // coût de personnalisation qui leur est propre.
+    schema.gradeUnlock = new fields.SchemaField({
+      grade: new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...Object.keys(SYSTEM.GRADES)] }),
+      cost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
+    })
+
     // Rangs de compétences de départ : uniquement les compétences concernées, pas les 31.
     schema.skills = new fields.ArrayField(
       new fields.SchemaField({

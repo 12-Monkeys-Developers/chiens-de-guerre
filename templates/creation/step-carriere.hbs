@@ -39,20 +39,22 @@
     <h3>{{localize "CDG.label.long.grade"}}</h3>
     <ol class="grade-cards">
       {{#each grades as |grade|}}
-        <li class="grade-card {{#if grade.selected}}selected{{/if}} {{#if grade.unavailable}}unavailable{{/if}}">
-          <label data-tooltip="{{#if grade.unavailable}}{{localize 'CDG.creation.carriere.gradeUnavailable'}}{{else if grade.creationCost}}{{localize 'CDG.creation.carriere.gradeCost' cost=grade.creationCost}}{{else}}{{localize 'CDG.creation.carriere.gradeFree'}}{{/if}}">
+        <li class="grade-card {{#if grade.selected}}selected{{/if}} {{#if (or grade.unavailable grade.belowFloor)}}unavailable{{/if}}">
+          <label data-tooltip="{{#if grade.unavailable}}{{localize 'CDG.creation.carriere.gradeUnavailable'}}{{else if grade.belowFloor}}{{localize 'CDG.creation.carriere.gradeBelowFloor'}}{{else if grade.creationCost}}{{localize 'CDG.creation.carriere.gradeCost' cost=grade.creationCost}}{{else}}{{localize 'CDG.creation.carriere.gradeFree'}}{{/if}}">
             <input
               type="radio"
               name="grade"
               value="{{grade.id}}"
               {{checked grade.selected}}
-              {{disabled (or grade.unavailable (and grade.tooExpensive (not grade.selected)))}}
+              {{disabled (or grade.unavailable grade.belowFloor (and grade.tooExpensive (not grade.selected)))}}
             />
             <span class="grade-name">{{localize grade.label}}</span>
           </label>
           <span class="grade-price">
             {{#if grade.unavailable}}
               <em>{{localize "CDG.creation.carriere.gradeOutOfReach"}}</em>
+            {{else if grade.belowFloor}}
+              <em>{{localize "CDG.creation.carriere.gradeBelowFloorShort"}}</em>
             {{else if grade.creationCost}}
               {{localize "CDG.creation.competences.points" points=grade.creationCost}}
             {{else}}
