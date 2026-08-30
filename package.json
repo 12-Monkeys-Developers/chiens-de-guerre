@@ -10,7 +10,8 @@
     "gulp": "gulp",
     "YMLtoLDB": "node ./tools/YMLtoLDB.mjs",
     "LDBtoYML": "node ./tools/LDBtoYML.mjs",
-    "build:compendiums": "node ./tools/build-compendiums.mjs"
+    "build:compendiums": "node ./tools/scripts/build-compendiums.mjs",
+    "build:pretires": "node ./tools/scripts/build-pretires.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

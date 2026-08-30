@@ -11,9 +11,9 @@ styles/**/*.css
 # Les visuels réellement utilisés par le système sont copiés dans ui/, qui est versionné.
 source/
 
-# Produit de génération : la macro autonome écrite par tools/build-carrieres.mjs, reconstructible
-# à tout moment depuis tools/data/.
-/tools/out/
+# Outillage local de génération : données sources, scripts et macros produites pour les
+# compendiums et les prétirés. Tout est reconstructible depuis le livre des règles.
+/tools/scripts/
 
 # Tools
 .claudeignore

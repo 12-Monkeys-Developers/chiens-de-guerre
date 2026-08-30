@@ -129,7 +129,7 @@ npm run build:compendiums -- --force --only=arcanums   # ... mais un seul pack
 npm run build:compendiums -- --force --only=pnjs       # régénère seulement le bestiaire
 ```
 
-- Les données vivent dans `tools/data/` — c'est là qu'on corrige, jamais dans les YAML produits.
+- Les données vivent dans `tools/scripts/` — c'est là qu'on corrige, jamais dans les YAML produits.
   `equipements.mjs` ne recopie d'ailleurs aucun chiffre : dégâts, protection, malus d'initiative,
   couple caractéristique / compétence et prix sont lus dans `module/config/equipment.mjs`, comme
   `CdgItem#_preUpdate` le fait quand on change la catégorie sur une fiche.
@@ -147,15 +147,15 @@ npm run build:compendiums -- --force --only=pnjs       # régénère seulement l
   CLI, elle, accepterait en silence.
 - Chaque carrière embarque son effet d'ajustement de caractéristique, pour la même raison que les
   peuples : `grantOrigin()` n'applique délibérément pas `system.abilityBonus`.
-- Il produit en plus `tools/out/macro-compendiums.js` (non versionné), une macro Foundry autonome qui
+- Il produit en plus `tools/scripts/macro-compendiums.js` (non versionné), une macro Foundry autonome qui
   crée les mêmes contenus dans des compendiums de monde. Elle n'y réutilise pas les UUID du système :
   elle crée d'abord arcanums et équipements, puis résout les références. Relancer la macro ne
   duplique rien.
-- Le bestiaire est généré depuis `tools/data/pnjs.mjs`. Chaque acteur embarque son équipement et ses
+- Le bestiaire est généré depuis `tools/scripts/pnjs.mjs`. Chaque acteur embarque son équipement et ses
   Arcanums : il reste donc utilisable sans les packs d'objets. Le bonus d'initiative stocké compense
   les malus de l'armure et du bouclier équipés afin que le total final soit exactement celui du PDF.
   La page source est conservée dans `flags.chiens-de-guerre.sourcePage`.
-- `tools/out/macro-pnjs.js` est la macro autonome dédiée au bestiaire. Elle exige un MJ, crée un
+- `tools/scripts/macro-pnjs.js` est la macro autonome dédiée au bestiaire. Elle exige un MJ, crée un
   compendium Actor de monde et conserve tout acteur déjà présent avec le même identifiant ; les
   retouches faites en jeu ne sont donc jamais écrasées lors d'une seconde exécution. La macro globale
   `macro-compendiums.js` crée également ce pack.
