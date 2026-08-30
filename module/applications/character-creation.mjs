@@ -59,6 +59,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       pickImage: CdgCharacterCreation.#onPickImage,
       editItem: CdgCharacterCreation.#onEditItem,
       removeItem: CdgCharacterCreation.#onRemoveItem,
+      removeCarriereEquipment: CdgCharacterCreation.#onRemoveCarriereEquipment,
       clearPeuple: CdgCharacterCreation.#onClearPeuple,
       clearCarriere: CdgCharacterCreation.#onClearCarriere,
       clearAscendance: CdgCharacterCreation.#onClearAscendance,
@@ -175,7 +176,6 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       // Le candidat d'arcanum choisi parmi ceux de l'ascendance, pour le bonus gratuit — distinct
       // des arcanums achetés en personnalisation (`arcanumRanks`).
       ascendanceArcanumBonus: "",
-      passionTokens: SYSTEM.BASE_PASSION_TOKENS,
       skills: Object.keys(SYSTEM.SKILLS).reduce((obj, id) => {
         obj[id] = 0
         return obj
@@ -204,6 +204,9 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       marque: "",
       histoire: "",
       items: [],
+      // Doublons d'un choix "OU" de la carrière (arme légère OU moyenne...) écartés à l'étape 8 —
+      // les deux sont accordées par défaut, celle-ci est celle que le joueur ne veut pas.
+      excludedCarriereEquipment: [],
     }
   }
 
@@ -280,10 +283,6 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         break
 
       case "origine":
-        context.religions = Object.values(SYSTEM.RELIGIONS)
-        // La carrière se choisit à l'étape suivante, mais un aumônier ne peut pas rester sans
-        // allégeance : la contrainte doit déjà se voir ici.
-        context.religionRequired = !!this.#carriereItem?.system.requiresReligion
         context.languages = Object.values(SYSTEM.LANGUAGES).map((language) => {
           const granted = this.#derived.grantedLanguages.includes(language.id)
           const known = this.#derived.languages.includes(language.id)
@@ -389,10 +388,21 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
       case "combat":
         context.woundLevels = Object.values(SYSTEM.WOUND_LEVELS)
-        context.carriereEquipments = this.#carriereEquipments
+        // La religion s'est déplacée ici (p. 123, à la suite des blessures) : la carrière se
+        // choisit à une étape antérieure, mais un aumônier ne peut pas rester sans allégeance.
+        context.religions = Object.values(SYSTEM.RELIGIONS)
+        context.religionRequired = !!this.#carriereItem?.system.requiresReligion
+        // Un choix "OU" de la carrière accorde les deux équipements : celui que le joueur ne veut
+        // pas se retire d'ici, comme un doublon, plutôt que de choisir pour lui.
+        context.carriereEquipments = this.#carriereEquipments.filter((item) => !this.#draft.excludedCarriereEquipment.includes(item.uuid))
+        // « Au choix » (p. 123) : le texte que la fiche de carrière ne sait pas modéliser autrement
+        // qu'en description — rappelé ici, pas cliquable, la décision se fait par un vrai dépôt
+        // d'équipement.
+        context.equipmentChoices = this.#carriereItem?.system.choices ?? []
         // `#droppedItems` porte tout ce que le brouillon a accumulé (arcanums, traits...), pas
         // seulement l'équipement déposé sur cet écran.
         context.items = this.#droppedItems.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment)
+        context.wealthRemaining = this.#derived.wealthRemaining
         break
 
       case "identite":
@@ -444,6 +454,10 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
     const equipments = await Promise.all((this.#carriereItem?.system.equipments ?? []).map((uuid) => this.#resolveDocument(uuid)))
     this.#carriereEquipments = equipments.filter((item) => item?.type === SYSTEM.ITEM_TYPE.equipment)
+    // Un choix "OU" de la carrière (arme légère OU moyenne...) accorde les deux : le rappel qui
+    // pointait vers une carrière abandonnée depuis n'a plus lieu d'être écarté.
+    const carriereEquipmentUuids = new Set(this.#carriereEquipments.map((item) => item.uuid))
+    this.#draft.excludedCarriereEquipment = this.#draft.excludedCarriereEquipment.filter((uuid) => carriereEquipmentUuids.has(uuid))
 
     const carriereArcanums = await Promise.all((this.#carriereItem?.system.arcanums ?? []).map((uuid) => this.#resolveDocument(uuid)))
     this.#carriereArcanums = carriereArcanums.filter((item) => item?.type === SYSTEM.ITEM_TYPE.arcanum)
@@ -856,6 +870,36 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       ducat: this.#draft.wealth.ducat + derived.boughtDucats,
       denier: this.#draft.wealth.denier,
     }
+
+    // La bourse de départ, c'est le pécule ET l'argent versé par la carrière — les deux sont à la
+    // disposition du joueur avant même d'ouvrir la fenêtre d'équipement.
+    derived.carriereStartingMoney = this.#carriereItem?.system.startingMoney ?? 0
+
+    // Ce que l'équipement supplémentaire de l'étape 8 a coûté sur cette bourse — jamais celui de
+    // la carrière, offert. Le solde qui en ressort est celui que le personnage aura vraiment à sa
+    // création (`#actorSystemData`), pas seulement un affichage.
+    derived.equipmentCost = this.#droppedItems.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment).reduce((total, item) => total + this.#toDeniers(item.system.price), 0)
+    derived.wealthRemaining = this.#fromDeniers(this.#toDeniers(derived.wealth) + derived.carriereStartingMoney * SYSTEM.DENIERS_PER_DUCAT - derived.equipmentCost)
+  }
+
+  /**
+   * Solde total en deniers, l'unité de compte interne (1 ducat = {@link SYSTEM.DENIERS_PER_DUCAT}
+   * deniers).
+   * @param {{ducat?: number, denier?: number}} wealth
+   * @returns {number}
+   */
+  #toDeniers(wealth) {
+    return Object.values(SYSTEM.CURRENCIES).reduce((total, currency) => total + (wealth?.[currency.id] ?? 0) * currency.inBaseUnit, 0)
+  }
+
+  /**
+   * Reconvertit un total de deniers en ducats et deniers, jamais sous zéro.
+   * @param {number} deniers
+   * @returns {{ducat: number, denier: number}}
+   */
+  #fromDeniers(deniers) {
+    const total = Math.max(0, deniers)
+    return { ducat: Math.floor(total / SYSTEM.DENIERS_PER_DUCAT), denier: total % SYSTEM.DENIERS_PER_DUCAT }
   }
 
   /**
@@ -1004,7 +1048,6 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
       case "origine":
         if (!this.#draft.peuple.name) return missing("peuple")
-        if (!this.#draft.religion) return missing("religion")
         if (this.#derived.languages.length === 0) return missing("languages")
         return done
 
@@ -1036,6 +1079,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         return done
 
       case "combat":
+        if (!this.#draft.religion) return missing("religion")
         return done
 
       case "identite":
@@ -1054,7 +1098,17 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       { label: "CDG.label.long.peuple", value: this.#draft.peuple.name },
       { label: "CDG.label.long.religion", value: this.#derived.religionLabel },
       { label: "CDG.label.long.carriere", value: this.#draft.carriere.name },
-      { label: "CDG.label.long.grade", value: this.#draft.grade ? game.i18n.localize(SYSTEM.GRADES[this.#draft.grade].label) : "" },
+      {
+        label: "CDG.label.long.grade",
+        value: this.#draft.grade
+          ? game.i18n.format("CDG.creation.recap.gradeValue", {
+              grade: game.i18n.localize(SYSTEM.GRADES[this.#draft.grade].label),
+              pay: SYSTEM.GRADES[this.#draft.grade].pay,
+              ducat: game.i18n.localize("CDG.currency.ducatShort"),
+              month: game.i18n.localize("CDG.label.short.month"),
+            })
+          : "",
+      },
       { label: "CDG.label.long.ascendance", value: this.#draft.ascendance.name },
       { label: "CDG.label.long.compulsion", value: this.#ascendanceItem?.system.compulsion ?? "" },
       {
@@ -1444,6 +1498,19 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   }
 
   /**
+   * Écarte un des deux équipements d'un choix "OU" de la carrière (arme légère OU moyenne...) :
+   * les deux sont accordés par défaut, celui-ci est le doublon dont le joueur ne veut pas.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte `data-uuid`.
+   */
+  static #onRemoveCarriereEquipment(event, target) {
+    const uuid = target.dataset.uuid
+    if (!uuid || this.#draft.excludedCarriereEquipment.includes(uuid)) return
+    this.#draft.excludedCarriereEquipment.push(uuid)
+    this.render()
+  }
+
+  /**
    * Détache l'objet Peuple, en laissant le nom saisi.
    * @param {PointerEvent} event
    * @param {HTMLElement} target
@@ -1517,6 +1584,16 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       case SYSTEM.ITEM_TYPE.ascendance:
         this.#draft.ascendance = { name: item.name, uuid: item.uuid }
         break
+      case SYSTEM.ITEM_TYPE.equipment: {
+        if (this.#draft.items.includes(item.uuid)) return
+        const cost = this.#toDeniers(item.system.price)
+        if (cost > this.#toDeniers(this.#derived.wealthRemaining)) {
+          ui.notifications.warn(game.i18n.localize("CDG.creation.combat.tooExpensive"))
+          return
+        }
+        this.#draft.items.push(item.uuid)
+        break
+      }
       default:
         if (this.#draft.items.includes(item.uuid)) return
         this.#draft.items.push(item.uuid)
@@ -1582,6 +1659,26 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
           const embedded = grantedArcanums.find((item) => item.name === source.name)
           if (embedded) await embedded.update({ "system.rank": target })
         }
+
+        // Les doublons d'un choix "OU" (les deux options sont accordées par `grantOrigin`) que le
+        // joueur a écartés dans l'assistant ne doivent pas rester sur le personnage.
+        if (this.#draft.excludedCarriereEquipment.length) {
+          const excludedNames = new Set(this.#carriereEquipments.filter((item) => this.#draft.excludedCarriereEquipment.includes(item.uuid)).map((item) => item.name))
+          const toRemove = actor.grantedBy(actor.carriere).filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment && excludedNames.has(item.name))
+          if (toRemove.length)
+            await actor.deleteEmbeddedDocuments(
+              "Item",
+              toRemove.map((item) => item.id),
+            )
+        }
+      }
+
+      // Le coût de l'équipement supplémentaire de l'étape 8 se déduit maintenant que l'argent de
+      // la carrière est bien sur la fiche : jamais avant, sous peine d'un solde négatif écrêté à
+      // zéro par le schéma alors que l'assistant l'aurait couvert avec cet argent-là.
+      if (this.#derived.equipmentCost > 0) {
+        const wealth = this.#fromDeniers(this.#toDeniers(actor.system.wealth) - this.#derived.equipmentCost)
+        await actor.update({ "system.wealth.ducat": wealth.ducat, "system.wealth.denier": wealth.denier })
       }
 
       // Avant l'ascendance : son bonus retrouve un arcanum déjà possédé par son nom
@@ -1655,10 +1752,14 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       skills: {},
       traits: {},
       languages: this.#derived.languages,
-      passion: { tokens: this.#draft.passionTokens },
+      // La passion n'est pas un choix de création : le schéma part déjà à `BASE_PASSION_TOKENS`.
       // Les points de personnalisation ne sont pas de l'expérience gagnée en jeu : le compteur
       // d'expérience du personnage part à zéro. Seule la case d'augmentation cochée en garde trace.
       xp: { total: 0, spent: 0 },
+      // Le pécule seul : l'argent de la carrière arrive par `grantOrigin` juste après la création,
+      // et le coût de l'équipement supplémentaire s'en déduit ensuite (`#onCreate`) — dans cet
+      // ordre, jamais avant, sans quoi un équipement payé grâce à l'argent de la carrière
+      // afficherait un solde correct dans l'assistant mais un solde négatif écrêté à la création.
       wealth: this.#derived.wealth,
       specialTraits: CdgCharacterCreation.#toHtml(this.#draft.marque),
       details: {

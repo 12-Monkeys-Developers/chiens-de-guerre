@@ -51,6 +51,7 @@ system:
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqpiedbiche00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccmoy00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+  choices: []
 effects:
   - _id: cdgeadetrousseur
     name: Ajustement de caractéristique

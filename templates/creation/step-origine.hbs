@@ -1,7 +1,8 @@
 {{!
-  Étape 2 — Origine, religion et langues.
+  Étape 2 — Origine et langues.
   Le peuple peut être un simple nom ou un objet du monde : dans ce second cas, il apporte son bonus
-  de caractéristique, ses traits et ses langues, rappelés ici.
+  de caractéristique, ses traits et ses langues, rappelés ici. La religion s'est déplacée à l'étape
+  8, sous le nom de Confession, juste après les blessures.
 }}
 <section class="creation-step step-origine">
   <h2 class="section-title">{{localize "CDG.creation.steps.origine"}}</h2>
@@ -53,34 +54,6 @@
       <p class="hint">{{localize "CDG.creation.origine.peupleHint"}}</p>
     {{/if}}
     {{#each originWarnings as |warning|}}<p class="warning"><i class="fa-solid fa-triangle-exclamation" inert></i> {{warning}}</p>{{/each}}
-  </div>
-
-  <div class="block">
-    <h3>{{localize "CDG.label.long.religion"}}</h3>
-    <ol class="religion-cards">
-      {{#each religions as |religion|}}
-        <li class="religion-card {{#if (eq religion.id @root.draft.religion)}}selected{{/if}}">
-          <label>
-            <input type="radio" name="religion" value="{{religion.id}}" {{checked (eq religion.id @root.draft.religion)}} />
-            <span class="religion-name">{{localize religion.label}}</span>
-          </label>
-          <p class="gods">{{localize religion.gods}}</p>
-          <p class="values">{{localize religion.values}}</p>
-          <p class="credo">« {{localize religion.credo}} »</p>
-        </li>
-      {{/each}}
-      {{! Un Marqué peut aussi n'avoir aucune allégeance spirituelle : une carte à part, sans
-          panthéon ni credo, plutôt qu'une case à cocher perdue au milieu des trois cultes. Un
-          aumônier, lui, n'a pas ce choix — la carrière se choisit à l'étape suivante, mais la
-          contrainte doit déjà se voir ici. }}
-      <li class="religion-card none {{#if (eq 'aucune' @root.draft.religion)}}selected{{/if}} {{#if religionRequired}}unavailable{{/if}}">
-        <label data-tooltip="{{#if religionRequired}}{{localize 'CDG.creation.origine.religionRequired'}}{{/if}}">
-          <input type="radio" name="religion" value="aucune" {{checked (eq 'aucune' @root.draft.religion)}} {{disabled religionRequired}} />
-          <span class="religion-name">{{localize "CDG.creation.origine.noReligion"}}</span>
-        </label>
-        <p class="hint">{{#if religionRequired}}{{localize "CDG.creation.origine.religionRequired"}}{{else}}{{localize "CDG.creation.origine.noReligionHint"}}{{/if}}</p>
-      </li>
-    </ol>
   </div>
 
   <div class="block">

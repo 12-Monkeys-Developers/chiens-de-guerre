@@ -23,7 +23,7 @@ system:
   initMalus: 0
   price:
     ducat: 0
-    denier: 0
+    denier: 50
 effects: []
 folder: null
 sort: 0

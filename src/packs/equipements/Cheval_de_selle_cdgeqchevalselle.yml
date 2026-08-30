@@ -22,7 +22,7 @@ system:
   blockBonus: 0
   initMalus: 0
   price:
-    ducat: 0
+    ducat: 80
     denier: 0
 effects: []
 folder: null

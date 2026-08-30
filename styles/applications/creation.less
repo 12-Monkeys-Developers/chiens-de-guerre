@@ -362,59 +362,6 @@
 
   // ---------------------------------------------------------------- Étape 2 : origine
   .step-origine {
-    .religion-cards {
-      .card-grid();
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .religion-card {
-      .card();
-
-      .religion-name {
-        font-family: var(--font-sans);
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
-
-      p {
-        margin: 0.2rem 0 0;
-        font-size: 0.75rem;
-      }
-
-      .gods {
-        color: var(--cdg-ink-soft);
-      }
-
-      .values {
-        color: var(--cdg-label);
-        font-variant: small-caps;
-      }
-
-      .credo {
-        font-style: italic;
-        color: var(--cdg-muted);
-      }
-
-      // « Aucune » n'a ni panthéon ni credo : une ligne à part entière plutôt qu'une carte orpheline
-      // aussi haute que ses trois voisines pour rien.
-      &.none {
-        grid-column: 1 / -1;
-        display: flex;
-        align-items: baseline;
-        gap: 0.6rem;
-
-        .hint {
-          margin: 0;
-        }
-      }
-
-      // Un aumônier ne peut pas la choisir : même traitement que les grades hors de portée.
-      &.unavailable {
-        opacity: 0.45;
-      }
-    }
-
     .language-list {
       list-style: none;
       margin: 0;
@@ -1020,6 +967,60 @@
       }
     }
 
+    // Confession (p. 123) : reprise telle quelle de l'ancien bloc Religion de l'étape 2.
+    .religion-cards {
+      .card-grid();
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .religion-card {
+      .card();
+
+      .religion-name {
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      p {
+        margin: 0.2rem 0 0;
+        font-size: 0.75rem;
+      }
+
+      .gods {
+        color: var(--cdg-ink-soft);
+      }
+
+      .values {
+        color: var(--cdg-label);
+        font-variant: small-caps;
+      }
+
+      .credo {
+        font-style: italic;
+        color: var(--cdg-muted);
+      }
+
+      // « Aucune » n'a ni panthéon ni credo : une ligne à part entière plutôt qu'une carte orpheline
+      // aussi haute que ses trois voisines pour rien.
+      &.none {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+
+        .hint {
+          margin: 0;
+        }
+      }
+
+      // Un aumônier ne peut pas la choisir : même traitement que les grades hors de portée.
+      &.unavailable {
+        opacity: 0.45;
+      }
+    }
+
     .drop-zone {
       margin: 0.4rem 0 0;
       padding: 0.5rem;
@@ -1034,6 +1035,41 @@
     // L'icône ouvre la fiche de l'objet : le curseur le dit, comme sur la fiche de personnage.
     .item-img {
       cursor: pointer;
+    }
+
+    // Ce qui reste après l'équipement supplémentaire (celui de la carrière est offert) : un total,
+    // pas une simple remarque en italique.
+    .wealth-remaining {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--cdg-blood);
+    }
+
+    .item-value {
+      font-size: 0.78rem;
+      color: var(--cdg-muted);
+      white-space: nowrap;
+    }
+
+    // Le texte de « Au choix » (p. 123) que la fiche de carrière ne modélise pas autrement : un
+    // simple rappel, pas une liste à cocher.
+    .equipment-choices {
+      margin: 0.4rem 0;
+
+      h4 {
+        margin: 0 0 0.15rem;
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--cdg-label);
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.2rem;
+        font-size: 0.8rem;
+      }
     }
   }
 

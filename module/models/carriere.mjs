@@ -50,6 +50,11 @@ export default class CdgCarriereData extends CdgItemData {
     schema.arcanums = new fields.ArrayField(new fields.DocumentUUIDField())
     schema.equipments = new fields.ArrayField(new fields.DocumentUUIDField())
 
+    // Le choix laissé au joueur (arme, bouclier...) que la fiche ne sait pas modéliser : du texte
+    // libre, déjà repris dans la description sous « Au choix », mais l'assistant de création en a
+    // besoin en clair pour le rappeler à l'étape de l'équipement.
+    schema.choices = new fields.ArrayField(new fields.HTMLField())
+
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
 }

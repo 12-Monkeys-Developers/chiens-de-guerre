@@ -55,7 +55,12 @@ system:
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqannalescomp
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccmoy00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+  choices:
+    - >-
+      Arme de corps-à-corps légère (dégâts 1) <em>ou</em> arme de corps-à-corps
+      moyenne (dégâts 2).
 effects:
   - _id: cdgeachroniqueur
     name: Ajustement de caractéristique

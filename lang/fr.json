@@ -671,20 +671,20 @@
       "title": "Création de personnage",
       "steps": {
         "abilities": "Caractéristiques",
-        "origine": "Origine et religion",
+        "origine": "Origine",
         "carriere": "Carrière et grade",
         "ascendance": "Ascendance",
         "competences": "Compétences",
         "traits": "Traits",
         "personnalisation": "Personnalisation",
-        "combat": "Blessures et équipement",
+        "combat": "Touches finales",
         "identite": "Identité"
       },
       "progress": "Étape {step} sur {count} — {done} achevées",
       "stepComplete": "Étape complète.",
       "previous": "Précédent",
       "next": "Suivant",
-      "create": "Forger le Marqué",
+      "create": "Créer votre personnage",
       "reset": "Recommencer",
       "resetTooltip": "Repartir d'un brouillon vierge.",
       "resetTitle": "Recommencer la création",
@@ -735,17 +735,14 @@
         "range": "Bornes de la création : {min} à {max} par caractéristique. Les bonus du peuple et de la carrière viennent par-dessus, sans se prendre sur ces points."
       },
       "origine": {
-        "intro": "L'Escannie est un pays dévasté par l'annexion darguanite. Votre allégeance spirituelle est souvent le seul ancrage qui vous sépare du néant.",
+        "intro": "L'Escannie est un pays dévasté par l'annexion darguanite. Le peuple dont vous êtes issu vous marque autant que la guerre elle-même.",
         "peupleName": "Peuple",
         "peupleItem": "Fiche de peuple",
         "peupleHint": "Rattacher une fiche de peuple reporte son bonus de caractéristique, ses traits et ses langues. Vous pouvez aussi la déposer directement sur cette fenêtre.",
         "noFeatures": "Aucun trait accordé.",
         "grantedLanguage": "Langue accordée par le peuple : elle ne se décoche pas.",
         "languageCost": "Apprendre cette langue coûte {cost} points de personnalisation.",
-        "languagesPriceHint": "Les langues du peuple sont gratuites ; toute autre coûte {cost} points de personnalisation.",
-        "noReligion": "Aucune",
-        "noReligionHint": "Ni dieux, ni credo : le champ religion reste vide sur la fiche.",
-        "religionRequired": "Un aumônier ne peut pas rester sans allégeance spirituelle."
+        "languagesPriceHint": "Les langues du peuple sont gratuites ; toute autre coûte {cost} points de personnalisation."
       },
       "carriere": {
         "intro": "Au sein de la Compagnie Franche, chaque homme a une fonction. Définissez votre rôle avant que le désert ne vous dévore.",
@@ -765,9 +762,7 @@
         "intro": "La Marque n'est jamais gratuite. Tout Marqué est lié à une origine surnaturelle qui engendre une faille morale irrépressible : chaque ascendance est une fiche du monde, qui porte sa propre compulsion.",
         "name": "Ascendance",
         "item": "Fiche d'ascendance",
-        "hint": "Rattacher une fiche d'ascendance en reporte la compulsion. Vous pouvez aussi la déposer sur cette fenêtre.",
-        "startingTokens": "Jetons de départ",
-        "passionHint": "Céder à sa compulsion rapporte un jeton de passion ; y résister en coûte un."
+        "hint": "Rattacher une fiche d'ascendance en reporte la compulsion. Vous pouvez aussi la déposer sur cette fenêtre."
       },
       "competences": {
         "intro": "Un test se réussit en obtenant un résultat inférieur ou égal à la caractéristique annoncée, ajustée par la difficulté. Vous disposez de {total} points à dépenser pour améliorer les compétences de votre carrière ou en acquérir d'autres.",
@@ -837,22 +832,32 @@
       "combat": {
         "woundsHint": "Cases dérivées du rang de Vigueur (rang {rank}).",
         "effectsIncluded": "Les cases supplémentaires accordées par les traits d'origine sont incluses.",
+        "confessionTitle": "Confession",
+        "confessionIntro": "Votre allégeance spirituelle est souvent le seul ancrage qui vous sépare du néant.",
+        "noReligion": "Aucune",
+        "noReligionHint": "Ni dieux, ni credo : le champ religion reste vide sur la fiche.",
+        "religionRequired": "Un aumônier ne peut pas rester sans allégeance spirituelle.",
         "startingGear": "Équipement de départ",
+        "choicesTitle": "Au choix",
+        "removeDuplicate": "Retirer ce doublon : un choix « ou » de la carrière accorde les deux.",
         "noGear": "Aucun objet pour l'instant.",
-        "dropHint": "Déposez ici armes, protections et arcanums, depuis la barre latérale ou un compendium."
+        "dropHint": "Déposez ici armes, protections et arcanums, depuis la barre latérale ou un compendium.",
+        "wealthRemaining": "{ducat} D et {denier} d — pécule et argent de la carrière compris.",
+        "tooExpensive": "Vous n'avez pas assez d'argent pour cet équipement."
       },
       "identite": {
         "intro": "Le monde se moque de qui vous étiez. Seul compte ce que vous êtes devenu.",
         "pickImage": "Choisir le portrait",
-        "marque": "La Marque",
+        "marque": "Traits spéciaux",
         "marquePlaceholder": "Cicatrice de lame, brûlure ésotérique, regard vitreux…",
-        "marqueHint": "Décrivez votre stigmate : il est le signe visible de votre statut de moralement douteux. Il sera consigné dans les traits spéciaux de la fiche.",
+        "marqueHint": "Ce texte sera consigné dans les traits spéciaux du personnage.",
         "histoire": "Origine et histoire",
         "histoirePlaceholder": "Comment avez-vous fini dans les Chiens de Guerre ?",
-        "histoireHint": "Ce texte devient la biographie publique du personnage."
+        "histoireHint": "Ce texte devient la biographie du personnage."
       },
       "recap": {
         "title": "Résumé",
+        "gradeValue": "{grade} — {pay} {ducat} / {month}",
         "incomplete": "Étapes laissées en plan :",
         "freeSkillRanks": "Ouvertures gratuites",
         "freeSkillRanksValue": "{used} utilisée(s) sur {total}",

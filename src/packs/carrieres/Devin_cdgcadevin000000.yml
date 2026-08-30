@@ -50,6 +50,10 @@ system:
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqmatdivinat0
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+  choices:
+    - >-
+      Le matériel de divination est au choix du personnage : chapelet, jeu de
+      cartes, pierres runiques, etc.
 effects:
   - _id: cdgeadevin000000
     name: Ajustement de caractéristique

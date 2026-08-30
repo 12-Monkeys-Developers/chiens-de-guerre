@@ -40,6 +40,7 @@ system:
   equipments:
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+  choices: []
 effects:
   - _id: cdgeanecromant00
     name: Ajustement de caractéristique

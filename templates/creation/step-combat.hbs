@@ -1,7 +1,8 @@
 {{!
-  Étape 8 — Calculs de combat et survie.
-  Rien à saisir ici sinon l'équipement : tout le reste découle des étapes précédentes et se lit
-  avant l'impact.
+  Étape 8 — Touches finales.
+  Blessures, confession et équipement : tout le reste découle des étapes précédentes et se lit
+  avant l'impact. La confession a rejoint cet écran (p. 123, juste après les blessures) — la
+  carrière se choisit plus tôt, mais un aumônier ne peut pas rester sans allégeance.
 }}
 <section class="creation-step step-combat">
   <h2 class="section-title">{{localize "CDG.creation.steps.combat"}}</h2>
@@ -28,6 +29,41 @@
   </div>
 
   <div class="block">
+    <h3>{{localize "CDG.creation.combat.confessionTitle"}}</h3>
+    <p class="intro">{{localize "CDG.creation.combat.confessionIntro"}}</p>
+    <ol class="religion-cards">
+      {{#each religions as |religion|}}
+        <li class="religion-card {{#if (eq religion.id @root.draft.religion)}}selected{{/if}}">
+          <label>
+            <input type="radio" name="religion" value="{{religion.id}}" {{checked (eq religion.id @root.draft.religion)}} />
+            <span class="religion-name">{{localize religion.label}}</span>
+          </label>
+          <p class="gods">{{localize religion.gods}}</p>
+          <p class="values">{{localize religion.values}}</p>
+          <p class="credo">« {{localize religion.credo}} »</p>
+        </li>
+      {{/each}}
+      {{! Un Marqué peut aussi n'avoir aucune allégeance spirituelle : une carte à part, sans
+          panthéon ni credo, plutôt qu'une case à cocher perdue au milieu des trois cultes. Un
+          aumônier, lui, n'a pas ce choix. }}
+      <li class="religion-card none {{#if (eq 'aucune' @root.draft.religion)}}selected{{/if}} {{#if religionRequired}}unavailable{{/if}}">
+        <label data-tooltip="{{#if religionRequired}}{{localize 'CDG.creation.combat.religionRequired'}}{{/if}}">
+          <input type="radio" name="religion" value="aucune" {{checked (eq 'aucune' @root.draft.religion)}} {{disabled religionRequired}} />
+          <span class="religion-name">{{localize "CDG.creation.combat.noReligion"}}</span>
+        </label>
+        <p class="hint">{{#if religionRequired}}{{localize "CDG.creation.combat.religionRequired"}}{{else}}{{localize "CDG.creation.combat.noReligionHint"}}{{/if}}</p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3 class="section-title section-title-art" data-bandeau="bourse">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/bourse.webp" alt="{{localize 'CDG.label.long.purse'}}" />
+    </h3>
+    <p class="hint wealth-remaining">{{localize "CDG.creation.combat.wealthRemaining" ducat=wealthRemaining.ducat denier=wealthRemaining.denier}}</p>
+  </div>
+
+  <div class="block">
     <h3>{{localize "CDG.creation.combat.startingGear"}}</h3>
     {{#if carriereEquipments.length}}
       <ul class="item-list">
@@ -37,9 +73,22 @@
               {{#if item.system.hasDescription}}data-tooltip-html="{{item.system.description}}"{{/if}} />
             <span class="item-name">{{item.name}}</span>
             <span class="item-label">{{localize "CDG.label.long.carriere"}}</span>
+            <button type="button" class="item-control" data-action="removeCarriereEquipment" data-uuid="{{item.uuid}}" data-tooltip="{{localize 'CDG.creation.combat.removeDuplicate'}}">
+              <i class="fa-solid fa-xmark" inert></i>
+            </button>
           </li>
         {{/each}}
       </ul>
+    {{/if}}
+    {{#if equipmentChoices.length}}
+      <div class="equipment-choices">
+        <h4>{{localize "CDG.creation.combat.choicesTitle"}}</h4>
+        <ul>
+          {{#each equipmentChoices as |choice|}}
+            <li>{{{choice}}}</li>
+          {{/each}}
+        </ul>
+      </div>
     {{/if}}
     {{#if items.length}}
       <ul class="item-list">
@@ -49,6 +98,7 @@
               {{#if item.system.hasDescription}}data-tooltip-html="{{item.system.description}}"{{/if}} />
             <span class="item-name">{{item.name}}</span>
             <span class="item-label">{{localize (concat "TYPES.Item." item.type)}}</span>
+            <span class="item-value">{{item.system.price.ducat}} {{localize "CDG.currency.ducatShort"}}{{#if item.system.price.denier}} {{item.system.price.denier}} {{localize "CDG.currency.denierShort"}}{{/if}}</span>
             <button type="button" class="item-control" data-action="removeItem" data-uuid="{{item.uuid}}" data-tooltip="{{localize 'CDG.ui.remove'}}">
               <i class="fa-solid fa-xmark" inert></i>
             </button>

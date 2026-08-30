@@ -49,8 +49,13 @@ system:
   equipments:
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqsoldat00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmetirlou0
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmetirmoy0
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+  choices:
+    - >-
+      Arme de tir lourde (dégâts 3, nécessite une action pour recharger)
+      <em>ou</em> arme de tir moyenne (dégâts 2).
 effects:
   - _id: cdgeatireurelite
     name: Ajustement de caractéristique

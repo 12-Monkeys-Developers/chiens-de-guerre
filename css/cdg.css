@@ -2804,64 +2804,6 @@ cdg-toggle-switch[checked] thumb {
   font-size: 1.1rem;
   margin-left: auto;
 }
-.cdg.creation .step-origine .religion-cards {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.4rem;
-  grid-template-columns: repeat(3, 1fr);
-}
-.cdg.creation .step-origine .religion-card {
-  border: 1px solid var(--cdg-parchment-line);
-  border-radius: var(--cdg-radius);
-  background: rgba(255, 255, 255, 0.3);
-  padding: 0.4rem 0.6rem;
-}
-.cdg.creation .step-origine .religion-card.selected {
-  border-color: var(--cdg-blood);
-  box-shadow: inset 3px 0 0 var(--cdg-blood);
-  background: rgba(255, 255, 255, 0.55);
-}
-.cdg.creation .step-origine .religion-card label {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  cursor: pointer;
-}
-.cdg.creation .step-origine .religion-card .religion-name {
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.cdg.creation .step-origine .religion-card p {
-  margin: 0.2rem 0 0;
-  font-size: 0.75rem;
-}
-.cdg.creation .step-origine .religion-card .gods {
-  color: var(--cdg-ink-soft);
-}
-.cdg.creation .step-origine .religion-card .values {
-  color: var(--cdg-label);
-  font-variant: small-caps;
-}
-.cdg.creation .step-origine .religion-card .credo {
-  font-style: italic;
-  color: var(--cdg-muted);
-}
-.cdg.creation .step-origine .religion-card.none {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-}
-.cdg.creation .step-origine .religion-card.none .hint {
-  margin: 0;
-}
-.cdg.creation .step-origine .religion-card.unavailable {
-  opacity: 0.45;
-}
 .cdg.creation .step-origine .language-list {
   list-style: none;
   margin: 0;
@@ -3354,6 +3296,64 @@ cdg-toggle-switch[checked] thumb {
   font-weight: 700;
   color: var(--cdg-blood);
 }
+.cdg.creation .step-combat .religion-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+.cdg.creation .step-combat .religion-card {
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0.4rem 0.6rem;
+}
+.cdg.creation .step-combat .religion-card.selected {
+  border-color: var(--cdg-blood);
+  box-shadow: inset 3px 0 0 var(--cdg-blood);
+  background: rgba(255, 255, 255, 0.55);
+}
+.cdg.creation .step-combat .religion-card label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+.cdg.creation .step-combat .religion-card .religion-name {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.cdg.creation .step-combat .religion-card p {
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+}
+.cdg.creation .step-combat .religion-card .gods {
+  color: var(--cdg-ink-soft);
+}
+.cdg.creation .step-combat .religion-card .values {
+  color: var(--cdg-label);
+  font-variant: small-caps;
+}
+.cdg.creation .step-combat .religion-card .credo {
+  font-style: italic;
+  color: var(--cdg-muted);
+}
+.cdg.creation .step-combat .religion-card.none {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+.cdg.creation .step-combat .religion-card.none .hint {
+  margin: 0;
+}
+.cdg.creation .step-combat .religion-card.unavailable {
+  opacity: 0.45;
+}
 .cdg.creation .step-combat .drop-zone {
   margin: 0.4rem 0 0;
   padding: 0.5rem;
@@ -3366,6 +3366,32 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.creation .step-combat .item-img {
   cursor: pointer;
+}
+.cdg.creation .step-combat .wealth-remaining {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--cdg-blood);
+}
+.cdg.creation .step-combat .item-value {
+  font-size: 0.78rem;
+  color: var(--cdg-muted);
+  white-space: nowrap;
+}
+.cdg.creation .step-combat .equipment-choices {
+  margin: 0.4rem 0;
+}
+.cdg.creation .step-combat .equipment-choices h4 {
+  margin: 0 0 0.15rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cdg-label);
+}
+.cdg.creation .step-combat .equipment-choices ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.8rem;
 }
 .cdg.creation .step-identite .identity-block {
   display: grid;

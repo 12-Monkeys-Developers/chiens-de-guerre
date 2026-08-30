@@ -48,6 +48,7 @@ system:
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqerudit00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqmatalchimie
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccleg00
+  choices: []
 effects:
   - _id: cdgeaenchanteur0
     name: Ajustement de caractéristique

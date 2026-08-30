@@ -58,8 +58,17 @@ system:
   equipments:
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqpaqsoldat00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmecclou00
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmeccmoy00
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqbouclierleg
+    - Compendium.chiens-de-guerre.equipements.Item.cdgeqbouclierlou
     - Compendium.chiens-de-guerre.equipements.Item.cdgeqarmureleg00
+  choices:
+    - >-
+      Arme de corps-à-corps lourde (dégâts 3) <em>ou</em> arme de corps-à-corps
+      moyenne (dégâts 2).
+    - >-
+      Bouclier léger (blocage + 2) <em>ou</em> bouclier lourd (init - 2, blocage
+      + 4).
 effects:
   - _id: cdgeaofficier000
     name: Ajustement de caractéristique
