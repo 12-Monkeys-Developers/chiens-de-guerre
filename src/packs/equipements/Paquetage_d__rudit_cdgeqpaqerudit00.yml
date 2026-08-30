@@ -5,7 +5,9 @@ img: icons/sundries/books/book-stack.webp
 system:
   description: >-
     <p>Le nécessaire de celui dont l'outil de travail est le savoir : de quoi
-    lire, écrire et se déplacer avec ses notes.</p>
+    lire, écrire et se déplacer avec ses notes.</p><p>Contenu : vêtements
+    bourgeois, sac à dos, bourse, briquet à silex, 5 bougies, matériel
+    d'écriture, étui à parchemins, 10 parchemins.</p>
   subtype: misc
   equipped: false
   quantity: 1
@@ -24,7 +26,7 @@ system:
   blockBonus: 0
   initMalus: 0
   price:
-    ducat: 0
+    ducat: 18
     denier: 0
 effects: []
 folder: null

@@ -70,13 +70,15 @@
         </li>
       {{/each}}
       {{! Un Marqué peut aussi n'avoir aucune allégeance spirituelle : une carte à part, sans
-          panthéon ni credo, plutôt qu'une case à cocher perdue au milieu des trois cultes. }}
-      <li class="religion-card none {{#if (eq 'aucune' @root.draft.religion)}}selected{{/if}}">
-        <label>
-          <input type="radio" name="religion" value="aucune" {{checked (eq 'aucune' @root.draft.religion)}} />
+          panthéon ni credo, plutôt qu'une case à cocher perdue au milieu des trois cultes. Un
+          aumônier, lui, n'a pas ce choix — la carrière se choisit à l'étape suivante, mais la
+          contrainte doit déjà se voir ici. }}
+      <li class="religion-card none {{#if (eq 'aucune' @root.draft.religion)}}selected{{/if}} {{#if religionRequired}}unavailable{{/if}}">
+        <label data-tooltip="{{#if religionRequired}}{{localize 'CDG.creation.origine.religionRequired'}}{{/if}}">
+          <input type="radio" name="religion" value="aucune" {{checked (eq 'aucune' @root.draft.religion)}} {{disabled religionRequired}} />
           <span class="religion-name">{{localize "CDG.creation.origine.noReligion"}}</span>
         </label>
-        <p class="hint">{{localize "CDG.creation.origine.noReligionHint"}}</p>
+        <p class="hint">{{#if religionRequired}}{{localize "CDG.creation.origine.religionRequired"}}{{else}}{{localize "CDG.creation.origine.noReligionHint"}}{{/if}}</p>
       </li>
     </ol>
   </div>

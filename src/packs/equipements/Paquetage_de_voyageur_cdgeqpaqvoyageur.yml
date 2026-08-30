@@ -5,7 +5,10 @@ img: icons/containers/bags/pack-simple-leather.webp
 system:
   description: >-
     <p>Le nécessaire de celui qui vit sur les routes : de quoi camper,
-    s'orienter et subsister loin de toute étape.</p>
+    s'orienter et subsister loin de toute étape.</p><p>Contenu : vêtements
+    confortables, sac à dos, bourse, corde 20 m, couverture, gamelle, couverts,
+    outre, briquet à silex, 5 torches, rations de voyage (5 jours), tente pour 2
+    personnes.</p>
   subtype: misc
   equipped: false
   quantity: 1
@@ -24,7 +27,7 @@ system:
   blockBonus: 0
   initMalus: 0
   price:
-    ducat: 0
+    ducat: 9
     denier: 0
 effects: []
 folder: null

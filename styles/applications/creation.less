@@ -408,6 +408,11 @@
           margin: 0;
         }
       }
+
+      // Un aumônier ne peut pas la choisir : même traitement que les grades hors de portée.
+      &.unavailable {
+        opacity: 0.45;
+      }
     }
 
     .language-list {

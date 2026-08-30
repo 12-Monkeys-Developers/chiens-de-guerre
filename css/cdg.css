@@ -2859,6 +2859,9 @@ cdg-toggle-switch[checked] thumb {
 .cdg.creation .step-origine .religion-card.none .hint {
   margin: 0;
 }
+.cdg.creation .step-origine .religion-card.unavailable {
+  opacity: 0.45;
+}
 .cdg.creation .step-origine .language-list {
   list-style: none;
   margin: 0;

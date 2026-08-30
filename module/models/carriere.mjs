@@ -18,6 +18,10 @@ export default class CdgCarriereData extends CdgItemData {
 
     schema.abilityBonus = new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...Object.keys(SYSTEM.ABILITIES)] })
 
+    // Un aumônier ne peut pas rester sans allégeance spirituelle : "Aucune" reste ouvert à tout le
+    // monde d'autre, sauf aux carrières qui l'excluent explicitement.
+    schema.requiresReligion = new fields.BooleanField({ required: true, nullable: false, initial: false })
+
     // Un grade d'entrée (Chroniqueur, Émissaire, Officier) : offert, pas un plancher payant
     // comme un rang de compétence — la création doit donc le distinguer d'un achat.
     schema.startingGrade = new fields.StringField({ required: true, blank: true, initial: "", choices: ["", ...Object.keys(SYSTEM.GRADES)] })

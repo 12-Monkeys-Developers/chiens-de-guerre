@@ -744,7 +744,8 @@
         "languageCost": "Apprendre cette langue coûte {cost} points de personnalisation.",
         "languagesPriceHint": "Les langues du peuple sont gratuites ; toute autre coûte {cost} points de personnalisation.",
         "noReligion": "Aucune",
-        "noReligionHint": "Ni dieux, ni credo : le champ religion reste vide sur la fiche."
+        "noReligionHint": "Ni dieux, ni credo : le champ religion reste vide sur la fiche.",
+        "religionRequired": "Un aumônier ne peut pas rester sans allégeance spirituelle."
       },
       "carriere": {
         "intro": "Au sein de la Compagnie Franche, chaque homme a une fonction. Définissez votre rôle avant que le désert ne vous dévore.",

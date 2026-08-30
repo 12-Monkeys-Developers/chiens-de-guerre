@@ -281,6 +281,9 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
       case "origine":
         context.religions = Object.values(SYSTEM.RELIGIONS)
+        // La carrière se choisit à l'étape suivante, mais un aumônier ne peut pas rester sans
+        // allégeance : la contrainte doit déjà se voir ici.
+        context.religionRequired = !!this.#carriereItem?.system.requiresReligion
         context.languages = Object.values(SYSTEM.LANGUAGES).map((language) => {
           const granted = this.#derived.grantedLanguages.includes(language.id)
           const known = this.#derived.languages.includes(language.id)
@@ -431,6 +434,10 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     // Un grade honorifique de carrière (Chroniqueur, Émissaire...) relève le plancher : jamais
     // rabaissé une fois atteint, comme un rang de compétence accordé.
     if (this.#isBelowGradeFloor(this.#draft.grade)) this.#draft.grade = this.#gradeFloor()
+
+    // Un aumônier ne peut pas rester sans allégeance : si la carrière l'exige, "aucune" ne reste
+    // pas un choix valide — on l'efface plutôt que de le remplacer par une religion au hasard.
+    if (this.#carriereItem?.system.requiresReligion && this.#draft.religion === "aucune") this.#draft.religion = ""
 
     const features = await Promise.all((this.#peupleItem?.system.features ?? []).map((uuid) => this.#resolveDocument(uuid)))
     this.#originFeatures = features.filter((item) => item?.type === SYSTEM.ITEM_TYPE.feature)
@@ -1133,6 +1140,10 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       const budget = this.#derived.customizationRemaining + this.#derived.gradeCost
       if (cost === null || cost === undefined || cost > budget || this.#isBelowGradeFloor(data.grade)) delete data.grade
     }
+
+    // Un aumônier ne peut pas rester sans allégeance : refusé ici en plus d'être désactivé dans
+    // le gabarit, au cas où la carrière change après coup sans repasser par l'étape 2.
+    if (data.religion === "aucune" && this.#carriereItem?.system.requiresReligion) delete data.religion
 
     foundry.utils.mergeObject(this.#draft, data)
 

@@ -18,6 +18,7 @@ system:
     est de confession tyvardique, miravique ou caedique. Il s'agit généralement
     de la foi dominante au sein de la compagnie.</p>
   abilityBonus: esprit
+  requiresReligion: true
   startingMoney: 30
   skills:
     - skill: artsArtisanats
