@@ -3,7 +3,7 @@
   {{! Expérience et Langues côte à côte ; la biographie garde toute la largeur en dessous. }}
   <div class="biographie-top">
     <section class="experience">
-      <h2 class="section-title section-title-art" data-bandeau="xp">
+    <h2 class="section-title section-title-art" data-bandeau="xp">
         <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/xp.webp" alt="{{localize 'CDG.label.long.xp'}}" />
       </h2>
       <div class="xp-line">
@@ -42,7 +42,9 @@
   </div>
 
   <section class="biography-section">
-    <h2 class="section-title">{{localize "CDG.label.long.biography"}}</h2>
+    <h2 class="section-title section-title-art" data-bandeau="biography">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/biographie.webp" alt="{{localize 'CDG.label.long.biography'}}" />
+    </h2>
     <div class="free-text">
       {{formInput systemFields.details.fields.biography value=system.details.biography
         enriched=enrichedBiography name="system.details.biography" toggled=true}}

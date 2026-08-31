@@ -34,7 +34,7 @@
       {{/each}}
     </ul>
   </section>
-
+<div style="display:grid;grid-template-columns: 1fr 1fr;">
   <section class="special-traits">
     <h2 class="section-title section-title-art" data-bandeau="traits-speciaux">
       <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/traits-speciaux.webp" alt="{{localize 'CDG.label.long.specialTraits'}}" />
@@ -77,7 +77,9 @@
   {{!-- Pense-bête : ces bonus ne sont jamais appliqués d'office, puisque le système ne sait pas
         ce que le personnage cherche à obtenir. Le dialogue de jet les proposera. --}}
   <section class="situational-modifiers">
-    <h2 class="section-title">{{localize "CDG.label.long.situationalModifiers"}}</h2>
+    <h2 class="section-title section-title-art section-title-right" data-bandeau="bonus-circonstanciels">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/bonus-circonstanciels.webp" alt="{{localize 'CDG.label.long.situationalModifiers'}}" />
+    </h2>
     <ul class="modifier-list">
       {{#each situationalModifiers as |modifier|}}
         <li class="modifier">
@@ -93,5 +95,5 @@
       <p class="hint">{{localize "CDG.ui.situationalHint"}}</p>
     {{/if}}
   </section>
-
+</div>
 </section>

@@ -160,88 +160,108 @@
 
   // --- Combat --------------------------------------------------------------------------------
   .combat-top {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-    margin-bottom: 0.8rem;
+    display: flex;
+    flex-direction: column;
   }
-
-  .initiative-block {
-    .init-modifier,
-    .init-bonus,
-    .init-dual-wield {
+  .actionscombat-block {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    padding-top: 30px;
+    .initiative-line {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.4rem;
+      flex-direction: row;
+      align-items: center;
+      .init-modifier,
+      .init-bonus,
+      .init-dual-wield {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.4rem;
+      }
+
+      // Le modificateur total est calculé, pas saisi : même traitement que l'expérience disponible.
+      .init-modifier .value,
+      .init-dual-wield .value {
+        .cdg-derived-value();
+      }
+    }
+    .dodge-track {
+      display: flex;
+      gap: 0.15rem;
+      align-items: center;
+      .dodge-step {
+        text-align: center;
+        font-size: 0.78rem;
+        padding: 0.15rem 0;
+        background: var(--cdg-shield-empty);
+        border: 1px solid var(--cdg-shield-border);
+        border-radius: var(--cdg-radius);
+        color: var(--cdg-ink);
+        width: 60px;
+        margin: 0px 10px;
+
+        &.used {
+          background: var(--cdg-blood);
+          border-color: var(--cdg-blood-dark);
+          color: var(--cdg-parchment);
+        }
+
+        &:hover {
+          border-color: var(--cdg-blood);
+          text-shadow: none;
+        }
+      }
+    }
+    .dodge-malus {
+      align-items: center;
+      text-align: center;
     }
 
-    // Le modificateur total est calculé, pas saisi : même traitement que l'expérience disponible.
-    .init-modifier .value,
-    .init-dual-wield .value {
-      .cdg-derived-value();
+    .parry {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      .parry-toggle {
+        font-size: 1rem;
+        color: var(--cdg-label);
+
+        &.used {
+          color: var(--cdg-muted);
+          text-decoration: line-through;
+        }
+
+        &:hover {
+          color: var(--cdg-blood);
+          text-shadow: none;
+        }
+      }
     }
   }
 
   .combat-quick-actions {
-    display: flex;
     gap: 0.3rem;
-    margin-bottom: 0.35rem;
 
     button {
-      flex: 1;
+      background-color: black;
       padding: 0.2rem 0.35rem;
       font-size: 0.75rem;
+      margin: 10px 10px;
+      width: 90px;
+opacity: 0.6;
+      transition: 0.4s;
+    }
+
+    button:hover {
+      opacity: 1;
+      cursor:pointer;
     }
   }
-
-  .dodge-track {
-    display: flex;
-    gap: 0.15rem;
-
-    .dodge-step {
-      flex: 1 1 0;
-      text-align: center;
-      font-size: 0.78rem;
-      padding: 0.15rem 0;
-      background: var(--cdg-shield-empty);
-      border: 1px solid var(--cdg-shield-border);
-      border-radius: var(--cdg-radius);
-      color: var(--cdg-ink);
-
-      &.used {
-        background: var(--cdg-blood);
-        border-color: var(--cdg-blood-dark);
-        color: var(--cdg-parchment);
-      }
-
-      &:hover {
-        border-color: var(--cdg-blood);
-        text-shadow: none;
-      }
-    }
-  }
-
-  .parry {
-    margin-top: 0.4rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-
-    .parry-toggle {
-      font-size: 0.8rem;
-      color: var(--cdg-label);
-
-      &.used {
-        color: var(--cdg-muted);
-        text-decoration: line-through;
-      }
-
-      &:hover {
-        color: var(--cdg-blood);
-        text-shadow: none;
-      }
-    }
+  .combat-deuxcol {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    margin-top: 2rem;
   }
 
   .wound-levels {
@@ -295,7 +315,7 @@
     color: var(--cdg-blood);
 
     &.cleared {
-      color: var(--cdg-muted);
+    color: var(--cdg-blood);
       font-weight: 400;
     }
 
@@ -305,8 +325,8 @@
     }
   }
 
-  // Une seule colonne : armures, boucliers et armes se lisent d'affilée sous un bandeau unique.
   .combat-gear {
+    width: 474px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.8rem;
@@ -319,6 +339,8 @@
     padding: 0;
     display: flex;
     gap: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 
     .currency {
       display: flex;
@@ -331,6 +353,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
+    margin-top: 1rem;
 
     .rest-button {
       padding: 0.2rem 0.6rem;
@@ -375,12 +398,13 @@
   .tab-arcanums {
     .arcanums,
     .special-traits {
-      margin-bottom: 0.8rem;
+      margin: 1rem 0rem;
     }
 
     // L'éditeur des traits spéciaux suit son contenu (`content-sized`) : il ne doit donc être
     // contraint ni en hauteur ni en défilement, sans quoi il retrouverait une taille fixe.
     .special-traits {
+      margin-right: 1rem;
       .free-text {
         min-height: 0;
         overflow: visible;
@@ -390,9 +414,16 @@
         min-height: 2.5rem;
       }
     }
+    .situational-modifiers {
+      margin-left: 1rem;
+    }
   }
 
   .arcanum-list {
+    columns: 2;
+    li {
+      padding: 0.4rem 1rem;
+    }
     // Une baguette par rang maîtrisé : trois icônes identiques se confondraient, d'où le chiffre
     // du rang en exposant. Le nom du tour et son coût se lisent au survol.
     .arcanum-activate {
@@ -434,8 +465,9 @@
 
   .language-list {
     list-style: none;
-    margin: 0;
+    margin: 10px 0px 0px 120px;
     padding: 0;
+    width: 285px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.15rem 0.5rem;

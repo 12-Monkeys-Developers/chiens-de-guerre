@@ -94,6 +94,24 @@
         <span class="value">{{identity.religion}}</span>
       {{/if}}
     </div>
+    <div class="field-line">
+            <p class="current-malus">
+          {{localize "CDG.label.long.currentWoundMalus"}}
+            </p>
+            <p class="current-malus"><strong>{{signed wounds.malus}}</strong>
+        </p>
+        {{#if system.isDying}}
+            {{#if wounds.dying}}
+            <a class="dying-toggle" data-action="toggleDying" data-tooltip="{{localize 'CDG.ui.toggleDying'}}">
+              <i class="fas fa-skull"></i> {{localize "CDG.ui.dying"}}
+            </a>
+            {{else}}
+            <a class="dying-toggle cleared" data-action="toggleDying" data-tooltip="{{localize 'CDG.ui.toggleStabilized'}}">
+              <i class="fas fa-heart-pulse"></i> {{localize "CDG.ui.stabilized"}}
+            </a>
+            {{/if}}
+        {{/if}}
+    </div>
   </div>
 
   <section class="abilities">
@@ -133,7 +151,7 @@
     </ol>
 
       <div class="passion-block">
-        <div class="passion-label" data-tooltip="{{localize 'CDG.ui.passionHint'}}" data-tooltip-direction="UP">{{localize "CDG.label.long.passion"}}</div>
+      <img class="passion-art" src="systems/chiens-de-guerre/ui/fiche/titres/passion.webp" alt="{{localize 'CDG.label.long.purse'}}" data-tooltip="{{localize 'CDG.ui.passionHint'}}" data-tooltip-direction="UP">
         <div class="tokens">
           <a data-action="adjustPassion" data-delta="-1" data-tooltip="{{localize 'CDG.ui.spendPassion'}}"><i class="fas fa-minus"></i></a>
           <span class="token-count">{{passion.tokens}}</span>
