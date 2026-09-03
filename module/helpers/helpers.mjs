@@ -70,4 +70,10 @@ export function registerHandlebarsHelpers() {
     }
     return stringFormula
   })
+
+    Handlebars.registerHelper("allegeanceIcon", function (value) {
+      if(value==="obscurite") return "fas fa-moon";
+      if(value==="balance") return "fas fa-scale-balanced";
+      return "fa-light fa-sun";
+  })
 }

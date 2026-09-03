@@ -123,12 +123,12 @@
   }
 
   .karma-block {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 120px 60px 30px auto;
     align-items: center;
-    justify-content: center;
+    gap: 0.4rem;
     gap: 0.5rem 1rem;
-    padding: 0.5rem;
+    padding: 0.5rem 0rem 0.5rem 1rem;
     border-top: 1px solid var(--cdg-parchment-line);
     border-bottom: 1px solid var(--cdg-parchment-line);
 
@@ -139,23 +139,12 @@
     }
 
     .karma strong,
-    .allegiance strong {
+    .allegiance {
       font-family: var(--cdg-font-title);
       font-size: 1.1rem;
       margin-left: 0.3rem;
     }
-
-    .allegiance-obscurite strong {
-      color: var(--cdg-ink);
-    }
-
-    .allegiance-balance strong {
-      color: var(--cdg-label);
-    }
-
-    .allegiance-lumiere strong {
-      color: var(--cdg-blood-light);
-    }
+.tokens{text-align: right;}
   }
 
   // --- Combat --------------------------------------------------------------------------------

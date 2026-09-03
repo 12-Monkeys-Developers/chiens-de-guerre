@@ -33,9 +33,11 @@
           <label>{{localize "CDG.label.long.karma"}}</label>
           <strong>{{signed karma.value}}</strong>
         </div>
-        <div class="allegiance allegiance-{{karma.allegiance}}">
-          <label>{{localize "CDG.label.long.allegiance"}}</label>
-          <strong>{{localize karma.allegianceLabel}}</strong>
+        <div class="allegiance allegiance-{{karma.allegiance}}" data-tooltip="{{localize "CDG.label.long.allegiance"}} : {{localize karma.allegianceLabel}}">
+          <i class="{{allegeanceIcon karma.allegiance}}"></i>
+        </div>
+        <div class="tokens">
+        <a class="clear-token" data-action="clearInvokedTraits" data-tooltip="{{localize "CDG.ui.clearInvokedTraits"}}"><i class="fa-solid fa-rotate-left"></i></a>
         </div>
       </div>
       <ul class="trait-pairs">

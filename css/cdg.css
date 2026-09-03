@@ -574,9 +574,18 @@ cdg-toggle-switch[checked] thumb {
 .cdg .item-body .rank-line {
   align-items: center;
 }
+.cdg.actor .allegiance-obscurite {
+  color: var(--cdg-ink);
+}
+.cdg.actor .allegiance-balance {
+  color: var(--cdg-label);
+}
+.cdg.actor .allegiance-lumiere {
+  color: var(--cdg-blood-light);
+}
 .cdg.actor .sheet-header {
   display: grid;
-  grid-template-columns: 190px 1fr 300px;
+  grid-template-columns: 190px 1fr 1fr 210px;
   height: 250px;
   gap: 0.6rem;
   align-items: start;
@@ -625,20 +634,21 @@ cdg-toggle-switch[checked] thumb {
   cursor: pointer;
 }
 .cdg.actor .passion {
-  margin-top: 90px;
+  margin-top: 135px;
   display: flex;
   flex-direction: column;
 }
+.cdg.actor .passion-art {
+  width: 120px;
+  align-self: center;
+}
 .cdg.actor .passion-block {
-  margin: 40px 0 0.8rem;
+  margin: 5px 0 0.8rem;
   text-align: center;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-.cdg.actor .passion-block .passion-art {
-  width: 140px;
 }
 .cdg.actor .passion-block .tokens {
   display: flex;
@@ -658,12 +668,12 @@ cdg-toggle-switch[checked] thumb {
   align-items: center;
   justify-content: center;
   font-family: var(--cdg-font-title);
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   color: var(--cdg-blood);
   height: 1.4rem;
   line-height: 1;
   min-width: 2rem;
-  margin-top: -10px;
+  margin-top: -15px;
 }
 .cdg.actor .passion-block .clear-invoked {
   font-size: 0.78rem;
@@ -672,6 +682,17 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.actor .malus-line {
   margin: 10px 0px 0px 10px;
+}
+.cdg.actor .origin-col {
+  margin-top: 105px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.cdg.actor .origin-col .allegeanceIcon {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 5px;
 }
 .cdg.actor .abilities {
   margin-top: 1.1rem;
@@ -918,12 +939,12 @@ cdg-toggle-switch[checked] thumb {
   color: var(--cdg-blood);
 }
 .cdg.actor .karma-block {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 120px 60px 30px auto;
   align-items: center;
-  justify-content: center;
+  gap: 0.4rem;
   gap: 0.5rem 1rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0rem 0.5rem 1rem;
   border-top: 1px solid var(--cdg-parchment-line);
   border-bottom: 1px solid var(--cdg-parchment-line);
 }
@@ -933,19 +954,13 @@ cdg-toggle-switch[checked] thumb {
   font-size: 0.8rem;
 }
 .cdg.actor .karma-block .karma strong,
-.cdg.actor .karma-block .allegiance strong {
+.cdg.actor .karma-block .allegiance {
   font-family: var(--cdg-font-title);
   font-size: 1.1rem;
   margin-left: 0.3rem;
 }
-.cdg.actor .karma-block .allegiance-obscurite strong {
-  color: var(--cdg-ink);
-}
-.cdg.actor .karma-block .allegiance-balance strong {
-  color: var(--cdg-label);
-}
-.cdg.actor .karma-block .allegiance-lumiere strong {
-  color: var(--cdg-blood-light);
+.cdg.actor .karma-block .tokens {
+  text-align: right;
 }
 .cdg.actor .combat-top {
   display: flex;

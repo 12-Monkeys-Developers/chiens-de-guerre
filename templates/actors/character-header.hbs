@@ -15,21 +15,74 @@
       </div>
     </div>
   </div>
+  <div class="origin-col">
+      <div class="allegeanceIcon allegiance-{{karma.allegiance}}"  data-tooltip="{{localize "CDG.label.long.allegiance"}} : {{localize karma.allegianceLabel}}">
+      <i class="{{allegeanceIcon karma.allegiance}}"></i>
+      </div>
+    <div class="field-line origin-line">
+      {{#if unlocked}}
+        <label>{{localize "CDG.label.long.peuple"}}</label>
+      {{/if}}
+      {{#if peuple}}
+        <span class="value origin" data-item-id="{{peuple.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{peuple.name}}</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{peuple.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else}}
+        <span class="value">Déposez un Objet "Peuple"</span>
+      {{/if}}
+    </div>
+    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
+        il réapparaît intact si l'on retire l'objet. }}
+    <div class="field-line origin-line">
+      {{#if unlocked}}
+        <label>{{localize "CDG.label.long.carriere"}}</label>
+      {{/if}}
+      {{#if carriere}}
+        <span class="value origin" data-item-id="{{carriere.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{carriere.name}}</a>
+        </span>
+        {{#if unlocked}}
+      <a class="origin-remove" data-action="removeOrigin" data-item-id="{{carriere.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else}}
+        <span class="value">Déposez un Objet "Carrière"</span>
+      {{/if}}
+    </div>
+    <div class="field-line origin-line">
+      {{#if unlocked}}
+        <label>{{localize "CDG.label.long.ascendance"}}</label>
+      {{/if}}
+      {{#if ascendance}}
+        <span class="value origin" data-item-id="{{ascendance.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{ascendance.name}} ({{ascendance.system.compulsion}})</a>
+        </span>
+        {{#if unlocked}}
+      <a class="origin-remove" data-action="removeAscendance" data-item-id="{{ascendance.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else}}
+        <span class="value">Déposez un Objet "Ascendance"</span>
+      {{/if}}
+    </div>
+  </div>
   <div class="passion">
-      <div class="passion-block">
       <img class="passion-art" src="systems/chiens-de-guerre/ui/fiche/titres/passion.webp" alt="{{localize 'CDG.label.long.purse'}}" data-tooltip="{{localize 'CDG.ui.passionHint'}}" data-tooltip-direction="UP">
+      <div class="passion-block">
         <div class="tokens">
-          <a data-action="adjustPassion" data-delta="-1" data-tooltip="{{localize 'CDG.ui.spendPassion'}}"><i class="fas fa-minus"></i></a>
+          <a data-action="adjustPassion" data-delta="-1" data-tooltip="{{localize 'CDG.ui.spendPassion'}}"><i class="fas fa-square-minus"></i></a>
           <span class="token-count">{{passion.tokens}}</span>
-          <a data-action="adjustPassion" data-delta="1" data-tooltip="{{localize 'CDG.ui.gainPassion'}}"><i class="fas fa-plus"></i></a>
-        </div>
-        <div class="tokens">
-        <a class="clear-token" data-action="clearInvokedTraits" data-tooltip="{{localize "CDG.ui.clearInvokedTraits"}}"><i class="fa-solid fa-rotate-left"></i></a>
+          <a data-action="adjustPassion" data-delta="1" data-tooltip="{{localize 'CDG.ui.gainPassion'}}"><i class="fas fa-square-plus"></i></a>
         </div>
       </div>
-
   </div>
-
   <section class="abilities">
     <h2 class="section-title section-title-right section-title-art" data-bandeau="caracs">
       <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/caracs.webp" alt="{{localize 'CDG.label.long.abilities'}}" />

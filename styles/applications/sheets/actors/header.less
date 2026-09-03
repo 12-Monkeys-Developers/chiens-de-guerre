@@ -1,9 +1,20 @@
 // En-tête de la fiche de personnage : le bandeau de bataille rouge, le portrait dans l'étendard
 // déchiré, l'état civil, puis les trois caractéristiques.
 .cdg.actor {
+  .allegiance-obscurite {
+    color: var(--cdg-ink);
+  }
+
+  .allegiance-balance {
+    color: var(--cdg-label);
+  }
+
+  .allegiance-lumiere {
+    color: var(--cdg-blood-light);
+  }
   .sheet-header {
     display: grid;
-    grid-template-columns: 190px 1fr 300px;
+    grid-template-columns: 190px 1fr 1fr 210px;
     height: 250px;
     gap: 0.6rem;
     align-items: start;
@@ -13,7 +24,7 @@
     background-size: cover;
     background-position: center 30%;
     border-bottom: 2px solid var(--cdg-ink);
-      z-index: -2;
+    z-index: -2;
   }
   .name-line {
     margin: -20px 0px -30px 10px;
@@ -36,7 +47,7 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     filter: drop-shadow(0 2px 4px rgb(0 0 0 / 25%));
-      z-index: -1;
+    z-index: -1;
 
     .portrait {
       position: absolute;
@@ -56,21 +67,22 @@
   }
 
   .passion {
-    margin-top: 90px;
+    margin-top: 135px;
     display: flex;
     flex-direction: column;
   }
+  .passion-art {
+    width: 120px;
+    align-self: center;
+  }
 
   .passion-block {
-    margin: 40px 0 0.8rem;
+    margin: 5px 0 0.8rem;
     text-align: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    .passion-art {
-      width: 140px;
-    }
     .tokens {
       display: flex;
       align-items: center;
@@ -91,12 +103,12 @@
       align-items: center;
       justify-content: center;
       font-family: var(--cdg-font-title);
-      font-size: 1.8rem;
+      font-size: 2.5rem;
       color: var(--cdg-blood);
       height: 1.4rem;
       line-height: 1;
       min-width: 2rem;
-      margin-top: -10px;
+      margin-top: -15px;
     }
 
     .clear-invoked {
@@ -105,9 +117,20 @@
       color: var(--cdg-ink-soft);
     }
   }
-    .malus-line{
-      margin: 10px 0px 0px 10px;
+  .malus-line {
+    margin: 10px 0px 0px 10px;
+  }
+  .origin-col {
+    margin-top: 105px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    .allegeanceIcon {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 5px;
     }
+  }
   // Les trois caractéristiques : nom, réserve sur maximum, et les trois bulles d'amélioration.
   .abilities {
     // L'éclaboussure du bandeau « Caractéristiques » monte 26 px au-dessus de son créneau, alors
