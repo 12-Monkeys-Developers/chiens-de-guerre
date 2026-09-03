@@ -1,117 +1,33 @@
 <header class="sheet-header">
 
-  <div class="banner">
-    <div class="portrait">
-      <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
-        {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} />
-    </div>
-  </div>
-
-  <div class="identity">
-    <div class="field-line name-line">
-      <label>{{localize "CDG.label.long.surnom"}}</label>
+  <div class="left-col">
+    <div class="name-line">
       {{#if unlocked}}
         <input type="text" name="name" value="{{actor.name}}" spellcheck="false" />
       {{else}}
         <span class="value name">{{actor.name}}</span>
       {{/if}}
     </div>
+    <div class="banner">
+      <div class="portrait">
+        <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
+          {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} />
+      </div>
+    </div>
+  </div>
+  <div class="passion">
+      <div class="passion-block">
+      <img class="passion-art" src="systems/chiens-de-guerre/ui/fiche/titres/passion.webp" alt="{{localize 'CDG.label.long.purse'}}" data-tooltip="{{localize 'CDG.ui.passionHint'}}" data-tooltip-direction="UP">
+        <div class="tokens">
+          <a data-action="adjustPassion" data-delta="-1" data-tooltip="{{localize 'CDG.ui.spendPassion'}}"><i class="fas fa-minus"></i></a>
+          <span class="token-count">{{passion.tokens}}</span>
+          <a data-action="adjustPassion" data-delta="1" data-tooltip="{{localize 'CDG.ui.gainPassion'}}"><i class="fas fa-plus"></i></a>
+        </div>
+        <div class="tokens">
+        <a class="clear-token" data-action="clearInvokedTraits" data-tooltip="{{localize "CDG.ui.clearInvokedTraits"}}"><i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+      </div>
 
-    <div class="field-line">
-      <label>{{localize "CDG.label.long.vraiNom"}}</label>
-      {{#if unlocked}}
-        <input type="text" name="system.identity.vraiNom" value="{{identity.vraiNom}}" spellcheck="false" />
-      {{else}}
-        <span class="value">{{identity.vraiNom}}</span>
-      {{/if}}
-    </div>
-
-    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
-        il réapparaît intact si l'on retire l'objet. }}
-    <div class="field-line origin-line">
-      <label>{{localize "CDG.label.long.peuple"}}</label>
-      {{#if peuple}}
-        <span class="value origin" data-item-id="{{peuple.id}}">
-          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{peuple.name}}</a>
-        </span>
-        {{#if unlocked}}
-          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{peuple.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
-            <i class="fas fa-xmark" inert></i>
-          </a>
-        {{/if}}
-      {{else}}
-        <span class="value">Déposez un Objet "Peuple"</span>
-      {{/if}}
-    </div>
-    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
-        il réapparaît intact si l'on retire l'objet. }}
-    <div class="field-line origin-line">
-      <label>{{localize "CDG.label.long.carriere"}}</label>
-      {{#if carriere}}
-        <span class="value origin" data-item-id="{{carriere.id}}">
-          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{carriere.name}}</a>
-        </span>
-        {{#if unlocked}}
-          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{carriere.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
-            <i class="fas fa-xmark" inert></i>
-          </a>
-        {{/if}}
-      {{else}}
-        <span class="value">Déposez un Objet "Carrière"</span>
-      {{/if}}
-    </div>
-
-    <div class="field-line origin-line">
-      <label>{{localize "CDG.label.long.ascendance"}}</label>
-      {{#if ascendance}}
-        <span class="value origin" data-item-id="{{ascendance.id}}">
-          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{ascendance.name}} ({{ascendance.system.compulsion}})</a>
-        </span>
-        {{#if unlocked}}
-          <a class="origin-remove" data-action="removeAscendance" data-item-id="{{ascendance.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
-            <i class="fas fa-xmark" inert></i>
-          </a>
-        {{/if}}
-      {{else}}
-        <span class="value">Déposez un Objet "Ascendance"</span>
-      {{/if}}
-    </div>
-    <div class="field-line">
-      <label>{{localize "CDG.label.long.grade"}}</label>
-      {{#if unlocked}}
-        <select name="system.identity.grade">
-          {{selectOptions choiceGrades selected=identity.grade blank="" localize=true labelAttr="label" valueAttr="id"}}
-        </select>
-      {{else}}
-        <span class="value">{{#if identity.grade}}{{localize (concat "CDG.grades." identity.grade)}}{{/if}}</span>
-      {{/if}}
-    </div>
-    <div class="field-line">
-      <label>{{localize "CDG.label.long.religion"}}</label>
-      {{#if unlocked}}
-        <input type="text" name="system.identity.religion" value="{{identity.religion}}" spellcheck="false" />
-      {{else}}
-        <span class="value">{{identity.religion}}</span>
-      {{/if}}
-    </div>
-    <div class="field-line">
-            <p class="current-malus">
-          {{localize "CDG.label.long.currentWoundMalus"}}
-            </p>
-            <p class="current-malus"><strong>{{signed wounds.malus}}</strong>
-        </p>
-        {{#if system.isDying}}
-            {{#if wounds.dying}}
-            <a class="dying-toggle" data-action="toggleDying" data-tooltip="{{localize 'CDG.ui.toggleDying'}}">
-              <i class="fas fa-skull"></i> {{localize "CDG.ui.dying"}}
-            </a>
-            {{else}}
-            <a class="dying-toggle cleared" data-action="toggleDying" data-tooltip="{{localize 'CDG.ui.toggleStabilized'}}">
-              <i class="fas fa-heart-pulse"></i> {{localize "CDG.ui.stabilized"}}
-            </a>
-            {{/if}}
-        {{/if}}
-    </div>
   </div>
 
   <section class="abilities">
@@ -150,16 +66,25 @@
       {{/each}}
     </ol>
 
-      <div class="passion-block">
-      <img class="passion-art" src="systems/chiens-de-guerre/ui/fiche/titres/passion.webp" alt="{{localize 'CDG.label.long.purse'}}" data-tooltip="{{localize 'CDG.ui.passionHint'}}" data-tooltip-direction="UP">
-        <div class="tokens">
-          <a data-action="adjustPassion" data-delta="-1" data-tooltip="{{localize 'CDG.ui.spendPassion'}}"><i class="fas fa-minus"></i></a>
-          <span class="token-count">{{passion.tokens}}</span>
-          <a data-action="adjustPassion" data-delta="1" data-tooltip="{{localize 'CDG.ui.gainPassion'}}"><i class="fas fa-plus"></i></a>
-        </div>
-        <div class="tokens">
-        <a class="clear-token" data-action="clearInvokedTraits" data-tooltip="{{localize "CDG.ui.clearInvokedTraits"}}"><i class="fa-solid fa-rotate-left"></i></a>
-        </div>
-      </div>
+    <div class="field-line malus-line">
+      {{#if wounds.malus}}
+        <p class="current-malus">
+          {{localize "CDG.label.long.currentWoundMalus"}}
+        </p>
+        <p class="current-malus"><strong>{{signed wounds.malus}}</strong>
+        </p>
+      {{/if}}
+      {{#if system.isDying}}
+        {{#if wounds.dying}}
+        <a class="dying-toggle" data-action="toggleDying" data-tooltip="{{localize 'CDG.ui.toggleDying'}}">
+          <i class="fas fa-skull"></i> {{localize "CDG.ui.dying"}}
+        </a>
+        {{else}}
+        <a class="dying-toggle cleared" data-action="toggleDying" data-tooltip="{{localize 'CDG.ui.toggleStabilized'}}">
+          <i class="fas fa-heart-pulse"></i> {{localize "CDG.ui.stabilized"}}
+        </a>
+        {{/if}}
+      {{/if}}
+    </div>
   </section>
 </header>

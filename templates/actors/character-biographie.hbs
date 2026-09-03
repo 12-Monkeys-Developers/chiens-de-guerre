@@ -2,6 +2,83 @@
 
   {{! Expérience et Langues côte à côte ; la biographie garde toute la largeur en dessous. }}
   <div class="biographie-top">
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.vraiNom"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="system.identity.vraiNom" value="{{identity.vraiNom}}" spellcheck="false" />
+      {{else}}
+        <span class="value">{{identity.vraiNom}}</span>
+      {{/if}}
+    </div>
+
+    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
+        il réapparaît intact si l'on retire l'objet. }}
+    <div class="field-line origin-line">
+      <label>{{localize "CDG.label.long.peuple"}}</label>
+      {{#if peuple}}
+        <span class="value origin" data-item-id="{{peuple.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{peuple.name}}</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{peuple.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else}}
+        <span class="value">Déposez un Objet "Peuple"</span>
+      {{/if}}
+    </div>
+    {{! Origine : l'objet fait foi dès qu'il est là ; le champ texte n'est plus qu'un repli, et
+        il réapparaît intact si l'on retire l'objet. }}
+    <div class="field-line origin-line">
+      <label>{{localize "CDG.label.long.carriere"}}</label>
+      {{#if carriere}}
+        <span class="value origin" data-item-id="{{carriere.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{carriere.name}}</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeOrigin" data-item-id="{{carriere.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else}}
+        <span class="value">Déposez un Objet "Carrière"</span>
+      {{/if}}
+    </div>
+
+    <div class="field-line origin-line">
+      <label>{{localize "CDG.label.long.ascendance"}}</label>
+      {{#if ascendance}}
+        <span class="value origin" data-item-id="{{ascendance.id}}">
+          <a data-action="editItem" data-tooltip="{{localize 'CDG.origin.open'}}">{{ascendance.name}} ({{ascendance.system.compulsion}})</a>
+        </span>
+        {{#if unlocked}}
+          <a class="origin-remove" data-action="removeAscendance" data-item-id="{{ascendance.id}}" data-tooltip="{{localize 'CDG.origin.remove'}}">
+            <i class="fas fa-xmark" inert></i>
+          </a>
+        {{/if}}
+      {{else}}
+        <span class="value">Déposez un Objet "Ascendance"</span>
+      {{/if}}
+    </div>
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.grade"}}</label>
+      {{#if unlocked}}
+        <select name="system.identity.grade">
+          {{selectOptions choiceGrades selected=identity.grade blank="" localize=true labelAttr="label" valueAttr="id"}}
+        </select>
+      {{else}}
+        <span class="value">{{#if identity.grade}}{{localize (concat "CDG.grades." identity.grade)}}{{/if}}</span>
+      {{/if}}
+    </div>
+    <div class="field-line">
+      <label>{{localize "CDG.label.long.religion"}}</label>
+      {{#if unlocked}}
+        <input type="text" name="system.identity.religion" value="{{identity.religion}}" spellcheck="false" />
+      {{else}}
+        <span class="value">{{identity.religion}}</span>
+      {{/if}}
+    </div>
     <section class="experience">
     <h2 class="section-title section-title-art" data-bandeau="xp">
         <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/xp.webp" alt="{{localize 'CDG.label.long.xp'}}" />
