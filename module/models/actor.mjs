@@ -149,6 +149,9 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
     const allowed = await super._preUpdate(changes, options, user)
     if (allowed === false) return false
     if (!foundry.utils.hasProperty(changes, "system.wounds.mortelle.value")) return
+    // Les blessures mortelles d'une compagnie réduisent ses Effectifs et peuvent la dissoudre ;
+    // elles ne rendent pas une entité collective inconsciente ou mourante.
+    if (this.parent.type === "compagnie") return
 
     const wasMortal = this.wounds.mortelle.value > 0
     const isMortal = foundry.utils.getProperty(changes, "system.wounds.mortelle.value") > 0

@@ -28,6 +28,8 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
       // Le couple caractéristique / compétence d'une compagnie est imposé (p. 124) : cette
       // surcharge remplace, pour cette seule fiche, l'action `rollTest` héritée du socle commun.
       rollTest: CdgCompagnieSheet.#onRollTest,
+      addWound: CdgCompagnieSheet.#onAddWound,
+      reactivate: CdgCompagnieSheet.#onReactivate,
       addChronicle: CdgCompagnieSheet.#onAddChronicle,
       removeChronicle: CdgCompagnieSheet.#onRemoveChronicle,
       addRosterEntry: CdgCompagnieSheet.#onAddRosterEntry,
@@ -94,6 +96,27 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     return CdgMacros.rollTest(target.closest("[data-ability]")?.dataset.ability ?? null, target.closest("[data-skill]")?.dataset.skill ?? null, this.document, {
       lockedPair: true,
     })
+  }
+
+  /**
+   * Ajoute une blessure avec débordement, y compris au-delà de la dernière case mortelle.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onAddWound(event, target) {
+    if (!this.isEditable || this.document.system.dissolved) return
+    const level = target.closest("[data-level]")?.dataset.level
+    if (!SYSTEM.WOUND_LEVELS[level]) return
+    return this.document.applyWoundOverflow(null, level)
+  }
+
+  /** Rend jouable une compagnie conservée après dissolution, une fois ses Effectifs corrigés. */
+  static async #onReactivate() {
+    if (!this.isEditable) return
+    if (this.document.system.abilities.effectifs.max <= 0) {
+      return ui.notifications.warn("CDG.company.cannotReactivate", { localize: true })
+    }
+    return this.document.update({ "system.state.dissolved": false })
   }
 
   static async #onAddChronicle() {

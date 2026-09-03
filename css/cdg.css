@@ -1534,6 +1534,13 @@ cdg-toggle-switch[checked] thumb {
   font-size: 0.8rem;
   color: var(--cdg-label);
 }
+.cdg.actor.compagnie .wounds-block .wound-add {
+  color: var(--cdg-label);
+  font-size: 0.65rem;
+}
+.cdg.actor.compagnie .wounds-block .wound-add:hover {
+  color: var(--cdg-blood);
+}
 .cdg.actor.compagnie .wounds-block .wound-boxes {
   display: flex;
   gap: 2px;
@@ -1547,6 +1554,10 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor.compagnie .wounds-block .current-malus {
   text-align: right;
   font-size: 0.8rem;
+}
+.cdg.actor.compagnie .reactivate {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
 }
 .cdg.item .prosemirror {
   min-height: 300px;

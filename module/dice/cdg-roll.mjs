@@ -218,6 +218,7 @@ export default class CdgRoll extends Roll {
 
     const actor = await fromUuid(test.actorUuid)
     if (!actor) return ui.notifications.warn(game.i18n.localize("CDG.roll.notif.actorMissing"))
+    if (actor.type === "compagnie" && actor.system.dissolved) return ui.notifications.warn("CDG.company.cannotRollDissolved", { localize: true })
 
     // Le triptyque dépend du type d'acteur : Corps/Vivacité/Esprit pour un combattant,
     // Effectifs/Logistique/Moral pour une compagnie. Le dialogue de jet suit déjà ce principe ;

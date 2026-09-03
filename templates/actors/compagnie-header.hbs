@@ -22,6 +22,9 @@
         </div>
         {{#if dissolved}}
           <p class="warning">{{localize "CDG.company.dissolved"}}</p>
+          {{#if unlocked}}
+            <button type="button" class="reactivate" data-action="reactivate">{{localize "CDG.company.reactivate"}}</button>
+          {{/if}}
         {{/if}}
       </div>
     </div>
@@ -35,6 +38,9 @@
           {{#with (lookup @root.wounds level.id) as |wound|}}
             <li class="wound-level" data-level="{{level.id}}">
               <span class="wound-name">{{localize level.label}}</span>
+              {{#if @root.isEditable}}
+                <a class="wound-add" data-action="addWound" data-tooltip="{{localize 'CDG.company.addWound'}}"><i class="fa-solid fa-plus" inert></i></a>
+              {{/if}}
               <div class="wound-boxes">
                 {{#each (range 1 wound.max) as |box|}}
                   <a class="shield {{#if (gte wound.value box)}}filled{{/if}}"

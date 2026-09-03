@@ -400,9 +400,10 @@ export default class CdgActor extends Actor {
     if (previousLevelId) wounds[previousLevelId].value = Math.max(0, wounds[previousLevelId].value - 1)
 
     let appliedLevelId = null
+    let start = -1
     if (newLevelId) {
       const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
-      const start = levels.findIndex((entry) => entry.id === newLevelId)
+      start = levels.findIndex((entry) => entry.id === newLevelId)
       for (let index = start; index !== -1 && index < levels.length && !appliedLevelId; index++) {
         const level = levels[index]
         if (wounds[level.id].value < wounds[level.id].max) appliedLevelId = level.id
@@ -413,6 +414,10 @@ export default class CdgActor extends Actor {
     const updates = {}
     if (previousLevelId) updates[`system.wounds.${previousLevelId}.value`] = wounds[previousLevelId].value
     if (appliedLevelId) updates[`system.wounds.${appliedLevelId}.value`] = wounds[appliedLevelId].value
+    // Une compagnie qui devrait subir une blessure au-delà de sa dernière case mortelle est
+    // dissoute. On conserve sa fiche au lieu de la supprimer, afin que cet état reste réversible
+    // en cas d'erreur de saisie ou de décision du Meneur.
+    if (!appliedLevelId && newLevelId && start >= 0 && this.type === "compagnie") updates["system.state.dissolved"] = true
     if (!foundry.utils.isEmpty(updates)) await this.update(updates)
     return appliedLevelId
   }

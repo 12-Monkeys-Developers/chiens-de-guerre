@@ -141,6 +141,10 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
    */
   static async open(actor, seed = {}) {
     if (!actor) return null
+    if (actor.type === "compagnie" && actor.system.dissolved) {
+      ui.notifications.warn("CDG.company.cannotRollDissolved", { localize: true })
+      return null
+    }
     // L'identifiant est imposé en entier, pas via le `{id}` de `DEFAULT_OPTIONS` : ApplicationV2
     // écrase `uniqueId` par son propre compteur dans `_initializeApplicationOptions`, si bien qu'un
     // `uniqueId` passé en option ne survit pas. Les points de l'uuid deviennent des tirets pour

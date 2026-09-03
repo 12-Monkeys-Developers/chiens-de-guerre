@@ -142,7 +142,11 @@
         "ruse": "Ruse",
         "surveillance": "Surveillance"
       },
-      "dissolved": "Compagnie dissoute : les effectifs sont réduits à néant.",
+      "dissolved": "Compagnie dissoute : elle ne peut plus poursuivre ses activités.",
+      "cannotRollDissolved": "Cette compagnie est dissoute et ne peut plus effectuer de test.",
+      "reactivate": "Réactiver la compagnie",
+      "cannotReactivate": "Restaurez d'abord un maximum d'Effectifs supérieur à zéro.",
+      "addWound": "Ajouter une blessure avec débordement",
       "unlinkActor": "Délier cet acteur",
       "noRoster": "Aucun nom.",
       "noChronicles": "Aucun événement consigné."
