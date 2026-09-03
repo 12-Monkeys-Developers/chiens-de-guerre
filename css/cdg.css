@@ -3668,6 +3668,78 @@ cdg-toggle-switch[checked] thumb {
   font-size: 0.72rem;
   font-weight: 400;
 }
+.cdg.creation .company-skills .company-quotas {
+  grid-template-columns: repeat(3, 1fr);
+}
+.cdg.creation .company-skills .company-skill-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.cdg.creation .company-skills .company-skill-column {
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0.4rem 0.6rem;
+}
+.cdg.creation .company-skills .company-skill-column.selected {
+  border-color: var(--cdg-blood);
+  box-shadow: inset 3px 0 0 var(--cdg-blood);
+  background: rgba(255, 255, 255, 0.55);
+}
+.cdg.creation .company-skills .company-skill-column label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+.cdg.creation .company-skills .company-skill-column h3 {
+  margin: 0 0 0.35rem;
+  text-align: center;
+}
+.cdg.creation .company-skills .company-skill-column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cdg.creation .company-skills .company-skill-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.2rem 0;
+  border-bottom: 1px dotted var(--cdg-parchment-line);
+  font-size: 0.78rem;
+}
+.cdg.creation .company-skills .company-ranks {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.12rem;
+}
+.cdg.creation .company-skills .company-rank {
+  width: 1.35rem;
+  height: 1.35rem;
+  padding: 0;
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  color: var(--cdg-ink-soft);
+  font-size: 0.7rem;
+  line-height: 1;
+}
+.cdg.creation .company-skills .company-rank.selected {
+  border-color: var(--cdg-blood-dark);
+  background: var(--cdg-blood);
+  color: var(--cdg-parchment);
+  opacity: 1;
+}
+.cdg.creation .company-skills .company-rank:hover:not(:disabled) {
+  border-color: var(--cdg-blood);
+  box-shadow: none;
+}
+.cdg.creation .company-identity .fields {
+  align-self: center;
+}
 .cdg.creation .creation-footer {
   flex: 0 0 auto;
   display: flex;

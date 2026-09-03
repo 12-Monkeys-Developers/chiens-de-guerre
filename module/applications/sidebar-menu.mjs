@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgCharacterCreation from "./character-creation.mjs"
+import CdgCompanyCreation from "./company-creation.mjs"
 
 const { HandlebarsApplicationMixin } = foundry.applications.api
 const { AbstractSidebarTab } = foundry.applications.sidebar
@@ -46,6 +47,8 @@ export default class CdgSidebarMenu extends HandlebarsApplicationMixin(AbstractS
         return game.system.partySheet.render({ force: true })
       case "character-creation":
         return CdgCharacterCreation.open()
+      case "company-creation":
+        return CdgCompanyCreation.open()
     }
   }
 

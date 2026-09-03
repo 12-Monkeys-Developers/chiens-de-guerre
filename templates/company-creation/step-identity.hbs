@@ -1,0 +1,31 @@
+<section class="creation-step step-identite company-identity">
+  <h2 class="section-title">{{localize "CDG.companyCreation.steps.identity"}}</h2>
+  <p class="intro">{{localize "CDG.companyCreation.identity.intro"}}</p>
+
+  <div class="identity-block">
+    <div class="portrait">
+      <img src="{{draft.img}}" alt="{{draft.name}}" data-action="pickImage" data-tooltip="{{localize 'CDG.companyCreation.identity.pickImage'}}" />
+    </div>
+    <div class="fields">
+      <div class="field-line">
+        <label for="company-creation-name">{{localize "CDG.label.long.companyName"}} <span class="required">*</span></label>
+        <input id="company-creation-name" type="text" name="name" value="{{draft.name}}" spellcheck="false" />
+      </div>
+    </div>
+  </div>
+
+  <div class="block recap">
+    <h3>{{localize "CDG.companyCreation.identity.recap"}}</h3>
+    <dl>
+      {{#each recap as |line|}}
+        <div class="recap-line"><dt>{{localize line.label}}</dt><dd>{{line.value}}</dd></div>
+      {{/each}}
+    </dl>
+    {{#if incompleteSteps.length}}
+      <p class="warning">
+        {{localize "CDG.companyCreation.identity.incomplete"}}
+        {{#each incompleteSteps as |step|}}<span class="pill">{{localize step.label}}</span>{{/each}}
+      </p>
+    {{/if}}
+  </div>
+</section>

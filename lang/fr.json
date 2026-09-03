@@ -24,6 +24,7 @@
       "menu": "Menu",
       "partyOverviewTooltip": "Ouvrir le tableau de bord des joueurs.",
       "characterCreationTooltip": "Créer un Marqué, étape par étape.",
+      "companyCreationTooltip": "Créer une compagnie franche, étape par étape.",
       "noCreatePermission": "Votre compte n'a pas le droit de créer des acteurs. Demandez-le au meneur."
     },
     "party": {
@@ -172,6 +173,64 @@
       "unlinkActor": "Délier cet acteur",
       "noRoster": "Aucun nom.",
       "noChronicles": "Aucun événement consigné."
+    },
+    "companyCreation": {
+      "title": "Création de compagnie",
+      "steps": {
+        "abilities": "Caractéristiques",
+        "skills": "Compétences",
+        "identity": "Identité"
+      },
+      "progress": "Étape {step} sur {count} — {done} achevées",
+      "stepComplete": "Étape complète.",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "create": "Créer la compagnie",
+      "reset": "Recommencer",
+      "resetTooltip": "Repartir d’un brouillon vierge.",
+      "resetTitle": "Recommencer la création",
+      "resetContent": "Tout ce qui a été saisi sera perdu. Continuer ?",
+      "incompleteTitle": "Création incomplète",
+      "incompleteContent": "Ces étapes ne sont pas achevées. La compagnie sera créée telle quelle, à finir sur sa fiche :",
+      "created": "{name} est désormais prête à entrer dans les annales.",
+      "createFailed": "La compagnie n’a pas pu être créée. Voir la console pour le détail.",
+      "createFailedPartial": "La création a échoué et {name} n’a pas pu être supprimée. Sa fiche doit être vérifiée manuellement.",
+      "missing": {
+        "abilitiesBounds": "Chaque caractéristique doit être comprise entre {min} et {max}.",
+        "abilitiesRemaining": "Il reste {points} point(s) à répartir.",
+        "abilitiesOver": "Vous dépassez l’enveloppe de {points} point(s).",
+        "weak": "Choisissez exactement une compétence faible.",
+        "advanced": "Dix compétences doivent atteindre au moins le rang 2.",
+        "expert": "Cinq des compétences de rang 2 doivent passer au rang 3.",
+        "name": "Le nom de la compagnie est obligatoire."
+      },
+      "abilities": {
+        "intro": "Répartissez {total} points entre les trois caractéristiques, chacune comprise entre {min} et {max}.",
+        "budget": "Points répartis",
+        "remaining": "reste {points}",
+        "over": "{points} de trop",
+        "allSpent": "Enveloppe épuisée",
+        "range": "Chaque caractéristique doit rester comprise entre {min} et {max}.",
+        "hint": {
+          "effectifs": "Nombre, compétences et spécialités des hommes de la compagnie.",
+          "logistique": "Organisation, ressources et capacité à assurer la vie des troupes.",
+          "moral": "Efficacité de l’état-major, état d’esprit et ingéniosité des mercenaires."
+        }
+      },
+      "skills": {
+        "intro": "Choisissez d’abord une faiblesse au rang 0, montez dix compétences au rang 2, puis cinq de celles-ci au rang 3.",
+        "weak": "Faiblesse — rang 0",
+        "advanced": "Rang 2 ou plus",
+        "expert": "Rang 3",
+        "hint": "Les cinq compétences promues au rang 3 comptent parmi les dix qui ont atteint le rang 2."
+      },
+      "identity": {
+        "intro": "Donnez à la compagnie le nom sous lequel ses exploits seront consignés.",
+        "pickImage": "Choisir l’emblème de la compagnie",
+        "recap": "Récapitulatif",
+        "incomplete": "Certaines étapes restent incomplètes :",
+        "skillSummary": "rang 0 : {weak} · rang 1 : {standard} · rang 2 : {trained} · rang 3 : {expert}"
+      }
     },
     "traits": {
       "blase": "Blasé",

@@ -1,0 +1,38 @@
+<section class="creation-step step-abilities company-abilities">
+  <h2 class="section-title section-title-art" data-bandeau="caracs">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/caracs.webp" alt="{{localize 'CDG.companyCreation.steps.abilities'}}" />
+  </h2>
+  <p class="intro">{{localize "CDG.companyCreation.abilities.intro" total=SYSTEM.COMPANY_ABILITY_POINTS min=SYSTEM.COMPANY_ABILITY_MIN max=SYSTEM.COMPANY_ABILITY_MAX}}</p>
+
+  <div class="budget {{#if (gt derived.pointsRemaining 0)}}pending{{/if}} {{#if (lt derived.pointsRemaining 0)}}over{{/if}}">
+    <span class="budget-label">{{localize "CDG.companyCreation.abilities.budget"}}</span>
+    <span class="budget-count"><strong>{{derived.pointsSpent}}</strong> / {{SYSTEM.COMPANY_ABILITY_POINTS}}</span>
+    <span class="budget-remaining">
+      {{#if (gt derived.pointsRemaining 0)}}
+        {{localize "CDG.companyCreation.abilities.remaining" points=derived.pointsRemaining}}
+      {{else if (lt derived.pointsRemaining 0)}}
+        {{localize "CDG.companyCreation.abilities.over" points=derived.pointsOver}}
+      {{else}}
+        <i class="fa-solid fa-check" inert></i> {{localize "CDG.companyCreation.abilities.allSpent"}}
+      {{/if}}
+    </span>
+  </div>
+
+  <ol class="ability-cards">
+    {{#each abilities as |ability|}}
+      <li class="ability-card">
+        <h3>{{localize ability.label}}</h3>
+        <p class="description">{{localize (concat "CDG.companyCreation.abilities.hint." ability.id)}}</p>
+        <div class="ability-input">
+          <button type="button" class="stepper" data-action="adjustAbility" data-ability="{{ability.id}}" data-delta="-1"
+            {{disabled (lte (lookup @root.draft.abilities ability.id) @root.SYSTEM.COMPANY_ABILITY_MIN)}}><i class="fa-solid fa-minus" inert></i></button>
+          <input type="number" name="abilities.{{ability.id}}" value="{{lookup @root.draft.abilities ability.id}}"
+            min="{{@root.SYSTEM.COMPANY_ABILITY_MIN}}" max="{{@root.SYSTEM.COMPANY_ABILITY_MAX}}" step="1" data-dtype="Number" />
+          <button type="button" class="stepper" data-action="adjustAbility" data-ability="{{ability.id}}" data-delta="1"
+            {{disabled (or (gte (lookup @root.draft.abilities ability.id) @root.SYSTEM.COMPANY_ABILITY_MAX) (lte @root.derived.pointsRemaining 0))}}><i class="fa-solid fa-plus" inert></i></button>
+        </div>
+      </li>
+    {{/each}}
+  </ol>
+  <p class="hint">{{localize "CDG.companyCreation.abilities.range" min=SYSTEM.COMPANY_ABILITY_MIN max=SYSTEM.COMPANY_ABILITY_MAX}}</p>
+</section>
