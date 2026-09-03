@@ -219,14 +219,18 @@ export default class CdgRoll extends Roll {
     const actor = await fromUuid(test.actorUuid)
     if (!actor) return ui.notifications.warn(game.i18n.localize("CDG.roll.notif.actorMissing"))
 
-    const drained = Object.values(SYSTEM.ABILITIES).filter((ability) => actor.system.abilities[ability.id].value <= 1)
+    // Le triptyque dépend du type d'acteur : Corps/Vivacité/Esprit pour un combattant,
+    // Effectifs/Logistique/Moral pour une compagnie. Le dialogue de jet suit déjà ce principe ;
+    // le dépassement doit débiter exactement les mêmes réserves.
+    const abilities = Object.values(actor.system.constructor.ABILITIES)
+    const drained = abilities.filter((ability) => actor.system.abilities[ability.id].value <= 1)
     if (drained.length > 0) {
       const names = drained.map((ability) => game.i18n.localize(ability.label)).join(", ")
       return ui.notifications.warn(game.i18n.format("CDG.roll.notif.cannotPush", { abilities: names }))
     }
 
     const updates = {}
-    for (const ability of Object.values(SYSTEM.ABILITIES)) {
+    for (const ability of abilities) {
       updates[`system.abilities.${ability.id}.value`] = actor.system.abilities[ability.id].value - 1
     }
     await actor.update(updates)
