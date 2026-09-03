@@ -147,6 +147,28 @@
       "reactivate": "Réactiver la compagnie",
       "cannotReactivate": "Restaurez d'abord un maximum d'Effectifs supérieur à zéro.",
       "addWound": "Ajouter une blessure avec débordement",
+      "healing": {
+        "title": "Guérison et repos",
+        "recovery": "Récupération naturelle — Effectifs / Cohésion",
+        "care": "Soins au repos — Logistique / Soins",
+        "reserves": "Récupération nocturne des réserves",
+        "apply": "Appliquer la guérison",
+        "chooseTitle": "Résorber les blessures",
+        "choose": "Effet de la guérison",
+        "oneStep": "Améliorer une blessure {wound} d’un cran",
+        "twoSteps": "Améliorer une blessure {wound} de deux crans",
+        "twoSame": "Améliorer deux blessures {first} d’un cran",
+        "twoDifferent": "Améliorer une blessure {first} et une blessure {second} d’un cran",
+        "noEligibleWound": "Aucune blessure ne peut recevoir cette guérison dans l’état actuel de la fiche.",
+        "changedWounds": "Les blessures ont changé depuis le jet ; choisissez de nouveau la guérison à appliquer.",
+        "notOwner": "Vous ne pouvez pas modifier les blessures de cette compagnie.",
+        "result": {
+          "criticalFailure": "Échec critique : une blessure légère a été ajoutée.",
+          "failure": "Échec : aucune blessure n’a été résorbée.",
+          "success": "Réussite : une blessure a été résorbée.",
+          "criticalSuccess": "Réussite critique : les blessures ont été résorbées."
+        }
+      },
       "unlinkActor": "Délier cet acteur",
       "noRoster": "Aucun nom.",
       "noChronicles": "Aucun événement consigné."

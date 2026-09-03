@@ -84,6 +84,9 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   /** Nature du test pour rechercher les objets de qualité exceptionnelle applicables. */
   #qualityDomain = null
 
+  /** Type de guérison de compagnie à proposer sur la carte du jet. */
+  #companyHealing = null
+
   /**
    * Test restreint (jet de survie, p. 46) : ni effort, ni passion, ni dépassement — le personnage
    * ne peut rien engager pour améliorer ce jet précis.
@@ -129,6 +132,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
     this.#targetUuid = seed.targetUuid ?? null
     this.#qualityDomain = Object.hasOwn(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS, seed.qualityDomain) ? seed.qualityDomain : null
+    this.#companyHealing = ["recovery", "care"].includes(seed.companyHealing) && actor.type === "compagnie" ? seed.companyHealing : null
     this.#restricted = !!seed.restricted
   }
 
@@ -178,6 +182,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
     this.#targetUuid = seed.targetUuid ?? null
     this.#qualityDomain = Object.hasOwn(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS, seed.qualityDomain) ? seed.qualityDomain : null
+    this.#companyHealing = ["recovery", "care"].includes(seed.companyHealing) && this.#actor.type === "compagnie" ? seed.companyHealing : null
     this.#restricted = !!seed.restricted
   }
 
@@ -527,6 +532,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
         : null,
       pushed: false,
       noPush: this.#restricted,
+      companyHealing: this.#companyHealing ? { type: this.#companyHealing, applied: false } : null,
     }
 
     const updates = {}

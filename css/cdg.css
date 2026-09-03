@@ -1435,6 +1435,27 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor.compagnie .chronicles {
   flex: 0 0 auto;
 }
+.cdg.actor.compagnie .company-rest .company-healing-actions,
+.cdg.actor.compagnie .company-rest .rest-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.cdg.actor.compagnie .company-rest button {
+  flex: 1 1 auto;
+  min-width: 8rem;
+  font-size: 0.8rem;
+}
+.cdg.actor.compagnie .company-rest h3 {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.8rem;
+  color: var(--cdg-label);
+}
+.cdg.actor.compagnie .company-rest .rest-button {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
 .cdg.actor.compagnie .compagnie-top {
   display: flex;
   flex-direction: row;
@@ -2217,7 +2238,8 @@ cdg-toggle-switch[checked] thumb {
   font-style: italic;
   color: var(--cdg-muted);
 }
-.cdg-roll-card .card-push {
+.cdg-roll-card .card-push,
+.cdg-roll-card .card-apply-healing {
   margin-top: 0.5rem;
   width: 100%;
   padding: 0.2rem 0.5rem;
@@ -2230,10 +2252,17 @@ cdg-toggle-switch[checked] thumb {
   letter-spacing: 0.04em;
   cursor: pointer;
 }
-.cdg-roll-card .card-push:hover {
+.cdg-roll-card .card-push:hover,
+.cdg-roll-card .card-apply-healing:hover {
   background: var(--cdg-blood);
   color: var(--cdg-parchment);
   box-shadow: none;
+}
+.cdg-roll-card .healing-applied {
+  margin: 0.5rem 0 0;
+  color: var(--cdg-label);
+  font-size: 0.8rem;
+  text-align: center;
 }
 .cdg [data-action="rollTest"] {
   cursor: pointer;

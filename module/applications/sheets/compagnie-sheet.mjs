@@ -30,6 +30,7 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
       rollTest: CdgCompagnieSheet.#onRollTest,
       addWound: CdgCompagnieSheet.#onAddWound,
       reactivate: CdgCompagnieSheet.#onReactivate,
+      companyHealing: CdgCompagnieSheet.#onCompanyHealing,
       addChronicle: CdgCompagnieSheet.#onAddChronicle,
       removeChronicle: CdgCompagnieSheet.#onRemoveChronicle,
       addRosterEntry: CdgCompagnieSheet.#onAddRosterEntry,
@@ -63,6 +64,8 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     context.rosterPNJ = this.#prepareRoster(this.document.system.rosterPNJ)
     context.chronicles = this.document.system.chronicles.map((chronicle, index) => ({ ...chronicle, index }))
     context.dissolved = this.document.system.dissolved
+    context.hasWounds = Object.values(SYSTEM.WOUND_LEVELS).some((level) => this.document.system.wounds[level.id].value > 0)
+    context.choiceRestConditions = Object.values(SYSTEM.REST_CONDITIONS)
 
     const enrichHTML = foundry.applications.ux.TextEditor.implementation.enrichHTML
     context.enrichedNotes = await enrichHTML(this.document.system.notes)
@@ -117,6 +120,19 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
       return ui.notifications.warn("CDG.company.cannotReactivate", { localize: true })
     }
     return this.document.update({ "system.state.dissolved": false })
+  }
+
+  /**
+   * Lance l'un des deux tests quotidiens qui peuvent résorber les blessures de la compagnie.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onCompanyHealing(event, target) {
+    if (!this.isEditable || this.document.system.dissolved) return
+    const type = target.dataset.healing
+    const pair = type === "recovery" ? ["effectifs", "cohesion"] : type === "care" ? ["logistique", "soins"] : null
+    if (!pair) return
+    return CdgMacros.rollTest(pair[0], pair[1], this.document, { lockedPair: true, companyHealing: type })
   }
 
   static async #onAddChronicle() {

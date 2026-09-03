@@ -423,6 +423,35 @@ export default class CdgActor extends Actor {
   }
 
   /**
+   * Applique un plan de guérison de compagnie préparé depuis une carte de jet.
+   * Chaque opération vise une blessure existante et l'améliore d'un ou deux crans ; une destination
+   * pleine invalide tout le plan, sans écriture partielle.
+   * @param {{level: string, steps: number}[]} operations
+   * @returns {Promise<boolean>}
+   */
+  async applyCompanyHealing(operations) {
+    if (this.type !== "compagnie" || !Array.isArray(operations) || operations.length === 0) return false
+
+    const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
+    const wounds = Object.fromEntries(levels.map((level) => [level.id, { value: this.system.wounds[level.id].value, max: this.system.wounds[level.id].max }]))
+
+    for (const operation of operations) {
+      const index = levels.findIndex((level) => level.id === operation.level)
+      const steps = Number(operation.steps)
+      if (index < 0 || ![1, 2].includes(steps) || wounds[operation.level].value <= 0) return false
+
+      const destination = index - steps
+      if (destination >= 0 && wounds[levels[destination].id].value >= wounds[levels[destination].id].max) return false
+      wounds[operation.level].value -= 1
+      if (destination >= 0) wounds[levels[destination].id].value += 1
+    }
+
+    const updates = Object.fromEntries(levels.map((level) => [`system.wounds.${level.id}.value`, wounds[level.id].value]))
+    await this.update(updates)
+    return true
+  }
+
+  /**
    * Remet à zéro les compteurs qui ne valent que pour un round : esquives utilisées et parade.
    * Appelé à chaque fin de round par CdgCombat.
    * @returns {Promise<CdgActor|undefined>}

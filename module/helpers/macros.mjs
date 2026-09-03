@@ -105,11 +105,12 @@ export default class CdgMacros {
    * @param {boolean} [options.lockedPair] Empêche de changer de caractéristique — les compétences
    *   de compagnie franche (p. 124) n'ont, à la différence de celles du personnage, qu'un seul
    *   couple possible.
+   * @param {"recovery"|"care"|null} [options.companyHealing] Guérison à appliquer depuis la carte.
    */
-  static async rollTest(abilityId = null, skillId = null, actor = null, { lockedPair = false } = {}) {
+  static async rollTest(abilityId = null, skillId = null, actor = null, { lockedPair = false, companyHealing = null } = {}) {
     actor ??= this.selectedActor()
     if (!actor) return null
-    return CdgRollDialog.open(actor, { abilityId, skillId, qualityDomain: "skill", lockedPair })
+    return CdgRollDialog.open(actor, { abilityId, skillId, qualityDomain: "skill", lockedPair, companyHealing })
   }
 
   /**
