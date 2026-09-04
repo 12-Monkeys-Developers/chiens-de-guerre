@@ -13,7 +13,7 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
   static DEFAULT_OPTIONS = {
     classes: ["adversaire"],
     position: {
-      width: 780,
+      width: 520,
       height: 780,
     },
     window: {
@@ -49,7 +49,7 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
     context.hasSpecial = !!this.document.system.details.special?.trim()
     context.adversaireAbilities = [SYSTEM.ABILITIES.corps, SYSTEM.ABILITIES.esprit, SYSTEM.ABILITIES.vivacite]
 
-    const skills = Object.values(SYSTEM.SKILLS)
+    const skills = Object.values(SYSTEM.ADVERSARY_SKILLS)
     if (this.isEditMode) {
       const columnSize = Math.ceil(skills.length / 4)
       context.skillColumns = Array.from({ length: 4 }, (_, column) => skills.slice(column * columnSize, (column + 1) * columnSize))

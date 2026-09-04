@@ -574,6 +574,99 @@ cdg-toggle-switch[checked] thumb {
 .cdg .item-body .rank-line {
   align-items: center;
 }
+.cdg.actor .adversaire-header {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  height: 250px;
+  gap: 0.6rem;
+  align-items: start;
+  padding: 0.6rem 0.8rem 0.4rem;
+}
+.cdg.actor .adversaire-header .banner {
+  grid-row: 1/4;
+}
+.cdg.actor .adversaire-header .banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 400 / 500;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+  z-index: -1;
+}
+.cdg.actor .adversaire-header .banner .portrait {
+  position: absolute;
+  inset: 12% 16%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.cdg.actor .adversaire-header .banner .actor-img {
+  max-height: 150px;
+  object-fit: cover;
+  border: solid 2px black;
+  cursor: pointer;
+}
+.cdg.actor .identity {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+.cdg.actor .identity .adversaire-nameline {
+  margin: 0px 0px 0px 10px;
+}
+.cdg.actor .identity .adversaire-nameline .name {
+  font-family: cinzel;
+  font-size: 1.5rem;
+  color: black;
+}
+.cdg.actor .identity .adversaire-nameline input[type="text"] {
+  font-family: "cinzel";
+  font-size: 1.5rem;
+}
+.cdg.actor .identity .major-npc {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 10px;
+  margin-top: 0.25rem;
+  color: var(--cdg-label);
+  font-size: 0.8rem;
+}
+.cdg.actor .identity .major-npc input {
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0;
+}
+.cdg.actor .abilities-line {
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+}
+.cdg.actor .abilities-line .ability {
+  display: flex;
+  margin: 0px 3px;
+}
+.cdg.actor .abilities-line .ability .pool {
+  margin: 0px 3px;
+}
+.cdg.actor .abilities-line .ability input[type="number"] {
+  text-align: center;
+  width: 1.5rem;
+}
+.cdg.actor .wounds-line {
+  grid-column: 1/3;
+  display: flex;
+  flex-direction: row;
+  font-size: 1.2rem;
+}
+.cdg.actor .wounds-line .wound-level {
+  display: flex;
+  margin: 0px 5px;
+}
+.cdg.actor .wounds-line .wound-level .pool {
+  margin: 0px 5px;
+}
 .cdg.actor .allegiance-obscurite {
   color: var(--cdg-ink);
 }
@@ -758,30 +851,6 @@ cdg-toggle-switch[checked] thumb {
   display: flex;
   gap: 3px;
   align-items: center;
-}
-.cdg.actor.adversaire .sheet-header {
-  grid-template-columns: 64px 1fr 240px;
-  background-image: none;
-}
-.cdg.actor.adversaire .sheet-header .portrait .actor-img {
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-  border: 2px solid var(--cdg-ink);
-  border-radius: var(--cdg-radius);
-}
-.cdg.actor.adversaire .sheet-header .major-npc {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.25rem;
-  color: var(--cdg-label);
-  font-size: 0.8rem;
-}
-.cdg.actor.adversaire .sheet-header .major-npc input {
-  flex: 0 0 auto;
-  width: auto;
-  margin: 0;
 }
 .cdg.actor.compagnie .sheet-header {
   display: flex;
@@ -969,7 +1038,7 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor .actionscombat-block {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 .cdg.actor .actionscombat-block .initiative-line {
   display: flex;

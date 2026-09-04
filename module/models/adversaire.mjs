@@ -13,6 +13,9 @@ export default class CdgAdversaireData extends CdgActorData {
   /** @override */
   static LOCALIZATION_PREFIXES = ["CDG.Adversaire"]
 
+  /** @override */
+  static SKILLS = SYSTEM.ADVERSARY_SKILLS
+
   static defineSchema() {
     const fields = foundry.data.fields
     const requiredInteger = { required: true, nullable: false, integer: true }
@@ -97,7 +100,7 @@ export default class CdgAdversaireData extends CdgActorData {
     for (const ability of Object.values(SYSTEM.ABILITIES)) {
       data[ability.id] = this.abilities[ability.id].value
     }
-    for (const skill of Object.values(SYSTEM.SKILLS)) {
+    for (const skill of Object.values(SYSTEM.ADVERSARY_SKILLS)) {
       data[skill.id] = this.skills[skill.id].rank
     }
     data.blessures = this.wounds.malus

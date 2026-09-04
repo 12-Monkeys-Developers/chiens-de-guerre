@@ -58,6 +58,14 @@ export const SKILLS = {
   vigueur: { id: "vigueur", label: "CDG.skills.vigueur", column: 2 },
   volonte: { id: "volonte", label: "CDG.skills.volonte", column: 2 },
 }
+export const ADVERSARY_SKILLS = {
+  blocage: { id: "blocage", label: "CDG.skills.blocage", column: 1 },
+  esquive: { id: "esquive", label: "CDG.skills.esquive", column: 1 },
+  melee: { id: "melee", label: "CDG.skills.melee", column: 1 },
+  sensCombat: { id: "sensCombat", label: "CDG.skills.sensCombat", column: 2 },
+  sensDuels: { id: "sensDuels", label: "CDG.skills.sensDuels", column: 2 },
+  tir: { id: "tir", label: "CDG.skills.tir", column: 2 },
+}
 
 /**
  * Caractéristique proposée d'office pour les compétences dont les règles fixent le couple.

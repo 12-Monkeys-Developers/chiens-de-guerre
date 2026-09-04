@@ -213,35 +213,6 @@
   }
 }
 
-// L'adversaire réutilise le même vocabulaire, sans étendard ni bandeau de bataille.
-.cdg.actor.adversaire .sheet-header {
-  grid-template-columns: 64px 1fr 240px;
-  background-image: none;
-
-  .portrait .actor-img {
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-    border: 2px solid var(--cdg-ink);
-    border-radius: var(--cdg-radius);
-  }
-
-  .major-npc {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-top: 0.25rem;
-    color: var(--cdg-label);
-    font-size: 0.8rem;
-
-    input {
-      flex: 0 0 auto;
-      width: auto;
-      margin: 0;
-    }
-  }
-}
-
 // La compagnie franche réutilise le même vocabulaire que l'adversaire (pas d'étendard), avec un
 // seul champ d'identité (Nom) — pas de peuple, de carrière ni d'ascendance à afficher.
 //

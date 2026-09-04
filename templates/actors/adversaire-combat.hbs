@@ -1,39 +1,62 @@
 <section class="tab tab-combat{{#if tabs.combat.active}} active{{/if}}" data-group="primary" data-tab="combat">
-  <div class="npc-skills-initiative{{#if unlocked}} editing{{/if}}">
-    <section class="npc-skills">
-      <h2 class="section-title section-title-art" data-bandeau="comps">
-        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/comps.webp" alt="{{localize 'CDG.label.long.skills'}}" />
-      </h2>
-      {{#if hasSkills}}
-        <div class="skill-columns">
-          {{#each skillColumns as |column|}}<ul class="skill-column">
-            {{#each column as |skill|}}<li class="skill" data-skill="{{skill.id}}">
-              <span class="skill-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize skill.label}}</span>
-              {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" path=(concat "system.skills." skill.id ".rank") rank=(lookup (lookup @root.skills skill.id) "rank") editable=@root.unlocked}}
-            </li>{{/each}}
-          </ul>{{/each}}
-        </div>
-      {{else}}<p class="empty">{{localize "CDG.ui.noSkill"}}</p>{{/if}}
-    </section>
-
-    {{#unless unlocked}}
-      <section class="initiative-block npc-initiative">
-        <h2 class="section-title section-title-art" data-bandeau="initiative">
-          <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/initiative.webp" alt="{{localize 'CDG.label.long.initiative'}}" />
-          <span class="title-actions"><a class="draggable" data-action="rollInitiative" data-cdg-macro="initiative" data-tooltip="{{localize 'CDG.combat.initiative.roll'}}"><i class="fa-solid fa-stopwatch"></i></a></span>
-        </h2>
-        <div class="init-modifier">
-          <label>{{localize "CDG.label.long.initiativeModifier"}}</label>
-          <span class="value" data-tooltip-html="{{initiativeModifierTooltip}}">{{signed combat.initiative.modifier}}</span>
-        </div>
-        <div class="init-bonus">
-          <label>{{localize "CDG.label.long.initiativeBonus"}}</label>
-          <span class="value">{{signed combat.initiative.bonus}}</span>
-        </div>
-      </section>
-    {{/unless}}
+ 
+     <div class="actionscombat-block" style="padding-top: 0px;">
+      <div class="combat-quick-actions">
+        <button class="draggable" type="button" data-action="rollInitiative" data-cdg-macro="initiative" data-tooltip="{{localize 'CDG.combat.initiative.roll'}}">
+          <i class="fa-solid fa-stopwatch"></i> {{localize "CDG.combat.initiative.title"}}</button>
+      </div>
+      <div class="initiative-line">
+{{#if unlocked}}<div class="init-bonus">
+  <label>{{localize "CDG.label.long.initiativeBonus"}}</label>
+  <input type="number" name="system.combat.initiative.bonus" value="{{combat.initiative.bonus}}" data-dtype="Number" />
   </div>
+  {{/if}}
+      </div>
 
+
+
+   
+
+      <div class="combat-quick-actions">
+        <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button>
+      </div>
+      <div class="dodge-track">
+          <label>{{localize "CDG.label.long.nextDodge"}}</label>
+        {{#each SYSTEM.DODGE_MALUS as |malus index|}}
+          <a class="dodge-step {{#if (gte @root.combat.dodgesUsed index)}}used{{/if}}"
+            data-action="setDodges" data-count="{{index}}">{{signed malus}}</a>
+        {{/each}}
+      </div>
+      <div class="combat-quick-actions">
+        <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="parry"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}</button>
+      </div>
+      <div class="parry">
+        <a class="parry-toggle {{#unless combat.canParry}}used{{/unless}}" data-action="toggleParry"
+          data-tooltip="{{localize 'CDG.ui.parryHint'}}">
+          <i class="fas {{#if combat.canParry}}fa-shield{{else}}fa-shield-slash{{/if}}"></i>
+          {{#if combat.canParry}}{{localize "CDG.ui.parryAvailable"}}{{else}}{{localize "CDG.ui.parryUsed"}}{{/if}}
+        </a>
+      </div>
+    </div>
+    <div class="combat-deuxcol">
+      <div class="combat-gear">
+
+  <section class="npc-equipment">
+    <h2 class="section-title section-title-art" data-bandeau="armes">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/armes.webp" alt="{{localize 'CDG.label.long.weaponsAndProtections'}}" />
+      <span class="title-actions"><a class="draggable" data-action="rollSoak" data-cdg-macro="soak" data-tooltip="{{localize 'CDG.combat.soakTest'}}"><i class="fa-solid fa-helmet-battle"></i></a>
+      {{#if isEditable}}<a data-action="createItem" data-type="equipment" data-subtype="armor" data-tooltip="{{localize 'CDG.ui.addArmor'}}"><i class="fas fa-shirt-long-sleeve"></i></a><a data-action="createItem" data-type="equipment" data-subtype="weapon" data-tooltip="{{localize 'CDG.ui.addWeapon'}}"><i class="fas fa-sword"></i></a><a data-action="createItem" data-type="equipment" data-subtype="shield" data-tooltip="{{localize 'CDG.ui.addShield'}}"><i class="fas fa-shield-halved"></i></a>{{/if}}</span>
+    </h2>
+     <ul class="item-list">
+      {{#each armors as |armor|}}<li class="item-row draggable {{#if armor.system.equipped}}equipped{{/if}}" data-item-id="{{armor.id}}"><a data-action="toggleEquipped"><i class="fas {{#if armor.system.equipped}}fa-circle-check{{else}}fa-circle{{/if}}"></i></a><img class="item-img" src="{{armor.img}}" data-action="editItem" /><span class="item-name" data-action="editItem">{{armor.name}}</span><span class="item-category">{{localize (concat "CDG.equipment.armorCategories." armor.system.category)}}</span><span class="item-label">{{localize "CDG.label.long.protection"}}</span>{{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=armor.system.protection.rank editable=false}}<span class="item-init">{{localize "CDG.label.short.init"}} {{signed armor.system.initMalus}}</span>{{#if @root.unlocked}}<a data-action="deleteItem"><i class="fas fa-trash"></i></a>{{/if}}</li>{{/each}}
+      {{#each shields as |shield|}}<li class="item-row draggable {{#if shield.system.equipped}}equipped{{/if}}" data-item-id="{{shield.id}}"><a data-action="toggleEquipped"><i class="fas {{#if shield.system.equipped}}fa-circle-check{{else}}fa-circle{{/if}}"></i></a><img class="item-img" src="{{shield.img}}" data-action="editItem" /><span class="item-name" data-action="editItem">{{shield.name}}</span><span class="item-category">{{localize (concat "CDG.equipment.shieldCategories." shield.system.category)}}</span><span class="item-label">{{localize "CDG.label.long.blockBonus"}}</span><span class="item-value">{{signed shield.system.blockBonus}}</span><span class="item-init">{{localize "CDG.label.short.init"}} {{signed shield.system.initMalus}}</span>{{#if @root.unlocked}}<a data-action="deleteItem"><i class="fas fa-trash"></i></a>{{/if}}</li>{{/each}}
+      {{#each weapons as |weapon|}}<li class="item-row draggable {{#if weapon.system.equipped}}equipped{{/if}}" data-item-id="{{weapon.id}}"><a data-action="toggleEquipped"><i class="fas {{#if weapon.system.equipped}}fa-hand-fist{{else}}fa-hand{{/if}}"></i></a><img class="item-img" src="{{weapon.img}}" data-action="editItem" /><span class="item-name" data-action="editItem">{{weapon.name}}</span><span class="item-category">{{localize (concat "CDG.equipment.weaponCategories." weapon.system.category)}}</span><a data-action="rollWeapon"><i class="fas {{#if weapon.system.isRangedWeapon}}fa-bow-arrow{{else}}fa-sword{{/if}}"></i></a><a data-action="rollDamage"><i class="fa-solid fa-burst"></i></a><span class="item-label">{{localize "CDG.label.long.damage"}}</span>{{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=weapon.system.damage.rank editable=false}}{{#if @root.unlocked}}<a data-action="deleteItem"><i class="fas fa-trash"></i></a>{{/if}}</li>{{/each}}
+    </ul>
+  </section>
+      </div>
+  </div>
+ 
+ 
   {{#if (or unlocked arcanums.length)}}
     <section class="npc-arcanums">
       <h2 class="section-title section-title-art" data-bandeau="arcanums">
@@ -51,25 +74,9 @@
       </ul>
     </section>
   {{/if}}
+ 
+ 
 
-  <section class="npc-equipment">
-    <h2 class="section-title section-title-art" data-bandeau="armes">
-      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/armes.webp" alt="{{localize 'CDG.label.long.weaponsAndProtections'}}" />
-      <span class="title-actions"><a class="draggable" data-action="rollSoak" data-cdg-macro="soak" data-tooltip="{{localize 'CDG.combat.soakTest'}}"><i class="fa-solid fa-helmet-battle"></i></a>
-      {{#if isEditable}}<a data-action="createItem" data-type="equipment" data-subtype="armor" data-tooltip="{{localize 'CDG.ui.addArmor'}}"><i class="fas fa-shirt-long-sleeve"></i></a><a data-action="createItem" data-type="equipment" data-subtype="weapon" data-tooltip="{{localize 'CDG.ui.addWeapon'}}"><i class="fas fa-sword"></i></a><a data-action="createItem" data-type="equipment" data-subtype="shield" data-tooltip="{{localize 'CDG.ui.addShield'}}"><i class="fas fa-shield-halved"></i></a>{{/if}}</span>
-    </h2>
-    {{#if unlocked}}<div class="init-bonus"><label>{{localize "CDG.label.long.initiativeBonus"}}</label><input type="number" name="system.combat.initiative.bonus" value="{{combat.initiative.bonus}}" data-dtype="Number" /><button class="draggable" type="button" data-action="rollInitiative" data-cdg-macro="initiative" data-tooltip="{{localize 'CDG.combat.initiative.roll'}}"><i class="fa-solid fa-stopwatch"></i></button></div>{{/if}}
-    <ul class="item-list">
-      {{#each armors as |armor|}}<li class="item-row draggable {{#if armor.system.equipped}}equipped{{/if}}" data-item-id="{{armor.id}}"><a data-action="toggleEquipped"><i class="fas {{#if armor.system.equipped}}fa-circle-check{{else}}fa-circle{{/if}}"></i></a><img class="item-img" src="{{armor.img}}" data-action="editItem" /><span class="item-name" data-action="editItem">{{armor.name}}</span><span class="item-category">{{localize (concat "CDG.equipment.armorCategories." armor.system.category)}}</span><span class="item-label">{{localize "CDG.label.long.protection"}}</span>{{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=armor.system.protection.rank editable=false}}<span class="item-init">{{localize "CDG.label.short.init"}} {{signed armor.system.initMalus}}</span>{{#if @root.unlocked}}<a data-action="deleteItem"><i class="fas fa-trash"></i></a>{{/if}}</li>{{/each}}
-      {{#each shields as |shield|}}<li class="item-row draggable {{#if shield.system.equipped}}equipped{{/if}}" data-item-id="{{shield.id}}"><a data-action="toggleEquipped"><i class="fas {{#if shield.system.equipped}}fa-circle-check{{else}}fa-circle{{/if}}"></i></a><img class="item-img" src="{{shield.img}}" data-action="editItem" /><span class="item-name" data-action="editItem">{{shield.name}}</span><span class="item-category">{{localize (concat "CDG.equipment.shieldCategories." shield.system.category)}}</span><span class="item-label">{{localize "CDG.label.long.blockBonus"}}</span><span class="item-value">{{signed shield.system.blockBonus}}</span><span class="item-init">{{localize "CDG.label.short.init"}} {{signed shield.system.initMalus}}</span>{{#if @root.unlocked}}<a data-action="deleteItem"><i class="fas fa-trash"></i></a>{{/if}}</li>{{/each}}
-      {{#each weapons as |weapon|}}<li class="item-row draggable {{#if weapon.system.equipped}}equipped{{/if}}" data-item-id="{{weapon.id}}"><a data-action="toggleEquipped"><i class="fas {{#if weapon.system.equipped}}fa-hand-fist{{else}}fa-hand{{/if}}"></i></a><img class="item-img" src="{{weapon.img}}" data-action="editItem" /><span class="item-name" data-action="editItem">{{weapon.name}}</span><span class="item-category">{{localize (concat "CDG.equipment.weaponCategories." weapon.system.category)}}</span><a data-action="rollWeapon"><i class="fas {{#if weapon.system.isRangedWeapon}}fa-bow-arrow{{else}}fa-sword{{/if}}"></i></a><a data-action="rollDamage"><i class="fa-solid fa-burst"></i></a><span class="item-label">{{localize "CDG.label.long.damage"}}</span>{{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=weapon.system.damage.rank editable=false}}{{#if @root.unlocked}}<a data-action="deleteItem"><i class="fas fa-trash"></i></a>{{/if}}</li>{{/each}}
-    </ul>
-  </section>
-
-  <div class="combat-top npc-combat-tracking">
-    <div class="dodge-block"><h2 class="section-title section-title-art" data-bandeau="esquives"><img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/esquives.webp" alt="{{localize 'CDG.label.long.dodgesUsed'}}" /></h2><div class="combat-quick-actions"><button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button><button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="parry"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}</button></div><div class="dodge-track">{{#each SYSTEM.DODGE_MALUS as |malus index|}}<a class="dodge-step {{#if (gte @root.combat.dodgesUsed index)}}used{{/if}}" data-action="setDodges" data-count="{{index}}">{{signed malus}}</a>{{/each}}</div><div class="parry"><a class="parry-toggle {{#unless combat.canParry}}used{{/unless}}" data-action="toggleParry"><i class="fas {{#if combat.canParry}}fa-shield{{else}}fa-shield-slash{{/if}}"></i> {{#if combat.canParry}}{{localize "CDG.ui.parryAvailable"}}{{else}}{{localize "CDG.ui.parryUsed"}}{{/if}}</a></div></div>
-    <div class="wounds-block"><h2 class="section-title section-title-right section-title-art" data-bandeau="blessures"><img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/blessures.webp" alt="{{localize 'CDG.label.long.wounds'}}" /></h2><ul class="wound-levels">{{#each woundLevels as |level|}}{{#with (lookup @root.wounds level.id) as |wound|}}<li class="wound-level"><label class="wound-name"><span>{{localize level.label}}</span>{{#if @root.unlocked}}<input type="number" name="system.woundSlots.{{level.id}}" value="{{lookup @root.system.woundSlots level.id}}" min="0" data-dtype="Number" />{{/if}}</label><div class="wound-boxes">{{#each (range 1 wound.max) as |box|}}<a class="shield {{#if (gte wound.value box)}}filled{{/if}}" data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>{{/each}}</div><span class="wound-malus">{{signed level.malus}}</span></li>{{/with}}{{/each}}</ul><p class="current-malus">{{localize "CDG.label.long.currentWoundMalus"}} <strong>{{signed wounds.malus}}</strong></p>{{#if system.isDying}}<a class="dying-toggle {{#unless wounds.dying}}cleared{{/unless}}" data-action="toggleDying" data-tooltip="{{localize 'CDG.ui.toggleDying'}}">{{#if wounds.dying}}<i class="fas fa-skull"></i> {{localize "CDG.ui.dying"}}{{else}}<i class="fas fa-heart-pulse"></i> {{localize "CDG.ui.stabilized"}}{{/if}}</a>{{/if}}</div>
-  </div>
 
   {{#if (or unlocked hasSpecial)}}<section class="npc-special"><h2 class="section-title">{{localize "CDG.label.long.special"}}</h2><div class="free-text">{{formInput systemFields.details.fields.special value=system.details.special enriched=enrichedSpecial name="system.details.special" toggled=true classes="content-sized"}}</div></section>{{/if}}
 </section>

@@ -1,12 +1,12 @@
-<header class="sheet-header adversaire-header">
-
-  <div class="portrait">
-    <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
-      {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} />
+<header class="adversaire-header">
+  <div class="banner">
+    <div class="portrait">
+      <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
+        {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} />
+    </div>
   </div>
-
   <div class="identity">
-    <div class="field-line name-line">
+    <div class="adversaire-nameline">
       {{#if unlocked}}
         <input type="text" name="name" value="{{actor.name}}" spellcheck="false" />
       {{else}}
@@ -19,28 +19,63 @@
     </label>{{/if}}
   </div>
 
-  <section class="abilities">
-    <ol class="ability-list">
-      {{#each adversaireAbilities as |ability|}}
-        {{#with (lookup @root.abilities ability.id) as |pool|}}
-          <li class="ability" data-ability="{{ability.id}}">
-            <span class="ability-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
-            <div class="pool">
-              <a class="pool-step" data-action="adjustPool" data-ability="{{ability.id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
-              <span class="pool-value">{{pool.value}}</span>
-              <span class="pool-separator">/</span>
-              {{#if @root.unlocked}}
-                <input class="pool-max" type="number" name="system.abilities.{{ability.id}}.max" value="{{pool.baseMax}}" min="0" data-dtype="Number"
-                  {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips ability.id}}"{{/if}} />
-              {{else}}
-                <span class="pool-max" {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips ability.id}}"{{/if}}>{{pool.max}}</span>
-              {{/if}}
-              <a class="pool-step" data-action="adjustPool" data-ability="{{ability.id}}" data-delta="1"><i class="fas fa-plus"></i></a>
+  <div class="abilities-line">
+    {{#each adversaireAbilities as |ability|}}
+      {{#with (lookup @root.abilities ability.id) as |pool|}}
+        <div class="ability" data-ability="{{ability.id}}">
+          <span class="ability-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}} :</span>
+          <div class="pool">
+            {{#if @root.unlocked}}
+              <input class="pool" type="number" name="system.abilities.{{ability.id}}.value" value="{{pool.value}}" min="0" data-dtype="Number"
+                {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips ability.id}}"{{/if}} />
+            {{else}}
+            <span class="pool-value">{{pool.value}}</span>
+            {{/if}}
+                {{#if @root.system.major}}
+            <span class="pool-separator">/</span>
+            {{#if @root.unlocked}}
+              <input class="pool-max" type="number" name="system.abilities.{{ability.id}}.max" value="{{pool.baseMax}}" min="0" data-dtype="Number"
+                {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips ability.id}}"{{/if}} />
+            {{else}}
+              <span class="pool-max" {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips ability.id}}"{{/if}}>{{pool.max}}</span>
+            {{/if}}
+            {{/if}}
             </div>
-          </li>
-        {{/with}}
-      {{/each}}
-    </ol>
-  </section>
-
+        </div>
+      {{/with}}
+    {{/each}}
+  </div>
+  <div class="npc-skills">
+  {{#if hasSkills}}
+    <div class="skill-columns">
+      {{#each skillColumns as |column|}}<ul class="skill-column">
+        {{#each column as |skill|}}<li class="skill" data-skill="{{skill.id}}">
+          <span class="skill-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize skill.label}}</span>
+          {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" path=(concat "system.skills." skill.id ".rank") rank=(lookup (lookup @root.skills skill.id) "rank") editable=@root.unlocked}}
+        </li>{{/each}}
+      </ul>{{/each}}
+    </div>
+  {{else}}<p class="empty">{{localize "CDG.ui.noSkill"}}</p>{{/if}}
+  </div>
+  
+  <div class="wounds-line">
+    {{#each woundLevels as |level|}}
+    {{#with (lookup @root.wounds level.id) as |wound|}}
+      <div class="wound-level">
+        <label class="wound-name">
+          <span>{{localize level.label}}</span>
+          {{#if @root.unlocked}}
+          <input type="number" name="system.woundSlots.{{level.id}}" value="{{lookup @root.system.woundSlots level.id}}" min="0" data-dtype="Number" />
+          {{/if}}
+        </label>
+        <div class="wound-boxes">
+          {{#each (range 1 wound.max) as |box|}}
+            <a class="shield {{#if (gte wound.value box)}}filled{{/if}}" data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>
+          {{/each}}
+        </div>
+        <span class="wound-malus">{{signed level.malus}}</span>
+      </div>
+      {{/with}}
+    {{/each}}
+  </div>
 </header>
