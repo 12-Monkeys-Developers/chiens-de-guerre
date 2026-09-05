@@ -1,56 +1,77 @@
 <section class="tab tab-combat{{#if tabs.combat.active}} active{{/if}}" data-group="primary" data-tab="combat">
 
-  <div class="combat-top">
-
-    <h2 class="section-title section-title-art" data-bandeau="actionscombat">
-      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/actionscombat.webp" alt="{{localize 'CDG.label.long.actionscombat'}}" />
-    </h2>
-    <div class="actionscombat-block">
-      <div class="combat-quick-actions">
-        <button class="draggable" type="button" data-action="rollInitiative" data-cdg-macro="initiative" data-tooltip="{{localize 'CDG.combat.initiative.roll'}}">
-          <i class="fa-solid fa-stopwatch"></i> {{localize "CDG.combat.initiative.title"}}</button>
-      </div>
-      <div class="initiative-line">
-        <div class="init-modifier">
-          <label>{{localize "CDG.label.long.initiativeModifier"}} :</label>
-          <span class="value" data-tooltip-html="{{initiativeModifierTooltip}}">{{signed combat.initiative.modifier}}</span>
+  <div class="combat-deuxcol">
+    <div class="combat-actions">
+      <h2 class="section-title section-title-art" data-bandeau="actionscombat">
+        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/actionscombat.webp" alt="{{localize 'CDG.label.long.actionscombat'}}" />
+      </h2>
+      <div class="actionscombat-block">
+        <div class="combat-quick-actions">
+          <button class="draggable" type="button" data-action="rollInitiative" data-cdg-macro="initiative" data-tooltip="{{localize 'CDG.combat.initiative.roll'}}">
+            <i class="fa-solid fa-stopwatch"></i> {{localize "CDG.combat.initiative.title"}}</button>
         </div>
-        <div class="init-bonus">
-          <label>{{localize "CDG.label.long.initiativeBonus"}} :</label>
-          <input type="number" name="system.combat.initiative.bonus" value="{{combat.initiative.bonus}}" data-dtype="Number" />
-        </div>
-        {{#if canDualWield}}
-          <div class="init-dual-wield">
-            <label>{{localize "CDG.combat.initiative.dualWield"}} :</label>
-            <span class="value">{{signed dualWieldInitiativeBonus}}</span>
+        <div class="initiative-line">
+          <div class="init-modifier">
+            <label data-tooltip="{{localize 'CDG.label.long.initiativeModifier'}}">{{localize "CDG.label.long.modifier"}} :</label>
+            <span class="value" data-tooltip-html="{{initiativeModifierTooltip}}">{{signed combat.initiative.modifier}}</span>
           </div>
-        {{/if}}
-        {{#if combat.armorOverloaded}}
-          <p class="warning">{{localize "CDG.ui.armorOverloaded"}}</p>
-        {{/if}}
-      </div>
-      <div class="combat-quick-actions">
-        <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button>
-      </div>
-      <div class="dodge-track">
-          <label>{{localize "CDG.label.long.nextDodge"}}</label>
-        {{#each SYSTEM.DODGE_MALUS as |malus index|}}
-          <a class="dodge-step {{#if (gte @root.combat.dodgesUsed index)}}used{{/if}}"
-            data-action="setDodges" data-count="{{index}}">{{signed malus}}</a>
-        {{/each}}
-      </div>
-      <div class="combat-quick-actions">
-        <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="parry"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}</button>
-      </div>
-      <div class="parry">
-        <a class="parry-toggle {{#unless combat.canParry}}used{{/unless}}" data-action="toggleParry"
-          data-tooltip="{{localize 'CDG.ui.parryHint'}}">
-          <i class="fas {{#if combat.canParry}}fa-shield{{else}}fa-shield-slash{{/if}}"></i>
-          {{#if combat.canParry}}{{localize "CDG.ui.parryAvailable"}}{{else}}{{localize "CDG.ui.parryUsed"}}{{/if}}
-        </a>
+          <div class="init-bonus">
+            <label>{{localize "CDG.label.long.initiativeBonus"}} :</label>
+            <input type="number" name="system.combat.initiative.bonus" value="{{combat.initiative.bonus}}" data-dtype="Number" />
+          </div>
+          {{#if canDualWield}}
+            <div class="init-dual-wield">
+              <label>{{localize "CDG.combat.initiative.dualWield"}} :</label>
+              <span class="value">{{signed dualWieldInitiativeBonus}}</span>
+            </div>
+          {{/if}}
+          {{#if combat.armorOverloaded}}
+            <p class="warning">{{localize "CDG.ui.armorOverloaded"}}</p>
+          {{/if}}
+        </div>
+        <div class="combat-quick-actions">
+          <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button>
+        </div>
+        <div class="dodge-track" data-tooltip="{{localize "CDG.label.long.nextDodge"}}">
+          <label>{{localize "CDG.label.long.malus"}}</label>
+          {{#each SYSTEM.DODGE_MALUS as |malus index|}}
+            <a class="dodge-step {{#if (gte @root.combat.dodgesUsed index)}}used{{/if}}"
+              data-action="setDodges" data-count="{{index}}">{{signed malus}}</a>
+          {{/each}}
+        </div>
+        <div class="combat-quick-actions">
+          <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="parry"><i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}</button>
+        </div>
+        <div class="parry">
+          <a class="parry-toggle {{#unless combat.canParry}}used{{/unless}}" data-action="toggleParry"
+            data-tooltip="{{localize 'CDG.ui.parryHint'}}">
+            <i class="fas {{#if combat.canParry}}fa-shield{{else}}fa-shield-slash{{/if}}"></i>
+            {{#if combat.canParry}}{{localize "CDG.ui.parryAvailable"}}{{else}}{{localize "CDG.ui.parryUsed"}}{{/if}}
+          </a>
+        </div>
       </div>
     </div>
-    <div class="combat-deuxcol">
+      <div class="wounds-block">
+        <h2 class="section-title section-title-right section-title-art" data-bandeau="blessures">
+          <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/blessures.webp" alt="{{localize 'CDG.label.long.wounds'}}" />
+        </h2>
+        <ul class="wound-levels">
+          {{#each woundLevels as |level|}}
+            {{#with (lookup @root.wounds level.id) as |wound|}}
+              <li class="wound-level" data-level="{{level.id}}">
+                <span class="wound-name">{{localize level.label}}</span>
+                <div class="wound-boxes">
+                  {{#each (range 1 wound.max) as |box|}}
+                    <a class="shield {{#if (gte wound.value box)}}filled{{/if}}"
+                      data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>
+                  {{/each}}
+                </div>
+                <span class="wound-malus">{{signed level.malus}}</span>
+              </li>
+            {{/with}}
+          {{/each}}
+        </ul>
+      </div>
         {{! Armes et protections tiennent en une seule liste, comme sur la fiche imprimée : les
       protections d'abord — armures puis boucliers —, les armes ensuite. Le bandeau
       calligraphié porte déjà les deux mots. }}
@@ -128,29 +149,5 @@
           </ul>
         </section>
       </div>
-      <div class="wounds-block">
-        <h2 class="section-title section-title-right section-title-art" data-bandeau="blessures">
-          <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/blessures.webp" alt="{{localize 'CDG.label.long.wounds'}}" />
-        </h2>
-        <ul class="wound-levels">
-          {{#each woundLevels as |level|}}
-            {{#with (lookup @root.wounds level.id) as |wound|}}
-              <li class="wound-level" data-level="{{level.id}}">
-                <span class="wound-name">{{localize level.label}}</span>
-                <div class="wound-boxes">
-                  {{#each (range 1 wound.max) as |box|}}
-                    <a class="shield {{#if (gte wound.value box)}}filled{{/if}}"
-                      data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>
-                  {{/each}}
-                </div>
-                <span class="wound-malus">{{signed level.malus}}</span>
-              </li>
-            {{/with}}
-          {{/each}}
-        </ul>
-      </div>
   </div>
-
-
-
 </section>

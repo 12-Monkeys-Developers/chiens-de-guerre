@@ -783,7 +783,7 @@ cdg-toggle-switch[checked] thumb {
   flex-direction: column;
 }
 .cdg.actor .origin-col .allegeanceIcon {
-  text-align: center;
+  align-self: left;
   font-size: 1.5rem;
   margin-bottom: 5px;
 }
@@ -1009,11 +1009,11 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.actor .karma-block {
   display: grid;
-  grid-template-columns: 120px 60px 30px auto;
+  grid-template-columns: 120px 70px 30px auto;
   align-items: center;
   gap: 0.4rem;
   gap: 0.5rem 1rem;
-  padding: 0.5rem 0rem 0.5rem 1rem;
+  padding: 0.5rem 0rem 0.5rem 0.5rem;
   border-top: 1px solid var(--cdg-parchment-line);
   border-bottom: 1px solid var(--cdg-parchment-line);
 }
@@ -1026,18 +1026,18 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor .karma-block .allegiance {
   font-family: var(--cdg-font-title);
   font-size: 1.1rem;
-  margin-left: 0.3rem;
+  margin-left: 0rem;
 }
 .cdg.actor .karma-block .tokens {
   text-align: right;
 }
-.cdg.actor .combat-top {
+.cdg.actor .combat-actions {
   display: flex;
   flex-direction: column;
 }
 .cdg.actor .actionscombat-block {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 120px auto;
   padding-top: 20px;
 }
 .cdg.actor .actionscombat-block .initiative-line {
@@ -1053,6 +1053,11 @@ cdg-toggle-switch[checked] thumb {
   justify-content: space-between;
   gap: 0.4rem;
 }
+.cdg.actor .actionscombat-block .initiative-line .init-modifier input,
+.cdg.actor .actionscombat-block .initiative-line .init-bonus input,
+.cdg.actor .actionscombat-block .initiative-line .init-dual-wield input {
+  width: 2.5rem;
+}
 .cdg.actor .actionscombat-block .initiative-line .init-modifier .value,
 .cdg.actor .actionscombat-block .initiative-line .init-dual-wield .value {
   width: 3.5rem;
@@ -1062,6 +1067,7 @@ cdg-toggle-switch[checked] thumb {
   font-size: 0.85rem;
   text-align: center;
   color: var(--cdg-blood);
+  width: 2.5rem;
 }
 .cdg.actor .actionscombat-block .dodge-track {
   display: flex;
@@ -1076,8 +1082,8 @@ cdg-toggle-switch[checked] thumb {
   border: 1px solid var(--cdg-shield-border);
   border-radius: var(--cdg-radius);
   color: var(--cdg-ink);
-  width: 60px;
-  margin: 0px 10px;
+  width: 30px;
+  margin: 0px 5px;
 }
 .cdg.actor .actionscombat-block .dodge-track .dodge-step.used {
   background: var(--cdg-blood);
@@ -1128,11 +1134,13 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor .combat-deuxcol {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  margin-top: 2rem;
+}
+.cdg.actor .wounds-block {
+  margin-top: 1.5rem;
 }
 .cdg.actor .wound-levels {
   list-style: none;
-  margin: 0;
+  margin: 0px 10px 0px 0px;
   padding: 0;
 }
 .cdg.actor .wound-level {
@@ -1185,6 +1193,7 @@ cdg-toggle-switch[checked] thumb {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.8rem;
+  margin-top: 1.5rem;
 }
 .cdg.actor .currency-list {
   list-style: none;

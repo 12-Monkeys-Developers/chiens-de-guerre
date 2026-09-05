@@ -12,16 +12,11 @@
   </div>
   {{/if}}
       </div>
-
-
-
-   
-
       <div class="combat-quick-actions">
         <button class="draggable" type="button" data-action="rollDefense" data-cdg-macro="defense" data-defense="dodge"><i class="fa-solid fa-person-running"></i> {{localize "CDG.combat.defense.dodge"}}</button>
       </div>
-      <div class="dodge-track">
-          <label>{{localize "CDG.label.long.nextDodge"}}</label>
+      <div class="dodge-track" data-tooltip="{{localize "CDG.label.long.nextDodge"}}">
+          <label>{{localize "CDG.label.long.malus"}}</label>
         {{#each SYSTEM.DODGE_MALUS as |malus index|}}
           <a class="dodge-step {{#if (gte @root.combat.dodgesUsed index)}}used{{/if}}"
             data-action="setDodges" data-count="{{index}}">{{signed malus}}</a>
