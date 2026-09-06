@@ -609,23 +609,23 @@ cdg-toggle-switch[checked] thumb {
   border: solid 2px black;
   cursor: pointer;
 }
-.cdg.actor .identity {
+.cdg.actor .adversaire-header .identity {
   display: grid;
   grid-template-columns: 3fr 1fr;
 }
-.cdg.actor .identity .adversaire-nameline {
+.cdg.actor .adversaire-header .identity .adversaire-nameline {
   margin: 0px 0px 0px 10px;
 }
-.cdg.actor .identity .adversaire-nameline .name {
+.cdg.actor .adversaire-header .identity .adversaire-nameline .name {
   font-family: cinzel;
   font-size: 1.5rem;
   color: black;
 }
-.cdg.actor .identity .adversaire-nameline input[type="text"] {
+.cdg.actor .adversaire-header .identity .adversaire-nameline input[type="text"] {
   font-family: "cinzel";
   font-size: 1.5rem;
 }
-.cdg.actor .identity .major-npc {
+.cdg.actor .adversaire-header .identity .major-npc {
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -634,39 +634,48 @@ cdg-toggle-switch[checked] thumb {
   color: var(--cdg-label);
   font-size: 0.8rem;
 }
-.cdg.actor .identity .major-npc input {
+.cdg.actor .adversaire-header .identity .major-npc input {
   flex: 0 0 auto;
   width: auto;
   margin: 0;
 }
-.cdg.actor .abilities-line {
+.cdg.actor .adversaire-header .abilities-line {
   display: flex;
   flex-direction: row;
   font-size: 1rem;
 }
-.cdg.actor .abilities-line .ability {
+.cdg.actor .adversaire-header .abilities-line .ability {
   display: flex;
   margin: 0px 3px;
 }
-.cdg.actor .abilities-line .ability .pool {
+.cdg.actor .adversaire-header .abilities-line .ability .pool {
   margin: 0px 3px;
 }
-.cdg.actor .abilities-line .ability input[type="number"] {
+.cdg.actor .adversaire-header .abilities-line .ability input[type="number"] {
   text-align: center;
   width: 1.5rem;
 }
-.cdg.actor .wounds-line {
+.cdg.actor .adversaire-header .wounds-line {
   grid-column: 1/3;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
   font-size: 1.2rem;
 }
-.cdg.actor .wounds-line .wound-level {
+.cdg.actor .adversaire-header .wounds-line .wound-level {
   display: flex;
   margin: 0px 5px;
 }
-.cdg.actor .wounds-line .wound-level .pool {
+.cdg.actor .adversaire-header .wounds-line .wound-level .pool {
   margin: 0px 5px;
+}
+.cdg.actor .adversaire-header .wounds-line .malus-line {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  margin-left: auto;
 }
 .cdg.actor .allegiance-obscurite {
   color: var(--cdg-ink);
