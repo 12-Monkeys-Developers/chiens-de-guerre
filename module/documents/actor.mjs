@@ -400,9 +400,10 @@ export default class CdgActor extends Actor {
     if (previousLevelId) wounds[previousLevelId].value = Math.max(0, wounds[previousLevelId].value - 1)
 
     let appliedLevelId = null
+    let start = -1
     if (newLevelId) {
       const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
-      const start = levels.findIndex((entry) => entry.id === newLevelId)
+      start = levels.findIndex((entry) => entry.id === newLevelId)
       for (let index = start; index !== -1 && index < levels.length && !appliedLevelId; index++) {
         const level = levels[index]
         if (wounds[level.id].value < wounds[level.id].max) appliedLevelId = level.id
@@ -413,8 +414,41 @@ export default class CdgActor extends Actor {
     const updates = {}
     if (previousLevelId) updates[`system.wounds.${previousLevelId}.value`] = wounds[previousLevelId].value
     if (appliedLevelId) updates[`system.wounds.${appliedLevelId}.value`] = wounds[appliedLevelId].value
+    // Une compagnie qui devrait subir une blessure au-delà de sa dernière case mortelle est
+    // dissoute. On conserve sa fiche au lieu de la supprimer, afin que cet état reste réversible
+    // en cas d'erreur de saisie ou de décision du Meneur.
+    if (!appliedLevelId && newLevelId && start >= 0 && this.type === "compagnie") updates["system.state.dissolved"] = true
     if (!foundry.utils.isEmpty(updates)) await this.update(updates)
     return appliedLevelId
+  }
+
+  /**
+   * Applique un plan de guérison de compagnie préparé depuis une carte de jet.
+   * Chaque opération vise une blessure existante et l'améliore d'un ou deux crans ; une destination
+   * pleine invalide tout le plan, sans écriture partielle.
+   * @param {{level: string, steps: number}[]} operations
+   * @returns {Promise<boolean>}
+   */
+  async applyCompanyHealing(operations) {
+    if (this.type !== "compagnie" || !Array.isArray(operations) || operations.length === 0) return false
+
+    const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
+    const wounds = Object.fromEntries(levels.map((level) => [level.id, { value: this.system.wounds[level.id].value, max: this.system.wounds[level.id].max }]))
+
+    for (const operation of operations) {
+      const index = levels.findIndex((level) => level.id === operation.level)
+      const steps = Number(operation.steps)
+      if (index < 0 || ![1, 2].includes(steps) || wounds[operation.level].value <= 0) return false
+
+      const destination = index - steps
+      if (destination >= 0 && wounds[levels[destination].id].value >= wounds[levels[destination].id].max) return false
+      wounds[operation.level].value -= 1
+      if (destination >= 0) wounds[levels[destination].id].value += 1
+    }
+
+    const updates = Object.fromEntries(levels.map((level) => [`system.wounds.${level.id}.value`, wounds[level.id].value]))
+    await this.update(updates)
+    return true
   }
 
   /**

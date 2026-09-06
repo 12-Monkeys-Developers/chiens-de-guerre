@@ -48,3 +48,11 @@
     <i class="fa-solid fa-rotate-right" inert></i> {{localize "CDG.roll.push"}}
   </button>
 {{/if}}
+
+{{#if canApplyCompanyHealing}}
+  <button type="button" class="card-apply-healing" data-action="applyCompanyHealing">
+    <i class="fa-solid fa-kit-medical" inert></i> {{localize "CDG.company.healing.apply"}}
+  </button>
+{{else if companyHealingApplied}}
+  <p class="healing-applied"><i class="fa-solid fa-check" inert></i> {{test.companyHealing.summary}}</p>
+{{/if}}

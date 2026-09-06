@@ -1,0 +1,44 @@
+<section class="creation-step company-skills">
+  <h2 class="section-title section-title-art" data-bandeau="comps">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/comps.webp" alt="{{localize 'CDG.companyCreation.steps.skills'}}" />
+  </h2>
+  <p class="intro">{{localize "CDG.companyCreation.skills.intro"}}</p>
+
+  <div class="quotas company-quotas">
+    <div class="quota {{#unless (eq (lookup derived.rankCounts 0) 1)}}pending{{else}}done{{/unless}}">
+      <span class="quota-label">{{localize "CDG.companyCreation.skills.weak"}}</span>
+      <span class="quota-count"><strong>{{lookup derived.rankCounts 0}}</strong> / 1</span>
+    </div>
+    <div class="quota {{#unless (eq derived.advancedCount 10)}}pending{{else}}done{{/unless}}">
+      <span class="quota-label">{{localize "CDG.companyCreation.skills.advanced"}}</span>
+      <span class="quota-count"><strong>{{derived.advancedCount}}</strong> / 10</span>
+    </div>
+    <div class="quota {{#unless (eq derived.expertCount 5)}}pending{{else}}done{{/unless}}">
+      <span class="quota-label">{{localize "CDG.companyCreation.skills.expert"}}</span>
+      <span class="quota-count"><strong>{{derived.expertCount}}</strong> / 5</span>
+    </div>
+  </div>
+
+  <div class="company-skill-columns">
+    {{#each skillColumns as |column|}}
+      <section class="company-skill-column">
+        <h3>{{localize column.ability.label}}</h3>
+        <ul>
+          {{#each column.skills as |skill|}}
+            <li class="company-skill-row">
+              <span>{{localize skill.label}}</span>
+              <div class="company-ranks">
+                {{#each (range 0 @root.SYSTEM.MAX_RANK) as |choice|}}
+                  <button type="button" class="company-rank {{#if (eq (lookup @root.draft.skills ../id) choice)}}selected{{/if}}"
+                    data-action="setCompanySkillRank" data-skill="{{../id}}" data-rank="{{choice}}"
+                    {{disabled (eq (lookup @root.draft.skills ../id) choice)}}>{{choice}}</button>
+                {{/each}}
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </section>
+    {{/each}}
+  </div>
+  <p class="hint">{{localize "CDG.companyCreation.skills.hint"}}</p>
+</section>

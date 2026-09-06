@@ -44,6 +44,12 @@ export default class CdgCompagnieData extends CdgActorData {
 
     schema.notes = new fields.HTMLField()
 
+    // Une dissolution provoquée par un débordement mortel doit survivre même si les Effectifs sont
+    // encore positifs. L'acteur reste conservé : le Meneur peut corriger la fiche puis le réactiver.
+    schema.state = new fields.SchemaField({
+      dissolved: new fields.BooleanField({ required: true, nullable: false, initial: false }),
+    })
+
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
 
@@ -86,7 +92,7 @@ export default class CdgCompagnieData extends CdgActorData {
    * @returns {boolean}
    */
   get dissolved() {
-    return this.abilities.effectifs.max <= 0
+    return this.state.dissolved || this.abilities.effectifs.max <= 0
   }
 
   /**
@@ -105,8 +111,15 @@ export default class CdgCompagnieData extends CdgActorData {
     const delta = after - before
     if (delta <= 0) return
 
-    const currentMax = foundry.utils.getProperty(changes, "system.abilities.effectifs.max") ?? this.abilities.effectifs.max
-    foundry.utils.setProperty(changes, "system.abilities.effectifs.max", Math.max(0, currentMax - delta))
+    const effectifs = this.abilities.effectifs
+    const currentMax = foundry.utils.getProperty(changes, "system.abilities.effectifs.max") ?? effectifs.baseMax ?? effectifs.max
+    const currentValue = foundry.utils.getProperty(changes, "system.abilities.effectifs.value") ?? effectifs.value
+    const nextMax = Math.max(0, currentMax - delta)
+    const nextValue = Math.max(0, currentValue - delta)
+
+    foundry.utils.setProperty(changes, "system.abilities.effectifs.max", nextMax)
+    foundry.utils.setProperty(changes, "system.abilities.effectifs.value", Math.min(nextValue, nextMax))
+    if (nextMax === 0) foundry.utils.setProperty(changes, "system.state.dissolved", true)
   }
 
   /**

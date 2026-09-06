@@ -117,7 +117,9 @@ export default class CdgRoll extends Roll {
     return {
       test,
       dice,
-      canPush: !test.pushed && !test.noPush,
+      canPush: !test.pushed && !test.noPush && !test.companyHealing?.applied,
+      canApplyCompanyHealing: !!test.companyHealing && !test.companyHealing.applied && (!test.pushed || test.isPush),
+      companyHealingApplied: !!test.companyHealing?.applied,
       outcome,
       outcomeId: outcome.outcome,
       outcomeLabel: game.i18n.localize(outcomeLabel(outcome)),
@@ -164,7 +166,7 @@ export default class CdgRoll extends Roll {
     if (!test) return
 
     for (const button of html.querySelectorAll("[data-action='keepDie']")) {
-      if (!game.user.isGM) {
+      if (!game.user.isGM || test.companyHealing?.applied) {
         button.disabled = true
         continue
       }
@@ -174,6 +176,9 @@ export default class CdgRoll extends Roll {
     if (!this.#canInteract(message)) return
     for (const button of html.querySelectorAll("[data-action='pushTest']")) {
       button.addEventListener("click", (event) => this.#onPushTest(event, message))
+    }
+    for (const button of html.querySelectorAll("[data-action='applyCompanyHealing']")) {
+      button.addEventListener("click", (event) => this.#onApplyCompanyHealing(event, message))
     }
   }
 
@@ -218,21 +223,142 @@ export default class CdgRoll extends Roll {
 
     const actor = await fromUuid(test.actorUuid)
     if (!actor) return ui.notifications.warn(game.i18n.localize("CDG.roll.notif.actorMissing"))
+    if (actor.type === "compagnie" && actor.system.dissolved) return ui.notifications.warn("CDG.company.cannotRollDissolved", { localize: true })
 
-    const drained = Object.values(SYSTEM.ABILITIES).filter((ability) => actor.system.abilities[ability.id].value <= 1)
+    // Le triptyque dépend du type d'acteur : Corps/Vivacité/Esprit pour un combattant,
+    // Effectifs/Logistique/Moral pour une compagnie. Le dialogue de jet suit déjà ce principe ;
+    // le dépassement doit débiter exactement les mêmes réserves.
+    const abilities = Object.values(actor.system.constructor.ABILITIES)
+    const drained = abilities.filter((ability) => actor.system.abilities[ability.id].value <= 1)
     if (drained.length > 0) {
       const names = drained.map((ability) => game.i18n.localize(ability.label)).join(", ")
       return ui.notifications.warn(game.i18n.format("CDG.roll.notif.cannotPush", { abilities: names }))
     }
 
     const updates = {}
-    for (const ability of Object.values(SYSTEM.ABILITIES)) {
+    for (const ability of abilities) {
       updates[`system.abilities.${ability.id}.value`] = actor.system.abilities[ability.id].value - 1
     }
     await actor.update(updates)
 
     await this.#refresh(message, { ...test, pushed: true })
     return this.post({ ...test, pushed: true, isPush: true })
+  }
+
+  /**
+   * Applique l'issue définitive d'un test de récupération ou de soins de compagnie.
+   * Le choix des blessures reste au joueur ; la carte mémorise l'application pour être idempotente.
+   * @param {PointerEvent} event
+   * @param {ChatMessage} message
+   */
+  static async #onApplyCompanyHealing(event, message) {
+    event.preventDefault()
+    event.currentTarget.disabled = true
+    const test = this.getTest(message)
+    if (!test?.companyHealing || test.companyHealing.applied || (test.pushed && !test.isPush)) return
+
+    const actor = await fromUuid(test.actorUuid)
+    if (!actor || actor.type !== "compagnie") return ui.notifications.warn(game.i18n.localize("CDG.roll.notif.actorMissing"))
+    if (!actor.isOwner) return ui.notifications.warn("CDG.company.healing.notOwner", { localize: true })
+    if (actor.system.dissolved) return ui.notifications.warn("CDG.company.cannotRollDissolved", { localize: true })
+
+    const outcome = resolveOutcome(test.results[test.keptIndex], test.sr)
+    let summary = game.i18n.localize(`CDG.company.healing.result.${outcome.outcome}`)
+
+    if (outcome.outcome === OUTCOMES.criticalFailure.id) {
+      await actor.applyWoundOverflow(null, "legere")
+    } else if (outcome.success) {
+      const plans = this.#companyHealingPlans(actor, outcome.critical)
+      if (plans.length === 0) return ui.notifications.warn("CDG.company.healing.noEligibleWound", { localize: true })
+
+      const options = plans.map((plan, index) => `<option value="${index}">${foundry.utils.escapeHTML(plan.label)}</option>`).join("")
+      const selected = await foundry.applications.api.DialogV2.prompt({
+        window: { title: game.i18n.localize("CDG.company.healing.chooseTitle") },
+        content: `<div class="form-group"><label>${game.i18n.localize("CDG.company.healing.choose")}</label><select name="plan">${options}</select></div>`,
+        ok: {
+          label: game.i18n.localize("CDG.company.healing.apply"),
+          callback: (promptEvent, button) => new foundry.applications.ux.FormDataExtended(button.form).object.plan,
+        },
+        rejectClose: false,
+      })
+      if (selected === null || selected === undefined) {
+        event.currentTarget.disabled = false
+        return
+      }
+
+      const plan = plans[Number(selected)]
+      if (!plan || !(await actor.applyCompanyHealing(plan.operations))) {
+        event.currentTarget.disabled = false
+        return ui.notifications.warn("CDG.company.healing.changedWounds", { localize: true })
+      }
+      summary = plan.label
+    }
+
+    const applied = {
+      ...test,
+      noPush: true,
+      companyHealing: { ...test.companyHealing, applied: true, summary },
+    }
+    return this.#refresh(message, applied)
+  }
+
+  /**
+   * Construit les choix encore applicables à l'état courant des blessures.
+   * @param {CdgActor} actor
+   * @param {boolean} critical
+   * @returns {{label: string, operations: {level: string, steps: number}[]}[]}
+   */
+  static #companyHealingPlans(actor, critical) {
+    const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
+    const initial = Object.fromEntries(levels.map((level) => [level.id, { value: actor.system.wounds[level.id].value, max: actor.system.wounds[level.id].max }]))
+    const name = (id) => game.i18n.localize(SYSTEM.WOUND_LEVELS[id].label)
+
+    const valid = (operations) => {
+      const wounds = foundry.utils.deepClone(initial)
+      for (const operation of operations) {
+        const index = levels.findIndex((level) => level.id === operation.level)
+        if (index < 0 || wounds[operation.level].value <= 0) return false
+        const destination = index - operation.steps
+        if (destination >= 0 && wounds[levels[destination].id].value >= wounds[levels[destination].id].max) return false
+        wounds[operation.level].value -= 1
+        if (destination >= 0) wounds[levels[destination].id].value += 1
+      }
+      return true
+    }
+
+    if (!critical) {
+      return levels
+        .map((level) => ({
+          label: game.i18n.format("CDG.company.healing.oneStep", { wound: name(level.id) }),
+          operations: [{ level: level.id, steps: 1 }],
+        }))
+        .filter((plan) => valid(plan.operations))
+    }
+
+    const plans = levels
+      .filter((level) => level.order >= 2)
+      .map((level) => ({
+        label: game.i18n.format("CDG.company.healing.twoSteps", { wound: name(level.id) }),
+        operations: [{ level: level.id, steps: 2 }],
+      }))
+
+    for (let first = 0; first < levels.length; first++) {
+      for (let second = first; second < levels.length; second++) {
+        const a = levels[first].id
+        const b = levels[second].id
+        plans.push({
+          label: game.i18n.format(a === b ? "CDG.company.healing.twoSame" : "CDG.company.healing.twoDifferent", {
+            first: name(a),
+            second: name(b),
+          }),
+          operations: [
+            { level: a, steps: 1 },
+            { level: b, steps: 1 },
+          ],
+        })
+      }
+    }
+    return plans.filter((plan) => valid(plan.operations))
   }
 
   // #endregion

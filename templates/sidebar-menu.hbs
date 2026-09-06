@@ -16,6 +16,10 @@
       <i class="fa-solid fa-user-plus" inert></i>
       {{localize "CDG.creation.title"}}
     </button>
+    <button type="button" class="button" data-action="openApp" data-app="company-creation" data-tooltip="{{localize 'CDG.sidebar.companyCreationTooltip'}}">
+      <i class="fa-solid fa-flag" inert></i>
+      {{localize "CDG.companyCreation.title"}}
+    </button>
   {{else}}
     <p class="hint">{{localize "CDG.sidebar.noCreatePermission"}}</p>
   {{/if}}

@@ -28,6 +28,9 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
       // Le couple caractéristique / compétence d'une compagnie est imposé (p. 124) : cette
       // surcharge remplace, pour cette seule fiche, l'action `rollTest` héritée du socle commun.
       rollTest: CdgCompagnieSheet.#onRollTest,
+      addWound: CdgCompagnieSheet.#onAddWound,
+      reactivate: CdgCompagnieSheet.#onReactivate,
+      companyHealing: CdgCompagnieSheet.#onCompanyHealing,
       addChronicle: CdgCompagnieSheet.#onAddChronicle,
       removeChronicle: CdgCompagnieSheet.#onRemoveChronicle,
       addRosterEntry: CdgCompagnieSheet.#onAddRosterEntry,
@@ -61,6 +64,8 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     context.rosterPNJ = this.#prepareRoster(this.document.system.rosterPNJ)
     context.chronicles = this.document.system.chronicles.map((chronicle, index) => ({ ...chronicle, index }))
     context.dissolved = this.document.system.dissolved
+    context.hasWounds = Object.values(SYSTEM.WOUND_LEVELS).some((level) => this.document.system.wounds[level.id].value > 0)
+    context.choiceRestConditions = Object.values(SYSTEM.REST_CONDITIONS)
 
     const enrichHTML = foundry.applications.ux.TextEditor.implementation.enrichHTML
     context.enrichedNotes = await enrichHTML(this.document.system.notes)
@@ -94,6 +99,40 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     return CdgMacros.rollTest(target.closest("[data-ability]")?.dataset.ability ?? null, target.closest("[data-skill]")?.dataset.skill ?? null, this.document, {
       lockedPair: true,
     })
+  }
+
+  /**
+   * Ajoute une blessure avec débordement, y compris au-delà de la dernière case mortelle.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onAddWound(event, target) {
+    if (!this.isEditable || this.document.system.dissolved) return
+    const level = target.closest("[data-level]")?.dataset.level
+    if (!SYSTEM.WOUND_LEVELS[level]) return
+    return this.document.applyWoundOverflow(null, level)
+  }
+
+  /** Rend jouable une compagnie conservée après dissolution, une fois ses Effectifs corrigés. */
+  static async #onReactivate() {
+    if (!this.isEditable) return
+    if (this.document.system.abilities.effectifs.max <= 0) {
+      return ui.notifications.warn("CDG.company.cannotReactivate", { localize: true })
+    }
+    return this.document.update({ "system.state.dissolved": false })
+  }
+
+  /**
+   * Lance l'un des deux tests quotidiens qui peuvent résorber les blessures de la compagnie.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #onCompanyHealing(event, target) {
+    if (!this.isEditable || this.document.system.dissolved) return
+    const type = target.dataset.healing
+    const pair = type === "recovery" ? ["effectifs", "cohesion"] : type === "care" ? ["logistique", "soins"] : null
+    if (!pair) return
+    return CdgMacros.rollTest(pair[0], pair[1], this.document, { lockedPair: true, companyHealing: type })
   }
 
   static async #onAddChronicle() {

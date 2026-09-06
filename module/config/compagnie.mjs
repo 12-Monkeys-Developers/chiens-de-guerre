@@ -68,3 +68,10 @@ export const COMPANY_WOUND_SLOTS_BY_COHESION = {
 export const COMPANY_ABILITY_POINTS = 34
 export const COMPANY_ABILITY_MIN = 8
 export const COMPANY_ABILITY_MAX = 14
+
+/** Les trois étapes de l'assistant de création de compagnie (p. 126). */
+export const COMPANY_CREATION_STEPS = [
+  { id: "abilities", label: "CDG.companyCreation.steps.abilities", icon: "fa-solid fa-people-group" },
+  { id: "skills", label: "CDG.companyCreation.steps.skills", icon: "fa-solid fa-shield-halved" },
+  { id: "identity", label: "CDG.companyCreation.steps.identity", icon: "fa-solid fa-flag" },
+]

@@ -1142,6 +1142,78 @@
     }
   }
 
+  // ---------------------------------------------------------------- Assistant de compagnie
+  .company-skills {
+    .company-quotas {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .company-skill-columns {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .company-skill-column {
+      .card();
+
+      h3 {
+        margin: 0 0 0.35rem;
+        text-align: center;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .company-skill-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.35rem;
+      padding: 0.2rem 0;
+      border-bottom: 1px dotted var(--cdg-parchment-line);
+      font-size: 0.78rem;
+    }
+
+    .company-ranks {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 0.12rem;
+    }
+
+    .company-rank {
+      width: 1.35rem;
+      height: 1.35rem;
+      padding: 0;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: 50%;
+      background: rgb(255 255 255 / 35%);
+      color: var(--cdg-ink-soft);
+      font-size: 0.7rem;
+      line-height: 1;
+
+      &.selected {
+        border-color: var(--cdg-blood-dark);
+        background: var(--cdg-blood);
+        color: var(--cdg-parchment);
+        opacity: 1;
+      }
+
+      &:hover:not(:disabled) {
+        border-color: var(--cdg-blood);
+        box-shadow: none;
+      }
+    }
+  }
+
+  .company-identity .fields {
+    align-self: center;
+  }
+
   // ---------------------------------------------------------------- Pied de page
   .creation-footer {
     flex: 0 0 auto;

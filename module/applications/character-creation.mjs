@@ -266,6 +266,15 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       incompleteSteps: SYSTEM.CREATION_STEPS.filter((step, index) => !statuses[index].complete),
       originWarnings: this.#derived.originWarnings,
       creating: this.#creating,
+      creationLabels: {
+        progress: "CDG.creation.progress",
+        stepComplete: "CDG.creation.stepComplete",
+        previous: "CDG.creation.previous",
+        next: "CDG.creation.next",
+        create: "CDG.creation.create",
+        reset: "CDG.creation.reset",
+        resetTooltip: "CDG.creation.resetTooltip",
+      },
     }
 
     if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)

@@ -30,6 +30,26 @@
     </section>
   </div>
 
+  <section class="company-rest">
+    <h2 class="section-title">{{localize "CDG.company.healing.title"}}</h2>
+    <div class="company-healing-actions">
+      <button type="button" data-action="companyHealing" data-healing="recovery" {{disabled (or dissolved (not hasWounds))}}>
+        <i class="fa-solid fa-heart-pulse" inert></i> {{localize "CDG.company.healing.recovery"}}
+      </button>
+      <button type="button" data-action="companyHealing" data-healing="care" {{disabled (or dissolved (not hasWounds))}}>
+        <i class="fa-solid fa-kit-medical" inert></i> {{localize "CDG.company.healing.care"}}
+      </button>
+    </div>
+    <h3>{{localize "CDG.company.healing.reserves"}}</h3>
+    <div class="rest-buttons">
+      {{#each choiceRestConditions as |condition|}}
+        <button type="button" class="rest-button" data-action="rest" data-condition="{{condition.id}}" {{disabled @root.dissolved}}
+          <span>{{localize condition.label}}</span><strong>+{{condition.recovery}}</strong>
+        </button>
+      {{/each}}
+    </div>
+  </section>
+
   <section class="chronicles">
     <h2 class="section-title">
       {{localize "CDG.label.long.chronicles"}}
