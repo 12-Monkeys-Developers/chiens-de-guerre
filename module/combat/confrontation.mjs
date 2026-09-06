@@ -142,8 +142,9 @@ export default class CdgConfrontation {
       target,
       weapon,
       attack,
-      // Une attaque échouée ne porte pas : la cible n'a donc aucun jet de défense à effectuer.
-      canChooseDefense: attack.outcome.success && !state.defenseTest,
+      // Le test d'opposition compare toujours les deux jets, y compris un échec ou un
+      // échec critique de l'attaquant : la cible se défend dans tous les cas.
+      canChooseDefense: !state.defenseTest,
       parryBlocked: !!target?.system.combat.parryUsed,
       parryNeedsShield: !!weapon?.system.isRangedWeapon && !target?.shield,
       // La confrontation est close une fois l'encaissement résolu : les phases précédentes se
@@ -469,8 +470,6 @@ export default class CdgConfrontation {
 
     const state = this.getState(message)
     if (!state || !this.#canAct("defense", state)) return
-    const attackOutcome = resolveOutcome(state.attackTest.results[state.attackTest.keptIndex], state.attackTest.sr)
-    if (!attackOutcome.success) return
     const target = await fromUuid(state.targetUuid)
     if (!target) return
 
