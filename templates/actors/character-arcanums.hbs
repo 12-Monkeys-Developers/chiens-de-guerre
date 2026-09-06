@@ -20,11 +20,11 @@
             <a class="item-control arcanum-activate" data-action="activateArcanum" data-rank="{{activation.rank}}"
               data-tooltip="{{#if activation.cost}}{{localize 'CDG.arcanum.activate' rank=activation.rank name=activation.name cost=activation.cost}}{{else}}{{localize 'CDG.arcanum.activateFree' rank=activation.rank name=activation.name}}{{/if}}"><i class="fa-solid fa-wand-sparkles"></i><sup>{{activation.rank}}</sup></a>
           {{/each}}
-          <span class="arcanum-type">{{localize (concat "CDG.arcanum.types." arcanum.system.arcanumType)}}</span>
-          {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=arcanum.system.rank editable=false}}
           {{#if arcanum.system.isPassive}}
             <span class="arcanum-bonus">{{signed arcanum.system.bonus}}</span>
           {{/if}}
+          <span class="arcanum-type">{{localize (concat "CDG.arcanum.types." arcanum.system.arcanumType)}}</span>
+          {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" rank=arcanum.system.rank editable=false}}
           {{#if @root.unlocked}}
             <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CDG.ui.delete'}}"><i class="fas fa-trash"></i></a>
           {{/if}}

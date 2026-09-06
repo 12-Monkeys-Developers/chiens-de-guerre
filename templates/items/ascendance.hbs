@@ -14,7 +14,9 @@
   </section>
 
   <section class="arcanum-choices">
-    <h2 class="section-title">{{localize "CDG.label.long.arcanumChoices"}}</h2>
+    <h2 class="section-title section-title-art" data-bandeau="arcanums">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/arcanums.webp" alt="{{localize 'CDG.label.long.arcanumChoices'}}" />
+    </h2>
     <ul class="item-list">
       {{#each arcanumChoices as |choice|}}
         <li class="item-row" data-uuid="{{choice.uuid}}">
