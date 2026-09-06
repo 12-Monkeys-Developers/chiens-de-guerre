@@ -444,6 +444,7 @@ cdg-toggle-switch[checked] thumb {
   background-position: center;
   color: var(--cdg-text);
   padding: 0;
+  isolation: isolate;
 }
 .cdg nav.tabs {
   display: flex;

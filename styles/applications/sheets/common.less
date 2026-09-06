@@ -9,6 +9,11 @@
     background-position: center;
     color: var(--cdg-text);
     padding: 0;
+    // Contexte d'empilement garanti, indépendant du thème Foundry : sans lui, les z-index négatifs
+    // du bandeau (header.less) s'évadent vers .application en thème clair et se retrouvent peints
+    // derrière ce fond parchemin — en thème sombre, le backdrop-filter de Foundry masquait le
+    // problème par accident en créant lui-même ce contexte.
+    isolation: isolate;
   }
 
   // Onglets : languettes sobres, soulignées de sang quand elles sont actives.
