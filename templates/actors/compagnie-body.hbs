@@ -1,37 +1,83 @@
 <div class="compagnie-body">
-
-  <div class="compagnie-top">
-    <section class="roster-pj" data-roster="pj">
-      <h2 class="section-title">
-        {{localize "CDG.label.long.rosterPJ"}}
-        {{#if unlocked}}<a data-action="addRosterEntry" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
-      </h2>
-      <ul class="item-list">
-        {{#each rosterPJ as |entry|}}
-          {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-roster-row.hbs" entry=entry roster="pj"}}
-        {{else}}
-          <li class="empty">{{localize "CDG.company.noRoster"}}</li>
+  <div class="skillrow">
+    <section class="section-skills">
+      <div class="skill-columns">
+        {{#each skillColumns as |column|}}
+          <ul class="skill-column">
+            <li class="soustitre">{{localize column.ability.label}}</li>
+            {{#each column.skills as |skill|}}
+              <li class="skill" data-skill="{{skill.id}}" data-ability="{{skill.ability}}">
+                <span class="skill-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize skill.label}}</span>
+                {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
+                    path=(concat "system.skills." skill.id ".rank")
+                    rank=(lookup (lookup @root.skills skill.id) "rank")
+                    editable=@root.unlocked}}
+              </li>
+            {{/each}}
+          </ul>
         {{/each}}
-      </ul>
+      </div>
     </section>
-
-    <section class="roster-pnj" data-roster="pnj">
-      <h2 class="section-title">
-        {{localize "CDG.label.long.rosterPNJ"}}
-        {{#if unlocked}}<a data-action="addRosterEntry" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
+    <section class="abilities">
+      <h2 class="section-title section-title-right section-title-art" data-bandeau="caracs">
+        <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/caracs.webp" alt="{{localize 'CDG.label.long.rosterPNJ'}}" />
       </h2>
-      <ul class="item-list">
-        {{#each rosterPNJ as |entry|}}
-          {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-roster-row.hbs" entry=entry roster="pnj"}}
-        {{else}}
-          <li class="empty">{{localize "CDG.company.noRoster"}}</li>
+      <ol class="ability-list">
+        {{#each companyAbilities as |ability id|}}
+          {{#with (lookup @root.abilities id) as |pool|}}
+            <li class="ability" data-ability="{{id}}">
+              <span class="ability-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
+
+              <div class="pool">
+                <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="-1"><i class="fas fa-minus"></i></a>
+                <span class="pool-value" data-tooltip="{{localize 'CDG.ui.poolHint'}}">{{pool.value}}</span>
+                <span class="pool-separator">/</span>
+                {{#if @root.unlocked}}
+                  <input class="pool-max" type="number" name="system.abilities.{{id}}.max" value="{{pool.baseMax}}" min="0" data-dtype="Number"
+                    {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips id}}"{{/if}} />
+                {{else}}
+                  <span class="pool-max" {{#if pool.bonus}}data-tooltip-html="{{lookup @root.abilityMaxTooltips id}}"{{/if}}>{{pool.max}}</span>
+                {{/if}}
+                <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="1"><i class="fas fa-plus"></i></a>
+              </div>
+            </li>
+          {{/with}}
         {{/each}}
-      </ul>
+      </ol>
     </section>
   </div>
-
-  <section class="company-rest">
-    <h2 class="section-title">{{localize "CDG.company.healing.title"}}</h2>
+  <div class="woundedrow">
+    <section class="wounds-block">
+      <h2 class="section-title section-title-left section-title-art" data-bandeau="blesses">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/blesses.webp" alt="{{localize 'CDG.label.long.woundsCompany'}}" />
+      </h2>
+      <ul class="wound-levels">
+        {{#each woundLevels as |level|}}
+          {{#with (lookup @root.wounds level.id) as |wound|}}
+            <li class="wound-level" data-level="{{level.id}}">
+              <span class="wound-name">{{localize level.labelComp}}</span>
+              {{#if @root.isEditable}}
+                <a class="wound-add" data-action="addWound" data-tooltip="{{localize 'CDG.company.addWound'}}"><i class="fa-solid fa-plus" inert></i></a>
+              {{/if}}
+              <div class="wound-boxes">
+                {{#each (range 1 wound.max) as |box|}}
+                  <a class="shield {{#if (gte wound.value box)}}filled{{/if}}"
+                    data-action="setWound" data-level="{{level.id}}" data-box="{{box}}"></a>
+                {{/each}}
+              </div>
+              <span class="wound-malus">{{signed level.malus}}</span>
+            </li>
+          {{/with}}
+        {{/each}}
+      </ul>
+      <p class="current-malus">
+        {{localize "CDG.label.long.currentWoundMalus"}} <strong>{{signed wounds.malus}}</strong>
+      </p>
+    </section>
+    <section class="company-rest">
+    <h2 class="section-title section-title-right section-title-art" data-bandeau="guerison">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/guerison.webp" alt="{{localize 'CDG.label.long.rosterPNJ'}}" />
+    </h2>
     <div class="company-healing-actions">
       <button type="button" data-action="companyHealing" data-healing="recovery" {{disabled (or dissolved (not hasWounds))}}>
         <i class="fa-solid fa-heart-pulse" inert></i> {{localize "CDG.company.healing.recovery"}}
@@ -40,7 +86,7 @@
         <i class="fa-solid fa-kit-medical" inert></i> {{localize "CDG.company.healing.care"}}
       </button>
     </div>
-    <h3>{{localize "CDG.company.healing.reserves"}}</h3>
+    <div class="soustitre">{{localize "CDG.company.healing.reserves"}}</div>
     <div class="rest-buttons">
       {{#each choiceRestConditions as |condition|}}
         <button type="button" class="rest-button" data-action="rest" data-condition="{{condition.id}}" {{disabled @root.dissolved}}
@@ -49,10 +95,10 @@
       {{/each}}
     </div>
   </section>
-
+  </div>
   <section class="chronicles">
-    <h2 class="section-title">
-      {{localize "CDG.label.long.chronicles"}}
+      <h2 class="section-title section-title-left section-title-art" data-bandeau="chroniques">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/chroniques.webp" alt="{{localize 'CDG.label.long.chronicles'}}" />
       {{#if unlocked}}<a data-action="addChronicle" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
     </h2>
     <ul class="item-list">
@@ -65,7 +111,9 @@
   </section>
 
   <section class="notes-section">
-    <h2 class="section-title">{{localize "CDG.label.long.notes"}}</h2>
+      <h2 class="section-title section-title-left section-title-art" data-bandeau="notes">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/notes.webp" alt="{{localize 'CDG.label.long.notes'}}" />
+      </h2>
     <div class="free-text">
       {{formInput systemFields.notes value=system.notes enriched=enrichedNotes name="system.notes" toggled=true}}
     </div>

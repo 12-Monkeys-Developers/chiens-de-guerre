@@ -374,6 +374,48 @@ cdg-toggle-switch[checked] thumb {
   width: 155.68px;
   top: 4.22px;
 }
+.cdg .section-title-art[data-bandeau="pjs"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="pjs"] > .title-art {
+  width: 282.52px;
+  top: -16.024px;
+}
+.cdg .section-title-art[data-bandeau="pnjs"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="pnjs"] > .title-art {
+  width: 290.64px;
+  top: -25.79712px;
+}
+.cdg .section-title-art[data-bandeau="blesses"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="blesses"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="guerison"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="guerison"] > .title-art {
+  width: 290.64px;
+  top: -25.79712px;
+}
+.cdg .section-title-art[data-bandeau="chroniques"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="chroniques"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="notes"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="notes"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
 .cdg input[type="text"],
 .cdg input[type="number"],
 .cdg select {
@@ -694,7 +736,6 @@ cdg-toggle-switch[checked] thumb {
   background-size: cover;
   background-position: center 30%;
   border-bottom: 2px solid var(--cdg-ink);
-  z-index: -2;
 }
 .cdg.actor .name-line {
   margin: -20px 0px -30px 10px;
@@ -717,7 +758,6 @@ cdg-toggle-switch[checked] thumb {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
-  z-index: -1;
 }
 .cdg.actor .banner .portrait {
   position: absolute;
@@ -858,58 +898,6 @@ cdg-toggle-switch[checked] thumb {
   display: flex;
   gap: 3px;
   align-items: center;
-}
-.cdg.actor.compagnie .sheet-header {
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-  gap: 0.5rem;
-  background-image: none;
-}
-.cdg.actor.compagnie .sheet-header .header-top {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
-}
-.cdg.actor.compagnie .sheet-header .header-identity {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.6rem;
-  min-width: 0;
-}
-.cdg.actor.compagnie .sheet-header .portrait .actor-img {
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-  border: 2px solid var(--cdg-ink);
-  border-radius: var(--cdg-radius);
-}
-.cdg.actor.compagnie .sheet-header .header-top .wounds-block {
-  align-self: flex-start;
-  flex: 0 0 auto;
-  margin-top: -0.6rem;
-  margin-right: -0.8rem;
-  padding-right: 0.4rem;
-}
-.cdg.actor.compagnie .sheet-header .header-top .wounds-block .wound-levels {
-  margin: 0;
-}
-.cdg.actor.compagnie .sheet-header .header-groups {
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  gap: 1rem;
-}
-.cdg.actor.compagnie .sheet-header .abilities {
-  flex: 0 0 210px;
-  margin-top: 0.3rem;
-}
-.cdg.actor.compagnie .sheet-header .section-skills {
-  flex: 1 1 auto;
-  margin-top: 0.3rem;
 }
 .cdg .identity .origin-line .origin {
   flex: 1 1 auto;
@@ -1429,6 +1417,54 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor.adversaire .npc-special .free-text {
   min-height: 4rem;
 }
+.cdg.actor.compagnie .window-content {
+  background-image: url("../ui/bck-company.webp");
+}
+.cdg.actor.compagnie .sheet-header {
+  background-image: none;
+  height: auto;
+}
+.cdg.actor.compagnie .sheet-header .portrait .actor-img {
+  max-height: 140px;
+  object-fit: cover;
+  border: 2px solid var(--cdg-ink);
+  border-radius: var(--cdg-radius);
+}
+.cdg.actor.compagnie .soustitre {
+  font-family: "cinzel";
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--cdg-blood);
+  padding: 0.1rem 0 0.2rem;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+  margin-bottom: 0.15rem;
+}
+.cdg.actor.compagnie .compagnie-header {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.5fr;
+  align-items: start;
+}
+.cdg.actor.compagnie .compagnie-header .name-line {
+  grid-column: 1 / 4;
+  text-align: center;
+  margin: 0px;
+}
+.cdg.actor.compagnie .compagnie-header .name-line .name {
+  font-family: var(--cdg-font-title);
+  font-size: 3rem;
+  color: #000;
+  -webkit-text-stroke: 1px #ba1c41;
+}
+.cdg.actor.compagnie .compagnie-header .name-line input[type="text"] {
+  font-family: var(--cdg-font-title);
+  font-size: 3rem;
+  height: 64px;
+}
+.cdg.actor.compagnie .compagnie-header .compagnie-colcentral {
+  border: 5px 15px 5px 15px;
+}
 .cdg.actor.compagnie .compagnie-body {
   display: flex;
   flex-direction: column;
@@ -1438,15 +1474,35 @@ cdg-toggle-switch[checked] thumb {
   gap: 0.6rem;
   padding: 0.6rem 0.8rem 1rem;
 }
-.cdg.actor.compagnie .compagnie-top,
+.cdg.actor.compagnie .skillrow {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr;
+  align-items: start;
+}
+.cdg.actor.compagnie .woundedrow {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: start;
+}
 .cdg.actor.compagnie .chronicles {
   flex: 0 0 auto;
 }
-.cdg.actor.compagnie .company-rest .company-healing-actions,
-.cdg.actor.compagnie .company-rest .rest-buttons {
+.cdg.actor.compagnie .company-rest {
+  margin: 10px 0px 0px 20px;
+}
+.cdg.actor.compagnie .company-rest .company-healing-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  margin: 20px 0px;
+}
+.cdg.actor.compagnie .company-rest .rest-buttons {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  width: 128px;
+  height: 40px;
 }
 .cdg.actor.compagnie .company-rest button {
   flex: 1 1 auto;
@@ -1503,16 +1559,6 @@ cdg-toggle-switch[checked] thumb {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0 0.8rem;
 }
-.cdg.actor.compagnie .skill-column-header {
-  font-family: "cinzel";
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--cdg-blood);
-  padding: 0.1rem 0 0.2rem;
-  border-bottom: 1px solid var(--cdg-parchment-line);
-  margin-bottom: 0.15rem;
-}
 .cdg.actor.compagnie .roster-row .item-img {
   cursor: pointer;
 }
@@ -1546,10 +1592,26 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor.compagnie .chronicle-row .chronicle-event {
   flex: 1 1 auto;
 }
+.cdg.actor.compagnie .header-groups {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 1rem;
+}
+.cdg.actor.compagnie .abilities {
+  margin: 10px 0px 0px 50px;
+}
+.cdg.actor.compagnie .section-skills {
+  flex: 1 1 auto;
+  margin-top: 0.3rem;
+}
+.cdg.actor.compagnie .wounds-block {
+  align-self: flex-start;
+  flex: 0 0 auto;
+  padding-right: 3rem;
+}
 .cdg.actor.compagnie .wounds-block .wound-levels {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: 20px 0px 0px 0px;
 }
 .cdg.actor.compagnie .wounds-block .wound-level {
   display: flex;

@@ -1,9 +1,55 @@
-// Corps de la fiche de compagnie franche (p. 171) : une seule page, pas d'onglets. Ligne 1 : roster
-// PJ/PNJ côte à côte. Puis Chroniques et Notes, chacune sur toute la largeur.
 .cdg.actor.compagnie {
-  // Le corps tient dans la fenêtre plutôt que de la faire défiler en entier (même motif que la
-  // fiche de carrière, `styles/applications/sheets/items/common.less`) : roster et chroniques
-  // gardent leur hauteur naturelle, Notes prend tout ce qui reste et suit le redimensionnement.
+  .window-content {
+    background-image: url("@{cdg-redparchment-image}");
+  }
+  .sheet-header {
+    background-image: none;
+    height: auto;
+
+    .portrait .actor-img {
+      max-height: 140px;
+      object-fit: cover;
+      border: 2px solid var(--cdg-ink);
+      border-radius: var(--cdg-radius);
+    }
+  }
+
+  .soustitre {
+    font-family: "cinzel";
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: var(--cdg-blood);
+    padding: 0.1rem 0 0.2rem;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+    margin-bottom: 0.15rem;
+  }
+  .compagnie-header {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1.5fr;
+    align-items: start;
+
+    .name-line {
+      grid-column: 1 / 4;
+      text-align: center;
+      margin: 0px;
+      .name {
+        font-family: var(--cdg-font-title);
+        font-size: 3rem;
+        color: #000;
+        -webkit-text-stroke: 1px #ba1c41;
+      }
+      input[type="text"] {
+        font-family: var(--cdg-font-title);
+        font-size: 3rem;
+        height: 64px;
+      }
+    }
+    .compagnie-colcentral {
+      border: 5px 15px 5px 15px;
+    }
+  }
   .compagnie-body {
     display: flex;
     flex-direction: column;
@@ -13,18 +59,35 @@
     gap: 0.6rem;
     padding: 0.6rem 0.8rem 1rem;
   }
-
-  .compagnie-top,
+  .skillrow {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr;
+    align-items: start;
+  }
+  .woundedrow {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: start;
+  }
   .chronicles {
     flex: 0 0 auto;
   }
 
   .company-rest {
-    .company-healing-actions,
-    .rest-buttons {
+    margin: 10px 0px 0px 20px;
+    .company-healing-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
+      margin: 20px 0px;
+    }
+    .rest-buttons {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      width:128px;
+      height:40px;
     }
 
     button {
@@ -95,20 +158,6 @@
     gap: 0 0.8rem;
   }
 
-  .skill-column-header {
-    // `--cdg-font-title` (darka) est une fonte d'affichage taillée pour les grands bandeaux, pas
-    // pour un petit intitulé de colonne : on reprend plutôt "cinzel", déjà utilisée pour le nom des
-    // caractéristiques dans l'en-tête (`.ability-name`).
-    font-family: "cinzel";
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--cdg-blood);
-    padding: 0.1rem 0 0.2rem;
-    border-bottom: 1px solid var(--cdg-parchment-line);
-    margin-bottom: 0.15rem;
-  }
-
   // Roster : chaque ligne accepte un acteur lié (portrait + nom cliquable) ou du texte libre.
   .roster-row {
     .item-img {
@@ -156,13 +205,32 @@
     }
   }
 
-  .wounds-block {
-    .wound-levels {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
+  .header-groups {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 1rem;
+  }
 
+  // Calibré pour la fiche de personnage, où « Caractéristiques » ouvre la première colonne du
+  // haut de fenêtre : ici la rangée du nom la précède déjà, la lame n'a plus besoin d'autant de
+  // dégagement.
+  .abilities {
+    margin: 10px 0px 0px 50px;
+  }
+
+  .section-skills {
+    flex: 1 1 auto;
+    margin-top: 0.3rem;
+  }
+  .wounds-block {
+    align-self: flex-start;
+    flex: 0 0 auto;
+    padding-right: 3rem;
+
+    .wound-levels {
+      margin: 20px 0px 0px 0px;
+    }
     .wound-level {
       display: flex;
       align-items: center;
@@ -202,7 +270,6 @@
       font-size: 0.8rem;
     }
   }
-
   .reactivate {
     margin-top: 0.25rem;
     font-size: 0.75rem;

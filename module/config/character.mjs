@@ -162,9 +162,9 @@ export const LANGUAGES = {
  * `order` sert à trouver cette blessure la plus grave.
  */
 export const WOUND_LEVELS = {
-  legere: { id: "legere", label: "CDG.wounds.legere", malus: -1, order: 1 },
-  grave: { id: "grave", label: "CDG.wounds.grave", malus: -3, order: 2 },
-  mortelle: { id: "mortelle", label: "CDG.wounds.mortelle", malus: -6, order: 3 },
+  legere: { id: "legere", label: "CDG.wounds.legere", labelComp: "CDG.woundsComp.legere", malus: -1, order: 1 },
+  grave: { id: "grave", label: "CDG.wounds.grave", labelComp: "CDG.woundsComp.grave", malus: -3, order: 2 },
+  mortelle: { id: "mortelle", label: "CDG.wounds.mortelle", labelComp: "CDG.woundsComp.mortelle", malus: -6, order: 3 },
 }
 
 /**

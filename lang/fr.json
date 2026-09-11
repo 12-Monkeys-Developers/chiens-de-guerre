@@ -293,6 +293,11 @@
       "grave": "Blessures graves",
       "mortelle": "Blessures mortelles"
     },
+    "woundsComp": {
+      "legere": "Blessés légers",
+      "grave": "Blessés graves",
+      "mortelle": "Blessés mortels"
+    },
     "ranks": {
       "0": "Incompétent",
       "1": "Novice",
