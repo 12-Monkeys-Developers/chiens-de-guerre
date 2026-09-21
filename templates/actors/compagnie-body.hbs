@@ -6,8 +6,8 @@
           <ul class="skill-column">
             <li class="soustitre">{{localize column.ability.label}}</li>
             {{#each column.skills as |skill|}}
-              <li class="skill" data-skill="{{skill.id}}" data-ability="{{skill.ability}}">
-                <span class="skill-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize skill.label}}</span>
+              <li class="skill{{#if @root.unlocked}} draggable{{/if}}" data-skill="{{skill.id}}" data-ability="{{skill.ability}}" data-cdg-macro="test">
+                <span class="skill-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize skill.label}}</span>
                 {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs"
                     path=(concat "system.skills." skill.id ".rank")
                     rank=(lookup (lookup @root.skills skill.id) "rank")
@@ -25,8 +25,8 @@
       <ol class="ability-list">
         {{#each companyAbilities as |ability id|}}
           {{#with (lookup @root.abilities id) as |pool|}}
-            <li class="ability" data-ability="{{id}}">
-              <span class="ability-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
+            <li class="ability draggable" data-ability="{{id}}" data-cdg-macro="test">
+              <span class="ability-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
 
               <div class="pool">
                 <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="-1"><i class="fas fa-minus"></i></a>

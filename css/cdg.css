@@ -514,6 +514,9 @@ cdg-toggle-switch[checked] thumb {
 .cdg .draggable[data-cdg-macro] {
   cursor: grab;
 }
+.cdg [data-action="rollTest"] {
+  cursor: pointer;
+}
 .cdg .item-list {
   list-style: none;
   margin: 0;

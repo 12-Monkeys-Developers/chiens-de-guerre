@@ -90,8 +90,8 @@
     <ol class="ability-list">
       {{#each SYSTEM.ABILITIES as |ability id|}}
         {{#with (lookup @root.abilities id) as |pool|}}
-          <li class="ability" data-ability="{{id}}">
-            <span class="ability-name draggable" data-action="rollTest" data-cdg-macro="test" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
+          <li class="ability draggable" data-ability="{{id}}" data-cdg-macro="test">
+            <span class="ability-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize ability.label}}</span>
 
             <div class="pool">
               <a class="pool-step" data-action="adjustPool" data-ability="{{id}}" data-delta="-1"><i class="fas fa-minus"></i></a>

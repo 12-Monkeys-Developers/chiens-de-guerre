@@ -48,6 +48,13 @@
     cursor: grab;
   }
 
+  // Sur une ligne de compétence ou de caractéristique, c'est la ligne qui se saisit (en édition
+  // pour les compétences) et le nom seul qui déclenche le jet : il porte le curseur du clic, que
+  // la ligne soit saisissable ou non.
+  [data-action="rollTest"] {
+    cursor: pointer;
+  }
+
   // Listes d'objets : une ligne par objet, image, nom, puis les valeurs qui comptent.
   .item-list {
     list-style: none;
