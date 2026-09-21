@@ -94,6 +94,13 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   #restricted = false
 
   /**
+   * Le volet « Modificateurs » est déplié d'emblée. Son état vit ici et non dans le DOM : chaque
+   * rendu reconstruit le gabarit, et un `<details>` neuf se replierait à chaque clic sur un effort,
+   * une passion ou un modificateur.
+   */
+  #modifiersOpen = true
+
+  /**
    * Les caractéristiques et compétences de l'acteur qui teste — celles du personnage/adversaire, ou
    * celles, propres, de la compagnie franche (p. 123). Jamais `SYSTEM.ABILITIES`/`SYSTEM.SKILLS` en
    * dur : la fenêtre de jet doit rester correcte quel que soit le type d'acteur qui l'ouvre.
@@ -207,6 +214,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     context.actor = this.#actor
     context.draft = this.#draft
     context.hasPassion = this.hasPassion
+    context.modifiersOpen = this.#modifiersOpen
     context.target = this.#targetUuid ? fromUuidSync(this.#targetUuid) : null
     context.SYSTEM = SYSTEM
 
@@ -423,6 +431,15 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     if (sr >= SYSTEM.NATURAL_MAX) return { level: "good", message: game.i18n.format("CDG.roll.status.assured", { bonus: sr - SYSTEM.NATURAL_MAX }) }
     if (rankEntry.keep === "worst") return { level: "warn", message: game.i18n.localize("CDG.roll.status.untrained") }
     return { level: "ok", message: game.i18n.localize("CDG.roll.status.ready") }
+  }
+
+  /** @override */
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+    // `toggle` ne remonte pas : l'écouteur se pose sur le volet lui-même, recréé à chaque rendu.
+    this.element.querySelector(".roll-modifiers details")?.addEventListener("toggle", (event) => {
+      this.#modifiersOpen = event.currentTarget.open
+    })
   }
 
   // #endregion

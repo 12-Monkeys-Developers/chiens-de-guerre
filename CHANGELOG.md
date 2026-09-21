@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.6.2
+
+### Fiches
+
+- Le nom d'un personnage est de nouveau éditable, et la longueur est augmentée.
+  Un nom encore trop long se coupe en « … » (le nom complet apparaît en info-bulle) au lieu de
+  passer à la ligne et de repousser le portrait sur les compétences.
+- Les compétences ne se déposent dans la hotbar qu'en mode Édition : en lecture, on ne peut plus en
+  saisir une par mégarde en cliquant sur son nom. Les caractéristiques, elles, restent
+  saisissables en permanence.
+
+### Fenêtre de jet
+
+- Le volet **Modificateurs** est déplié à l'ouverture, et le reste : cliquer sur un point d'effort,
+  choisir une passion ou cocher un bonus ne le replie plus. Son état est mémorisé par la fenêtre
+  tant qu'elle est ouverte ; s'il est replié à la main, il le reste.
+
 ## 0.6.1
 - Ajout du répertoire assets dans la release
 

@@ -184,10 +184,17 @@
   background-position: center;
   background-repeat: no-repeat;
     select{
-        font-size: 2rem;
-        height: 2.5rem;
-        margin:15px;
+        font-size: 1.2rem;
+        height: 2rem;
+        margin:12px 15px;
         text-align: center;
+    }
+    // Couple imposé : le nom s'affiche sans liste déroulante, à la même taille que le choix libre.
+    > strong {
+      flex: 1 1 auto;
+      font-size: 1.2rem;
+      margin: 12px 15px;
+      text-align: center;
     }
   }
   .effort-steps,

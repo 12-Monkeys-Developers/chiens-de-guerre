@@ -1971,9 +1971,15 @@ cdg-toggle-switch[checked] thumb {
   background-repeat: no-repeat;
 }
 .cdg.roll .skill-line select {
-  font-size: 2rem;
-  height: 2.5rem;
-  margin: 15px;
+  font-size: 1.2rem;
+  height: 2rem;
+  margin: 12px 15px;
+  text-align: center;
+}
+.cdg.roll .skill-line > strong {
+  flex: 1 1 auto;
+  font-size: 1.2rem;
+  margin: 12px 15px;
   text-align: center;
 }
 .cdg.roll .effort-steps,
