@@ -131,6 +131,7 @@ jobs:
             css/                                 \
             lang/                                \
             module/                              \
+            assets/                              \
             ui/                                  \
             templates/                           \
             packs/

@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.1
+- Ajout du répertoire assets dans la release
+
 ## 0.6.0
 
 ### PNJ et bestiaire
