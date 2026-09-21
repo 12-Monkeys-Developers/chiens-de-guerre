@@ -28,15 +28,62 @@
   .name-line {
     margin: -20px 0px -30px 10px;
     .name {
+      display: block;
       font-family: var(--cdg-font-title);
       font-size: 4rem;
       color: #f2ece0;
       -webkit-text-stroke: 2px black;
+      // Un nom trop long pour la place se coupe en « … » (le nom complet est en info-bulle) au
+      // lieu de passer à la ligne, ce qui repoussait le portrait sur les compétences.
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     input[type="text"] {
+      width: 100%;
       font-family: var(--cdg-font-title);
       font-size: 3rem;
       height: 64px;
+    }
+  }
+  // Personnage : le nom court sur les trois premières colonnes (portrait, peuple/carrière,
+  // passion), libres à cette hauteur puisque peuple et passion démarrent plus bas. Chaque colonne
+  // est placée à la main : sans cela, le nom occuperait les cellules et l'auto-placement
+  // repousserait le portrait dans la colonne des caractéristiques.
+  &.character .sheet-header {
+    > .name-line {
+      grid-column: 1 / 4;
+      grid-row: 1;
+      min-width: 0;
+      // L'éclaboussure du bandeau « Caractéristiques » mord de 26 px sur la colonne voisine : le
+      // nom s'arrête avant elle.
+      margin-right: 2rem;
+      // Au-dessus du portrait, dont il déborde de 30 px : le champ reste cliquable sur toute sa
+      // hauteur.
+      position: relative;
+      z-index: 1;
+    }
+
+    > .left-comp {
+      grid-column: 1;
+      grid-row: 1;
+      // La place que le nom prenait dans la colonne : 64 px de champ moins ses deux marges.
+      margin-top: 14px;
+    }
+
+    > .origin-col {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    > .passion {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    > .abilities {
+      grid-column: 4;
+      grid-row: 1;
     }
   }
   .banner {

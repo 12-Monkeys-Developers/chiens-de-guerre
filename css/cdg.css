@@ -744,15 +744,45 @@ cdg-toggle-switch[checked] thumb {
   margin: -20px 0px -30px 10px;
 }
 .cdg.actor .name-line .name {
+  display: block;
   font-family: var(--cdg-font-title);
   font-size: 4rem;
   color: #f2ece0;
   -webkit-text-stroke: 2px black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .cdg.actor .name-line input[type="text"] {
+  width: 100%;
   font-family: var(--cdg-font-title);
   font-size: 3rem;
   height: 64px;
+}
+.cdg.actor.character .sheet-header > .name-line {
+  grid-column: 1 / 4;
+  grid-row: 1;
+  min-width: 0;
+  margin-right: 2rem;
+  position: relative;
+  z-index: 1;
+}
+.cdg.actor.character .sheet-header > .left-comp {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 14px;
+}
+.cdg.actor.character .sheet-header > .origin-col {
+  grid-column: 2;
+  grid-row: 1;
+}
+.cdg.actor.character .sheet-header > .passion {
+  grid-column: 3;
+  grid-row: 1;
+}
+.cdg.actor.character .sheet-header > .abilities {
+  grid-column: 4;
+  grid-row: 1;
 }
 .cdg.actor .banner {
   position: relative;

@@ -1,13 +1,16 @@
 <header class="sheet-header">
 
+  {{! Le nom occupe les trois premières colonnes de l'en-tête (voir header.less) : à cette hauteur
+      elles sont libres, et un nom comme « Gueule-de-Caillou » ne tient pas dans les 190 px du
+      portrait. }}
+  <div class="name-line">
+    {{#if unlocked}}
+      <input type="text" name="name" value="{{actor.name}}" spellcheck="false" />
+    {{else}}
+      <span class="value name" data-tooltip="{{actor.name}}">{{actor.name}}</span>
+    {{/if}}
+  </div>
   <div class="left-comp">
-    <div class="name-line">
-      {{#if unlocked}}
-        <input type="text" name="name" value="{{actor.name}}" spellcheck="false" />
-      {{else}}
-        <span class="value name">{{actor.name}}</span>
-      {{/if}}
-    </div>
     <div class="banner">
       <div class="portrait">
         <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
