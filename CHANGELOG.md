@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## 0.6.0
 
 ### PNJ et bestiaire
 
@@ -11,9 +11,6 @@
   non nul sont affichées.
 - La distinction **PNJ majeur** applique la règle d'effort du bestiaire : les autres PNJ ne peuvent
   investir aucun point de caractéristique.
-- Un compendium de 44 profils autonomes des *Chroniques du meneur* (p. 50 à 75) est généré avec son
-  équipement, ses Arcanums et ses textes. Une macro autonome permet de créer le même bestiaire dans
-  un monde.
 
 ### Traits spéciaux et effets actifs
 
@@ -33,10 +30,10 @@
 
 ### Compendiums
 
-- Deux compendiums livrés avec le système : les 8 peuples et leurs 17 traits spéciaux, effets
-  compris. Sources YAML versionnées dans `src/packs/`, compilées par `npm run YMLtoLDB`.
-- Trois compendiums de plus, générés par `npm run build:carrieres` depuis `tools/data/` : les
-  **15 carrières** (p. 84 à 89), les **22 arcanums** qu'elles accordent et les **25 équipements
+- Deux compendiums livrés avec le système : les **8 peuples** et leurs **17 traits spéciaux**, effets
+  compris.
+- Trois compendiums de plus : les
+  **15 carrières**, les **22 arcanums** qu'elles accordent et les **25 équipements
   génériques** de leur barda de départ. Déposer une carrière sur un personnage monte ses rangs de
   compétence, lui crée ses arcanums et son équipement, et applique son ajustement de
   caractéristique.
@@ -46,10 +43,6 @@
 - Un arcanum mystique **s'active depuis la fiche**, une baguette par rang maîtrisé : le test part
   sur l'Esprit avec la poignée du rang maîtrisé, et l'Esprit n'est débité qu'une fois le jet lancé,
   le seuil se calculant avant la dépense (p. 92).
-- `npm run build:carrieres` accepte `--only=<pack>` : reprendre un chapitre du livre n'oblige plus
-  à réécrire les trois compendiums, donc à perdre ce qui a été retouché en jeu.
-- `tools/build-carrieres.mjs` produit aussi `tools/out/macro-carrieres.js`, une macro autonome qui
-  crée les mêmes contenus dans les compendiums d'un monde, sans recompiler les packs du système.
 - L'**argent de départ** d'une carrière a désormais son champ, en ducats, au lieu d'une phrase en
   fin de description. La fiche l'affiche à droite de la caractéristique augmentée, et les
   15 carrières du compendium portent le montant du livre — 60 D pour l'émissaire, le maître d'armes
