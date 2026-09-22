@@ -231,33 +231,25 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
     if (data.type !== "Actor") return super._onDrop(event)
     if (!this.isEditable) return
-
     const row = event.target.closest?.("[data-roster-row]")
-    const section = row ? null : event.target.closest?.("[data-roster]")
+    const section = event.target.closest?.("[data-roster]")
     if (!row && !section) return super._onDrop(event)
 
     const actor = await Actor.implementation.fromDropData(data)
     if (!actor) return
     const grade = this.constructor.#gradeOf(actor)
 
-    if (row) {
-      const { key, index } = this.constructor.#rosterRow(row)
-      if (!key) return
-      const updates = {
-        [`system.${key}.${index}.actorUuid`]: actor.uuid,
-        [`system.${key}.${index}.name`]: actor.name,
-      }
-      // Un PNJ (adversaire) n'a pas de grade au sens des règles : la ligne garde alors celui déjà
-      // saisi à la main plutôt que de se faire vider.
-      if (grade) updates[`system.${key}.${index}.grade`] = grade
-      return this.document.update(updates)
-    }
-
     const roster = section.dataset.roster
     const key = roster === "pj" ? "rosterPJ" : roster === "pnj" ? "rosterPNJ" : null
     if (!key) return
+    const newline = { actorUuid: actor.uuid, grade: "", name: actor.name, notes: "" }
+    if (grade) newline.grade = grade
+    //si l'actor est deja dans le rooster on arrete
+    for (let char of this.actor.system[key]) {
+      if (actor.uuid === char.actorUuid) return
+    }
     return this.document.update({
-      [`system.${key}`]: [...this.document.system[key], { actorUuid: actor.uuid, name: actor.name, grade, notes: "" }],
+      [`system.${key}`]: [...this.document.system[key], newline],
     })
   }
 

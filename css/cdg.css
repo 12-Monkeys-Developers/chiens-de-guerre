@@ -957,6 +957,9 @@ cdg-toggle-switch[checked] thumb {
   flex-direction: row;
   justify-content: space-between;
 }
+.cdg.actor .tabName {
+  color: black;
+}
 .cdg.actor .section-skills,
 .cdg.actor .section-traits {
   flex: 0 1 auto;
@@ -1498,6 +1501,9 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor.compagnie .compagnie-header .compagnie-colcentral {
   border: 5px 15px 5px 15px;
 }
+.cdg.actor.compagnie .compagnie-header .item-list {
+  padding-top: 20px;
+}
 .cdg.actor.compagnie .compagnie-body {
   display: flex;
   flex-direction: column;
@@ -1506,6 +1512,9 @@ cdg-toggle-switch[checked] thumb {
   overflow-y: auto;
   gap: 0.6rem;
   padding: 0.6rem 0.8rem 1rem;
+}
+.cdg.actor.compagnie .skill-name {
+  color: black;
 }
 .cdg.actor.compagnie .skillrow {
   display: grid;
