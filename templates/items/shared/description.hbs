@@ -1,7 +1,9 @@
 <section class="description">
   {{!-- `noTitle` sert aux fiches à onglets, dont l'onglet porte déjà le mot « Description ». --}}
   {{#unless noTitle}}
-    <h2 class="section-title">{{localize "CDG.label.long.description"}}</h2>
+    <h2 class="section-title section-title-left section-title-art" data-bandeau="description">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/description.webp" alt="{{localize 'CDG.label.long.description'}}" />
+    </h2>
   {{/unless}}
   <div class="free-text">
     {{formInput systemFields.description value=system.description enriched=enrichedDescription

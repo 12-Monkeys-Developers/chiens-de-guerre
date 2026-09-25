@@ -416,6 +416,55 @@ cdg-toggle-switch[checked] thumb {
   width: 282.52px;
   top: -16.668px;
 }
+.cdg .section-title-art[data-bandeau="description"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="description"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="notesprivees"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="notesprivees"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="grantedfeatures"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="grantedfeatures"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="startinglanguages"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="startinglanguages"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="startingArcanums"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="startingArcanums"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="startingSkills"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="startingSkills"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="startingEquipments"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="startingEquipments"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
 .cdg input[type="text"],
 .cdg input[type="number"],
 .cdg select {
@@ -718,6 +767,12 @@ cdg-toggle-switch[checked] thumb {
   gap: 0.35rem;
   font-size: 0.9rem;
   margin-left: auto;
+}
+.cdg.actor .notes-section {
+  margin-top: 0.8rem;
+}
+.cdg.actor .notes-section .free-text {
+  margin-top: 1.5rem;
 }
 .cdg.actor .allegiance-obscurite {
   color: var(--cdg-ink);
@@ -1444,6 +1499,8 @@ cdg-toggle-switch[checked] thumb {
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  width: 70px;
+  margin-left: 16px;
 }
 .cdg.actor.adversaire .wound-name input {
   width: 3.5rem;
@@ -1699,6 +1756,9 @@ cdg-toggle-switch[checked] thumb {
   margin: 0;
   padding: 0;
 }
+.cdg.item .tabName {
+  color: black;
+}
 .cdg.item .carriere-summary {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1735,14 +1795,15 @@ cdg-toggle-switch[checked] thumb {
   font-size: 0.78rem;
   color: var(--cdg-muted);
 }
-.cdg.item .starting-skills,
-.cdg.item .starting-arcanums,
-.cdg.item .starting-equipments,
-.cdg.item .features,
-.cdg.item .languages,
-.cdg.item .effect,
-.cdg.item .description {
-  margin-bottom: 0.7rem;
+.cdg.item .starting-skills .section-title,
+.cdg.item .starting-arcanums .section-title,
+.cdg.item .starting-equipments .section-title,
+.cdg.item .features .section-title,
+.cdg.item .languages .section-title,
+.cdg.item .effect .section-title,
+.cdg.item .description .section-title {
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 .cdg.item.arcanum .tab.active {
   display: flex;
@@ -1788,6 +1849,7 @@ cdg-toggle-switch[checked] thumb {
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+  min-height: 200px;
 }
 .cdg.item.arcanum .prosemirror,
 .cdg.item.arcanum prose-mirror {

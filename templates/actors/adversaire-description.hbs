@@ -1,7 +1,9 @@
 <section class="tab tab-description{{#if tabs.description.active}} active{{/if}}" data-group="primary" data-tab="description">
 
   <section class="notes-section">
-    <h2 class="section-title">{{localize "CDG.label.long.description"}}</h2>
+      <h2 class="section-title section-title-left section-title-art" data-bandeau="description">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/description.webp" alt="{{localize 'CDG.label.long.description'}}" />
+      </h2>
     <div class="free-text">
       {{formInput systemFields.details.fields.description value=system.details.description
         enriched=enrichedDescription name="system.details.description" toggled=true classes="content-sized"}}
@@ -10,7 +12,9 @@
 
   {{#if isEditable}}
     <section class="notes-section">
-      <h2 class="section-title">{{localize "CDG.label.long.notesPrivate"}}</h2>
+      <h2 class="section-title section-title-left section-title-art" data-bandeau="notesprivees">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/notes-privees.webp" alt="{{localize 'CDG.label.long.notesPrivate'}}" />
+      </h2>
       <div class="free-text">
         {{formInput systemFields.details.fields.notes value=system.details.notes
           enriched=enrichedNotes name="system.details.notes" toggled=true}}

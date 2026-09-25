@@ -10,6 +10,9 @@
     padding: 0;
   }
 
+  .tabName{
+    color: black;
+  }
   // Le résumé d'une carrière tient sur une ligne de deux colonnes égales : caractéristique
   // augmentée à gauche, argent de départ à droite.
   .carriere-summary {
@@ -64,7 +67,10 @@
   .languages,
   .effect,
   .description {
-    margin-bottom: 0.7rem;
+    .section-title{
+    margin-bottom: 30px;
+    margin-top: 20px;
+    }
   }
 }
 
@@ -127,6 +133,7 @@
     flex-direction: column;
     min-height: 0;
     overflow: hidden;
+    min-height: 200px;
   }
 
   .prosemirror,

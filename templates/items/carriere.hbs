@@ -19,8 +19,8 @@
   </div>
 
   <section class="starting-skills">
-    <h2 class="section-title">
-      {{localize "CDG.label.long.startingSkills"}}
+    <h2 class="section-title section-title-left section-title-art" data-bandeau="startingSkills">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/competences-depart.webp" alt="{{localize 'CDG.label.long.startingSkills'}}" />
       {{#if isEditable}}
         <a class="create" data-action="addSkill" data-tooltip="{{localize 'CDG.ui.addSkill'}}"><i class="fas fa-plus"></i></a>
       {{/if}}
@@ -43,7 +43,9 @@
   </section>
 
   <section class="starting-arcanums">
-    <h2 class="section-title">{{localize "CDG.label.long.startingArcanums"}}</h2>
+    <h2 class="section-title section-title-left section-title-art" data-bandeau="startingArcanums">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/arcanums-depart.webp" alt="{{localize 'CDG.label.long.startingArcanums'}}" />
+    </h2>
     <ul class="item-list">
       {{#each arcanums as |arcanum|}}
         <li class="item-row" data-uuid="{{arcanum.uuid}}">
@@ -60,7 +62,9 @@
   </section>
 
   <section class="starting-equipments">
-    <h2 class="section-title">{{localize "CDG.label.long.startingEquipments"}}</h2>
+    <h2 class="section-title section-title-left section-title-art" data-bandeau="startingEquipments">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/equipement-depart.webp" alt="{{localize 'CDG.label.long.startingEquipments'}}" />
+    </h2>
     <ul class="item-list">
       {{#each equipments as |equipment|}}
         <li class="item-row" data-uuid="{{equipment.uuid}}">

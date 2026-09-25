@@ -8,7 +8,9 @@
   </div>
 
   <section class="features">
-    <h2 class="section-title">{{localize "CDG.label.long.grantedFeatures"}}</h2>
+      <h2 class="section-title section-title-left section-title-art" data-bandeau="grantedfeatures">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/traits-accordes.webp" alt="{{localize 'CDG.label.long.grantedFeatures'}}" />
+      </h2>
     <ul class="item-list">
       {{#each features as |feature|}}
         <li class="item-row" data-uuid="{{feature.uuid}}">
@@ -26,7 +28,9 @@
   </section>
 
   <section class="languages">
-    <h2 class="section-title">{{localize "CDG.label.long.startingLanguages"}}</h2>
+      <h2 class="section-title section-title-left section-title-art" data-bandeau="startinglanguages">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/langues-depart.webp" alt="{{localize 'CDG.label.long.startingLanguages'}}" />
+      </h2>
     <ul class="language-list">
       {{#each languages as |language|}}
         <li class="language">
