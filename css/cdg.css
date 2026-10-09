@@ -416,10 +416,24 @@ cdg-toggle-switch[checked] thumb {
   width: 282.52px;
   top: -16.668px;
 }
+.cdg .section-title-art[data-bandeau="creationGrants"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="creationGrants"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
 .cdg .section-title-art[data-bandeau="description"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="description"] > .title-art {
+  width: 282.52px;
+  top: -16.668px;
+}
+.cdg .section-title-art[data-bandeau="effects"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="effects"] > .title-art {
   width: 282.52px;
   top: -16.668px;
 }
@@ -2591,6 +2605,12 @@ cdg-toggle-switch[checked] thumb {
 .cdg-confrontation-card .confrontation-wound.none {
   color: var(--cdg-muted);
 }
+.cdg .creation-grants {
+  margin: 20px 0px 30px 0px;
+}
+.cdg .creation-grants h2 {
+  margin-bottom: 20px;
+}
 .cdg .group-title {
   margin: 0.6rem 0 0.2rem 0;
   border: none;
@@ -2600,6 +2620,9 @@ cdg-toggle-switch[checked] thumb {
   letter-spacing: 0.04em;
   color: var(--cdg-label);
   border-bottom: 1px solid var(--cdg-parchment-line);
+}
+.cdg .effects h2 {
+  margin: 20px 0px 30px 0px;
 }
 .cdg .effects .effect-row {
   align-items: flex-start;

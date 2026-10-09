@@ -17,7 +17,9 @@
   {{!-- Ce que le trait accorde à la création : l'assistant travaille sur un brouillon, aucun effet
         actif n'existe encore à ce moment-là. --}}
   <section class="creation-grants">
-    <h2 class="section-title">{{localize "CDG.label.long.creationGrants"}}</h2>
+    <h2 class="section-title section-title-left section-title-art" data-bandeau="creationGrants">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/accordes-creation.webp" alt="{{localize 'CDG.label.long.creationGrants'}}" />
+    </h2>
     <div class="field-line">
       <label>{{localize "CDG.label.long.customizationPoints"}}</label>
       {{formInput systemFields.creationGrants.fields.customizationPoints
