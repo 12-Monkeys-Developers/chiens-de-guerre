@@ -662,11 +662,14 @@ cdg-toggle-switch[checked] thumb {
   flex: 1 1 auto;
   min-width: 0;
 }
+.cdg .item-header .titles input {
+  height: auto;
+}
 .cdg .item-header .name {
   display: block;
   width: 100%;
   font-family: var(--cdg-font-title);
-  font-size: 1.15rem;
+  font-size: 3rem;
   color: var(--cdg-ink);
 }
 .cdg .item-header .type {
@@ -1841,7 +1844,8 @@ cdg-toggle-switch[checked] thumb {
   flex: 1 1 auto;
   min-width: 0;
   font-family: var(--cdg-font-title);
-  font-size: 1rem;
+  font-size: 2rem;
+  height: auto;
 }
 .cdg.item.arcanum .variant-label {
   width: 100%;
@@ -1854,8 +1858,11 @@ cdg-toggle-switch[checked] thumb {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  min-height: 5rem;
   margin-bottom: 0.6rem;
+}
+.cdg.item.arcanum .description,
+.cdg.item.arcanum .rank-effect {
+  min-height: 5rem;
 }
 .cdg.item.arcanum .free-text {
   display: flex;

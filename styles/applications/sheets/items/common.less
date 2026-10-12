@@ -1,8 +1,8 @@
 // Fiches d'objet : les lignes de compétences de départ d'une carrière et les listes de références
 // déposées par glisser-déposer.
 .cdg.item {
-  .prosemirror{
-    min-height:300px
+  .prosemirror {
+    min-height: 300px;
   }
   .skill-lines {
     list-style: none;
@@ -10,7 +10,7 @@
     padding: 0;
   }
 
-  .tabName{
+  .tabName {
     color: black;
   }
   // Le résumé d'une carrière tient sur une ligne de deux colonnes égales : caractéristique
@@ -67,9 +67,9 @@
   .languages,
   .effect,
   .description {
-    .section-title{
-    margin-bottom: 30px;
-    margin-top: 20px;
+    .section-title {
+      margin-bottom: 30px;
+      margin-top: 20px;
     }
   }
 }
@@ -106,7 +106,8 @@
     flex: 1 1 auto;
     min-width: 0;
     font-family: var(--cdg-font-title);
-    font-size: 1rem;
+    font-size: 2rem;
+        height:auto;
   }
 
   .variant-label {
@@ -123,10 +124,12 @@
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    min-height: 5rem;
     margin-bottom: 0.6rem;
   }
-
+  .description,
+  .rank-effect {
+    min-height: 5rem;
+  }
   .free-text {
     display: flex;
     flex: 1 1 auto;
