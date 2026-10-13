@@ -69,9 +69,13 @@
       </ul>
     </section>
   {{/if}}
- 
- 
 
-
-  {{#if (or unlocked hasSpecial)}}<section class="npc-special"><h2 class="section-title">{{localize "CDG.label.long.special"}}</h2><div class="free-text">{{formInput systemFields.details.fields.special value=system.details.special enriched=enrichedSpecial name="system.details.special" toggled=true classes="content-sized"}}</div></section>{{/if}}
+  {{#if (or unlocked hasSpecial)}}
+  <section class="npc-special">
+    <h2 class="section-title section-title-art" data-bandeau="special">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/speciaux.webp" alt="{{localize 'CDG.label.long.special'}}" />
+    </h2>
+    <div class="free-text">{{formInput systemFields.details.fields.special value=system.details.special enriched=enrichedSpecial name="system.details.special" toggled=true classes="content-sized"}}
+    </div>
+    </section>{{/if}}
 </section>
