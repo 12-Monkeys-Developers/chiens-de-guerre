@@ -1,15 +1,23 @@
-# Changelog
-
-## Non publié
+## 0.7.0
 
 ### Guide du système
 
 - Nouveau compendium **Guide du système**, ouvert aux joueurs en lecture : dix pages illustrées de
   captures d'écran, de l'assistant de création au combat en confrontation, en passant par la fiche,
   les objets, les PNJ, la compagnie franche, les tests, les macros et le tableau de bord du meneur.
-- Les pages s'écrivent en HTML dans `guide/html/fr/` ; `npm run guide` en tire la source du
-  compendium (`src/packs/guide`), puis `npm run YMLtoLDB` le compile. Les captures vivent dans
-  `assets/guide/`.
+
+### Fiche de personnage
+
+- Le portrait retrouve l'**étendard gris déchiré** de la fiche imprimée.
+- Le **nom du personnage** s'écrit à l'encre, en lettres pleines détachées du fond par un halo
+  parchemin, au lieu de lettres claires cernées de noir qui se perdaient dans les éclaboussures.
+- Les lignes vides de l'en-tête disent « Déposez un Peuple », « Déposez une Carrière », « Déposez
+  une Ascendance ».
+
+### Personnages prétirés
+
+- Les cinq prétirés (Châtaigne, Fringant, Gueule-de-Caillou, Fêlée, Vérole) ont leur dessin de la
+  fiche du livre : en pied sur la fiche, en buste sur le token (`assets/images/pretires/`).
 
 ### Corrections
 

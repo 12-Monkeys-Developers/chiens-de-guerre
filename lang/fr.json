@@ -470,6 +470,11 @@
     },
     "origin": {
       "open": "Ouvrir la fiche",
+      "drop": {
+        "peuple": "Déposez un Peuple",
+        "carriere": "Déposez une Carrière",
+        "ascendance": "Déposez une Ascendance"
+      },
       "remove": "Retirer",
       "notForAdversaire": "Un adversaire n'a ni peuple ni carrière : {type} n'a pas été ajouté.",
       "alreadyPresent": "{type} déjà défini : {name}. Retirez-le avant d'en déposer un autre.",

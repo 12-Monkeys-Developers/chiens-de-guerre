@@ -30,7 +30,7 @@
     .name {
       display: block;
       font-family: var(--cdg-font-title);
-      font-size: 4rem;
+      font-size: 3.4rem;
       color: #f2ece0;
       -webkit-text-stroke: 2px black;
       // Un nom trop long pour la place se coupe en « … » (le nom complet est en info-bulle) au
@@ -38,6 +38,12 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      // `overflow: hidden` rogne aussi ce qui dépasse de la boîte : les majuscules calligraphiées
+      // débordent sous la ligne de base et à gauche de leur chasse, et le bas comme la boucle du
+      // « F » de Fringant disparaissaient. Les retraits logent ces débords dans la boîte ; les
+      // marges négatives rendent la place prise, le nom ne bouge pas.
+      padding: 0.1em 0 0.25em 0.3em;
+      margin: -0.1em 0 -0.25em -0.3em;
     }
     input[type="text"] {
       width: 100%;
@@ -62,13 +68,58 @@
       // hauteur.
       position: relative;
       z-index: 1;
+
+      // Le nom s'écrit à l'encre, comme le surnom porté à la main sur la fiche imprimée. Les
+      // lettres claires cernées de noir se perdaient dans les éclaboussures de l'en-tête ; le halo
+      // couleur parchemin détache les lettres pleines du rouge.
+      .name {
+        color: var(--cdg-ink);
+        -webkit-text-stroke: 0;
+        text-shadow:
+          0 0 4px var(--cdg-parchment),
+          0 0 8px var(--cdg-parchment);
+      }
     }
 
     > .left-comp {
       grid-column: 1;
       grid-row: 1;
-      // La place que le nom prenait dans la colonne : 64 px de champ moins ses deux marges.
-      margin-top: 14px;
+      // Sous le nom, que l'étendard ne doit pas recouvrir : le visage tombe juste en dessous.
+      margin-top: 44px;
+    }
+
+    // Le portrait dans l'étendard gris de la fiche imprimée. L'image prend la silhouette déchirée
+    // de l'étendard et se fond dans son dégradé : un dessin au crayon sur fond blanc s'y imprime
+    // comme sur le papier, le blanc devenant le gris du tissu. Un léger fondu vers la pointe
+    // reprend celui du livre. 140 × 200 px : la hauteur est celle que laisse l'en-tête sous le nom, sans
+    // rien changer à la hauteur de l'en-tête.
+    .banner {
+      width: 140px;
+      height: 200px;
+      aspect-ratio: auto;
+      margin: 0 auto;
+      background: url("@{cdg-etendard-image}") center / 100% 100% no-repeat;
+      filter: drop-shadow(0 3px 5px rgb(0 0 0 / 35%));
+
+      .portrait {
+        inset: 0;
+        // Le dégradé est reposé ici, sous l'image : le masque isole cette boîte, et sans fond
+        // dans la même boîte le mode multiplication n'aurait rien sur quoi s'imprimer.
+        background: url("@{cdg-etendard-image}") center / 100% 100% no-repeat;
+        mask-image: url("@{cdg-etendard-image}"), linear-gradient(black 72%, transparent 97%);
+        mask-size: 100% 100%;
+        mask-composite: intersect;
+      }
+
+      .actor-img {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: cover;
+        object-position: center top;
+        border: none;
+        mix-blend-mode: multiply;
+      }
     }
 
     > .origin-col {

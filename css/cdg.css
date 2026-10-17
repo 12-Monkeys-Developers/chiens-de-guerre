@@ -837,12 +837,14 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor .name-line .name {
   display: block;
   font-family: var(--cdg-font-title);
-  font-size: 4rem;
+  font-size: 3.4rem;
   color: #f2ece0;
   -webkit-text-stroke: 2px black;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 0.1em 0 0.25em 0.3em;
+  margin: -0.1em 0 -0.25em -0.3em;
 }
 .cdg.actor .name-line input[type="text"] {
   width: 100%;
@@ -858,10 +860,39 @@ cdg-toggle-switch[checked] thumb {
   position: relative;
   z-index: 1;
 }
+.cdg.actor.character .sheet-header > .name-line .name {
+  color: var(--cdg-ink);
+  -webkit-text-stroke: 0;
+  text-shadow: 0 0 4px var(--cdg-parchment), 0 0 8px var(--cdg-parchment);
+}
 .cdg.actor.character .sheet-header > .left-comp {
   grid-column: 1;
   grid-row: 1;
-  margin-top: 14px;
+  margin-top: 44px;
+}
+.cdg.actor.character .sheet-header .banner {
+  width: 140px;
+  height: 200px;
+  aspect-ratio: auto;
+  margin: 0 auto;
+  background: url("../ui/fiche/etendard.webp") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.35));
+}
+.cdg.actor.character .sheet-header .banner .portrait {
+  inset: 0;
+  background: url("../ui/fiche/etendard.webp") center / 100% 100% no-repeat;
+  mask-image: url("../ui/fiche/etendard.webp"), linear-gradient(black 72%, transparent 97%);
+  mask-size: 100% 100%;
+  mask-composite: intersect;
+}
+.cdg.actor.character .sheet-header .banner .actor-img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  object-position: center top;
+  border: none;
+  mix-blend-mode: multiply;
 }
 .cdg.actor.character .sheet-header > .origin-col {
   grid-column: 2;

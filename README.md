@@ -1,15 +1,6 @@
 # Chiens de guerre — système Foundry VTT
 
-Système de jeu **Chiens de guerre** pour Foundry Virtual Tabletop (v14).
-
-## État
-
-Première passe : le système est **installable et éditable**. On crée un personnage, on saisit tout ce
-que porte la fiche papier (caractéristiques, compétences, traits de personnalité, blessures,
-arcanums, équipement, bourse), et ça persiste.
-
-Le moteur de jet (seuil de réussite, poignée de dés par rang) n'est pas encore implémenté : les jets
-se font pour l'instant à la main.
+Système de jeu **Chiens de guerre** pour Foundry Virtual Tabletop.
 
 ## Développement
 
@@ -35,13 +26,20 @@ npx eslint .
 | `ui/` | Visuels du système (fonds, bannières, logo) |
 | `lang/` | Traductions |
 
-Le répertoire `source/` (PDF des règles, fiche de personnage, images extraites) n'est pas versionné :
-c'est de la matière première. Les visuels réellement utilisés sont copiés dans `ui/`.
-
 ## Crédits
 
-Chiens de guerre est un jeu de rôle écrit par ses auteurs et publié par son éditeur. Ce système est
-une implémentation non officielle pour Foundry VTT.
+Chiens de guerre est un jeu de rôle écrit par ses auteurs et publié par son éditeur. Ce système est une implémentation non officielle pour Foundry VTT.
 
-L'organisation du code reprend celle du système
-[Chroniques Oubliées 2e édition](https://github.com/BlackBookEditions/foundry-co2).
+<h2>Mentions Légales</h2>
+
+<h2>Communauté</h2>
+
+<p>Rejoignez-nous sur le serveur <a href="https://discord.com/invite/pPSDNJk">Discord francophone dédié à Foundry Virtual Tabletop</a></p>
+<p>Nous serons ravis d'avoir vos retours sur le système, des signalements de bug, des idées d'amélioration, ou simplement des encouragements !</p>
+
+<h2>Licences</h2>
+<ul>
+<li>Le code HTML, CSS et Javascript de ce projet est placé sous <a href="https://choosealicense.com/licenses/gpl-3.0/">licence GNU General Public License v3.0</a></li>
+
+<li>Le support de Foundry VTT est couvert par la licence suivante : <a href="https://foundryvtt.com/article/license/">Accord de licence limitée pour le développement de modules du 17/02/2021</a>.</li>
+</ul>
