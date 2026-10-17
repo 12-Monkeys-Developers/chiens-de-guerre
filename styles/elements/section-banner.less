@@ -14,58 +14,71 @@
 @cdg-bandeau-creneau-mini: 24px; // Expérience, Bourse
 @cdg-bandeau-debord: -12px; // la lame mord le bord de l'onglet, dont le padding vaut 0.8rem
 
-// nom du fichier, largeur et hauteur natives, centre de la bande, hauteur du créneau.
-.cdg-bandeau(@nom; @w; @h; @bande; @creneau: @cdg-bandeau-creneau) {
+// nom du fichier, largeur et hauteur natives, centre de la bande, hauteur du créneau, et largeur
+// affichée en pixels quand elle s'écarte de l'échelle commune.
+//
+// Les bandeaux redessinés en 1300 × 365 (série ajoutée en octobre 2026) ont un canevas plus large
+// que la série d'origine pour la même lame : à l'échelle de 28 %, ils s'afficheraient plus grands
+// que leurs voisins. Ils gardent donc la largeur affichée qu'ils avaient déjà, et seules leurs
+// dimensions natives et leur `@bande` — mesurées dans le fichier, comme pour la série d'origine —
+// servent à caler la lame sur le créneau. Auparavant, ces lignes recopiaient les dimensions d'une
+// autre image (souvent 1009 × 377 à 0,300) : la lame tombait une dizaine de pixels trop bas et
+// mordait la première ligne de la section, comme les Chroniques de la compagnie.
+.cdg-bandeau(@nom; @w; @h; @bande; @creneau: @cdg-bandeau-creneau; @largeur: (@w * @cdg-bandeau-echelle)) {
   .cdg .section-title-art[data-bandeau="@{nom}"] {
     height: @creneau;
 
     > .title-art {
       // `* 1px` est indispensable : @w et @cdg-bandeau-echelle sont des nombres nus, et LESS
       // rendrait un `width: 290.64` sans unité, que le navigateur jette en silence.
-      width: (@w * @cdg-bandeau-echelle * 1px);
-      top: (@creneau / 2) - (@h * @cdg-bandeau-echelle * @bande * 1px);
+      width: (@largeur * 1px);
+      top: (@creneau / 2) - (@largeur * @h / @w * @bande * 1px);
     }
   }
 }
 
+// `@bande` : centre de la bande noire, relevé sur chaque fichier de ui/fiche/titres/ (lignes dont
+// la noirceur dépasse 60 % de celle de la ligne la plus sombre). La méthode retrouve les valeurs
+// de la série d'origine à 0,005 près (Compétences : 0,404 pour 0,400).
+//
+// Série d'origine, à l'échelle commune.
 //            nom                w      h    bande   créneau
-.cdg-bandeau(caracs;          1038;  312;  0.467);
 .cdg-bandeau(comps;           1009;  277;  0.400);
 .cdg-bandeau(arcanums;        1009;  277;  0.400);
-.cdg-bandeau(traits-speciaux; 1038;  312;  0.467);
-.cdg-bandeau(equipement;       825;  302;  0.433);
-.cdg-bandeau(blessures;        803;  359;  0.525);
-.cdg-bandeau(armes;            876;  374;  0.450; @cdg-bandeau-creneau2);
-.cdg-bandeau(personnalite;     864;  444;  0.550; @cdg-bandeau-creneau2);
-.cdg-bandeau(langues;          938;  392;  0.467; 50px);
-.cdg-bandeau(esquives;         650;  271;  0.492);
-.cdg-bandeau(bourse;           840;  114;  1;);
-.cdg-bandeau(repos;           840;  114;  1.2;);
-.cdg-bandeau(bonus-circonstanciels;           840;  114;  1.2;);
-.cdg-bandeau(biography;           940;  114;  1.3;);
-.cdg-bandeau(xp;               922;  114;  1.4;);
-.cdg-bandeau(actionscombat;    856;   77;  1);
-.cdg-bandeau(special;    856;   77;  1);
-// Initiative n'existait pas en bandeau prêt à l'emploi : celui de l'éditeur
-// (source/cdg_foundry/recto/TITRE_init.webp) embarque la piste de six écussons et la légende
-// « Modificateur total d'initiative », que la fiche rend déjà en vrai juste en dessous. Il a été
-// recomposé en retirant ce bloc et en recollant la lame — les deux bords se raccordent au pixel
-// (bande y 31..107 de part et d'autre) —, puis détouré de son sang comme ses voisines de la
-// rangée. La lame y fait 77 px de haut, comme celle d'Esquives : même échelle, mêmes proportions.
-.cdg-bandeau(initiative;       556;   77;  0.500);
+.cdg-bandeau(traits-speciaux; 1038;  312;  0.439);
+.cdg-bandeau(blessures;        803;  359;  0.531);
+.cdg-bandeau(personnalite;     864;  444;  0.552; @cdg-bandeau-creneau2);
+.cdg-bandeau(langues;          938;  392;  0.492; 50px);
 
-.cdg-bandeau(pjs;           1009;  277;  0.400);
-.cdg-bandeau(pnjs;          1038;  312;  0.467);
-.cdg-bandeau(blesses;           1009;  377;  0.300);
-.cdg-bandeau(guerison;          1038;  312;  0.467);
-.cdg-bandeau(chroniques;           1009;  377;  0.300);
-.cdg-bandeau(notes;           1009;  377;  0.300);
-.cdg-bandeau(creationGrants;           1009;  377;  0.300);
-.cdg-bandeau(description;           1009;  377;  0.300);
-.cdg-bandeau(effects;           1009;  377;  0.300);
-.cdg-bandeau(notesprivees;           1009;  377;  0.300);
-.cdg-bandeau(grantedfeatures;           1009;  377;  0.300);
-.cdg-bandeau(startinglanguages;           1009;  377;  0.300);
-.cdg-bandeau(startingArcanums;           1009;  377;  0.300);
-.cdg-bandeau(startingSkills;           1009;  377;  0.300);
-.cdg-bandeau(startingEquipments;           1009;  377;  0.300);
+// Bandeaux redessinés : dimensions et bande du fichier actuel, largeur affichée conservée.
+//            nom                    w      h    bande   créneau                 largeur
+.cdg-bandeau(caracs;              1300;  365;  0.511; @cdg-bandeau-creneau;  290.6);
+.cdg-bandeau(equipement;           804;  272;  0.480; @cdg-bandeau-creneau;  231);
+.cdg-bandeau(armes;                804;  261;  0.638; @cdg-bandeau-creneau2; 245.3);
+.cdg-bandeau(esquives;            1112;  365;  0.537; @cdg-bandeau-creneau;  182);
+.cdg-bandeau(bourse;              1200;  365;  0.537; @cdg-bandeau-creneau;  235.2);
+.cdg-bandeau(repos;               1200;  365;  0.537; @cdg-bandeau-creneau;  235.2);
+.cdg-bandeau(bonus-circonstanciels; 1112; 365; 0.534; @cdg-bandeau-creneau2;  235.2);
+.cdg-bandeau(biography;           1300;  365;  0.521; @cdg-bandeau-creneau;  263.2);
+.cdg-bandeau(xp;                  1300;  365;  0.534; @cdg-bandeau-creneau;  258.2);
+.cdg-bandeau(actionscombat;       1300;  365;  0.534; @cdg-bandeau-creneau;  239.7);
+.cdg-bandeau(special;             1300;  365;  0.515; @cdg-bandeau-creneau;  239.7);
+.cdg-bandeau(initiative;          1112;  298;  0.517; @cdg-bandeau-creneau;  155.7);
+
+// Compagnie et fiches d'objet. Les titres calligraphiés sur deux lignes (« Compétences / de départ »,
+// « Personnages / joueurs »…) prennent le créneau de deux lignes, comme Armes et Personnalité.
+.cdg-bandeau(pjs;                 1300;  365;  0.534; @cdg-bandeau-creneau2;  282.5);
+.cdg-bandeau(pnjs;                1300;  365;  0.545; @cdg-bandeau-creneau2;  290.6);
+.cdg-bandeau(blesses;             1300;  365;  0.534; @cdg-bandeau-creneau;  282.5);
+.cdg-bandeau(guerison;            1300;  365;  0.526; @cdg-bandeau-creneau2;  290.6);
+.cdg-bandeau(chroniques;          1300;  365;  0.514; @cdg-bandeau-creneau;  282.5);
+.cdg-bandeau(notes;               1300;  365;  0.527; @cdg-bandeau-creneau;  282.5);
+.cdg-bandeau(creationGrants;      1300;  365;  0.534; @cdg-bandeau-creneau2;  282.5);
+.cdg-bandeau(description;         1300;  365;  0.504; @cdg-bandeau-creneau;  282.5);
+.cdg-bandeau(effects;             1300;  365;  0.526; @cdg-bandeau-creneau;  282.5);
+.cdg-bandeau(notesprivees;        1300;  365;  0.536; @cdg-bandeau-creneau;  282.5);
+.cdg-bandeau(grantedfeatures;     1300;  365;  0.534; @cdg-bandeau-creneau2;  282.5);
+.cdg-bandeau(startinglanguages;   1300;  365;  0.534; @cdg-bandeau-creneau2;  282.5);
+.cdg-bandeau(startingArcanums;    1300;  365;  0.536; @cdg-bandeau-creneau2;  282.5);
+.cdg-bandeau(startingSkills;      1300;  365;  0.534; @cdg-bandeau-creneau2;  282.5);
+.cdg-bandeau(startingEquipments;  1300;  365;  0.541; @cdg-bandeau-creneau2;  282.5);

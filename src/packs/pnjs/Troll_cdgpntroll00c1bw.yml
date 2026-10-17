@@ -1,7 +1,7 @@
 _id: cdgpntroll00c1bw
 name: Troll
 type: adversaire
-img: icons/creatures/humanoids/troll.webp
+img: icons/magic/unholy/silhouette-evil-horned-giant.webp
 system:
   abilities:
     corps:

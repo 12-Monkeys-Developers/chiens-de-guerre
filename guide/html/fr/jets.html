@@ -1,0 +1,117 @@
+<div class="cdg-guide">
+  <h2>Ouvrir un test</h2>
+  <p>
+    Un clic sur le nom d'une caractéristique ou d'une compétence, sur une fiche, ouvre la <strong>fenêtre de test</strong>. Le couple caractéristique / compétence
+    n'est qu'une présélection : cliquer sur une compétence laisse choisir la caractéristique, et inversement. Les boutons de combat de la fiche, les arcanums
+    mystiques et les macros ouvrent la même fenêtre, avec un couple imposé.
+  </p>
+
+  <h2>La fenêtre de test</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-card"><img src="@@img:fenetre-jet@@" alt="Fenêtre de test" /></div>
+    <div>
+      <p>Elle suit les étapes du test, de haut en bas :</p>
+      <ul>
+        <li>
+          la <strong>compétence</strong> (liste) et la <strong>caractéristique</strong> (boutons, avec la réserve courante). Sans compétence pertinente, le test se
+          lance avec un seul d20 ;
+        </li>
+        <li>
+          la <strong>difficulté</strong> annoncée par le meneur — de « Très facile » (+10) à « Très difficile » (−10), « Moyenne » par défaut — et un
+          <strong>modificateur</strong> libre ;
+        </li>
+        <li>
+          l'<strong>effort</strong> : chaque point investi ajoute <strong>+3</strong> au seuil, trois points au plus, et vide d'autant la réserve de la
+          caractéristique, après le jet. Une réserve ne tombe jamais à zéro volontairement ;
+        </li>
+        <li>
+          la <strong>passion</strong> (personnages seulement) : choisissez un trait dominant pas encore invoqué cette session. <strong>Invoquer</strong> dépense un
+          jeton et ajoute le rang du trait au seuil ; <strong>S'imposer</strong> retire ce rang mais rapporte un jeton. Dans les deux cas le trait est marqué invoqué
+          pour la session ;
+        </li>
+        <li>
+          les <strong>modificateurs automatiques</strong>, cochés ou non selon le cas, toujours décochables : malus de blessure, bonus d'un arcanum physique, malus
+          des esquives du round, bonus du bouclier, bonus circonstanciels des traits, qualité exceptionnelle d'un objet.
+        </li>
+      </ul>
+      <p>
+        Le bas de la fenêtre affiche le <strong>seuil de réussite</strong> (SR), dont le survol donne le détail, et la poignée de dés qui sera lancée. Le pied
+        prévient des cas particuliers : rang 0, seuil nul ou négatif, seuil supérieur à 20.
+      </p>
+    </div>
+  </div>
+
+  <h2>La poignée de dés</h2>
+  <p>Le rang de compétence fixe le nombre de d20 lancés et le dé conservé :</p>
+  <table class="guide-table">
+    <tr><th>Rang</th><th>Poignée</th><th>Dé conservé</th></tr>
+    <tr><td>0 — Incompétent</td><td>2d20</td><td>le moins bon</td></tr>
+    <tr><td>1 — Novice</td><td>1d20</td><td>le seul</td></tr>
+    <tr><td>2 — Professionnel</td><td>2d20</td><td>le meilleur</td></tr>
+    <tr><td>3 — Expert</td><td>3d20</td><td>le meilleur</td></tr>
+  </table>
+  <p>
+    Le « meilleur » dé n'est ni le plus grand ni le plus petit : c'est celui qui donne la meilleure issue, donc le plus grand qui reste sous le seuil. Le système le
+    choisit automatiquement.
+  </p>
+
+  <h2>La carte de résultat</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-card"><img src="@@img:carte-jet@@" alt="Carte d'un test réussi" /></div>
+    <div>
+      <p>
+        La carte rappelle le couple et le SR, puis montre tous les dés : le dé conservé est encadré, les autres restent visibles, estompés. Sous les dés, le
+        verdict :
+      </p>
+      <ul>
+        <li><strong>Oui, mais…</strong> : réussite de justesse, dé de 1 à 5 ;</li>
+        <li><strong>Oui</strong> : réussite franche, dé de 6 ou plus et inférieur au seuil ;</li>
+        <li><strong>Oui, et…</strong> : réussite critique, le dé égale exactement le seuil ;</li>
+        <li><strong>Échec</strong> : le dé dépasse le seuil ;</li>
+        <li><strong>Échec critique</strong> : un 20 naturel.</li>
+      </ul>
+      <p>La <strong>qualité</strong> d'une réussite est la valeur du dé. Le volet <strong>Détail du seuil</strong> déplie le calcul, avec l'effort et la passion dépensés.</p>
+    </div>
+  </div>
+  <div class="guide-row">
+    <div class="guide-image guide-image-card"><img src="@@img:carte-jet-echec@@" alt="Échec critique au rang 0" /></div>
+    <div>
+      <h3>Les seuils extrêmes</h3>
+      <ul>
+        <li>
+          <strong>SR de 20 ou plus</strong> : plus d'échec critique, et chaque point au-delà de 20 s'ajoute à la qualité. Une qualité de 20 ou plus est une réussite
+          critique.
+        </li>
+        <li>
+          <strong>SR nul ou négatif</strong> : seul un 1 réussit, jamais en critique, et l'échec devient critique dès que le dé atteint 20 moins l'écart.
+        </li>
+      </ul>
+      <p>Ci-contre, un test au rang 0 : deux dés, et le moins bon, un 20, est imposé.</p>
+    </div>
+  </div>
+
+  <h2>Se dépasser</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-card"><img src="@@img:carte-jet-depasse@@" alt="Second jet obtenu en se dépassant" /></div>
+    <div>
+      <p>
+        Le bouton <strong>Se dépasser</strong> de la carte relance tous les dés, une seule fois par test, en consommant <strong>1 point de Corps, de Vivacité et
+        d'Esprit</strong>. Le seuil est conservé. Il faut au moins 2 points dans chaque réserve. La carte indique alors « Second jet, obtenu en se dépassant ».
+      </p>
+      <p>Seuls l'auteur du test et le meneur peuvent s'en servir.</p>
+    </div>
+  </div>
+
+  <h2>Le dé conservé et le meneur</h2>
+  <p>
+    Le meneur peut cliquer sur un autre dé de la carte pour le conserver à la place du dé choisi par le système : la carte, et le cas échéant l'opposition et la
+    blessure qui en découlent, sont recalculées. Pour les joueurs, les dés ne sont pas cliquables.
+  </p>
+
+  <h2>Les tests en opposition</h2>
+  <p>
+    Quand deux personnages s'opposent, chacun fait son test face à son propre seuil, puis les deux issues se croisent : par exemple une réussite contre un échec
+    donne la victoire à l'actif, un échec face à un échec critique devient une réussite. Deux réussites de même rang se départagent par la qualité. En combat, la
+    carte de confrontation fait ce calcul toute seule : voir @@page:combat@@.
+  </p>
+</div>

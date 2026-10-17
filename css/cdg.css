@@ -132,6 +132,7 @@
 }
 .cdg .section-title-right.section-title-art {
   justify-self: stretch;
+  padding-left: 0;
 }
 .cdg .section-title-right.section-title-art > .title-art {
   left: auto;
@@ -140,6 +141,12 @@
 .cdg .section-title-right.section-title-art > .title-actions {
   right: auto;
   left: 0.3rem;
+}
+.cdg .section-title-right.section-title-art > a {
+  position: absolute;
+  top: 50%;
+  left: 0.3rem;
+  transform: translateY(-50%);
 }
 .cdg h3 {
   font-family: var(--cdg-font-title);
@@ -256,13 +263,6 @@ cdg-toggle-switch[checked] track {
 cdg-toggle-switch[checked] thumb {
   margin-left: calc(100% - var(--toggle-switch-thumb-width));
 }
-.cdg .section-title-art[data-bandeau="caracs"] {
-  height: 30px;
-}
-.cdg .section-title-art[data-bandeau="caracs"] > .title-art {
-  width: 290.64px;
-  top: -25.79712px;
-}
 .cdg .section-title-art[data-bandeau="comps"] {
   height: 30px;
 }
@@ -282,210 +282,217 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg .section-title-art[data-bandeau="traits-speciaux"] > .title-art {
   width: 290.64px;
-  top: -25.79712px;
-}
-.cdg .section-title-art[data-bandeau="equipement"] {
-  height: 30px;
-}
-.cdg .section-title-art[data-bandeau="equipement"] > .title-art {
-  width: 231px;
-  top: -21.61448px;
+  top: -23.35104px;
 }
 .cdg .section-title-art[data-bandeau="blessures"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="blessures"] > .title-art {
   width: 224.84px;
-  top: -37.773px;
-}
-.cdg .section-title-art[data-bandeau="armes"] {
-  height: 44px;
-}
-.cdg .section-title-art[data-bandeau="armes"] > .title-art {
-  width: 245.28px;
-  top: -25.124px;
+  top: -38.37612px;
 }
 .cdg .section-title-art[data-bandeau="personnalite"] {
   height: 44px;
 }
 .cdg .section-title-art[data-bandeau="personnalite"] > .title-art {
   width: 241.92px;
-  top: -46.376px;
+  top: -46.62464px;
 }
 .cdg .section-title-art[data-bandeau="langues"] {
   height: 50px;
 }
 .cdg .section-title-art[data-bandeau="langues"] > .title-art {
   width: 262.64px;
-  top: -26.25792px;
+  top: -29.00192px;
+}
+.cdg .section-title-art[data-bandeau="caracs"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="caracs"] > .title-art {
+  width: 290.6px;
+  top: -26.69327615px;
+}
+.cdg .section-title-art[data-bandeau="equipement"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="equipement"] > .title-art {
+  width: 231px;
+  top: -22.51164179px;
+}
+.cdg .section-title-art[data-bandeau="armes"] {
+  height: 44px;
+}
+.cdg .section-title-art[data-bandeau="armes"] > .title-art {
+  width: 245.3px;
+  top: -28.80455896px;
 }
 .cdg .section-title-art[data-bandeau="esquives"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="esquives"] > .title-art {
   width: 182px;
-  top: -22.33296px;
+  top: -17.07995504px;
 }
 .cdg .section-title-art[data-bandeau="bourse"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="bourse"] > .title-art {
   width: 235.2px;
-  top: -16.92px;
+  top: -23.41698px;
 }
 .cdg .section-title-art[data-bandeau="repos"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="repos"] > .title-art {
   width: 235.2px;
-  top: -23.304px;
+  top: -23.41698px;
 }
 .cdg .section-title-art[data-bandeau="bonus-circonstanciels"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="bonus-circonstanciels"] > .title-art {
   width: 235.2px;
-  top: -23.304px;
+  top: -19.22556835px;
 }
 .cdg .section-title-art[data-bandeau="biography"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="biography"] > .title-art {
   width: 263.2px;
-  top: -26.496px;
+  top: -23.50109846px;
 }
 .cdg .section-title-art[data-bandeau="xp"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="xp"] > .title-art {
-  width: 258.16px;
-  top: -29.688px;
+  width: 258.2px;
+  top: -23.71212462px;
 }
 .cdg .section-title-art[data-bandeau="actionscombat"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="actionscombat"] > .title-art {
-  width: 239.68px;
-  top: -6.56px;
+  width: 239.7px;
+  top: -20.93840538px;
 }
 .cdg .section-title-art[data-bandeau="special"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="special"] > .title-art {
-  width: 239.68px;
-  top: -6.56px;
+  width: 239.7px;
+  top: -19.65969808px;
 }
 .cdg .section-title-art[data-bandeau="initiative"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="initiative"] > .title-art {
-  width: 155.68px;
-  top: 4.22px;
+  width: 155.7px;
+  top: -6.57201097px;
 }
 .cdg .section-title-art[data-bandeau="pjs"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="pjs"] > .title-art {
-  width: 282.52px;
-  top: -16.024px;
+  width: 282.5px;
+  top: -20.35544231px;
 }
 .cdg .section-title-art[data-bandeau="pnjs"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="pnjs"] > .title-art {
-  width: 290.64px;
-  top: -25.79712px;
+  width: 290.6px;
+  top: -22.46738846px;
 }
 .cdg .section-title-art[data-bandeau="blesses"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="blesses"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -27.35544231px;
 }
 .cdg .section-title-art[data-bandeau="guerison"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="guerison"] > .title-art {
-  width: 290.64px;
-  top: -25.79712px;
+  width: 290.6px;
+  top: -20.91714923px;
 }
 .cdg .section-title-art[data-bandeau="chroniques"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="chroniques"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -25.76909615px;
 }
 .cdg .section-title-art[data-bandeau="notes"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="notes"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -26.80022115px;
 }
 .cdg .section-title-art[data-bandeau="creationGrants"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="creationGrants"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -20.35544231px;
 }
 .cdg .section-title-art[data-bandeau="description"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="description"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -24.97592308px;
 }
 .cdg .section-title-art[data-bandeau="effects"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="effects"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -26.72090385px;
 }
 .cdg .section-title-art[data-bandeau="notesprivees"] {
   height: 30px;
 }
 .cdg .section-title-art[data-bandeau="notesprivees"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -27.51407692px;
 }
 .cdg .section-title-art[data-bandeau="grantedfeatures"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="grantedfeatures"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -20.35544231px;
 }
 .cdg .section-title-art[data-bandeau="startinglanguages"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="startinglanguages"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -20.35544231px;
 }
 .cdg .section-title-art[data-bandeau="startingArcanums"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="startingArcanums"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -20.51407692px;
 }
 .cdg .section-title-art[data-bandeau="startingSkills"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="startingSkills"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -20.35544231px;
 }
 .cdg .section-title-art[data-bandeau="startingEquipments"] {
-  height: 30px;
+  height: 44px;
 }
 .cdg .section-title-art[data-bandeau="startingEquipments"] > .title-art {
-  width: 282.52px;
-  top: -16.668px;
+  width: 282.5px;
+  top: -20.91066346px;
 }
 .cdg input[type="text"],
 .cdg input[type="number"],
@@ -950,6 +957,15 @@ cdg-toggle-switch[checked] thumb {
   align-self: left;
   font-size: 1.5rem;
   margin-bottom: 5px;
+}
+.cdg.actor .origin-col .origin-line > label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-width: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 .cdg.actor .abilities {
   margin-top: 1.1rem;
@@ -1580,6 +1596,10 @@ cdg-toggle-switch[checked] thumb {
   -webkit-text-stroke: 1px #ba1c41;
 }
 .cdg.actor.compagnie .compagnie-header .name-line input[type="text"] {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
   font-family: var(--cdg-font-title);
   font-size: 3rem;
   height: 64px;
@@ -1710,6 +1730,39 @@ cdg-toggle-switch[checked] thumb {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.cdg.actor.compagnie .roster-row:has(> span.roster-notes) {
+  flex-wrap: wrap;
+  row-gap: 0;
+}
+.cdg.actor.compagnie .roster-row:has(> span.roster-notes) span.roster-grade {
+  flex: 0 0 auto;
+  color: var(--cdg-muted);
+}
+.cdg.actor.compagnie .roster-row:has(> span.roster-notes) span.roster-notes {
+  flex: 1 0 100%;
+  white-space: normal;
+  font-style: italic;
+  color: var(--cdg-ink-soft);
+}
+.cdg.actor.compagnie .roster-row:has(> span.roster-notes) span.roster-notes:empty {
+  display: none;
+}
+.cdg.actor.compagnie .roster-row:has(> input.roster-notes) {
+  flex-wrap: wrap;
+  row-gap: 0.15rem;
+}
+.cdg.actor.compagnie .roster-row:has(> input.roster-notes) input.roster-name {
+  flex: 1 1 0;
+  width: auto;
+}
+.cdg.actor.compagnie .roster-row:has(> input.roster-notes) input.roster-grade {
+  flex: 0 0 5.5rem;
+  width: auto;
+}
+.cdg.actor.compagnie .roster-row:has(> input.roster-notes) input.roster-notes {
+  flex: 1 0 100%;
+  order: 10;
 }
 .cdg.actor.compagnie .chronicle-row input[type="text"] {
   font-size: 0.8rem;
@@ -2261,6 +2314,13 @@ cdg-toggle-switch[checked] thumb {
   background: var(--cdg-blood-light);
   box-shadow: none;
 }
+.cdg.initiative-roll h2 {
+  margin: 0 0 0.3rem;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+  font-family: var(--cdg-font-label);
+  font-size: 1rem;
+  color: var(--cdg-blood);
+}
 .cdg.initiative-roll .initiative-pair {
   display: flex;
   align-items: baseline;
@@ -2775,9 +2835,20 @@ cdg-toggle-switch[checked] thumb {
   margin-top: 0.35rem;
   font-size: var(--font-size-12);
 }
+.cdg-combat-tracker .duel-settings select,
+.cdg-combat-tracker .duel-settings label {
+  color: var(--color-text-primary);
+}
 .cdg-combat-tracker .duel-settings select {
   width: auto;
   min-width: 5rem;
+  border-bottom-color: var(--color-border-light-2, var(--color-text-secondary));
+}
+.cdg-combat-tracker .duel-settings select:disabled {
+  color: var(--color-text-secondary);
+}
+.cdg-combat-tracker .duel-settings select option {
+  color: initial;
 }
 .cdg-combat-tracker .duel-settings label {
   display: flex;
@@ -3812,6 +3883,7 @@ cdg-toggle-switch[checked] thumb {
   cursor: pointer;
 }
 .cdg.creation .step-combat .wealth-remaining {
+  margin-top: 0.6rem;
   font-style: normal;
   font-weight: 700;
   color: var(--cdg-blood);
@@ -4009,6 +4081,94 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.creation .creation-footer button.reset {
   color: var(--cdg-muted);
+}
+:root {
+  --cdg-guide-accent: var(--cdg-blood);
+  --cdg-guide-tip-background: rgba(122, 16, 16, 0.07);
+}
+.cdg-guide h2 {
+  font-family: var(--cdg-font-title);
+  font-size: 1.6em;
+  font-weight: normal;
+  color: var(--cdg-blood);
+  border-bottom: 2px solid var(--cdg-guide-accent);
+  margin-top: 1.5rem;
+}
+.cdg-guide h3 {
+  font-family: var(--cdg-font-label);
+  font-weight: bold;
+  border-bottom: none;
+  margin-top: 1rem;
+}
+.cdg-guide img {
+  border: none;
+  max-width: 100%;
+  height: auto;
+}
+.cdg-guide .guide-image {
+  text-align: center;
+  margin: 0.75rem auto;
+}
+.cdg-guide .guide-image img {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.cdg-guide .guide-image-narrow {
+  flex: 0 0 220px;
+}
+.cdg-guide .guide-image-card {
+  flex: 0 1 300px;
+  max-width: 300px;
+}
+.cdg-guide .guide-image-half {
+  flex: 1 1 45%;
+}
+.cdg-guide .guide-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+.cdg-guide .guide-row > div:not(.guide-image) {
+  flex: 1 1 300px;
+}
+.cdg-guide .guide-row .guide-image {
+  margin: 0;
+}
+.cdg-guide .guide-astuce {
+  border-left: 4px solid var(--cdg-guide-accent);
+  background: var(--cdg-guide-tip-background);
+  padding: 0.25rem 0.75rem;
+  margin: 0.75rem 0;
+}
+.cdg-guide .guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+}
+.cdg-guide .guide-table th,
+.cdg-guide .guide-table td {
+  border: 1px solid var(--cdg-parchment-line);
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+.cdg-guide .guide-table th {
+  background: var(--cdg-parchment-dark);
+}
+.cdg-guide code,
+.cdg-guide kbd {
+  white-space: nowrap;
+}
+.theme-dark .cdg-guide {
+  --cdg-guide-accent: var(--cdg-blood-light);
+  --cdg-guide-tip-background: rgba(168, 50, 50, 0.15);
+}
+.theme-dark .cdg-guide h2 {
+  color: #e3a5a5;
+}
+.theme-dark .cdg-guide .guide-table th {
+  background: rgba(255, 255, 255, 0.08);
 }
 #pause > img {
   content: url("../assets/ui/images/epee-crane.webp");

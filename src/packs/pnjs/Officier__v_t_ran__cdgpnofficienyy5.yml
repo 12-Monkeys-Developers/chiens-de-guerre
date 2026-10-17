@@ -1,7 +1,7 @@
 _id: cdgpnofficienyy5
 name: Officier (vétéran)
 type: adversaire
-img: icons/environment/people/noble.webp
+img: icons/environment/people/charge.webp
 system:
   abilities:
     corps:

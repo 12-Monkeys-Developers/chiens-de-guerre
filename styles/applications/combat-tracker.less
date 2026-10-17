@@ -31,9 +31,25 @@
     margin-top: 0.35rem;
     font-size: var(--font-size-12);
 
+    // Le suivi porte la classe `.cdg`, dont les champs et libellés sont teintés pour le parchemin des
+    // fiches : sur le fond sombre de la barre latérale, ils reprennent les couleurs du thème.
+    select,
+    label {
+      color: var(--color-text-primary);
+    }
+
     select {
       width: auto;
       min-width: 5rem;
+      border-bottom-color: var(--color-border-light-2, var(--color-text-secondary));
+
+      &:disabled {
+        color: var(--color-text-secondary);
+      }
+
+      option {
+        color: initial;
+      }
     }
 
     label {

@@ -10,6 +10,7 @@
     "gulp": "gulp",
     "YMLtoLDB": "node ./tools/YMLtoLDB.mjs",
     "LDBtoYML": "node ./tools/LDBtoYML.mjs",
+    "guide": "node ./guide/build-guide.mjs",
     "build:compendiums": "node ./tools/scripts/build-compendiums.mjs",
     "build:pretires": "node ./tools/scripts/build-pretires.mjs"
   },

@@ -1,7 +1,7 @@
 _id: cdgpnloup000ws6p
 name: Loup
 type: adversaire
-img: icons/creatures/abilities/mouth-teeth-wolf.webp
+img: icons/creatures/mammals/wolf-shadow-black.webp
 system:
   abilities:
     corps:

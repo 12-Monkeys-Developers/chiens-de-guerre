@@ -1,7 +1,7 @@
 _id: cdgpnsquelet6wn3
 name: Squelette
 type: adversaire
-img: icons/creatures/undead/skeleton-worn-blue.webp
+img: icons/magic/death/undead-skeleton-worn-blue.webp
 system:
   abilities:
     corps:

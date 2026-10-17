@@ -1,7 +1,7 @@
 _id: cdgpnvampireykfh
 name: Vampire
 type: adversaire
-img: icons/creatures/undead/vampire-bat.webp
+img: icons/magic/death/mouth-teeth-fangs-vampire.webp
 system:
   abilities:
     corps:

@@ -1,7 +1,7 @@
 _id: cdgpnzombi00ppi8
 name: Zombi
 type: adversaire
-img: icons/creatures/undead/zombie-worn-green.webp
+img: icons/magic/death/undead-zombie-grave-green.webp
 system:
   abilities:
     corps:

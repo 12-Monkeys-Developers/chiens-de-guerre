@@ -122,6 +122,10 @@
     // se réduirait à une boîte de largeur nulle collée au bord droit. La lame tomberait juste,
     // mais les commandes n'auraient plus rien à quoi s'accrocher. On rend donc sa largeur au bloc.
     justify-self: stretch;
+    // Le décalage de 250 px pousse les commandes posées à même le titre au-delà d'une lame alignée
+    // à gauche. Sur un titre aligné à droite, la lame est de l'autre côté : il ne faisait
+    // qu'élargir le bloc, et « Caractéristiques » sortait de la fiche.
+    padding-left: 0;
 
     > .title-art {
       left: auto;
@@ -131,6 +135,15 @@
     > .title-actions {
       right: auto;
       left: 0.3rem;
+    }
+
+    // Une commande posée à même le titre (le « + » des PNJ de la compagnie) suivrait l'alignement à
+    // droite et passerait sous la lame : elle rejoint le côté libre, comme `.title-actions`.
+    > a {
+      position: absolute;
+      top: 50%;
+      left: 0.3rem;
+      transform: translateY(-50%);
     }
   }
 

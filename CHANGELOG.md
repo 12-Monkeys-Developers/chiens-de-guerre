@@ -1,5 +1,37 @@
 # Changelog
 
+## Non publié
+
+### Guide du système
+
+- Nouveau compendium **Guide du système**, ouvert aux joueurs en lecture : dix pages illustrées de
+  captures d'écran, de l'assistant de création au combat en confrontation, en passant par la fiche,
+  les objets, les PNJ, la compagnie franche, les tests, les macros et le tableau de bord du meneur.
+- Les pages s'écrivent en HTML dans `guide/html/fr/` ; `npm run guide` en tire la source du
+  compendium (`src/packs/guide`), puis `npm run YMLtoLDB` le compile. Les captures vivent dans
+  `assets/guide/`.
+
+### Corrections
+
+- **Bestiaire** : 25 PNJ et créatures (Troll, Ogre, Goule, Loup, Ours, Officiers, Archers,
+  Duellistes, Guerriers de choc…) pointaient vers des icônes absentes de Foundry V14 et
+  s'affichaient sans portrait. Elles sont remplacées par des icônes du cœur, dans le générateur
+  comme dans les sources du compendium.
+- **Bandeaux calligraphiés** : les bandeaux redessinés étaient déclarés avec les dimensions d'une
+  autre image ; leur lame tombait trop bas et mordait la première ligne de la section (Chroniques
+  et Notes de la compagnie, sections des fiches d'objet). Leur position est désormais calculée sur
+  les dimensions réelles de chaque fichier, et les titres sur deux lignes ont la hauteur qu'il leur
+  faut. Le bandeau « Caractéristiques » ne sort plus de la fiche.
+- **Fenêtre d'initiative** : les titres « Initiative » et « Modificateurs » étaient blancs sur le
+  parchemin.
+- **Suivi de combat, duel** : le type de duel, le nombre de touches et la case « Duel formel » étaient
+  presque illisibles sur le fond sombre de la barre latérale.
+- **Fiche de compagnie** : les noms et les notes des membres ne sont plus coupés (les notes passent
+  sur une seconde ligne), le grade a la place de s'écrire en édition, le nom de la compagnie reste
+  centré en édition, et le « + » des personnages non joueurs n'est plus caché sous son bandeau.
+- **Fiche de personnage, mode édition** : l'ascendance ne déborde plus sur les onglets.
+- **Assistant de création** : à l'étape 8, le bandeau « Bourse » ne recouvre plus le montant.
+
 ## 0.6.2
 
 ### Fiches

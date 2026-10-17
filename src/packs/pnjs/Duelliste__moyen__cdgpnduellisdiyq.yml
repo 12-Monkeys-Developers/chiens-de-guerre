@@ -1,7 +1,7 @@
 _id: cdgpnduellisdiyq
 name: Duelliste (moyen)
 type: adversaire
-img: icons/weapons/swords/rapier-guard-blue.webp
+img: icons/weapons/swords/sword-guard-blue.webp
 system:
   abilities:
     corps:

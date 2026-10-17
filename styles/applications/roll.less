@@ -409,6 +409,16 @@
 }
 
 .cdg.initiative-roll {
+  // Sans règle propre, ces titres prennent la couleur claire du thème sombre de Foundry et
+  // disparaissent sur le parchemin de la fenêtre.
+  h2 {
+    margin: 0 0 0.3rem;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+    font-family: var(--cdg-font-label);
+    font-size: 1rem;
+    color: var(--cdg-blood);
+  }
+
   .initiative-pair {
     display: flex;
     align-items: baseline;

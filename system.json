@@ -72,6 +72,14 @@
       "path": "packs/pnjs",
       "type": "Actor",
       "ownership": { "PLAYER": "NONE", "ASSISTANT": "NONE" }
+    },
+    {
+      "name": "guide",
+      "label": "Guide du système",
+      "system": "chiens-de-guerre",
+      "path": "packs/guide",
+      "type": "JournalEntry",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
     }
   ],
   "languages": [

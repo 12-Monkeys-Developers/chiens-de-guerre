@@ -1,0 +1,155 @@
+<div class="cdg-guide">
+  <h2>Consultation et édition</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:fiche-edition@@" alt="Fiche en mode édition" /></div>
+    <div>
+      <p>
+        La fiche s'ouvre en <strong>consultation</strong> : on y joue, on clique pour lancer un test, cocher une blessure ou dépenser un point de réserve.
+        L'interrupteur de la barre de titre la passe en <strong>mode édition</strong>, où l'on modifie le nom, le portrait, les maximums des caractéristiques, les
+        rangs de compétence et les traits de personnalité, et où apparaissent les corbeilles de suppression.
+      </p>
+      <p>
+        Peuple, carrière, ascendance et équipement ne se déposent sur la fiche qu'en mode édition : modifier l'inventaire n'est pas un geste de consultation.
+      </p>
+    </div>
+  </div>
+
+  <h2>L'en-tête</h2>
+  <ul>
+    <li>
+      <strong>Peuple</strong>, <strong>Carrière</strong> et <strong>Ascendance</strong> : un clic ouvre la fiche de l'objet ; en mode édition, la croix le retire
+      (voir plus bas). L'icône d'allégeance (Obscurité, Balance, Lumière) découle du karma.
+    </li>
+    <li>
+      <strong>Passion</strong> : le nombre de jetons, avec <i class="fas fa-square-minus"></i> et <i class="fas fa-square-plus"></i> pour en dépenser ou en gagner. Le
+      survol rappelle la règle : dépenser un jeton ajoute la valeur d'un trait dominant au seuil de réussite ; s'imposer le malus correspondant en rapporte un.
+    </li>
+    <li>
+      <strong>Caractéristiques</strong> : la réserve courante sur le maximum. <i class="fas fa-minus"></i> et <i class="fas fa-plus"></i> dépensent ou rendent un
+      point, sans dépasser le maximum. Un clic sur le nom ouvre un test (voir @@page:jets@@). Le survol du maximum indique d'où vient un bonus (peuple, carrière,
+      effet). Les trois bulles marquent les augmentations achetées en expérience (5 XP chacune, trois au plus).
+    </li>
+    <li>Sous les caractéristiques, le <strong>malus courant</strong> de la blessure la plus grave, et l'état <strong>Mourant</strong> le cas échéant (voir @@page:combat@@).</li>
+  </ul>
+
+  <h2>Compétences et Personnalité</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:fiche-competences@@" alt="Onglet Compétences et Personnalité" /></div>
+    <div>
+      <p>
+        Les <strong>31 compétences</strong> et leur rang en écussons, de 0 (incompétent) à 3 (expert). Un clic sur le nom ouvre un test avec cette compétence ; en
+        mode édition, un clic sur un écusson fixe le rang, et recliquer sur l'écusson courant redescend d'un cran.
+      </p>
+      <p>
+        Les <strong>17 couples de traits</strong> de personnalité, avec les totaux de vices et de vertus, le karma et l'allégeance. La flamme
+        <i class="fas fa-fire-flame-simple"></i> au bout de chaque ligne marque le trait comme <strong>invoqué</strong> pour la session : un trait ne sert qu'une
+        fois par session, et la fenêtre de test ne le propose plus. Le bouton <i class="fa-solid fa-rotate-left"></i> les libère tous en début de session.
+      </p>
+    </div>
+  </div>
+
+  <h2>Combat</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:fiche-combat@@" alt="Onglet Combat" /></div>
+    <div>
+      <ul>
+        <li>
+          <strong>Initiative</strong> : lance l'initiative du personnage dans le combat en cours. Le survol du <strong>modificateur</strong> détaille son calcul :
+          bonus saisi, malus de l'armure et du bouclier portés. Le malus de l'armure est <strong>doublé</strong> si le rang de Port d'armures est insuffisant, ce que
+          la fiche signale. Le combat à deux armes ajoute son bonus.
+        </li>
+        <li>
+          <strong>Esquiver</strong> : test de Vivacité / Esquive. La piste de malus (0, −2, −4, −6, −8) compte les esquives du round ; la suivante subit le malus
+          marqué.
+        </li>
+        <li><strong>Parer</strong> : test de Corps / Blocage, avec le bonus du bouclier. Une seule parade par round : l'interrupteur dit si elle est disponible.</li>
+        <li>
+          <strong>Blessures</strong> : cases légères (−1), graves (−3) et mortelles (−6), selon le rang de Vigueur. Un clic coche une case, recliquer sur la
+          dernière la libère.
+        </li>
+        <li>
+          <strong>Armes et protections</strong> : <i class="fas fa-circle-check"></i> équipe une armure ou un bouclier (un seul de chaque, le précédent est
+          retiré), <i class="fas fa-hand-fist"></i> tient une arme en main. Une arme tenue affiche ses boutons d'<strong>attaque</strong>
+          <i class="fas fa-sword"></i> et de <strong>dégâts</strong> <i class="fa-solid fa-burst"></i>. Le casque <i class="fa-solid fa-helmet-battle"></i> du titre
+          lance l'<strong>encaissement</strong> avec l'armure portée.
+        </li>
+      </ul>
+      <p>Les boutons de cet onglet se glissent sur la barre de macros (voir @@page:outils@@).</p>
+    </div>
+  </div>
+
+  <h2>Équipement</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:fiche-equipement@@" alt="Onglet Équipement" /></div>
+    <div>
+      <ul>
+        <li><strong>Équipement</strong> : les objets divers et leur quantité ; le survol d'une ligne affiche la description de l'objet.</li>
+        <li><strong>Bourse</strong> : ducats et deniers (1 ducat vaut 100 deniers).</li>
+        <li>
+          <strong>Repos</strong> : à la fin d'une journée, cliquez sur le confort du repos — exécrable (+1), voyage (+2), agréable (+3) ou exceptionnel (+4). Chaque
+          réserve regagne ce nombre de points, sans dépasser son maximum. Un trait comme <em>Infatigable</em> ajoute son point de Corps.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Arcanums</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:fiche-arcanums@@" alt="Onglet Arcanums" /></div>
+    <div>
+      <ul>
+        <li>
+          <strong>Arcanums</strong> : un arcanum <strong>physique</strong> affiche son bonus constant, appliqué d'office aux tests de la compétence qu'il bonifie. Un
+          arcanum <strong>mystique</strong> affiche une baguette <i class="fa-solid fa-wand-sparkles"></i> par rang maîtrisé : voir @@page:objets@@.
+        </li>
+        <li>
+          <strong>Traits spéciaux</strong> : rangés par provenance (trait d'origine, don de carrière, marque de l'Oblitéré). Une étiquette rappelle le regard que
+          les humains portent sur le trait. Le texte libre en dessous reçoit la description de la Marque.
+        </li>
+        <li>
+          <strong>Bonus circonstanciels</strong> : ceux que les effets des traits apportent, par exemple « +2 pour se montrer charmant ». Ils ne s'appliquent jamais
+          d'office : la fenêtre de test les propose à cocher.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Biographie</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:fiche-biographie@@" alt="Onglet Biographie" /></div>
+    <div>
+      <ul>
+        <li>Vrai nom, peuple, carrière, ascendance, <strong>grade</strong> et religion.</li>
+        <li><strong>Expérience</strong> : total gagné et dépensé ; le disponible se calcule.</li>
+        <li>
+          <strong>Langues maîtrisées</strong> : un clic coche ou décoche une langue. Le survol du titre rappelle la règle de l'écrit, qui dépend du rang en
+          Érudition.
+        </li>
+        <li><strong>Biographie</strong> : texte libre.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Peuple, carrière et ascendance sur la fiche</h2>
+  <p>
+    Hors de l'assistant, on peut aussi déposer un peuple, une carrière ou une ascendance sur la fiche (mode édition), depuis un compendium ou la barre latérale.
+    L'objet s'inscrit dans l'en-tête et accorde ce qu'il porte :
+  </p>
+  <ul>
+    <li><strong>Peuple</strong> : ses traits spéciaux, ses langues et son ajustement de caractéristique ;</li>
+    <li>
+      <strong>Carrière</strong> : ses rangs de compétence (sans jamais baisser un rang déjà plus haut), ses arcanums, son équipement, son ajustement de
+      caractéristique, et son argent de départ, versé dans la bourse ;
+    </li>
+    <li><strong>Ascendance</strong> : sa compulsion, et son arcanum bonifié s'il est choisi (acquis au rang 1, ou monté d'un rang s'il est déjà connu).</li>
+  </ul>
+  <p>
+    Un second peuple, une seconde carrière ou une seconde ascendance sont refusés : retirez d'abord le premier. Le retrait (croix de l'en-tête) supprime aussi
+    les objets accordés, après confirmation. Les langues et les rangs de compétence restent, puisque rien ne distingue plus ce qui venait de l'origine. L'argent de
+    la carrière n'est repris que si la bourse vaut encore exactement le montant versé.
+  </p>
+  <p class="guide-astuce">
+    L'ajustement de caractéristique d'un peuple ou d'une carrière est un <strong>effet actif</strong> porté par l'objet. En mode édition, le champ du maximum
+    n'édite que la valeur de base : le bonus s'ajoute à part, et le survol du maximum en donne l'origine.
+  </p>
+</div>

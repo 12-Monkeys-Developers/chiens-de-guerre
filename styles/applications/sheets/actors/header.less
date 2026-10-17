@@ -176,6 +176,20 @@
       font-size: 1.5rem;
       margin-bottom: 5px;
     }
+
+    // En mode édition, l'étiquette (5,5 rem de large) ne laissait qu'une centaine de pixels au nom
+    // de l'objet : « Apposée par Harpie (Fureur) » passait sur quatre lignes et débordait sur les
+    // onglets. Elle reste lisible par les lecteurs d'écran ; à l'œil, la ligne vide dit déjà ce
+    // qu'il faut y déposer, et l'onglet Biographie garde ses étiquettes.
+    .origin-line > label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      min-width: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
   }
   // Les trois caractéristiques : nom, réserve sur maximum, et les trois bulles d'amélioration.
   .abilities {

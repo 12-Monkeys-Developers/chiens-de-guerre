@@ -1,0 +1,1219 @@
+_id: cdgGuide77vg8wUz
+name: Guide du système
+pages:
+  - _id: TWCq1YGI98mlv6ez
+    name: Introduction
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <h2>Bienvenue dans la compagnie</h2>
+          <p>
+            Ce guide présente ce que le système <strong>Chiens de guerre</strong> pour Foundry VTT met à votre disposition : l'assistant de création des Marqués, la fiche
+            de personnage, les PNJ et créatures, la compagnie franche, les tests à poignée de d20 et le combat en confrontation. Il ne remplace pas le livre de règles : il
+            explique comment Foundry vous aide à les appliquer.
+          </p>
+          <p>Le système nécessite <strong>Foundry VTT V14</strong>.</p>
+
+          <h3>Sommaire</h3>
+          <ul>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GmNyKHhl8NNxO3ep]{Réglages} : les réglages du monde.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.2wzFoVxI1eErVbzz]{Créer un Marqué} : l'assistant de création de personnage, en neuf étapes.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.uzA4Ui46yz5MRj5Z]{La fiche de personnage} : la fiche, onglet par onglet, et le dépôt d'un peuple, d'une carrière ou d'une ascendance.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.Bd0TlcBOLfPaZzt9]{Objets et origines} : équipement, arcanums, traits spéciaux et effets, peuples, carrières, ascendances.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.Mhbx3hlIt28jYB7U]{PNJ et créatures} : la fiche de PNJ et le bestiaire.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.atUkWWFtqc9vxOlx]{La compagnie franche} : l'assistant et la fiche de la compagnie franche.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.IVgxzdiSc9kXDRd9]{Les tests} : la fenêtre de test, la poignée de dés, la carte de résultat et le dépassement.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GdA29X6mS3ScAj1f]{Le combat} : le suivi de combat, l'initiative, la confrontation et le personnage mourant.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.d6qJxIR42RlaHXOi]{Macros et outils du meneur} : la barre de macros et le tableau de bord du meneur.</li>
+          </ul>
+
+          <h2>L'onglet du système</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-narrow"><img src="systems/chiens-de-guerre/assets/guide/barre-laterale.webp" alt="Onglet Chiens de guerre de la barre latérale" /></div>
+            <div>
+              <p>
+                Le système ajoute un onglet à la barre latérale, marqué de deux épées croisées <i class="fa-solid fa-swords"></i>. Il rassemble les points d'entrée des outils du système :
+              </p>
+              <ul>
+                <li><strong>Tableau de bord des joueurs</strong> (meneur seulement) : l'état des personnages des joueurs connectés, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.d6qJxIR42RlaHXOi]{Macros et outils du meneur} ;</li>
+                <li><strong>Création de personnage</strong> : l'assistant qui guide la création d'un Marqué, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.2wzFoVxI1eErVbzz]{Créer un Marqué} ;</li>
+                <li><strong>Création de compagnie</strong> : l'assistant de la compagnie franche, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.atUkWWFtqc9vxOlx]{La compagnie franche}.</li>
+              </ul>
+              <p>
+                Les deux assistants n'apparaissent qu'aux comptes qui ont le droit de créer des acteurs. Un joueur qui ne l'a pas voit à la place un message l'invitant à
+                le demander au meneur (droit « Créer de nouveaux acteurs » dans la configuration des permissions).
+              </p>
+            </div>
+          </div>
+
+          <h2>Les types de documents</h2>
+          <p>Le système définit trois types d'acteurs :</p>
+          <ul>
+            <li><strong>Personnage</strong> : un Marqué, joué par un joueur ;</li>
+            <li><strong>PNJ / Créature</strong> : un adversaire, un allié, une bête ou un monstre, avec son bloc de statistiques ;</li>
+            <li><strong>Compagnie franche</strong> : la compagnie commune aux joueurs, avec ses propres caractéristiques, compétences et blessés.</li>
+          </ul>
+          <p>Et six types d'objets :</p>
+          <ul>
+            <li><strong>Équipement</strong> : arme, armure, bouclier ou objet divers ;</li>
+            <li><strong>Arcanum</strong> : un pouvoir physique (bonus constant) ou mystique (tours de magie par rang) ;</li>
+            <li><strong>Trait spécial</strong> : un trait d'origine, un don de carrière ou une marque, avec ses effets ;</li>
+            <li><strong>Peuple</strong>, <strong>Carrière</strong> et <strong>Ascendance</strong> : les origines du personnage, qui accordent traits, langues, compétences,
+              arcanums et équipement quand on les dépose sur la fiche.</li>
+          </ul>
+
+          <h2>Les compendiums</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-narrow"><img src="systems/chiens-de-guerre/assets/guide/compendiums.webp" alt="Compendiums du système" /></div>
+            <div>
+              <p>Le système est livré avec huit compendiums :</p>
+              <ul>
+                <li><strong>Peuples</strong> : les 8 peuples, avec leur ajustement de caractéristique, leurs langues et leurs traits ;</li>
+                <li><strong>Traits spéciaux</strong> : les traits accordés par les peuples, effets compris ;</li>
+                <li><strong>Carrières</strong> : les 15 carrières, avec leurs compétences, arcanums, équipement et argent de départ ;</li>
+                <li><strong>Arcanums</strong> : les 22 arcanums, physiques et mystiques ;</li>
+                <li><strong>Équipement</strong> : armes, armures, boucliers, paquetages et outils ;</li>
+                <li><strong>Ascendances</strong> : l'origine de la Marque et sa compulsion ;</li>
+                <li><strong>Bestiaire — PNJ / Créatures</strong> : PNJ types et créatures, réservé au meneur ;</li>
+                <li><strong>Guide du système</strong> : ce guide.</li>
+              </ul>
+              <p>
+                Peuples, carrières, ascendances et arcanums sont aussi proposés dans les listes de l'assistant de création, qu'ils soient dans un compendium ou dans les
+                objets du monde.
+              </p>
+            </div>
+          </div>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 100000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.TWCq1YGI98mlv6ez'
+  - _id: GmNyKHhl8NNxO3ep
+    name: Réglages
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <h2>Les réglages du système</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/reglages.webp" alt="Réglages du système" /></div>
+            <div>
+              <p>Les réglages se trouvent dans <strong>Paramètres de jeu → Configurer les paramètres → Chiens de guerre</strong>. Ils concernent tout le monde.</p>
+              <h3>Réinitialiser esquives et parade</h3>
+              <p>
+                Activé par défaut. À la fin de chaque round de combat, le compteur d'esquives et la parade de chaque combattant reviennent à zéro : la première esquive du
+                round suivant redevient gratuite et la parade est de nouveau disponible. Désactivez-le si votre table préfère tenir ces compteurs à la main, depuis
+                l'onglet Combat de chaque fiche.
+              </p>
+              <h3>Mode débogage</h3>
+              <p>
+                Désactivé par défaut. Affiche dans la console du navigateur le détail du calcul des fiches et du combat. Il ne sert qu'à signaler un problème ; il demande
+                un rechargement de la page.
+              </p>
+            </div>
+          </div>
+
+          <h2>Avant la première partie</h2>
+          <ul>
+            <li>
+              <strong>Droits des joueurs</strong> : pour utiliser l'assistant de création, un joueur doit pouvoir créer des acteurs (Paramètres de jeu → Configurer les
+              permissions → « Créer de nouveaux acteurs »).
+            </li>
+            <li>
+              <strong>Personnage attribué</strong> : attribuez à chaque joueur son personnage (Configuration du joueur → Personnage). C'est ce qui le fait apparaître dans
+              le tableau de bord du meneur, et c'est l'acteur que visent les macros quand aucun token n'est sélectionné.
+            </li>
+            <li>
+              <strong>Grille</strong> : une case du système vaut 1,5 m.
+            </li>
+          </ul>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 200000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.GmNyKHhl8NNxO3ep'
+  - _id: 2wzFoVxI1eErVbzz
+    name: Créer un Marqué
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <h2>L'assistant de création</h2>
+          <p>
+            L'assistant conduit la création d'un Marqué en neuf étapes, dans l'ordre du livre. On l'ouvre depuis l'onglet <i class="fa-solid fa-swords"></i> de la barre
+            latérale, bouton <strong>Création de personnage</strong>.
+          </p>
+          <ul>
+            <li>Le bandeau du haut montre les neuf étapes : chacune est cliquable, et l'on revient librement en arrière pour changer un choix.</li>
+            <li>
+              Le pied de fenêtre dit ce qui manque à l'étape en cours, ou « Étape complète. », et compte les étapes achevées. <strong>Précédent</strong> et
+              <strong>Suivant</strong> font avancer l'assistant ; <strong>Recommencer</strong> repart d'un brouillon vierge.
+            </li>
+            <li>
+              Rien n'est écrit dans le monde avant le bouton final <strong>Créer votre personnage</strong> : tout se passe dans un brouillon. Fermer la fenêtre
+              abandonne ce brouillon.
+            </li>
+            <li>
+              Peuples, carrières, ascendances et arcanums se choisissent dans des listes qui réunissent les objets du monde et ceux des compendiums. On peut aussi déposer
+              l'objet directement sur la fenêtre de l'assistant.
+            </li>
+          </ul>
+
+          <h2>1. Caractéristiques</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-caracteristiques.webp" alt="Étape des caractéristiques" /></div>
+            <div>
+              <p>
+                Répartissez <strong>32 points</strong> entre <strong>Corps</strong>, <strong>Vivacité</strong> et <strong>Esprit</strong>, chacune entre <strong>8</strong> et
+                <strong>12</strong>. Le compteur indique ce qui reste, ou ce qui dépasse.
+              </p>
+              <p>
+                Les bonus du peuple et de la carrière s'ajoutent par-dessus, sans se prendre sur ces points : la colonne de droite montre la valeur qui sera inscrite sur la
+                fiche.
+              </p>
+            </div>
+          </div>
+
+          <h2>2. Origine</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-origine.webp" alt="Étape de l'origine" /></div>
+            <div>
+              <p>
+                Choisissez le <strong>peuple</strong> dans la liste « Fiche de peuple ». L'assistant rappelle alors sa description, sa caractéristique augmentée et les
+                traits spéciaux qu'il accorde. On peut aussi se contenter d'un nom, sans objet rattaché : le personnage n'aura alors ni bonus ni traits.
+              </p>
+              <p>
+                Cochez ensuite les <strong>langues</strong> maîtrisées. Celles du peuple sont acquises et ne se décochent pas ; toute autre coûte
+                <strong>2 points de personnalisation</strong> (étape 7).
+              </p>
+            </div>
+          </div>
+
+          <h2>3. Carrière et grade</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-carriere.webp" alt="Étape de la carrière" /></div>
+            <div>
+              <p>
+                La <strong>carrière</strong> accorde un ajustement de caractéristique, des rangs de compétence minimaux, ses arcanums et son paquetage de départ. Sa
+                description s'affiche sous la liste.
+              </p>
+              <p>Le <strong>grade</strong> fixe la solde mensuelle :</p>
+              <ul>
+                <li><strong>Duplicator</strong> : grade d'entrée, gratuit, 12 D par mois ;</li>
+                <li><strong>Sergent</strong> : 5 points de personnalisation, 18 D par mois ;</li>
+                <li><strong>Lieutenant</strong> : inaccessible à la création.</li>
+              </ul>
+              <p>Le Chroniqueur, l'Émissaire et l'Officier commencent sergents : la promotion leur est offerte.</p>
+            </div>
+          </div>
+
+          <h2>4. Ascendance</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-ascendance.webp" alt="Étape de l'ascendance" /></div>
+            <div>
+              <p>
+                L'<strong>ascendance</strong> est l'origine surnaturelle de la Marque. Chacune porte sa <strong>compulsion</strong>, la faille morale du personnage, que
+                l'assistant affiche avec sa description.
+              </p>
+              <p>
+                Certaines ascendances proposent jusqu'à quatre <strong>arcanums candidats</strong> : l'un d'eux s'acquiert gratuitement à l'étape 7.
+              </p>
+            </div>
+          </div>
+
+          <h2>5. Compétences</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-competences.webp" alt="Étape des compétences" /></div>
+            <div>
+              <p>
+                Vous disposez de <strong>10 points</strong> pour améliorer les 31 compétences. Cliquez sur un écusson pour fixer le rang. Les coûts se cumulent : le rang 1
+                coûte 1 point, le rang 2 en coûte 2 de plus, soit 3 points depuis rien.
+              </p>
+              <ul>
+                <li>Les rangs accordés par la carrière sont gratuits et verrouillés.</li>
+                <li>À cette étape, une compétence ne dépasse pas le <strong>rang 2</strong> : le rang 3 s'achète à l'étape 7.</li>
+                <li>
+                  Si vous dépensez plus de 10 points, le surplus est pris sur les points de personnalisation : le compteur le signale.
+                </li>
+                <li>Un trait d'origine comme <em>Industrieux</em> accorde des compétences au rang 1 sans frais ; le compteur indique combien il en reste à choisir.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>6. Traits de personnalité</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-traits.webp" alt="Étape des traits" /></div>
+            <div>
+              <p>Chacun des <strong>17 couples</strong> de traits oppose un vice à une vertu. Cliquez sur une case pour rendre ce côté dominant à ce rang :</p>
+              <ul>
+                <li>chaque couple reçoit un trait dominant, au moins au rang 1 ;</li>
+                <li>5 à 10 traits montent au <strong>rang 2</strong> ;</li>
+                <li>0 à 2 d'entre eux vont jusqu'au <strong>rang 3</strong> (un trait au rang 3 compte aussi parmi ceux du rang 2).</li>
+              </ul>
+              <p>Les totaux de vices et de vertus, le <strong>karma</strong> et l'<strong>allégeance</strong> qui en découle se mettent à jour à chaque clic.</p>
+              <p>Recliquer sur la case courante libère le couple.</p>
+            </div>
+          </div>
+
+          <h2>7. Personnalisation</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-personnalisation.webp" alt="Étape de la personnalisation" /></div>
+            <div>
+              <p>
+                <strong>15 points de personnalisation</strong> (plus ceux qu'accorde un trait comme <em>Versatilité</em>) affinent le personnage. Le récapitulatif du haut
+                montre où ils sont partis ; un lien ramène à l'étape où se fait chaque choix.
+              </p>
+              <ul>
+                <li><strong>Augmenter une caractéristique</strong> : +1 pour 5 points, une fois par caractéristique. La première case d'amélioration de la fiche est cochée.</li>
+                <li><strong>Améliorer une compétence</strong> : rangs 1, 2 et 3 pour 1, 2 et 4 points. Une seule compétence peut finir au rang 3.</li>
+                <li><strong>Acquérir un arcanum</strong> : 7 points par rang, jamais au rang 3 en début de partie.</li>
+                <li><strong>Bonus de l'ascendance</strong> : un des arcanums candidats, gratuit, acquis au rang 1 ou monté au rang 2 s'il est déjà connu.</li>
+                <li><strong>Langues</strong> et <strong>promotion</strong> : déjà choisies aux étapes 2 et 3, elles sont décomptées ici.</li>
+                <li><strong>Pécule</strong> : chaque point investi rapporte 10 ducats.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>8. Touches finales</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-touches-finales.webp" alt="Étape des touches finales" /></div>
+            <div>
+              <ul>
+                <li><strong>Blessures</strong> : les cases découlent du rang de Vigueur, et des traits qui en ajoutent.</li>
+                <li>
+                  <strong>Confession</strong> : Tyvardisme, Miravisme, Caedisme, ou aucune religion. Un aumônier ne peut pas rester sans allégeance spirituelle.
+                </li>
+                <li><strong>Bourse</strong> : ce qui reste, argent de la carrière et pécule compris.</li>
+                <li>
+                  <strong>Équipement de départ</strong> : le paquetage de la carrière. Quand la carrière offre un choix (« arme ou bouclier »), les deux objets sont
+                  proposés : retirez celui que vous ne prenez pas avec la croix.
+                </li>
+                <li>
+                  Déposez sur la zone prévue des armes, protections ou arcanums supplémentaires, depuis la barre latérale ou un compendium : leur prix est déduit de la
+                  bourse.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>9. Identité</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/creation-identite.webp" alt="Étape de l'identité" /></div>
+            <div>
+              <ul>
+                <li><strong>Surnom</strong> (obligatoire) : le nom de l'acteur, celui par lequel la compagnie vous appelle.</li>
+                <li><strong>Vrai nom</strong> et <strong>portrait</strong> (clic sur l'image).</li>
+                <li><strong>Traits spéciaux</strong> : la description de la Marque, reportée dans les traits spéciaux de la fiche.</li>
+                <li><strong>Origine et histoire</strong> : elle devient la biographie du personnage.</li>
+              </ul>
+              <p>
+                Le <strong>résumé</strong> reprend tous les choix et signale les étapes laissées en plan. <strong>Créer votre personnage</strong> crée l'acteur et ouvre sa
+                fiche ; si des étapes sont incomplètes, l'assistant demande confirmation et le personnage est créé tel quel, à finir sur sa fiche.
+              </p>
+            </div>
+          </div>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 300000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.2wzFoVxI1eErVbzz'
+  - _id: uzA4Ui46yz5MRj5Z
+    name: La fiche de personnage
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <h2>Consultation et édition</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/fiche-edition.webp" alt="Fiche en mode édition" /></div>
+            <div>
+              <p>
+                La fiche s'ouvre en <strong>consultation</strong> : on y joue, on clique pour lancer un test, cocher une blessure ou dépenser un point de réserve.
+                L'interrupteur de la barre de titre la passe en <strong>mode édition</strong>, où l'on modifie le nom, le portrait, les maximums des caractéristiques, les
+                rangs de compétence et les traits de personnalité, et où apparaissent les corbeilles de suppression.
+              </p>
+              <p>
+                Peuple, carrière, ascendance et équipement ne se déposent sur la fiche qu'en mode édition : modifier l'inventaire n'est pas un geste de consultation.
+              </p>
+            </div>
+          </div>
+
+          <h2>L'en-tête</h2>
+          <ul>
+            <li>
+              <strong>Peuple</strong>, <strong>Carrière</strong> et <strong>Ascendance</strong> : un clic ouvre la fiche de l'objet ; en mode édition, la croix le retire
+              (voir plus bas). L'icône d'allégeance (Obscurité, Balance, Lumière) découle du karma.
+            </li>
+            <li>
+              <strong>Passion</strong> : le nombre de jetons, avec <i class="fas fa-square-minus"></i> et <i class="fas fa-square-plus"></i> pour en dépenser ou en gagner. Le
+              survol rappelle la règle : dépenser un jeton ajoute la valeur d'un trait dominant au seuil de réussite ; s'imposer le malus correspondant en rapporte un.
+            </li>
+            <li>
+              <strong>Caractéristiques</strong> : la réserve courante sur le maximum. <i class="fas fa-minus"></i> et <i class="fas fa-plus"></i> dépensent ou rendent un
+              point, sans dépasser le maximum. Un clic sur le nom ouvre un test (voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.IVgxzdiSc9kXDRd9]{Les tests}). Le survol du maximum indique d'où vient un bonus (peuple, carrière,
+              effet). Les trois bulles marquent les augmentations achetées en expérience (5 XP chacune, trois au plus).
+            </li>
+            <li>Sous les caractéristiques, le <strong>malus courant</strong> de la blessure la plus grave, et l'état <strong>Mourant</strong> le cas échéant (voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GdA29X6mS3ScAj1f]{Le combat}).</li>
+          </ul>
+
+          <h2>Compétences et Personnalité</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/fiche-competences.webp" alt="Onglet Compétences et Personnalité" /></div>
+            <div>
+              <p>
+                Les <strong>31 compétences</strong> et leur rang en écussons, de 0 (incompétent) à 3 (expert). Un clic sur le nom ouvre un test avec cette compétence ; en
+                mode édition, un clic sur un écusson fixe le rang, et recliquer sur l'écusson courant redescend d'un cran.
+              </p>
+              <p>
+                Les <strong>17 couples de traits</strong> de personnalité, avec les totaux de vices et de vertus, le karma et l'allégeance. La flamme
+                <i class="fas fa-fire-flame-simple"></i> au bout de chaque ligne marque le trait comme <strong>invoqué</strong> pour la session : un trait ne sert qu'une
+                fois par session, et la fenêtre de test ne le propose plus. Le bouton <i class="fa-solid fa-rotate-left"></i> les libère tous en début de session.
+              </p>
+            </div>
+          </div>
+
+          <h2>Combat</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/fiche-combat.webp" alt="Onglet Combat" /></div>
+            <div>
+              <ul>
+                <li>
+                  <strong>Initiative</strong> : lance l'initiative du personnage dans le combat en cours. Le survol du <strong>modificateur</strong> détaille son calcul :
+                  bonus saisi, malus de l'armure et du bouclier portés. Le malus de l'armure est <strong>doublé</strong> si le rang de Port d'armures est insuffisant, ce que
+                  la fiche signale. Le combat à deux armes ajoute son bonus.
+                </li>
+                <li>
+                  <strong>Esquiver</strong> : test de Vivacité / Esquive. La piste de malus (0, −2, −4, −6, −8) compte les esquives du round ; la suivante subit le malus
+                  marqué.
+                </li>
+                <li><strong>Parer</strong> : test de Corps / Blocage, avec le bonus du bouclier. Une seule parade par round : l'interrupteur dit si elle est disponible.</li>
+                <li>
+                  <strong>Blessures</strong> : cases légères (−1), graves (−3) et mortelles (−6), selon le rang de Vigueur. Un clic coche une case, recliquer sur la
+                  dernière la libère.
+                </li>
+                <li>
+                  <strong>Armes et protections</strong> : <i class="fas fa-circle-check"></i> équipe une armure ou un bouclier (un seul de chaque, le précédent est
+                  retiré), <i class="fas fa-hand-fist"></i> tient une arme en main. Une arme tenue affiche ses boutons d'<strong>attaque</strong>
+                  <i class="fas fa-sword"></i> et de <strong>dégâts</strong> <i class="fa-solid fa-burst"></i>. Le casque <i class="fa-solid fa-helmet-battle"></i> du titre
+                  lance l'<strong>encaissement</strong> avec l'armure portée.
+                </li>
+              </ul>
+              <p>Les boutons de cet onglet se glissent sur la barre de macros (voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.d6qJxIR42RlaHXOi]{Macros et outils du meneur}).</p>
+            </div>
+          </div>
+
+          <h2>Équipement</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/fiche-equipement.webp" alt="Onglet Équipement" /></div>
+            <div>
+              <ul>
+                <li><strong>Équipement</strong> : les objets divers et leur quantité ; le survol d'une ligne affiche la description de l'objet.</li>
+                <li><strong>Bourse</strong> : ducats et deniers (1 ducat vaut 100 deniers).</li>
+                <li>
+                  <strong>Repos</strong> : à la fin d'une journée, cliquez sur le confort du repos — exécrable (+1), voyage (+2), agréable (+3) ou exceptionnel (+4). Chaque
+                  réserve regagne ce nombre de points, sans dépasser son maximum. Un trait comme <em>Infatigable</em> ajoute son point de Corps.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>Arcanums</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/fiche-arcanums.webp" alt="Onglet Arcanums" /></div>
+            <div>
+              <ul>
+                <li>
+                  <strong>Arcanums</strong> : un arcanum <strong>physique</strong> affiche son bonus constant, appliqué d'office aux tests de la compétence qu'il bonifie. Un
+                  arcanum <strong>mystique</strong> affiche une baguette <i class="fa-solid fa-wand-sparkles"></i> par rang maîtrisé : voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.Bd0TlcBOLfPaZzt9]{Objets et origines}.
+                </li>
+                <li>
+                  <strong>Traits spéciaux</strong> : rangés par provenance (trait d'origine, don de carrière, marque de l'Oblitéré). Une étiquette rappelle le regard que
+                  les humains portent sur le trait. Le texte libre en dessous reçoit la description de la Marque.
+                </li>
+                <li>
+                  <strong>Bonus circonstanciels</strong> : ceux que les effets des traits apportent, par exemple « +2 pour se montrer charmant ». Ils ne s'appliquent jamais
+                  d'office : la fenêtre de test les propose à cocher.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>Biographie</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/fiche-biographie.webp" alt="Onglet Biographie" /></div>
+            <div>
+              <ul>
+                <li>Vrai nom, peuple, carrière, ascendance, <strong>grade</strong> et religion.</li>
+                <li><strong>Expérience</strong> : total gagné et dépensé ; le disponible se calcule.</li>
+                <li>
+                  <strong>Langues maîtrisées</strong> : un clic coche ou décoche une langue. Le survol du titre rappelle la règle de l'écrit, qui dépend du rang en
+                  Érudition.
+                </li>
+                <li><strong>Biographie</strong> : texte libre.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>Peuple, carrière et ascendance sur la fiche</h2>
+          <p>
+            Hors de l'assistant, on peut aussi déposer un peuple, une carrière ou une ascendance sur la fiche (mode édition), depuis un compendium ou la barre latérale.
+            L'objet s'inscrit dans l'en-tête et accorde ce qu'il porte :
+          </p>
+          <ul>
+            <li><strong>Peuple</strong> : ses traits spéciaux, ses langues et son ajustement de caractéristique ;</li>
+            <li>
+              <strong>Carrière</strong> : ses rangs de compétence (sans jamais baisser un rang déjà plus haut), ses arcanums, son équipement, son ajustement de
+              caractéristique, et son argent de départ, versé dans la bourse ;
+            </li>
+            <li><strong>Ascendance</strong> : sa compulsion, et son arcanum bonifié s'il est choisi (acquis au rang 1, ou monté d'un rang s'il est déjà connu).</li>
+          </ul>
+          <p>
+            Un second peuple, une seconde carrière ou une seconde ascendance sont refusés : retirez d'abord le premier. Le retrait (croix de l'en-tête) supprime aussi
+            les objets accordés, après confirmation. Les langues et les rangs de compétence restent, puisque rien ne distingue plus ce qui venait de l'origine. L'argent de
+            la carrière n'est repris que si la bourse vaut encore exactement le montant versé.
+          </p>
+          <p class="guide-astuce">
+            L'ajustement de caractéristique d'un peuple ou d'une carrière est un <strong>effet actif</strong> porté par l'objet. En mode édition, le champ du maximum
+            n'édite que la valeur de base : le bonus s'ajoute à part, et le survol du maximum en donne l'origine.
+          </p>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 400000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.uzA4Ui46yz5MRj5Z'
+  - _id: Bd0TlcBOLfPaZzt9
+    name: Objets et origines
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <p>
+            Les fiches d'objet sont toujours modifiables par leur propriétaire. Un objet se crée depuis les boutons <i class="fas fa-plus"></i> des onglets de la fiche de
+            personnage, depuis la barre latérale, ou se tire d'un compendium.
+          </p>
+
+          <h2>Équipement</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/objet-arme.webp" alt="Fiche d'une arme" /></div>
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/objet-armure.webp" alt="Fiche d'une armure" /></div>
+          </div>
+          <p>Un équipement a un <strong>type</strong> — arme, armure, bouclier ou divers — qui décide des champs affichés :</p>
+          <ul>
+            <li>
+              <strong>Arme</strong> : sa catégorie (naturelle, légère, moyenne, lourde, de tir…), le couple caractéristique / compétence de son <strong>test d'attaque</strong>
+              et le rang de <strong>dégâts</strong>, qui fixe la poignée de dés du test de dégâts.
+            </li>
+            <li>
+              <strong>Armure</strong> : sa catégorie, le rang de <strong>protection</strong> (poignée du test d'encaissement) et son <strong>malus d'initiative</strong>. Sans
+              un rang de Port d'armures au moins égal à la catégorie, ce malus est doublé.
+            </li>
+            <li><strong>Bouclier</strong> : sa catégorie, son <strong>bonus de blocage</strong> (ajouté aux parades) et son malus d'initiative.</li>
+            <li><strong>Divers</strong> : quantité et prix seulement.</li>
+          </ul>
+          <p>
+            La case <strong>Qualité exceptionnelle</strong> donne +1 dans un domaine choisi : une compétence, l'attaque, la parade, les dégâts ou l'encaissement. La fenêtre
+            de test le propose dans ce domaine, tant que l'objet est porté (ou présent dans l'inventaire pour un objet divers). Un seul bonus de qualité s'applique au
+            même test.
+          </p>
+
+          <h2>Arcanums</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/objet-arcanum.webp" alt="Fiche d'un arcanum" /></div>
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/objet-arcanum-rang.webp" alt="Onglet de rang d'un arcanum mystique" /></div>
+          </div>
+          <p>L'onglet <strong>Description</strong> fixe la <strong>nature</strong> de l'arcanum et le rang maîtrisé :</p>
+          <ul>
+            <li>
+              <strong>Physique</strong> : un bonus constant de <strong>+2 par rang</strong> aux tests de la <strong>compétence bonifiée</strong>, que la fenêtre de test
+              coche d'office.
+            </li>
+            <li>
+              <strong>Mystique</strong> : trois tours de magie, un par rang, chacun dans son onglet <strong>Rang 1</strong> à <strong>Rang 3</strong> : nom, coût en Esprit
+              pour chaque allégeance, effet commun et deux variantes selon la voie suivie.
+            </li>
+          </ul>
+          <p>
+            Sur la fiche de personnage, un arcanum mystique affiche une baguette <i class="fa-solid fa-wand-sparkles"></i> par rang maîtrisé. Elle ouvre un test
+            d'<strong>Esprit</strong>, avec la poignée de dés du rang <strong>maîtrisé</strong> (un pratiquant de rang 2 lance 2d20 même pour son tour de rang 1). Le coût
+            est celui du tour <strong>lancé</strong>, selon l'allégeance du personnage ; l'Esprit n'est débité qu'une fois les dés lancés, puisque le seuil se calcule
+            avant la dépense. Si l'Esprit ne suffit pas, le tour est refusé.
+          </p>
+
+          <h2>Traits spéciaux et effets</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/objet-trait.webp" alt="Fiche d'un trait spécial" /></div>
+            <div>
+              <p>
+                Un trait spécial a une <strong>origine</strong> (trait d'origine, don de carrière, marque de l'Oblitéré, autre) et un <strong>regard des humains</strong>, de
+                « a priori favorable » à « identifié comme Marqué ».
+              </p>
+              <p>
+                <strong>Accordé à la création</strong> : des points de personnalisation ou des compétences au rang 1 que l'assistant de création ajoute à ses budgets
+                (<em>Versatilité</em>, <em>Industrieux</em>).
+              </p>
+              <p>
+                <strong>Effets</strong> : les effets actifs que le trait transfère au porteur. Chaque ligne résume ce que fait l'effet ; les boutons permettent d'en ajouter,
+                de le modifier, de l'activer ou le désactiver, et de le supprimer.
+              </p>
+            </div>
+          </div>
+          <p>Deux sortes de modifications coexistent dans un effet :</p>
+          <ul>
+            <li>
+              les modifications <strong>permanentes</strong> de Foundry, appliquées d'office : ajustement d'une caractéristique, case de blessure supplémentaire, point de
+              repos en plus, vision du token ;
+            </li>
+            <li>
+              le type maison <strong>Bonus circonstanciel</strong>, avec un champ <strong>Situation</strong> (se montrer charmant, mentir, endurer…) : il n'écrit rien sur la
+              fiche, mais s'ajoute à la liste des bonus circonstanciels du personnage et la fenêtre de test le propose à cocher. Il est pré-coché quand la compétence lancée
+              est l'une de celles par lesquelles passe d'ordinaire la situation.
+            </li>
+          </ul>
+
+          <h2>Peuple</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/objet-peuple.webp" alt="Fiche d'un peuple" /></div>
+            <div>
+              <p>
+                La caractéristique augmentée, les <strong>traits accordés</strong> (à déposer depuis le compendium des traits) et les <strong>langues de départ</strong>.
+                L'ajustement de caractéristique est porté par un effet de l'objet.
+              </p>
+            </div>
+          </div>
+
+          <h2>Carrière</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/objet-carriere.webp" alt="Fiche d'une carrière" /></div>
+            <div>
+              <p>
+                La caractéristique augmentée et l'<strong>argent de départ</strong>, puis les <strong>compétences de départ</strong> avec leur rang, les
+                <strong>arcanums</strong> et l'<strong>équipement de départ</strong>, à déposer depuis les compendiums.
+              </p>
+              <p>Quand le livre offre un choix (« arme ou bouclier »), c'est la description qui l'énonce ; l'assistant de création propose les deux objets.</p>
+            </div>
+          </div>
+
+          <h2>Ascendance</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/objet-ascendance.webp" alt="Fiche d'une ascendance" /></div>
+            <div>
+              <p>
+                La <strong>compulsion</strong> et sa description, puis les <strong>arcanums candidats</strong> (quatre au plus, à déposer) et l'<strong>arcanum bonifié</strong>
+                choisi parmi eux. Changer l'arcanum bonifié d'une ascendance portée par un personnage reprend l'ancien bonus et applique le nouveau.
+              </p>
+            </div>
+          </div>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 500000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.Bd0TlcBOLfPaZzt9'
+  - _id: Mhbx3hlIt28jYB7U
+    name: PNJ et créatures
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <h2>La fiche de PNJ / Créature</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/pnj-fiche.webp" alt="Fiche d'une créature" /></div>
+            <div>
+              <p>
+                Le type <strong>PNJ / Créature</strong> reprend le bloc de statistiques du livre sur un seul écran : caractéristiques, compétences renseignées, blessures,
+                initiative, armes et protections, arcanums et règles spéciales.
+              </p>
+              <ul>
+                <li>En consultation, seules les compétences dont le rang n'est pas nul sont affichées ; en édition, les 31 sont accessibles.</li>
+                <li>Un clic sur une caractéristique ou une compétence ouvre un test, comme sur la fiche de personnage.</li>
+                <li>
+                  Le nombre de cases de chaque gravité de blessure se règle à la main en mode édition : un PNJ n'a pas de rang de Vigueur qui les calcule.
+                </li>
+                <li>L'onglet <strong>Description</strong> porte la description et les <strong>notes privées</strong>, visibles des seuls propriétaires de la fiche.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>PNJ majeur</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/pnj-edition.webp" alt="Fiche de PNJ en mode édition" /></div>
+            <div>
+              <p>
+                La case <strong>PNJ majeur</strong> applique la règle d'effort du bestiaire. Un PNJ majeur a des réserves (valeur courante sur maximum) et peut investir de
+                l'effort dans ses tests, comme un personnage. Les autres PNJ n'ont qu'une valeur par caractéristique et n'investissent aucun point.
+              </p>
+              <p>Les PNJ ne disposent pas de jetons de passion.</p>
+            </div>
+          </div>
+
+          <h2>Combat</h2>
+          <p>
+            L'onglet Combat reprend les commandes de la fiche de personnage : <strong>Initiative</strong>, <strong>Esquiver</strong> avec sa piste de malus,
+            <strong>Parer</strong> et sa parade du round, encaissement <i class="fa-solid fa-helmet-battle"></i>, et pour chaque arme ses boutons d'attaque et de dégâts
+            (l'arme doit être tenue en main, <i class="fas fa-hand-fist"></i>). Les arcanums mystiques s'activent de la même façon. Voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GdA29X6mS3ScAj1f]{Le combat}.
+          </p>
+          <p>
+            Une blessure mortelle rend un PNJ inconscient (statut du token), mais le rappel de survie de fin de round est réservé aux personnages des joueurs.
+          </p>
+
+          <h2>Le bestiaire</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/compendium-pnj.webp" alt="Compendium du bestiaire" /></div>
+            <div>
+              <p>
+                Le compendium <strong>Bestiaire — PNJ / Créatures</strong>, réservé au meneur, range les PNJ types (soldats, archers, brigands, duellistes, officiers… en
+                versions faible, moyenne et vétéran) et les créatures (animaux, morts-vivants, monstres).
+              </p>
+              <p>
+                Glissez une entrée dans l'onglet Acteurs pour l'importer dans le monde, ou directement sur la scène pour poser un token. Modifiez ensuite la copie : le
+                compendium reste intact.
+              </p>
+            </div>
+          </div>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 600000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.Mhbx3hlIt28jYB7U'
+  - _id: atUkWWFtqc9vxOlx
+    name: La compagnie franche
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <p>
+            La <strong>compagnie franche</strong> est un acteur à part entière, commun aux joueurs. Elle a ses propres caractéristiques — <strong>Effectifs</strong>,
+            <strong>Logistique</strong> et <strong>Moral</strong> —, ses 18 compétences, ses blessés et ses chroniques. Son token est lié et amical par défaut.
+          </p>
+
+          <h2>L'assistant de création</h2>
+          <p>On l'ouvre depuis l'onglet <i class="fa-solid fa-swords"></i> de la barre latérale, bouton <strong>Création de compagnie</strong>. Il compte trois étapes.</p>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/compagnie-creation-caracteristiques.webp" alt="Caractéristiques de la compagnie" /></div>
+            <div>
+              <h3>1. Caractéristiques</h3>
+              <p>Répartissez <strong>34 points</strong> entre Effectifs, Logistique et Moral, chacune entre <strong>8</strong> et <strong>14</strong>.</p>
+              <ul>
+                <li><strong>Effectifs</strong> : nombre, compétences et spécialités des hommes ;</li>
+                <li><strong>Logistique</strong> : organisation, ressources, vie des troupes ;</li>
+                <li><strong>Moral</strong> : état-major, état d'esprit et ingéniosité des mercenaires.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/compagnie-creation-competences.webp" alt="Compétences de la compagnie" /></div>
+            <div>
+              <h3>2. Compétences</h3>
+              <p>Toutes les compétences partent du rang 1. Dans l'ordre :</p>
+              <ul>
+                <li>choisissez <strong>une faiblesse</strong>, au rang 0 ;</li>
+                <li>montez <strong>dix compétences</strong> au rang 2 ;</li>
+                <li>promouvez <strong>cinq</strong> de ces dix au rang 3.</li>
+              </ul>
+              <p>
+                Chaque compétence est rattachée à une seule caractéristique : Bataille, Ingénierie, Savoirs, Magie, Soins et Tactique aux Effectifs ; Approvisionnement,
+                Équipements, Mobilité, Montures, Repérage et Richesses à la Logistique ; Cohésion, Discipline, Informateurs, Négociation, Ruse et Surveillance au Moral.
+              </p>
+            </div>
+          </div>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/compagnie-creation-identite.webp" alt="Identité de la compagnie" /></div>
+            <div>
+              <h3>3. Identité</h3>
+              <p>
+                Le nom de la compagnie (obligatoire) et son emblème. Le récapitulatif signale les étapes incomplètes ; <strong>Créer la compagnie</strong> crée l'acteur,
+                après confirmation s'il reste des étapes inachevées.
+              </p>
+            </div>
+          </div>
+
+          <h2>La fiche de la compagnie</h2>
+          <div class="guide-image"><img src="systems/chiens-de-guerre/assets/guide/compagnie-fiche.webp" alt="Fiche de la compagnie franche" /></div>
+
+          <h3>Les membres</h3>
+          <p>
+            Deux listes encadrent l'emblème : <strong>Personnages joueurs</strong> et <strong>Personnages non joueurs</strong>. Chaque ligne porte un nom, un grade et des
+            notes.
+          </p>
+          <ul>
+            <li>Déposez un acteur de la barre latérale sur une liste : une ligne s'ajoute, liée à l'acteur (portrait, clic pour ouvrir sa fiche). Un acteur déjà présent n'est pas ajouté une seconde fois.</li>
+            <li>En mode édition, <i class="fas fa-plus"></i> ajoute une ligne de texte libre, <i class="fas fa-link-slash"></i> délie l'acteur en gardant le texte, et la corbeille supprime la ligne.</li>
+          </ul>
+
+          <h3>Caractéristiques et compétences</h3>
+          <p>
+            Les 18 compétences sont rangées sous leur caractéristique. Un clic sur une compétence ouvre un test dont le couple est imposé ; un clic sur une caractéristique
+            ouvre un test de cette caractéristique seule, sans compétence. Les réserves se dépensent et se rendent avec <i class="fas fa-minus"></i> et <i class="fas fa-plus"></i> ; une compagnie peut investir de
+            l'effort, mais n'a pas de passion.
+          </p>
+
+          <h3>Les blessés</h3>
+          <ul>
+            <li>
+              Blessés <strong>légers</strong> (−1), <strong>graves</strong> (−3) et <strong>mortels</strong> (−6). La compagnie part d'une case légère, deux graves et
+              trois mortelles ; le rang de <strong>Cohésion</strong> ajoute des cases légères puis graves.
+            </li>
+            <li>
+              Le <i class="fa-solid fa-plus"></i> d'une ligne ajoute une blessure <strong>avec débordement</strong> : si la gravité est pleine, la blessure passe à la
+              gravité supérieure.
+            </li>
+            <li>Chaque blessé mortel nouvellement coché fait perdre <strong>1 point d'Effectifs</strong>, définitivement (maximum et réserve).</li>
+            <li>
+              La compagnie est <strong>dissoute</strong> quand ses Effectifs tombent à 0, ou quand une blessure déborde au-delà de la dernière case mortelle : elle ne peut
+              plus faire de test. La fiche est conservée ; en mode édition, <strong>Réactiver la compagnie</strong> la relance une fois ses Effectifs restaurés.
+            </li>
+          </ul>
+
+          <h3>Guérison et repos</h3>
+          <ul>
+            <li>
+              <strong>Récupération naturelle</strong> (Effectifs / Cohésion) et <strong>Soins au repos</strong> (Logistique / Soins) ouvrent un test. Sa carte porte un
+              bouton <strong>Appliquer la guérison</strong> : une réussite améliore une blessure d'un cran, une réussite critique offre de plus larges choix (deux crans,
+              ou deux blessures), à choisir dans une liste ; un échec critique ajoute une blessure légère.
+            </li>
+            <li><strong>Récupération nocturne des réserves</strong> : les quatre conforts de repos, de +1 à +4, comme pour un personnage.</li>
+          </ul>
+
+          <h3>Chroniques et notes</h3>
+          <p>Les <strong>chroniques</strong> consignent les événements de la compagnie, une date et un texte par ligne ; les <strong>notes</strong> sont libres.</p>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 700000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.atUkWWFtqc9vxOlx'
+  - _id: IVgxzdiSc9kXDRd9
+    name: Les tests
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <h2>Ouvrir un test</h2>
+          <p>
+            Un clic sur le nom d'une caractéristique ou d'une compétence, sur une fiche, ouvre la <strong>fenêtre de test</strong>. Le couple caractéristique / compétence
+            n'est qu'une présélection : cliquer sur une compétence laisse choisir la caractéristique, et inversement. Les boutons de combat de la fiche, les arcanums
+            mystiques et les macros ouvrent la même fenêtre, avec un couple imposé.
+          </p>
+
+          <h2>La fenêtre de test</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/fenetre-jet.webp" alt="Fenêtre de test" /></div>
+            <div>
+              <p>Elle suit les étapes du test, de haut en bas :</p>
+              <ul>
+                <li>
+                  la <strong>compétence</strong> (liste) et la <strong>caractéristique</strong> (boutons, avec la réserve courante). Sans compétence pertinente, le test se
+                  lance avec un seul d20 ;
+                </li>
+                <li>
+                  la <strong>difficulté</strong> annoncée par le meneur — de « Très facile » (+10) à « Très difficile » (−10), « Moyenne » par défaut — et un
+                  <strong>modificateur</strong> libre ;
+                </li>
+                <li>
+                  l'<strong>effort</strong> : chaque point investi ajoute <strong>+3</strong> au seuil, trois points au plus, et vide d'autant la réserve de la
+                  caractéristique, après le jet. Une réserve ne tombe jamais à zéro volontairement ;
+                </li>
+                <li>
+                  la <strong>passion</strong> (personnages seulement) : choisissez un trait dominant pas encore invoqué cette session. <strong>Invoquer</strong> dépense un
+                  jeton et ajoute le rang du trait au seuil ; <strong>S'imposer</strong> retire ce rang mais rapporte un jeton. Dans les deux cas le trait est marqué invoqué
+                  pour la session ;
+                </li>
+                <li>
+                  les <strong>modificateurs automatiques</strong>, cochés ou non selon le cas, toujours décochables : malus de blessure, bonus d'un arcanum physique, malus
+                  des esquives du round, bonus du bouclier, bonus circonstanciels des traits, qualité exceptionnelle d'un objet.
+                </li>
+              </ul>
+              <p>
+                Le bas de la fenêtre affiche le <strong>seuil de réussite</strong> (SR), dont le survol donne le détail, et la poignée de dés qui sera lancée. Le pied
+                prévient des cas particuliers : rang 0, seuil nul ou négatif, seuil supérieur à 20.
+              </p>
+            </div>
+          </div>
+
+          <h2>La poignée de dés</h2>
+          <p>Le rang de compétence fixe le nombre de d20 lancés et le dé conservé :</p>
+          <table class="guide-table">
+            <tr><th>Rang</th><th>Poignée</th><th>Dé conservé</th></tr>
+            <tr><td>0 — Incompétent</td><td>2d20</td><td>le moins bon</td></tr>
+            <tr><td>1 — Novice</td><td>1d20</td><td>le seul</td></tr>
+            <tr><td>2 — Professionnel</td><td>2d20</td><td>le meilleur</td></tr>
+            <tr><td>3 — Expert</td><td>3d20</td><td>le meilleur</td></tr>
+          </table>
+          <p>
+            Le « meilleur » dé n'est ni le plus grand ni le plus petit : c'est celui qui donne la meilleure issue, donc le plus grand qui reste sous le seuil. Le système le
+            choisit automatiquement.
+          </p>
+
+          <h2>La carte de résultat</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/carte-jet.webp" alt="Carte d'un test réussi" /></div>
+            <div>
+              <p>
+                La carte rappelle le couple et le SR, puis montre tous les dés : le dé conservé est encadré, les autres restent visibles, estompés. Sous les dés, le
+                verdict :
+              </p>
+              <ul>
+                <li><strong>Oui, mais…</strong> : réussite de justesse, dé de 1 à 5 ;</li>
+                <li><strong>Oui</strong> : réussite franche, dé de 6 ou plus et inférieur au seuil ;</li>
+                <li><strong>Oui, et…</strong> : réussite critique, le dé égale exactement le seuil ;</li>
+                <li><strong>Échec</strong> : le dé dépasse le seuil ;</li>
+                <li><strong>Échec critique</strong> : un 20 naturel.</li>
+              </ul>
+              <p>La <strong>qualité</strong> d'une réussite est la valeur du dé. Le volet <strong>Détail du seuil</strong> déplie le calcul, avec l'effort et la passion dépensés.</p>
+            </div>
+          </div>
+          <div class="guide-row">
+            <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/carte-jet-echec.webp" alt="Échec critique au rang 0" /></div>
+            <div>
+              <h3>Les seuils extrêmes</h3>
+              <ul>
+                <li>
+                  <strong>SR de 20 ou plus</strong> : plus d'échec critique, et chaque point au-delà de 20 s'ajoute à la qualité. Une qualité de 20 ou plus est une réussite
+                  critique.
+                </li>
+                <li>
+                  <strong>SR nul ou négatif</strong> : seul un 1 réussit, jamais en critique, et l'échec devient critique dès que le dé atteint 20 moins l'écart.
+                </li>
+              </ul>
+              <p>Ci-contre, un test au rang 0 : deux dés, et le moins bon, un 20, est imposé.</p>
+            </div>
+          </div>
+
+          <h2>Se dépasser</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/carte-jet-depasse.webp" alt="Second jet obtenu en se dépassant" /></div>
+            <div>
+              <p>
+                Le bouton <strong>Se dépasser</strong> de la carte relance tous les dés, une seule fois par test, en consommant <strong>1 point de Corps, de Vivacité et
+                d'Esprit</strong>. Le seuil est conservé. Il faut au moins 2 points dans chaque réserve. La carte indique alors « Second jet, obtenu en se dépassant ».
+              </p>
+              <p>Seuls l'auteur du test et le meneur peuvent s'en servir.</p>
+            </div>
+          </div>
+
+          <h2>Le dé conservé et le meneur</h2>
+          <p>
+            Le meneur peut cliquer sur un autre dé de la carte pour le conserver à la place du dé choisi par le système : la carte, et le cas échéant l'opposition et la
+            blessure qui en découlent, sont recalculées. Pour les joueurs, les dés ne sont pas cliquables.
+          </p>
+
+          <h2>Les tests en opposition</h2>
+          <p>
+            Quand deux personnages s'opposent, chacun fait son test face à son propre seuil, puis les deux issues se croisent : par exemple une réussite contre un échec
+            donne la victoire à l'actif, un échec face à un échec critique devient une réussite. Deux réussites de même rang se départagent par la qualité. En combat, la
+            carte de confrontation fait ce calcul toute seule : voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GdA29X6mS3ScAj1f]{Le combat}.
+          </p>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 800000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.IVgxzdiSc9kXDRd9'
+  - _id: GdA29X6mS3ScAj1f
+    name: Le combat
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <h2>Le suivi de combat</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-narrow"><img src="systems/chiens-de-guerre/assets/guide/combat-escarmouche.webp" alt="Suivi de combat en escarmouche" /></div>
+            <div>
+              <p>
+                Le suivi de combat de la barre latérale connaît les deux cadences du livre. Le meneur choisit le mode <strong>avant</strong> de commencer le combat ; il ne
+                change plus ensuite.
+              </p>
+              <h3>Escarmouche</h3>
+              <ul>
+                <li>L'initiative se lance une fois le combat commencé, avec <strong>Vivacité + Sens du combat</strong>.</li>
+                <li>
+                  Le combattant qui a la plus haute initiative agit. <strong>Fin action</strong> lui retire <strong>10 points</strong> d'initiative et passe la main à la plus
+                  haute initiative restante. La ligne de chaque combattant indique combien d'actions il lui reste.
+                </li>
+                <li>Quand plus personne n'a d'initiative positive, le round s'achève et chacun relance son initiative.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="guide-row">
+            <div class="guide-image guide-image-narrow"><img src="systems/chiens-de-guerre/assets/guide/combat-duel.webp" alt="Suivi de combat en duel" /></div>
+            <div>
+              <h3>Duel</h3>
+              <ul>
+                <li>Deux combattants exactement ; l'initiative se lance avec <strong>Vivacité + Sens des duels</strong>.</li>
+                <li>
+                  <strong>Duel de plaisance</strong> : on le gagne en 1, 2 ou 3 touches ; le meneur les compte avec <strong>−</strong> et <strong>+</strong>, et une
+                  notification annonce le vainqueur. <strong>Duel à outrance</strong> : sans compte de touches.
+                </li>
+                <li>
+                  <strong>Duel formel</strong> : une seule arme de mêlée à une main, ni armure ni bouclier. Le système prévient au début du combat si un duelliste ne s'y
+                  conforme pas. Décochez pour un duel improvisé.
+                </li>
+                <li>
+                  La plus haute initiative désigne l'<strong>attaquant</strong>, l'autre défend. En cas d'égalité, relancez ou utilisez <strong>Désigner attaquant</strong>.
+                  <strong>Fin attaque</strong> clôt la passe d'armes et ouvre la suivante.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>L'initiative</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/fenetre-initiative.webp" alt="Fenêtre d'initiative" /></div>
+            <div>
+              <p>
+                Le dé d20 d'un combattant dans le suivi, le bouton <strong>Initiative</strong> de la fiche ou sa macro ouvrent la fenêtre d'initiative. Le total vaut le dé
+                conservé (selon le rang de la compétence d'initiative) plus la <strong>Vivacité</strong> courante, et :
+              </p>
+              <ul>
+                <li>l'effort et la passion, comme pour un test ;</li>
+                <li>le malus de blessure, le modificateur d'équipement de la fiche, et en escarmouche le bonus du combat à deux armes — chacun décochable ;</li>
+                <li>un modificateur libre.</li>
+              </ul>
+              <p>
+                Les boutons collectifs du meneur lancent l'initiative de tous les combattants, ou des seuls PNJ, sans fenêtre. Le détail d'une initiative de PNJ n'est
+                envoyé qu'au meneur.
+              </p>
+            </div>
+          </div>
+
+          <h2>La confrontation</h2>
+          <p>
+            Une attaque se mène de bout en bout dans <strong>une seule carte</strong> de tchat, mise à jour à chaque jet. Désignez <strong>une</strong> cible sur la scène
+            (touche <kbd>T</kbd>), puis cliquez sur l'icône d'attaque <i class="fas fa-sword"></i> d'une arme tenue en main, sur la fiche ou depuis la barre de macros.
+            Sans cible, l'attaque est un test ordinaire ; avec plusieurs cibles, elle est refusée.
+          </p>
+          <div class="guide-row">
+            <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/confrontation-attaque.webp" alt="Carte de confrontation après l'attaque" /></div>
+            <div>
+              <ol>
+                <li>
+                  <strong>Attaque</strong> : un test avec le couple caractéristique / compétence de l'arme. La carte s'ouvre sur le résultat.
+                </li>
+                <li>
+                  <strong>Défense</strong> : le joueur de la cible, ou le meneur, choisit <strong>Esquiver</strong> (Vivacité / Esquive, avec le malus des esquives du round)
+                  ou <strong>Parer</strong> (Corps / Blocage, avec le bonus du bouclier). Un projectile ne se pare qu'avec un bouclier ; une seconde parade dans le round est
+                  signalée, mais reste permise pour laisser le meneur arbitrer.
+                </li>
+                <li>
+                  <strong>Opposition</strong> : les deux issues se croisent et la carte affiche <strong>Touché</strong> ou <strong>Raté</strong>.
+                  Si l'opposition se solde par une réussite critique de l'attaquant, l'armure est ignorée.
+                </li>
+              </ol>
+            </div>
+          </div>
+          <div class="guide-row">
+            <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/confrontation-complete.webp" alt="Carte de confrontation terminée" /></div>
+            <div>
+              <ol start="4">
+                <li><strong>Dégâts</strong> : l'attaquant lance son Corps, avec la poignée du rang de dégâts de l'arme.</li>
+                <li>
+                  <strong>Encaissement</strong> : la cible lance son Corps, avec la poignée du rang de protection de son armure (rang 0 si l'armure est ignorée). Le malus de
+                  blessure n'y compte pas.
+                </li>
+                <li>
+                  <strong>Blessure</strong> : les deux issues donnent la gravité, légère, grave ou mortelle, ou aucune blessure. Elle est <strong>cochée sur la fiche de la
+                  cible</strong>. Si toutes les cases de cette gravité sont pleines, la blessure passe à la gravité supérieure, et la carte le dit.
+                </li>
+              </ol>
+              <p>
+                Chaque étape garde son bouton <strong>Se dépasser</strong>, réservé à celui qui l'a lancée et au meneur. Un dépassement tardif, ou un dé conservé changé
+                par le meneur, recalcule l'opposition et corrige la blessure déjà posée. Une fois l'encaissement résolu, les étapes précédentes se replient ; elles restent
+                dépliables.
+              </p>
+              <p class="guide-astuce">
+                La carte appartient à l'attaquant : les jets de la cible passent par le meneur. Un meneur doit donc être connecté pour qu'une confrontation progresse.
+              </p>
+            </div>
+          </div>
+
+          <h2>Les jets hors confrontation</h2>
+          <p>
+            Les boutons <strong>Esquiver</strong>, <strong>Parer</strong>, dégâts <i class="fa-solid fa-burst"></i> et encaissement
+            <i class="fa-solid fa-helmet-battle"></i> de la fiche restent disponibles seuls, pour une situation que la confrontation ne couvre pas. Esquiver et parer
+            tiennent alors le compte du round sur la fiche.
+          </p>
+          <p>
+            À la fin de chaque round, les esquives et la parade de chaque combattant reviennent à zéro (réglage « Réinitialiser esquives et parade », voir
+            @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GmNyKHhl8NNxO3ep]{Réglages}).
+          </p>
+
+          <h2>Le personnage mourant</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/carte-mourant.webp" alt="Rappel de fin de round pour un mourant" /></div>
+            <div>
+              <p>
+                Dès qu'une case de <strong>blessure mortelle</strong> est cochée, le personnage devient <strong>Mourant</strong> : son token reçoit le statut Inconscient et
+                l'en-tête de sa fiche l'indique.
+              </p>
+              <p>
+                À la fin de chaque round, une carte le rappelle, avec un bouton <strong>Jet de survie</strong> : un test de Corps / Vigueur, sans effort, sans passion et
+                sans dépassement. Un échec est fatal : le token reçoit le statut Mort.
+              </p>
+            </div>
+          </div>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/fiche-mourant.webp" alt="En-tête d'un personnage mourant" /></div>
+            <div>
+              <p>
+                Une fois le personnage stabilisé par un allié, un clic sur <strong>Mourant</strong> dans l'en-tête le passe à <strong>Stabilisé</strong> : les rappels
+                cessent, la blessure mortelle reste cochée. Recliquer le remet mourant. Le rappel ne concerne que les personnages des joueurs.
+              </p>
+            </div>
+          </div>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 900000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.GdA29X6mS3ScAj1f'
+  - _id: d6qJxIR42RlaHXOi
+    name: Macros et outils du meneur
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <h2>La barre de macros</h2>
+          <div class="guide-image"><img src="systems/chiens-de-guerre/assets/guide/barre-macros.webp" alt="Barre de macros" /></div>
+          <p>Glissez un élément de la fiche sur la barre de macros pour en faire un raccourci :</p>
+          <ul>
+            <li><strong>Caractéristique</strong> : son nom, dans l'en-tête — à tout moment ;</li>
+            <li><strong>Compétence</strong> : son nom — en mode édition seulement, pour ne pas en saisir une par mégarde en jouant ;</li>
+            <li>
+              <strong>Arme</strong> : sa ligne dans l'onglet Combat. Un clic sur la macro lance l'attaque (une confrontation si une cible est désignée),
+              <kbd>Maj</kbd>+clic lance les dégâts ;
+            </li>
+            <li><strong>Initiative</strong>, <strong>Esquiver</strong>, <strong>Parer</strong> et l'<strong>encaissement</strong> : leurs boutons dans l'onglet Combat.</li>
+          </ul>
+          <p>
+            Une macro agit sur le token sélectionné, ou à défaut sur le personnage attribué au joueur. Une même macro sert donc à tout personnage qui a la même
+            compétence ; seule la macro d'arme cherche d'abord l'arme d'origine, puis une arme du même nom sur l'acteur sélectionné.
+          </p>
+
+          <h2>Le tableau de bord des joueurs</h2>
+          <div class="guide-image"><img src="systems/chiens-de-guerre/assets/guide/tableau-de-bord.webp" alt="Tableau de bord des joueurs" /></div>
+          <p>
+            Réservé au meneur, il s'ouvre depuis l'onglet <i class="fa-solid fa-swords"></i> de la barre latérale. Il liste, pour chaque joueur connecté qui a un
+            personnage attribué : ses caractéristiques (réserve sur maximum), ses jetons de passion et ses blessures, avec le malus courant. Il se met à jour tout seul
+            quand une fiche change ou qu'un joueur se connecte ; un clic sur le portrait ou le nom ouvre la fiche.
+          </p>
+          <p>
+            Il est purement informatif : rien ne s'y modifie. Un joueur qui n'a pas de personnage attribué (Configuration du joueur → Personnage) n'y apparaît pas.
+          </p>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 1000000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.d6qJxIR42RlaHXOi'
+folder: null
+sort: 0
+ownership:
+  default: 0
+flags: {}
+_key: '!journal!cdgGuide77vg8wUz'

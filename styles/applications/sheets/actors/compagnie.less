@@ -40,7 +40,13 @@
         color: #000;
         -webkit-text-stroke: 1px #ba1c41;
       }
+      // Centré comme le nom affiché en consultation, et pas plus large que l'espace entre les deux
+      // bandeaux du dessous : aligné à gauche, il passait sous « Personnages joueurs ».
       input[type="text"] {
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        text-align: center;
         font-family: var(--cdg-font-title);
         font-size: 3rem;
         height: 64px;
@@ -194,6 +200,53 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    // En consultation, les trois champs se partageaient une colonne de 300 px : nom et notes
+    // finissaient coupés, sans moyen de les lire en entier. Les notes passent sur une seconde ligne,
+    // où elles peuvent courir ; le grade, toujours court, n'est plus rogné.
+    &:has(> span.roster-notes) {
+      flex-wrap: wrap;
+      row-gap: 0;
+
+      span.roster-grade {
+        flex: 0 0 auto;
+        color: var(--cdg-muted);
+      }
+
+      span.roster-notes {
+        flex: 1 0 100%;
+        white-space: normal;
+        font-style: italic;
+        color: var(--cdg-ink-soft);
+      }
+
+      span.roster-notes:empty {
+        display: none;
+      }
+    }
+
+    // Même découpage en édition : nom et grade sur la première ligne, notes sur toute la largeur
+    // de la seconde. Les trois champs côte à côte laissaient au grade trois ou quatre lettres.
+    &:has(> input.roster-notes) {
+      flex-wrap: wrap;
+      row-gap: 0.15rem;
+
+      // Les champs du cœur font 100 % de large : sans base nulle, le nom prendrait toute la ligne.
+      input.roster-name {
+        flex: 1 1 0;
+        width: auto;
+      }
+
+      input.roster-grade {
+        flex: 0 0 5.5rem;
+        width: auto;
+      }
+
+      input.roster-notes {
+        flex: 1 0 100%;
+        order: 10;
+      }
     }
   }
 

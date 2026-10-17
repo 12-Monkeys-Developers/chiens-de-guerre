@@ -1,0 +1,118 @@
+<div class="cdg-guide">
+  <p>
+    Les fiches d'objet sont toujours modifiables par leur propriétaire. Un objet se crée depuis les boutons <i class="fas fa-plus"></i> des onglets de la fiche de
+    personnage, depuis la barre latérale, ou se tire d'un compendium.
+  </p>
+
+  <h2>Équipement</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:objet-arme@@" alt="Fiche d'une arme" /></div>
+    <div class="guide-image guide-image-half"><img src="@@img:objet-armure@@" alt="Fiche d'une armure" /></div>
+  </div>
+  <p>Un équipement a un <strong>type</strong> — arme, armure, bouclier ou divers — qui décide des champs affichés :</p>
+  <ul>
+    <li>
+      <strong>Arme</strong> : sa catégorie (naturelle, légère, moyenne, lourde, de tir…), le couple caractéristique / compétence de son <strong>test d'attaque</strong>
+      et le rang de <strong>dégâts</strong>, qui fixe la poignée de dés du test de dégâts.
+    </li>
+    <li>
+      <strong>Armure</strong> : sa catégorie, le rang de <strong>protection</strong> (poignée du test d'encaissement) et son <strong>malus d'initiative</strong>. Sans
+      un rang de Port d'armures au moins égal à la catégorie, ce malus est doublé.
+    </li>
+    <li><strong>Bouclier</strong> : sa catégorie, son <strong>bonus de blocage</strong> (ajouté aux parades) et son malus d'initiative.</li>
+    <li><strong>Divers</strong> : quantité et prix seulement.</li>
+  </ul>
+  <p>
+    La case <strong>Qualité exceptionnelle</strong> donne +1 dans un domaine choisi : une compétence, l'attaque, la parade, les dégâts ou l'encaissement. La fenêtre
+    de test le propose dans ce domaine, tant que l'objet est porté (ou présent dans l'inventaire pour un objet divers). Un seul bonus de qualité s'applique au
+    même test.
+  </p>
+
+  <h2>Arcanums</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:objet-arcanum@@" alt="Fiche d'un arcanum" /></div>
+    <div class="guide-image guide-image-half"><img src="@@img:objet-arcanum-rang@@" alt="Onglet de rang d'un arcanum mystique" /></div>
+  </div>
+  <p>L'onglet <strong>Description</strong> fixe la <strong>nature</strong> de l'arcanum et le rang maîtrisé :</p>
+  <ul>
+    <li>
+      <strong>Physique</strong> : un bonus constant de <strong>+2 par rang</strong> aux tests de la <strong>compétence bonifiée</strong>, que la fenêtre de test
+      coche d'office.
+    </li>
+    <li>
+      <strong>Mystique</strong> : trois tours de magie, un par rang, chacun dans son onglet <strong>Rang 1</strong> à <strong>Rang 3</strong> : nom, coût en Esprit
+      pour chaque allégeance, effet commun et deux variantes selon la voie suivie.
+    </li>
+  </ul>
+  <p>
+    Sur la fiche de personnage, un arcanum mystique affiche une baguette <i class="fa-solid fa-wand-sparkles"></i> par rang maîtrisé. Elle ouvre un test
+    d'<strong>Esprit</strong>, avec la poignée de dés du rang <strong>maîtrisé</strong> (un pratiquant de rang 2 lance 2d20 même pour son tour de rang 1). Le coût
+    est celui du tour <strong>lancé</strong>, selon l'allégeance du personnage ; l'Esprit n'est débité qu'une fois les dés lancés, puisque le seuil se calcule
+    avant la dépense. Si l'Esprit ne suffit pas, le tour est refusé.
+  </p>
+
+  <h2>Traits spéciaux et effets</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:objet-trait@@" alt="Fiche d'un trait spécial" /></div>
+    <div>
+      <p>
+        Un trait spécial a une <strong>origine</strong> (trait d'origine, don de carrière, marque de l'Oblitéré, autre) et un <strong>regard des humains</strong>, de
+        « a priori favorable » à « identifié comme Marqué ».
+      </p>
+      <p>
+        <strong>Accordé à la création</strong> : des points de personnalisation ou des compétences au rang 1 que l'assistant de création ajoute à ses budgets
+        (<em>Versatilité</em>, <em>Industrieux</em>).
+      </p>
+      <p>
+        <strong>Effets</strong> : les effets actifs que le trait transfère au porteur. Chaque ligne résume ce que fait l'effet ; les boutons permettent d'en ajouter,
+        de le modifier, de l'activer ou le désactiver, et de le supprimer.
+      </p>
+    </div>
+  </div>
+  <p>Deux sortes de modifications coexistent dans un effet :</p>
+  <ul>
+    <li>
+      les modifications <strong>permanentes</strong> de Foundry, appliquées d'office : ajustement d'une caractéristique, case de blessure supplémentaire, point de
+      repos en plus, vision du token ;
+    </li>
+    <li>
+      le type maison <strong>Bonus circonstanciel</strong>, avec un champ <strong>Situation</strong> (se montrer charmant, mentir, endurer…) : il n'écrit rien sur la
+      fiche, mais s'ajoute à la liste des bonus circonstanciels du personnage et la fenêtre de test le propose à cocher. Il est pré-coché quand la compétence lancée
+      est l'une de celles par lesquelles passe d'ordinaire la situation.
+    </li>
+  </ul>
+
+  <h2>Peuple</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:objet-peuple@@" alt="Fiche d'un peuple" /></div>
+    <div>
+      <p>
+        La caractéristique augmentée, les <strong>traits accordés</strong> (à déposer depuis le compendium des traits) et les <strong>langues de départ</strong>.
+        L'ajustement de caractéristique est porté par un effet de l'objet.
+      </p>
+    </div>
+  </div>
+
+  <h2>Carrière</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:objet-carriere@@" alt="Fiche d'une carrière" /></div>
+    <div>
+      <p>
+        La caractéristique augmentée et l'<strong>argent de départ</strong>, puis les <strong>compétences de départ</strong> avec leur rang, les
+        <strong>arcanums</strong> et l'<strong>équipement de départ</strong>, à déposer depuis les compendiums.
+      </p>
+      <p>Quand le livre offre un choix (« arme ou bouclier »), c'est la description qui l'énonce ; l'assistant de création propose les deux objets.</p>
+    </div>
+  </div>
+
+  <h2>Ascendance</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:objet-ascendance@@" alt="Fiche d'une ascendance" /></div>
+    <div>
+      <p>
+        La <strong>compulsion</strong> et sa description, puis les <strong>arcanums candidats</strong> (quatre au plus, à déposer) et l'<strong>arcanum bonifié</strong>
+        choisi parmi eux. Changer l'arcanum bonifié d'une ascendance portée par un personnage reprend l'ancien bonus et applique le nouveau.
+      </p>
+    </div>
+  </div>
+</div>

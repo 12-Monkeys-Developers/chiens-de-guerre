@@ -1,0 +1,114 @@
+// Guide du système : pages de journal du compendium « Guide du système ».
+// Les couleurs et les polices sont celles de la fiche (palette.less) : le guide doit se lire comme
+// une page du livre, pas comme une page du cœur de Foundry.
+:root {
+  --cdg-guide-accent: var(--cdg-blood);
+  --cdg-guide-tip-background: rgba(122, 16, 16, 0.07);
+}
+
+.cdg-guide {
+  h2 {
+    font-family: var(--cdg-font-title);
+    font-size: 1.6em;
+    font-weight: normal;
+    color: var(--cdg-blood);
+    border-bottom: 2px solid var(--cdg-guide-accent);
+    margin-top: 1.5rem;
+  }
+
+  h3 {
+    font-family: var(--cdg-font-label);
+    font-weight: bold;
+    border-bottom: none;
+    margin-top: 1rem;
+  }
+
+  img {
+    border: none;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .guide-image {
+    text-align: center;
+    margin: 0.75rem auto;
+
+    img {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  // Captures étroites (barre latérale, carte du tchat) ou de taille moyenne, posées à côté du texte.
+  .guide-image-narrow {
+    flex: 0 0 220px;
+  }
+
+  .guide-image-card {
+    flex: 0 1 300px;
+    max-width: 300px;
+  }
+
+  .guide-image-half {
+    flex: 1 1 45%;
+  }
+
+  .guide-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: center;
+
+    > div:not(.guide-image) {
+      flex: 1 1 300px;
+    }
+
+    .guide-image {
+      margin: 0;
+    }
+  }
+
+  .guide-astuce {
+    border-left: 4px solid var(--cdg-guide-accent);
+    background: var(--cdg-guide-tip-background);
+    padding: 0.25rem 0.75rem;
+    margin: 0.75rem 0;
+  }
+
+  .guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+
+    th,
+    td {
+      border: 1px solid var(--cdg-parchment-line);
+      padding: 0.25rem 0.5rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--cdg-parchment-dark);
+    }
+  }
+
+  code,
+  kbd {
+    white-space: nowrap;
+  }
+}
+
+// Thème sombre de Foundry : le rouge sang de la fiche ne se lit pas sur le fond noir du journal.
+.theme-dark .cdg-guide {
+  --cdg-guide-accent: var(--cdg-blood-light);
+  --cdg-guide-tip-background: rgba(168, 50, 50, 0.15);
+
+  h2 {
+    color: #e3a5a5;
+  }
+
+  .guide-table th {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}

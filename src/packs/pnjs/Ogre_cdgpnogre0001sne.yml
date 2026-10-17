@@ -1,7 +1,7 @@
 _id: cdgpnogre0001sne
 name: Ogre
 type: adversaire
-img: icons/creatures/humanoids/ogre.webp
+img: icons/creatures/magical/humanoid-giant-forest-blue.webp
 system:
   abilities:
     corps:

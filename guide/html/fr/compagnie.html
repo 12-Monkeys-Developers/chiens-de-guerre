@@ -1,0 +1,97 @@
+<div class="cdg-guide">
+  <p>
+    La <strong>compagnie franche</strong> est un acteur à part entière, commun aux joueurs. Elle a ses propres caractéristiques — <strong>Effectifs</strong>,
+    <strong>Logistique</strong> et <strong>Moral</strong> —, ses 18 compétences, ses blessés et ses chroniques. Son token est lié et amical par défaut.
+  </p>
+
+  <h2>L'assistant de création</h2>
+  <p>On l'ouvre depuis l'onglet <i class="fa-solid fa-swords"></i> de la barre latérale, bouton <strong>Création de compagnie</strong>. Il compte trois étapes.</p>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:compagnie-creation-caracteristiques@@" alt="Caractéristiques de la compagnie" /></div>
+    <div>
+      <h3>1. Caractéristiques</h3>
+      <p>Répartissez <strong>34 points</strong> entre Effectifs, Logistique et Moral, chacune entre <strong>8</strong> et <strong>14</strong>.</p>
+      <ul>
+        <li><strong>Effectifs</strong> : nombre, compétences et spécialités des hommes ;</li>
+        <li><strong>Logistique</strong> : organisation, ressources, vie des troupes ;</li>
+        <li><strong>Moral</strong> : état-major, état d'esprit et ingéniosité des mercenaires.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:compagnie-creation-competences@@" alt="Compétences de la compagnie" /></div>
+    <div>
+      <h3>2. Compétences</h3>
+      <p>Toutes les compétences partent du rang 1. Dans l'ordre :</p>
+      <ul>
+        <li>choisissez <strong>une faiblesse</strong>, au rang 0 ;</li>
+        <li>montez <strong>dix compétences</strong> au rang 2 ;</li>
+        <li>promouvez <strong>cinq</strong> de ces dix au rang 3.</li>
+      </ul>
+      <p>
+        Chaque compétence est rattachée à une seule caractéristique : Bataille, Ingénierie, Savoirs, Magie, Soins et Tactique aux Effectifs ; Approvisionnement,
+        Équipements, Mobilité, Montures, Repérage et Richesses à la Logistique ; Cohésion, Discipline, Informateurs, Négociation, Ruse et Surveillance au Moral.
+      </p>
+    </div>
+  </div>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:compagnie-creation-identite@@" alt="Identité de la compagnie" /></div>
+    <div>
+      <h3>3. Identité</h3>
+      <p>
+        Le nom de la compagnie (obligatoire) et son emblème. Le récapitulatif signale les étapes incomplètes ; <strong>Créer la compagnie</strong> crée l'acteur,
+        après confirmation s'il reste des étapes inachevées.
+      </p>
+    </div>
+  </div>
+
+  <h2>La fiche de la compagnie</h2>
+  <div class="guide-image"><img src="@@img:compagnie-fiche@@" alt="Fiche de la compagnie franche" /></div>
+
+  <h3>Les membres</h3>
+  <p>
+    Deux listes encadrent l'emblème : <strong>Personnages joueurs</strong> et <strong>Personnages non joueurs</strong>. Chaque ligne porte un nom, un grade et des
+    notes.
+  </p>
+  <ul>
+    <li>Déposez un acteur de la barre latérale sur une liste : une ligne s'ajoute, liée à l'acteur (portrait, clic pour ouvrir sa fiche). Un acteur déjà présent n'est pas ajouté une seconde fois.</li>
+    <li>En mode édition, <i class="fas fa-plus"></i> ajoute une ligne de texte libre, <i class="fas fa-link-slash"></i> délie l'acteur en gardant le texte, et la corbeille supprime la ligne.</li>
+  </ul>
+
+  <h3>Caractéristiques et compétences</h3>
+  <p>
+    Les 18 compétences sont rangées sous leur caractéristique. Un clic sur une compétence ouvre un test dont le couple est imposé ; un clic sur une caractéristique
+    ouvre un test de cette caractéristique seule, sans compétence. Les réserves se dépensent et se rendent avec <i class="fas fa-minus"></i> et <i class="fas fa-plus"></i> ; une compagnie peut investir de
+    l'effort, mais n'a pas de passion.
+  </p>
+
+  <h3>Les blessés</h3>
+  <ul>
+    <li>
+      Blessés <strong>légers</strong> (−1), <strong>graves</strong> (−3) et <strong>mortels</strong> (−6). La compagnie part d'une case légère, deux graves et
+      trois mortelles ; le rang de <strong>Cohésion</strong> ajoute des cases légères puis graves.
+    </li>
+    <li>
+      Le <i class="fa-solid fa-plus"></i> d'une ligne ajoute une blessure <strong>avec débordement</strong> : si la gravité est pleine, la blessure passe à la
+      gravité supérieure.
+    </li>
+    <li>Chaque blessé mortel nouvellement coché fait perdre <strong>1 point d'Effectifs</strong>, définitivement (maximum et réserve).</li>
+    <li>
+      La compagnie est <strong>dissoute</strong> quand ses Effectifs tombent à 0, ou quand une blessure déborde au-delà de la dernière case mortelle : elle ne peut
+      plus faire de test. La fiche est conservée ; en mode édition, <strong>Réactiver la compagnie</strong> la relance une fois ses Effectifs restaurés.
+    </li>
+  </ul>
+
+  <h3>Guérison et repos</h3>
+  <ul>
+    <li>
+      <strong>Récupération naturelle</strong> (Effectifs / Cohésion) et <strong>Soins au repos</strong> (Logistique / Soins) ouvrent un test. Sa carte porte un
+      bouton <strong>Appliquer la guérison</strong> : une réussite améliore une blessure d'un cran, une réussite critique offre de plus larges choix (deux crans,
+      ou deux blessures), à choisir dans une liste ; un échec critique ajoute une blessure légère.
+    </li>
+    <li><strong>Récupération nocturne des réserves</strong> : les quatre conforts de repos, de +1 à +4, comme pour un personnage.</li>
+  </ul>
+
+  <h3>Chroniques et notes</h3>
+  <p>Les <strong>chroniques</strong> consignent les événements de la compagnie, une date et un texte par ligne ; les <strong>notes</strong> sont libres.</p>
+</div>

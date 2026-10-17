@@ -1,0 +1,147 @@
+<div class="cdg-guide">
+  <h2>Le suivi de combat</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-narrow"><img src="@@img:combat-escarmouche@@" alt="Suivi de combat en escarmouche" /></div>
+    <div>
+      <p>
+        Le suivi de combat de la barre latérale connaît les deux cadences du livre. Le meneur choisit le mode <strong>avant</strong> de commencer le combat ; il ne
+        change plus ensuite.
+      </p>
+      <h3>Escarmouche</h3>
+      <ul>
+        <li>L'initiative se lance une fois le combat commencé, avec <strong>Vivacité + Sens du combat</strong>.</li>
+        <li>
+          Le combattant qui a la plus haute initiative agit. <strong>Fin action</strong> lui retire <strong>10 points</strong> d'initiative et passe la main à la plus
+          haute initiative restante. La ligne de chaque combattant indique combien d'actions il lui reste.
+        </li>
+        <li>Quand plus personne n'a d'initiative positive, le round s'achève et chacun relance son initiative.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="guide-row">
+    <div class="guide-image guide-image-narrow"><img src="@@img:combat-duel@@" alt="Suivi de combat en duel" /></div>
+    <div>
+      <h3>Duel</h3>
+      <ul>
+        <li>Deux combattants exactement ; l'initiative se lance avec <strong>Vivacité + Sens des duels</strong>.</li>
+        <li>
+          <strong>Duel de plaisance</strong> : on le gagne en 1, 2 ou 3 touches ; le meneur les compte avec <strong>−</strong> et <strong>+</strong>, et une
+          notification annonce le vainqueur. <strong>Duel à outrance</strong> : sans compte de touches.
+        </li>
+        <li>
+          <strong>Duel formel</strong> : une seule arme de mêlée à une main, ni armure ni bouclier. Le système prévient au début du combat si un duelliste ne s'y
+          conforme pas. Décochez pour un duel improvisé.
+        </li>
+        <li>
+          La plus haute initiative désigne l'<strong>attaquant</strong>, l'autre défend. En cas d'égalité, relancez ou utilisez <strong>Désigner attaquant</strong>.
+          <strong>Fin attaque</strong> clôt la passe d'armes et ouvre la suivante.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>L'initiative</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-card"><img src="@@img:fenetre-initiative@@" alt="Fenêtre d'initiative" /></div>
+    <div>
+      <p>
+        Le dé d20 d'un combattant dans le suivi, le bouton <strong>Initiative</strong> de la fiche ou sa macro ouvrent la fenêtre d'initiative. Le total vaut le dé
+        conservé (selon le rang de la compétence d'initiative) plus la <strong>Vivacité</strong> courante, et :
+      </p>
+      <ul>
+        <li>l'effort et la passion, comme pour un test ;</li>
+        <li>le malus de blessure, le modificateur d'équipement de la fiche, et en escarmouche le bonus du combat à deux armes — chacun décochable ;</li>
+        <li>un modificateur libre.</li>
+      </ul>
+      <p>
+        Les boutons collectifs du meneur lancent l'initiative de tous les combattants, ou des seuls PNJ, sans fenêtre. Le détail d'une initiative de PNJ n'est
+        envoyé qu'au meneur.
+      </p>
+    </div>
+  </div>
+
+  <h2>La confrontation</h2>
+  <p>
+    Une attaque se mène de bout en bout dans <strong>une seule carte</strong> de tchat, mise à jour à chaque jet. Désignez <strong>une</strong> cible sur la scène
+    (touche <kbd>T</kbd>), puis cliquez sur l'icône d'attaque <i class="fas fa-sword"></i> d'une arme tenue en main, sur la fiche ou depuis la barre de macros.
+    Sans cible, l'attaque est un test ordinaire ; avec plusieurs cibles, elle est refusée.
+  </p>
+  <div class="guide-row">
+    <div class="guide-image guide-image-card"><img src="@@img:confrontation-attaque@@" alt="Carte de confrontation après l'attaque" /></div>
+    <div>
+      <ol>
+        <li>
+          <strong>Attaque</strong> : un test avec le couple caractéristique / compétence de l'arme. La carte s'ouvre sur le résultat.
+        </li>
+        <li>
+          <strong>Défense</strong> : le joueur de la cible, ou le meneur, choisit <strong>Esquiver</strong> (Vivacité / Esquive, avec le malus des esquives du round)
+          ou <strong>Parer</strong> (Corps / Blocage, avec le bonus du bouclier). Un projectile ne se pare qu'avec un bouclier ; une seconde parade dans le round est
+          signalée, mais reste permise pour laisser le meneur arbitrer.
+        </li>
+        <li>
+          <strong>Opposition</strong> : les deux issues se croisent et la carte affiche <strong>Touché</strong> ou <strong>Raté</strong>.
+          Si l'opposition se solde par une réussite critique de l'attaquant, l'armure est ignorée.
+        </li>
+      </ol>
+    </div>
+  </div>
+  <div class="guide-row">
+    <div class="guide-image guide-image-card"><img src="@@img:confrontation-complete@@" alt="Carte de confrontation terminée" /></div>
+    <div>
+      <ol start="4">
+        <li><strong>Dégâts</strong> : l'attaquant lance son Corps, avec la poignée du rang de dégâts de l'arme.</li>
+        <li>
+          <strong>Encaissement</strong> : la cible lance son Corps, avec la poignée du rang de protection de son armure (rang 0 si l'armure est ignorée). Le malus de
+          blessure n'y compte pas.
+        </li>
+        <li>
+          <strong>Blessure</strong> : les deux issues donnent la gravité, légère, grave ou mortelle, ou aucune blessure. Elle est <strong>cochée sur la fiche de la
+          cible</strong>. Si toutes les cases de cette gravité sont pleines, la blessure passe à la gravité supérieure, et la carte le dit.
+        </li>
+      </ol>
+      <p>
+        Chaque étape garde son bouton <strong>Se dépasser</strong>, réservé à celui qui l'a lancée et au meneur. Un dépassement tardif, ou un dé conservé changé
+        par le meneur, recalcule l'opposition et corrige la blessure déjà posée. Une fois l'encaissement résolu, les étapes précédentes se replient ; elles restent
+        dépliables.
+      </p>
+      <p class="guide-astuce">
+        La carte appartient à l'attaquant : les jets de la cible passent par le meneur. Un meneur doit donc être connecté pour qu'une confrontation progresse.
+      </p>
+    </div>
+  </div>
+
+  <h2>Les jets hors confrontation</h2>
+  <p>
+    Les boutons <strong>Esquiver</strong>, <strong>Parer</strong>, dégâts <i class="fa-solid fa-burst"></i> et encaissement
+    <i class="fa-solid fa-helmet-battle"></i> de la fiche restent disponibles seuls, pour une situation que la confrontation ne couvre pas. Esquiver et parer
+    tiennent alors le compte du round sur la fiche.
+  </p>
+  <p>
+    À la fin de chaque round, les esquives et la parade de chaque combattant reviennent à zéro (réglage « Réinitialiser esquives et parade », voir
+    @@page:options@@).
+  </p>
+
+  <h2>Le personnage mourant</h2>
+  <div class="guide-row">
+    <div class="guide-image guide-image-card"><img src="@@img:carte-mourant@@" alt="Rappel de fin de round pour un mourant" /></div>
+    <div>
+      <p>
+        Dès qu'une case de <strong>blessure mortelle</strong> est cochée, le personnage devient <strong>Mourant</strong> : son token reçoit le statut Inconscient et
+        l'en-tête de sa fiche l'indique.
+      </p>
+      <p>
+        À la fin de chaque round, une carte le rappelle, avec un bouton <strong>Jet de survie</strong> : un test de Corps / Vigueur, sans effort, sans passion et
+        sans dépassement. Un échec est fatal : le token reçoit le statut Mort.
+      </p>
+    </div>
+  </div>
+  <div class="guide-row">
+    <div class="guide-image guide-image-half"><img src="@@img:fiche-mourant@@" alt="En-tête d'un personnage mourant" /></div>
+    <div>
+      <p>
+        Une fois le personnage stabilisé par un allié, un clic sur <strong>Mourant</strong> dans l'en-tête le passe à <strong>Stabilisé</strong> : les rappels
+        cessent, la blessure mortelle reste cochée. Recliquer le remet mourant. Le rappel ne concerne que les personnages des joueurs.
+      </p>
+    </div>
+  </div>
+</div>

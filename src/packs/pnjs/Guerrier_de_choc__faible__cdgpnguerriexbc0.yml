@@ -1,7 +1,7 @@
 _id: cdgpnguerriexbc0
 name: Guerrier de choc (faible)
 type: adversaire
-img: icons/weapons/axes/axe-double-broad.webp
+img: icons/weapons/axes/axe-double-brown.webp
 system:
   abilities:
     corps:

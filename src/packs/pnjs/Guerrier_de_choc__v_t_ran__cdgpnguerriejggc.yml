@@ -1,7 +1,7 @@
 _id: cdgpnguerriejggc
 name: Guerrier de choc (vétéran)
 type: adversaire
-img: icons/weapons/axes/axe-double-broad.webp
+img: icons/weapons/axes/axe-double-brown.webp
 system:
   abilities:
     corps:
