@@ -184,15 +184,23 @@
   background-position: center;
   background-repeat: no-repeat;
     select{
-        font-size: 1.2rem;
+        font-size: 1rem;
         height: 2rem;
         margin:12px 15px;
         text-align: center;
+
+        // La liste dépliée prend la taille du champ — sous Windows, Chromium dessine la liste
+        // native avec la police du `<select>` et ignore souvent celle des options : à 1,2 rem, les
+        // 31 compétences débordaient largement de la fenêtre. D'où un champ ramené à 1 rem, et
+        // des options un cran en dessous là où le navigateur les respecte.
+        option {
+          font-size: 0.9rem;
+        }
     }
     // Couple imposé : le nom s'affiche sans liste déroulante, à la même taille que le choix libre.
     > strong {
       flex: 1 1 auto;
-      font-size: 1.2rem;
+      font-size: 1rem;
       margin: 12px 15px;
       text-align: center;
     }

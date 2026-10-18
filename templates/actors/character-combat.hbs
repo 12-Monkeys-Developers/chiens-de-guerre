@@ -150,4 +150,20 @@
         </section>
       </div>
   </div>
+
+  {{! Le repos de fin de journée rend leurs points aux réserves que le combat a vidées : il clôt
+      l'onglet, après les blessures et les armes. }}
+  <section class="rest">
+    <h2 class="section-title section-title-art" data-bandeau="repos">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/repos.webp" alt="{{localize 'CDG.label.long.rest'}}" />
+    </h2>
+    <div class="rest-buttons">
+      {{#each choiceRestConditions as |condition|}}
+        <a class="rest-button" data-action="rest" data-condition="{{condition.id}}"
+          data-tooltip="{{localize 'CDG.ui.restHint'}}">
+          {{localize condition.label}} <span class="recovery">+{{condition.recovery}}</span>
+        </a>
+      {{/each}}
+    </div>
+  </section>
 </section>

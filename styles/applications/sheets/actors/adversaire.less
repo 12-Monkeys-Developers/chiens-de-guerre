@@ -4,7 +4,12 @@
   .adversaire-header {
     display: grid;
     grid-template-columns: 150px 1fr;
-    height: 250px;
+    // Hauteur plancher plutôt que fixe : la ligne du malus courant, quand elle existe, s'ajoute
+    // sous les blessures sans déborder sur les onglets. L'en-tête ne doit pas non plus rétrécir :
+    // dans la colonne flexible de la fenêtre, il se laissait comprimer à 250 px quel que soit son
+    // contenu.
+    min-height: 250px;
+    flex-shrink: 0;
     gap: 0.6rem;
     align-items: start;
     padding: 0.6rem 0.8rem 0.4rem;
@@ -105,10 +110,11 @@
       }
       .malus-line {
         display: flex;
+        flex-basis: 100%;
         align-items: center;
         gap: 0.35rem;
         font-size: 0.9rem;
-        margin-left: auto;
+        margin: 0.2rem 5px 0;
       }
     }
   }
@@ -119,4 +125,11 @@
       }
     }
     .adversaire-content{overflow-y: scroll;}
+
+  // Arcanums et Spécial suivent la liste des armes : la calligraphie de leur bandeau déborde vers
+  // le haut et mordait la dernière ligne. Même écart que le Repos de la fiche de personnage.
+  .tab-combat > .npc-arcanums,
+  .tab-combat > .npc-special {
+    margin-top: 2rem;
+  }
 }

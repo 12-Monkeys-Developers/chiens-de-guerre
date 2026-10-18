@@ -77,6 +77,9 @@
       </div>
       {{/with}}
     {{/each}}
+    {{! Sur sa propre ligne, sous les blessures : à droite des cases, une fenêtre étroite le
+        repoussait hors de vue. Sans malus ni état mourant, rien n'est affiché. }}
+    {{#if (or wounds.malus system.isDying)}}
     <div class="malus-line">
       {{#if wounds.malus}}
         <span class="current-malus">{{localize "CDG.label.long.currentWoundMalus"}} <strong>{{signed wounds.malus}}</strong></span>
@@ -93,5 +96,6 @@
         {{/if}}
       {{/if}}
     </div>
+    {{/if}}
   </div>
 </header>

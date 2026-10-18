@@ -71,5 +71,17 @@
     prose-mirror {
       min-height: 4rem;
     }
+
+    // Les titres d'un texte riche (« Lumière / Balance », « Obscurité » des arcanums…) prennent
+    // sinon la couleur du thème de Foundry : claire en thème sombre, ils disparaissaient sur le
+    // parchemin de la fiche.
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--cdg-ink);
+    }
   }
 }

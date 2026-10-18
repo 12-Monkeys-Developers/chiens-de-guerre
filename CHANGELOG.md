@@ -13,6 +13,17 @@
   parchemin, au lieu de lettres claires cernées de noir qui se perdaient dans les éclaboussures.
 - Les lignes vides de l'en-tête disent « Déposez un Peuple », « Déposez une Carrière », « Déposez
   une Ascendance ».
+- Le **repos** de fin de journée quitte l'onglet Équipement pour la fin de l'onglet Combat.
+- **Fenêtre de jet** : la liste des compétences s'écrit plus petit ; dépliée, elle ne déborde plus
+  largement de la fenêtre.
+- **Fiche de PNJ** : les bandeaux Arcanums et Spécial ne mordent plus la liste des armes.
+- **Fiche de PNJ** : le malus courant et l'état « Mourant » s'affichent sous les blessures, sur leur
+  propre ligne, au lieu d'être repoussés hors de vue dans une fenêtre étroite ; sans malus, la ligne
+  n'apparaît pas.
+- **Guide du système** : les titres calligraphiés sont plus grands, et plus clairs en thème sombre.
+- **Thème sombre** : les titres des textes riches (« Lumière / Balance », « Obscurité » des
+  arcanums…) prenaient la couleur claire de Foundry et disparaissaient sur le parchemin ; ils sont
+  désormais à l'encre.
 
 ### Personnages prétirés
 
