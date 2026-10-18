@@ -142,7 +142,23 @@
       font-size: 0.8rem;
     }
 
-    .karma strong,
+    // Le karma se lit comme les deux totaux qui le précèdent : même police, même corps, même
+    // ligne de base. Son étiquette prenait sinon le style des `<label>` de la fiche (petites
+    // capitales, plus petites) et sa valeur la police des titres.
+    .karma {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+
+      > label {
+        font: inherit;
+        font-variant: normal;
+        letter-spacing: normal;
+        color: inherit;
+      }
+    }
+
     .allegiance {
       font-family: var(--cdg-font-title);
       font-size: 1.1rem;

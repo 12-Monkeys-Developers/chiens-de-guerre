@@ -13,6 +13,8 @@
   parchemin, au lieu de lettres claires cernées de noir qui se perdaient dans les éclaboussures.
 - Les lignes vides de l'en-tête disent « Déposez un Peuple », « Déposez une Carrière », « Déposez
   une Ascendance ».
+- Le **karma** s'écrit comme les totaux de vices et de vertus qui le précèdent, au lieu de petites
+  capitales.
 - Le **repos** de fin de journée quitte l'onglet Équipement pour la fin de l'onglet Combat.
 - **Fenêtre de jet** : la liste des compétences s'écrit plus petit ; dépliée, elle ne déborde plus
   largement de la fenêtre.

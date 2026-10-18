@@ -1198,7 +1198,18 @@ cdg-toggle-switch[checked] thumb {
   gap: 1rem;
   font-size: 0.8rem;
 }
-.cdg.actor .karma-block .karma strong,
+.cdg.actor .karma-block .karma {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+}
+.cdg.actor .karma-block .karma > label {
+  font: inherit;
+  font-variant: normal;
+  letter-spacing: normal;
+  color: inherit;
+}
 .cdg.actor .karma-block .allegiance {
   font-family: var(--cdg-font-title);
   font-size: 1.1rem;
