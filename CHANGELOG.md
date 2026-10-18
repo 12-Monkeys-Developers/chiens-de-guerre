@@ -25,6 +25,10 @@
 - **Tableau de bord des joueurs** : en thème sombre, le tableau gardait les couleurs grises de
   Foundry sur le parchemin et ses intitulés s'y perdaient ; il a maintenant le même aspect qu'en thème clair.
 - **Création de compagnie** : les compteurs de l'étape Compétences se lisent « Rang 3 : 0 / 5 ».
+- **Compagnie** : le grade d'un membre se choisit dans une liste qui suit la hiérarchie de la
+  compagnie (Capitaine, Lieutenant, Sergent, Duplicator, Homme d'armes, Valet, ou aucun) au lieu
+  d'un champ libre. Un grade déjà saisi à la main est reconnu ; un texte qui ne correspond à aucun
+  grade est conservé tel quel.
 - **Guide du système** : les titres calligraphiés sont plus grands, et plus clairs en thème sombre.
 - **Thème sombre** : les titres des textes riches (« Lumière / Balance », « Obscurité » des
   arcanums…) prenaient la couleur claire de Foundry et disparaissaient sur le parchemin ; ils sont

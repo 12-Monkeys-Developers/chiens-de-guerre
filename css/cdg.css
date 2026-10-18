@@ -1815,8 +1815,8 @@ cdg-toggle-switch[checked] thumb {
   flex: 1 1 0;
   width: auto;
 }
-.cdg.actor.compagnie .roster-row:has(> input.roster-notes) input.roster-grade {
-  flex: 0 0 5.5rem;
+.cdg.actor.compagnie .roster-row:has(> input.roster-notes) select.roster-grade {
+  flex: 0 0 8rem;
   width: auto;
 }
 .cdg.actor.compagnie .roster-row:has(> input.roster-notes) input.roster-notes {

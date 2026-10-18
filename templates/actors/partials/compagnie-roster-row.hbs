@@ -1,5 +1,5 @@
 {{!
-  Une ligne de roster : Nom / Grade / Notes en texte libre, ou liée à un acteur réel glissé depuis
+  Une ligne de roster : Nom et Notes en texte libre, Grade choisi dans une liste, ou liée à un acteur réel glissé depuis
   la barre latérale (portrait, lien vers sa fiche). `roster` vaut `pj` ou `pnj`, `entry` porte
   `index`, `actorUuid`, `name`, `grade`, `notes` et `actor` (résolu, ou `null`).
 }}
@@ -11,13 +11,16 @@
   {{#if @root.unlocked}}
     <input type="text" class="roster-name" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.name"
       value="{{entry.name}}" placeholder="{{localize 'CDG.label.long.name'}}" spellcheck="false" />
-    <input type="text" class="roster-grade" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.grade"
-      value="{{entry.grade}}" placeholder="{{localize 'CDG.label.long.grade'}}" spellcheck="false" />
+    <select class="roster-grade" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.grade"
+      aria-label="{{localize 'CDG.label.long.grade'}}">
+      {{selectOptions @root.choiceGrades selected=entry.grade blank="" localize=true labelAttr="label" valueAttr="id"}}
+      {{#if entry.gradeLegacy}}<option value="{{entry.gradeLegacy}}" selected>{{entry.gradeLegacy}}</option>{{/if}}
+    </select>
     <input type="text" class="roster-notes" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.notes"
       value="{{entry.notes}}" placeholder="{{localize 'CDG.label.long.notes'}}" spellcheck="false" />
   {{else}}
     <span class="roster-name">{{#if entry.actor}}{{entry.actor.name}}{{else}}{{entry.name}}{{/if}}</span>
-    <span class="roster-grade">{{entry.grade}}</span>
+    <span class="roster-grade">{{entry.gradeLabel}}</span>
     <span class="roster-notes">{{entry.notes}}</span>
   {{/if}}
 

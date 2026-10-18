@@ -66,6 +66,7 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     context.dissolved = this.document.system.dissolved
     context.hasWounds = Object.values(SYSTEM.WOUND_LEVELS).some((level) => this.document.system.wounds[level.id].value > 0)
     context.choiceRestConditions = Object.values(SYSTEM.REST_CONDITIONS)
+    context.choiceGrades = SYSTEM.COMPANY_GRADES
 
     const enrichHTML = foundry.applications.ux.TextEditor.implementation.enrichHTML
     context.enrichedNotes = await enrichHTML(this.document.system.notes)
@@ -74,16 +75,24 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
   }
 
   /**
-   * Résout, pour chaque ligne du roster, l'acteur qu'elle référence — s'il y en a un.
+   * Résout, pour chaque ligne du roster, l'acteur qu'elle référence — s'il y en a un — et le
+   * libellé de son grade. Un grade qui n'est pas un identifiant connu (ancien texte libre) est
+   * affiché tel quel et proposé en plus dans la liste, pour ne pas être perdu au premier envoi du
+   * formulaire.
    * @param {Object[]} entries
    * @returns {Object[]}
    */
   #prepareRoster(entries) {
-    return entries.map((entry, index) => ({
-      ...entry,
-      index,
-      actor: entry.actorUuid ? fromUuidSync(entry.actorUuid) : null,
-    }))
+    return entries.map((entry, index) => {
+      const grade = Object.hasOwn(SYSTEM.COMPANY_GRADES, entry.grade) ? SYSTEM.COMPANY_GRADES[entry.grade] : null
+      return {
+        ...entry,
+        index,
+        actor: entry.actorUuid ? fromUuidSync(entry.actorUuid) : null,
+        gradeLabel: grade ? game.i18n.localize(grade.label) : entry.grade,
+        gradeLegacy: !grade && entry.grade ? entry.grade : "",
+      }
+    })
   }
 
   // #region Actions
@@ -254,16 +263,14 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
   }
 
   /**
-   * Le grade d'un personnage, prêt à afficher, ou une chaîne vide pour tout autre type d'acteur —
+   * L'identifiant du grade d'un personnage, ou une chaîne vide pour tout autre type d'acteur —
    * un adversaire n'a ni identité, ni grade (p. 121).
    * @param {CdgActor} actor
    * @returns {string}
    */
   static #gradeOf(actor) {
     const gradeId = actor.system.identity?.grade
-    if (!gradeId) return ""
-    const grade = SYSTEM.GRADES[gradeId]
-    return grade ? game.i18n.localize(grade.label) : ""
+    return Object.hasOwn(SYSTEM.COMPANY_GRADES, gradeId ?? "") ? gradeId : ""
   }
 
   // #endregion

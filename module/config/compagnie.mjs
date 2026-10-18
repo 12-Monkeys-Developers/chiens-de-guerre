@@ -69,6 +69,20 @@ export const COMPANY_ABILITY_POINTS = 34
 export const COMPANY_ABILITY_MIN = 8
 export const COMPANY_ABILITY_MAX = 14
 
+/**
+ * La hiérarchie de la compagnie franche, du capitaine au valet, proposée pour le grade d'un membre
+ * du roster. Plus large que les trois grades accessibles à un personnage (`GRADES`), dont elle
+ * reprend les identifiants : le grade d'un personnage déposé sur le roster s'y retrouve tel quel.
+ */
+export const COMPANY_GRADES = {
+  capitaine: { id: "capitaine", label: "CDG.grades.capitaine" },
+  lieutenant: { id: "lieutenant", label: "CDG.grades.lieutenant" },
+  sergent: { id: "sergent", label: "CDG.grades.sergent" },
+  duplicator: { id: "duplicator", label: "CDG.grades.duplicator" },
+  hommeDArmes: { id: "hommeDArmes", label: "CDG.grades.hommeDArmes" },
+  valet: { id: "valet", label: "CDG.grades.valet" },
+}
+
 /** Les trois étapes de l'assistant de création de compagnie (p. 126). */
 export const COMPANY_CREATION_STEPS = [
   { id: "abilities", label: "CDG.companyCreation.steps.abilities", icon: "fa-solid fa-people-group" },

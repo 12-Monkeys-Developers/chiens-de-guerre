@@ -28,6 +28,8 @@ export default class CdgCompagnieData extends CdgActorData {
       new fields.SchemaField({
         actorUuid: new fields.StringField({ required: true, blank: true }),
         name: new fields.StringField({ required: true, blank: true }),
+        // L'identifiant d'un grade de `SYSTEM.COMPANY_GRADES`, choisi dans une liste. Un ancien texte libre
+        // qui ne correspond à aucun grade est conservé tel quel plutôt qu'effacé.
         grade: new fields.StringField({ required: true, blank: true }),
         notes: new fields.StringField({ required: true, blank: true }),
       })
@@ -51,6 +53,22 @@ export default class CdgCompagnieData extends CdgActorData {
     })
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
+  }
+
+  /** @inheritDoc */
+  static migrateData(source) {
+    // Le grade d'une ligne de roster était un texte libre (« Sergent », « Homme d'armes », ou le
+    // libellé recopié d'un personnage déposé) : il devient l'identifiant du grade, qui s'écrit comme
+    // son libellé sans casse, accents, espaces ni apostrophes.
+    const normalize = (text) => text.normalize("NFD").replace(/[^a-z]/gi, "").toLowerCase()
+    const ids = new Map(Object.keys(SYSTEM.COMPANY_GRADES).map((id) => [normalize(id), id]))
+    for (const key of ["rosterPJ", "rosterPNJ"]) {
+      for (const entry of source[key] ?? []) {
+        if (!entry.grade || Object.hasOwn(SYSTEM.COMPANY_GRADES, entry.grade)) continue
+        entry.grade = ids.get(normalize(entry.grade)) ?? entry.grade
+      }
+    }
+    return super.migrateData(source)
   }
 
   /** @inheritDoc */

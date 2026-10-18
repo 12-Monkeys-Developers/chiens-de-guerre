@@ -276,7 +276,10 @@
     "grades": {
       "duplicator": "Duplicator",
       "sergent": "Sergent",
-      "lieutenant": "Lieutenant"
+      "lieutenant": "Lieutenant",
+      "capitaine": "Capitaine",
+      "hommeDArmes": "Homme d’armes",
+      "valet": "Valet"
     },
     "languages": {
       "stygien": "Stygien",
