@@ -357,9 +357,9 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   /**
    * Les modificateurs que le système sait déduire de la fiche.
    *
-   * Aucun n'est imposé : la blessure ne compte pas sur un test d'encaissement, un bonus
-   * circonstanciel dépend de ce que le personnage cherche à obtenir, et le meneur a toujours le
-   * dernier mot. Chacun est donc présenté coché ou non, mais toujours décochable.
+   * Aucun n'est imposé : la blessure ne compte ni sur un test d'encaissement ni sur le jet de
+   * survie d'un mourant, un bonus circonstanciel dépend de ce que le personnage cherche à obtenir,
+   * et le meneur a toujours le dernier mot. Chacun est donc présenté coché ou non, mais toujours décochable.
    * @returns {Object[]}
    */
   #computeModifiers() {

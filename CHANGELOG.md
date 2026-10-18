@@ -39,6 +39,10 @@
   centré en édition, et le « + » des personnages non joueurs n'est plus caché sous son bandeau.
 - **Fiche de personnage, mode édition** : l'ascendance ne déborde plus sur les onglets.
 - **Assistant de création** : à l'étape 8, le bandeau « Bourse » ne recouvre plus le montant.
+- **Personnage mourant** : l'état Mourant (et le statut Inconscient) n'est plus posé dès la
+  première case de blessure mortelle cochée, mais seulement quand elles le sont toutes (p. 46).
+- **Jet de survie** : le malus de blessure ne s'applique plus au test de Corps / Vigueur du
+  mourant ; la ligne reste dans la fenêtre de jet, décochée.
 
 ## 0.6.2
 

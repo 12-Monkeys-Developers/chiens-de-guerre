@@ -4,9 +4,10 @@ import CdgRoll from "../dice/cdg-roll.mjs"
 import { resolveOutcome } from "../dice/roll-outcome.mjs"
 
 /**
- * Rappel de fin de round pour un personnage joueur mourant (blessure mortelle non stabilisée,
- * p. 46) : une carte de chat par personnage concerné, avec un bouton ouvrant le test de survie
- * Corps / Vigueur — sans effort, sans passion, sans dépassement (`restricted: true`).
+ * Rappel de fin de round pour un personnage joueur mourant (toutes les cases de blessure mortelle
+ * cochées, non stabilisé, p. 46) : une carte de chat par personnage concerné, avec un bouton
+ * ouvrant le test de survie Corps / Vigueur — sans effort, sans passion, sans dépassement
+ * (`restricted: true`), et sans malus de blessure (case décochée, comme à l'encaissement).
  *
  * Le personnage reste mourant tant que le joueur ou le Meneur ne décoche pas `wounds.dying` à la
  * main (fiche, bloc Blessures) — sauf échec du test de survie, qui tranche définitivement : voir
@@ -83,6 +84,7 @@ export default class CdgDyingPrompt {
       lockedPair: true,
       label: "CDG.combat.survivalTest",
       restricted: true,
+      toggles: { wound: false },
       postHandler: (test) => this.#postSurvivalRoll(test, actor),
     })
   }

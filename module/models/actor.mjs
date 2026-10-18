@@ -49,8 +49,8 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
         })
         return obj
       }, {}),
-      // Distinct du fait que la case mortelle soit cochée (`isDying`) : ce drapeau ne gouverne que
-      // le rappel de fin de round, posé automatiquement quand la case mortelle se coche, mais
+      // Distinct du fait que les cases mortelles soient toutes cochées (`isDying`) : ce drapeau ne
+      // gouverne que le rappel de fin de round, posé automatiquement quand la dernière se coche, mais
       // décochable à la main (stabilisation) sans que la blessure elle-même ne guérisse.
       dying: new fields.BooleanField({ required: true, nullable: false, initial: false }),
     })
@@ -129,19 +129,21 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
   }
 
   /**
-   * Le personnage est mourant : une blessure mortelle est cochée. Il doit réussir un test de
-   * Corps / Vigueur à chaque round, ou être stabilisé par un allié.
+   * Le personnage est mourant : toutes ses cases de blessure mortelle sont cochées (p. 46). Il doit
+   * réussir un test de Corps / Vigueur à chaque round, ou être stabilisé par un allié.
    * @returns {boolean}
    */
   get isDying() {
-    return this.wounds.mortelle.value > 0
+    const { value, max } = this.wounds.mortelle
+    return max > 0 && value >= max
   }
 
   /**
-   * Pose ou retire le statut Foundry « Inconscient » dès que la case de blessure mortelle change
-   * d'état, et initialise/efface au passage le drapeau `wounds.dying` qui gouverne le rappel de
-   * fin de round — quel que soit le chemin d'écriture (automatique ou case cochée à la main
-   * sur la fiche), pour n'avoir qu'un seul endroit qui porte cette règle.
+   * Pose ou retire le statut Foundry « Inconscient » dès que les cases de blessure mortelle
+   * deviennent toutes cochées ou cessent de l'être, et initialise/efface au passage le drapeau
+   * `wounds.dying` qui gouverne le rappel de fin de round — quel que soit le chemin d'écriture
+   * (automatique ou case cochée à la main sur la fiche), pour n'avoir qu'un seul endroit qui
+   * porte cette règle.
    *
    * @override
    */
@@ -153,8 +155,9 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
     // elles ne rendent pas une entité collective inconsciente ou mourante.
     if (this.parent.type === "compagnie") return
 
-    const wasMortal = this.wounds.mortelle.value > 0
-    const isMortal = foundry.utils.getProperty(changes, "system.wounds.mortelle.value") > 0
+    const { max } = this.wounds.mortelle
+    const wasMortal = this.isDying
+    const isMortal = max > 0 && foundry.utils.getProperty(changes, "system.wounds.mortelle.value") >= max
     if (wasMortal === isMortal) return
 
     await this.parent.toggleStatusEffect("unconscious", { active: isMortal })
