@@ -209,7 +209,11 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     if (!this.isEditable) return
     const { key, index } = this.constructor.#rosterRow(target)
     if (!key) return
-    return this.document.update({ [`system.${key}.${index}.actorUuid`]: "" })
+    // Le roster est un tableau : une mise à jour par chemin (`system.rosterPJ.0.actorUuid`) le
+    // remplaçait par cette seule ligne, vidée de tout le reste — la liste entière disparaissait.
+    // On renvoie donc le tableau complet, comme pour l'ajout et la suppression.
+    const roster = this.document.system[key].map((entry, i) => (i === index ? { ...entry, actorUuid: "" } : entry))
+    return this.document.update({ [`system.${key}`]: roster })
   }
 
   /**
@@ -230,36 +234,33 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
   // #region Glisser-déposer
 
   /**
-   * Dépose un acteur sur une ligne de roster (elle en hérite le nom, et le grade s'il s'agit d'un
-   * personnage) ou n'importe où ailleurs dans la section — le roster étant vide au départ, exiger
-   * de cliquer d'abord sur « + » avant de pouvoir glisser un acteur serait un détour inutile : on
-   * ajoute alors une ligne. Tout le reste (objets d'inventaire, etc.) est délégué au socle commun.
+   * Dépose un acteur sur le roster : il y gagne une ligne, avec son nom, et son grade s'il s'agit
+   * d'un personnage. Lâché sur l'une des deux listes, il la rejoint ; n'importe où ailleurs sur la
+   * fiche, il rejoint celle de son type — un personnage les personnages joueurs, un adversaire les
+   * non joueurs. Les listes ne couvraient que leur titre et leurs lignes, et un acteur lâché à côté
+   * était ignoré sans un mot. Tout le reste (objets d'inventaire, etc.) est délégué au socle commun.
    * @param {DragEvent} event
    */
   async _onDrop(event) {
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
     if (data.type !== "Actor") return super._onDrop(event)
     if (!this.isEditable) return
-    const row = event.target.closest?.("[data-roster-row]")
-    const section = event.target.closest?.("[data-roster]")
-    if (!row && !section) return super._onDrop(event)
 
     const actor = await Actor.implementation.fromDropData(data)
-    if (!actor) return
-    const grade = this.constructor.#gradeOf(actor)
+    if (!actor || actor.type === "compagnie") return
 
-    const roster = section.dataset.roster
-    const key = roster === "pj" ? "rosterPJ" : roster === "pnj" ? "rosterPNJ" : null
-    if (!key) return
-    const newline = { actorUuid: actor.uuid, grade: "", name: actor.name, notes: "" }
-    if (grade) newline.grade = grade
-    //si l'actor est deja dans le rooster on arrete
-    for (let char of this.actor.system[key]) {
-      if (actor.uuid === char.actorUuid) return
+    const roster = event.target.closest?.("[data-roster]")?.dataset.roster ?? (actor.type === "character" ? "pj" : "pnj")
+    const key = roster === "pj" ? "rosterPJ" : "rosterPNJ"
+
+    // Un acteur ne figure qu'une fois au roster, toutes listes confondues.
+    const { rosterPJ, rosterPNJ } = this.document.system
+    if ([...rosterPJ, ...rosterPNJ].some((entry) => entry.actorUuid === actor.uuid)) {
+      ui.notifications.info(game.i18n.format("CDG.company.alreadyInRoster", { name: actor.name }))
+      return
     }
-    return this.document.update({
-      [`system.${key}`]: [...this.document.system[key], newline],
-    })
+
+    const newline = { actorUuid: actor.uuid, name: actor.name, grade: this.constructor.#gradeOf(actor), notes: "" }
+    return this.document.update({ [`system.${key}`]: [...this.document.system[key], newline] })
   }
 
   /**

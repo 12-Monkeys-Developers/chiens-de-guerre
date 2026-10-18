@@ -713,7 +713,7 @@ pages:
             (l'arme doit être tenue en main, <i class="fas fa-hand-fist"></i>). Les arcanums mystiques s'activent de la même façon. Voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GdA29X6mS3ScAj1f]{Le combat}.
           </p>
           <p>
-            Une blessure mortelle rend un PNJ inconscient (statut du token), mais le rappel de survie de fin de round est réservé aux personnages des joueurs.
+            Quand toutes ses cases de blessure mortelle sont cochées, un PNJ devient inconscient (statut du token), mais le rappel de survie de fin de round est réservé aux personnages des joueurs.
           </p>
 
           <h2>Le bestiaire</h2>
@@ -807,7 +807,7 @@ pages:
             notes.
           </p>
           <ul>
-            <li>Déposez un acteur de la barre latérale sur une liste : une ligne s'ajoute, liée à l'acteur (portrait, clic pour ouvrir sa fiche). Un acteur déjà présent n'est pas ajouté une seconde fois.</li>
+            <li>Déposez un acteur de la barre latérale sur une liste : une ligne s'ajoute, liée à l'acteur (portrait, clic pour ouvrir sa fiche). Lâché ailleurs sur la fiche, un personnage rejoint les personnages joueurs et un adversaire les non joueurs. Un acteur déjà présent n'est pas ajouté une seconde fois.</li>
             <li>En mode édition, <i class="fas fa-plus"></i> ajoute une ligne de texte libre, <i class="fas fa-link-slash"></i> délie l'acteur en gardant le texte, et la corbeille supprime la ligne.</li>
           </ul>
 
@@ -1133,12 +1133,12 @@ pages:
             <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/carte-mourant.webp" alt="Rappel de fin de round pour un mourant" /></div>
             <div>
               <p>
-                Dès qu'une case de <strong>blessure mortelle</strong> est cochée, le personnage devient <strong>Mourant</strong> : son token reçoit le statut Inconscient et
+                Quand toutes ses cases de <strong>blessure mortelle</strong> sont cochées, le personnage devient <strong>Mourant</strong> : son token reçoit le statut Inconscient et
                 l'en-tête de sa fiche l'indique.
               </p>
               <p>
-                À la fin de chaque round, une carte le rappelle, avec un bouton <strong>Jet de survie</strong> : un test de Corps / Vigueur, sans effort, sans passion et
-                sans dépassement. Un échec est fatal : le token reçoit le statut Mort.
+                À la fin de chaque round, une carte le rappelle, avec un bouton <strong>Jet de survie</strong> : un test de Corps / Vigueur, sans effort, sans passion,
+                sans dépassement et sans malus de blessure. Un échec est fatal : le token reçoit le statut Mort.
               </p>
             </div>
           </div>

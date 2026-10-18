@@ -28,7 +28,20 @@
   .compagnie-header {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1.5fr;
-    align-items: start;
+    // Les deux listes du roster occupent toute la hauteur de leur colonne : ce sont les zones où
+    // l'on dépose un acteur, et elles s'arrêtaient sous leur dernière ligne, laissant un grand vide
+    // sous le titre qui n'acceptait rien.
+    align-items: stretch;
+
+    .compagnie-colpj,
+    .compagnie-colpnj {
+      display: flex;
+      flex-direction: column;
+
+      > section {
+        flex: 1 1 auto;
+      }
+    }
 
     .name-line {
       grid-column: 1 / 4;
@@ -53,6 +66,7 @@
       }
     }
     .compagnie-colcentral {
+      align-self: start;
       border: 5px 15px 5px 15px;
     }
       .item-list {

@@ -29,6 +29,14 @@
   compagnie (Capitaine, Lieutenant, Sergent, Duplicator, Homme d'armes, Valet, ou aucun) au lieu
   d'un champ libre. Un grade déjà saisi à la main est reconnu ; un texte qui ne correspond à aucun
   grade est conservé tel quel.
+- **Compagnie** : un acteur glissé sur la fiche n'était accepté que sur le titre ou les lignes
+  d'une liste du roster, et ignoré sans message partout ailleurs. Chaque liste couvre désormais
+  toute sa colonne ; lâché ailleurs sur la fiche, un personnage rejoint les personnages joueurs et
+  un adversaire les non joueurs. Un acteur déjà présent au roster le signale.
+- **Compagnie** : un acteur lié au roster perdait son lien, et son portrait, dès que la fiche passait
+  en mode Écriture puis revenait en Lecture : le formulaire réécrivait la ligne sans lui.
+- **Compagnie** : « Délier cet acteur » vidait toute la liste au lieu de délier la seule ligne
+  visée ; les autres lignes, le nom, le grade et les notes de la ligne sont désormais conservés.
 - **Guide du système** : les titres calligraphiés sont plus grands, et plus clairs en thème sombre.
 - **Thème sombre** : les titres des textes riches (« Lumière / Balance », « Obscurité » des
   arcanums…) prenaient la couleur claire de Foundry et disparaissaient sur le parchemin ; ils sont

@@ -1641,7 +1641,16 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor.compagnie .compagnie-header {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1.5fr;
-  align-items: start;
+  align-items: stretch;
+}
+.cdg.actor.compagnie .compagnie-header .compagnie-colpj,
+.cdg.actor.compagnie .compagnie-header .compagnie-colpnj {
+  display: flex;
+  flex-direction: column;
+}
+.cdg.actor.compagnie .compagnie-header .compagnie-colpj > section,
+.cdg.actor.compagnie .compagnie-header .compagnie-colpnj > section {
+  flex: 1 1 auto;
 }
 .cdg.actor.compagnie .compagnie-header .name-line {
   grid-column: 1 / 4;
@@ -1664,6 +1673,7 @@ cdg-toggle-switch[checked] thumb {
   height: 64px;
 }
 .cdg.actor.compagnie .compagnie-header .compagnie-colcentral {
+  align-self: start;
   border: 5px 15px 5px 15px;
 }
 .cdg.actor.compagnie .compagnie-header .item-list {

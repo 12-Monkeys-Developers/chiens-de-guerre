@@ -171,6 +171,7 @@
         }
       },
       "unlinkActor": "Délier cet acteur",
+      "alreadyInRoster": "{name} figure déjà au roster de la compagnie.",
       "noRoster": "Aucun nom.",
       "noChronicles": "Aucun événement consigné."
     },

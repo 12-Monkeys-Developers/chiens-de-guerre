@@ -9,6 +9,9 @@
   {{/if}}
 
   {{#if @root.unlocked}}
+    {{!-- Le formulaire réécrit la ligne entière : sans ce champ, l'envoi (changement de mode, saisie)
+    effaçait le lien vers l'acteur, et avec lui son portrait. --}}
+    <input type="hidden" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.actorUuid" value="{{entry.actorUuid}}" />
     <input type="text" class="roster-name" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.name"
       value="{{entry.name}}" placeholder="{{localize 'CDG.label.long.name'}}" spellcheck="false" />
     <select class="roster-grade" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.grade"
