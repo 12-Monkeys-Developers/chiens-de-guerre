@@ -20,6 +20,8 @@
 - **Fiche de PNJ** : le malus courant et l'état « Mourant » s'affichent sous les blessures, sur leur
   propre ligne, au lieu d'être repoussés hors de vue dans une fenêtre étroite ; sans malus, la ligne
   n'apparaît pas.
+- **Tableau de bord des joueurs** : en thème sombre, le tableau gardait les couleurs grises de
+  Foundry sur le parchemin et ses intitulés s'y perdaient ; il a maintenant le même aspect qu'en thème clair.
 - **Guide du système** : les titres calligraphiés sont plus grands, et plus clairs en thème sombre.
 - **Thème sombre** : les titres des textes riches (« Lumière / Balance », « Obscurité » des
   arcanums…) prenaient la couleur claire de Foundry et disparaissaient sur le parchemin ; ils sont

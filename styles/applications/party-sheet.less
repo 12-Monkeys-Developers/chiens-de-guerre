@@ -6,6 +6,13 @@
   }
 
   .party-table {
+    // La fenêtre garde son parchemin dans les deux thèmes ; le thème sombre de Foundry posait
+    // pourtant ses couleurs de tableau (fond gris bleuté, en-tête sombre) et les intitulés vert
+    // de gris s'y perdaient. Le tableau prend les couleurs du thème clair quel que soit le thème.
+    --table-background-color: transparent;
+    --table-header-bg-color: rgb(0 0 0 / 10%);
+    --table-header-border-color: var(--cdg-ink);
+    --table-row-color-odd: transparent;
     width: 100%;
     border-collapse: collapse;
     font-size: 0.85rem;

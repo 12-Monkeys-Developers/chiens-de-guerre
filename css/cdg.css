@@ -3002,6 +3002,10 @@ cdg-toggle-switch[checked] thumb {
   padding: 0.6rem 0.8rem;
 }
 .cdg.party-sheet .party-table {
+  --table-background-color: transparent;
+  --table-header-bg-color: rgba(0, 0, 0, 0.1);
+  --table-header-border-color: var(--cdg-ink);
+  --table-row-color-odd: transparent;
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
