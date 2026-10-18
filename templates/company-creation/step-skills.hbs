@@ -6,15 +6,15 @@
 
   <div class="quotas company-quotas">
     <div class="quota {{#unless (eq (lookup derived.rankCounts 0) 1)}}pending{{else}}done{{/unless}}">
-      <span class="quota-label">{{localize "CDG.companyCreation.skills.weak"}}</span>
+      <span class="quota-label">{{localize "CDG.companyCreation.skills.weak"}}</span>&nbsp;:
       <span class="quota-count"><strong>{{lookup derived.rankCounts 0}}</strong> / 1</span>
     </div>
     <div class="quota {{#unless (eq derived.advancedCount 10)}}pending{{else}}done{{/unless}}">
-      <span class="quota-label">{{localize "CDG.companyCreation.skills.advanced"}}</span>
+      <span class="quota-label">{{localize "CDG.companyCreation.skills.advanced"}}</span>&nbsp;:
       <span class="quota-count"><strong>{{derived.advancedCount}}</strong> / 10</span>
     </div>
     <div class="quota {{#unless (eq derived.expertCount 5)}}pending{{else}}done{{/unless}}">
-      <span class="quota-label">{{localize "CDG.companyCreation.skills.expert"}}</span>
+      <span class="quota-label">{{localize "CDG.companyCreation.skills.expert"}}</span>&nbsp;:
       <span class="quota-count"><strong>{{derived.expertCount}}</strong> / 5</span>
     </div>
   </div>
