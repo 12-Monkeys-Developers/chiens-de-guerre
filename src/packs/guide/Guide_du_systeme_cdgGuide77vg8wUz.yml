@@ -436,6 +436,10 @@ pages:
                   <i class="fas fa-sword"></i> et de <strong>dégâts</strong> <i class="fa-solid fa-burst"></i>. Le casque <i class="fa-solid fa-helmet-battle"></i> du titre
                   lance l'<strong>encaissement</strong> avec l'armure portée.
                 </li>
+                <li>
+                  <strong>Repos</strong> : à la fin d'une journée, cliquez sur le confort du repos — exécrable (+1), voyage (+2), agréable (+3) ou exceptionnel (+4). Chaque
+                  réserve regagne ce nombre de points, sans dépasser son maximum. Un trait comme <em>Infatigable</em> ajoute son point de Corps.
+                </li>
               </ul>
               <p>Les boutons de cet onglet se glissent sur la barre de macros (voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.d6qJxIR42RlaHXOi]{Macros et outils du meneur}).</p>
             </div>
@@ -448,10 +452,6 @@ pages:
               <ul>
                 <li><strong>Équipement</strong> : les objets divers et leur quantité ; le survol d'une ligne affiche la description de l'objet.</li>
                 <li><strong>Bourse</strong> : ducats et deniers (1 ducat vaut 100 deniers).</li>
-                <li>
-                  <strong>Repos</strong> : à la fin d'une journée, cliquez sur le confort du repos — exécrable (+1), voyage (+2), agréable (+3) ou exceptionnel (+4). Chaque
-                  réserve regagne ce nombre de points, sans dépasser son maximum. Un trait comme <em>Infatigable</em> ajoute son point de Corps.
-                </li>
               </ul>
             </div>
           </div>
@@ -713,7 +713,7 @@ pages:
             (l'arme doit être tenue en main, <i class="fas fa-hand-fist"></i>). Les arcanums mystiques s'activent de la même façon. Voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GdA29X6mS3ScAj1f]{Le combat}.
           </p>
           <p>
-            Quand toutes ses cases de blessure mortelle sont cochées, un PNJ devient inconscient (statut du token), mais le rappel de survie de fin de round est réservé aux personnages des joueurs.
+            Quand toutes ses cases de blessure mortelle sont cochées, un PNJ devient inconscient (statut du token) et sort du combat : il ne prend plus la main dans le suivi. Le rappel de survie de fin de round est réservé aux personnages des joueurs.
           </p>
 
           <h2>Le bestiaire</h2>
@@ -804,7 +804,7 @@ pages:
           <h3>Les membres</h3>
           <p>
             Deux listes encadrent l'emblème : <strong>Personnages joueurs</strong> et <strong>Personnages non joueurs</strong>. Chaque ligne porte un nom, un grade et des
-            notes.
+            notes. Le grade se choisit dans la hiérarchie de la compagnie : Capitaine, Lieutenant, Sergent, Duplicator, Homme d'armes ou Valet.
           </p>
           <ul>
             <li>Déposez un acteur de la barre latérale sur une liste : une ligne s'ajoute, liée à l'acteur (portrait, clic pour ouvrir sa fiche). Lâché ailleurs sur la fiche, un personnage rejoint les personnages joueurs et un adversaire les non joueurs. Un acteur déjà présent n'est pas ajouté une seconde fois.</li>
