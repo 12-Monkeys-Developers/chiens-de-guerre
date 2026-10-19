@@ -41,6 +41,10 @@
   Grisé dans le suivi, il ne prend plus la main et n'a plus d'initiative à lancer, au lieu de jouer
   ses actions inconscient jusqu'à ce que le Meneur le marque vaincu. Décocher une case le ramène
   dans le round.
+- **Carrière** : la fiche de la carrière d'un personnage rangeait parfois un arcanum de départ parmi
+  l'équipement, et inversement (environ une fois sur six, selon l'ordre dans lequel Foundry
+  renvoyait les objets embarqués). Les références sont désormais établies d'après des identifiants
+  fixés avant la création. Un personnage déjà touché garde sa fiche de carrière mélangée.
 - **Guide du système** : les titres calligraphiés sont plus grands, et plus clairs en thème sombre.
 - **Thème sombre** : les titres des textes riches (« Lumière / Balance », « Obscurité » des
   arcanums…) prenaient la couleur claire de Foundry et disparaissaient sur le parchemin ; ils sont

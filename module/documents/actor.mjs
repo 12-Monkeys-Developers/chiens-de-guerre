@@ -116,12 +116,16 @@ export default class CdgActor extends Actor {
 
     const details = []
     const created = []
-    const createdFields = []
+    // Les identifiants des objets à embarquer, rangés par champ de l'origine, fixés avant la
+    // création : `createEmbeddedDocuments` ne renvoie pas toujours ses documents dans l'ordre des
+    // données reçues, et une correspondance par position rangeait alors un arcanum parmi
+    // l'équipement de la carrière, et inversement.
+    const createdIds = {}
     let missing = 0
 
     const groups = CdgActor.#grantGroups(item)
     for (const group of groups) {
-      let count = 0
+      const ids = (createdIds[group.field] = [])
       for (const uuid of group.uuids) {
         const granted = await fromUuid(uuid)
         if (!granted) {
@@ -129,21 +133,23 @@ export default class CdgActor extends Actor {
           continue
         }
         const data = granted.toObject()
+        data._id = foundry.utils.randomID()
         foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.${CdgActor.GRANT_FLAG}`, origin.id)
         created.push(data)
-        createdFields.push(group.field)
-        count++
+        ids.push(data._id)
       }
-      if (count > 0) details.push(game.i18n.format(group.label, { count }))
+      if (ids.length > 0) details.push(game.i18n.format(group.label, { count: ids.length }))
     }
-    const embedded = created.length > 0 ? await this.createEmbeddedDocuments("Item", created) : []
+    if (created.length > 0) await this.createEmbeddedDocuments("Item", created, { keepId: true })
 
     // La copie de l'origine doit désormais référencer les objets qui viennent d'être embarqués,
-    // jamais leurs modèles du monde ou du compendium. L'ordre de createEmbeddedDocuments est celui
-    // des données reçues, ce qui permet de reconstruire chaque tableau sans recherche fragile.
-    const embeddedByField = Object.fromEntries(groups.map((group) => [group.field, []]))
-    embedded.forEach((document, index) => embeddedByField[createdFields[index]].push(document.uuid))
-    await origin.update(Object.fromEntries(Object.entries(embeddedByField).map(([field, uuids]) => [`system.${field}`, uuids])))
+    // jamais leurs modèles du monde ou du compendium. Chaque identifiant, imposé à la création,
+    // retrouve son objet quel que soit l'ordre dans lequel ils ont été créés.
+    const references = groups.map((group) => [
+      `system.${group.field}`,
+      createdIds[group.field].map((id) => this.items.get(id)?.uuid).filter((uuid) => uuid),
+    ])
+    await origin.update(Object.fromEntries(references))
 
     const updates =
       item.type === SYSTEM.ITEM_TYPE.peuple ? this.#grantLanguages(item, details) : { ...this.#grantSkillRanks(item, details), ...this.#grantStartingMoney(item, details) }
