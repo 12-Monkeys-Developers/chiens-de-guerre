@@ -78,7 +78,10 @@ export default class CdgCombatTracker extends CoreCombatTracker {
   async _prepareTurnContext(combat, combatant, index) {
     const turn = await super._prepareTurnContext(combat, combatant, index)
     const attackerId = combat.duelAttackerId
-    turn.actionsRemaining = Number.isFinite(combatant.initiative) && combatant.initiative > 0 ? Math.ceil(combatant.initiative / SYSTEM.INITIATIVE_ACTION_COST) : 0
+    // Un adversaire inconscient est grisé comme un vaincu : il ne jouera plus ce round.
+    const out = combat.constructor.isOut(combatant)
+    if (out && !turn.isDefeated) turn.css = [turn.css, "defeated"].filterJoin(" ")
+    turn.actionsRemaining = !out && Number.isFinite(combatant.initiative) && combatant.initiative > 0 ? Math.ceil(combatant.initiative / SYSTEM.INITIATIVE_ACTION_COST) : 0
     turn.touches = combat.touchesFor(combatant)
     turn.isAttacker = combat.cdgMode === SYSTEM.COMBAT_MODES.duel.id && attackerId === combatant.id
     turn.isDefender = combat.cdgMode === SYSTEM.COMBAT_MODES.duel.id && !!attackerId && attackerId !== combatant.id && combat.duelists.some((entry) => entry.id === combatant.id)

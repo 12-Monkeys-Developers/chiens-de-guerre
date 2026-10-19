@@ -37,6 +37,10 @@
   en mode Écriture puis revenait en Lecture : le formulaire réécrivait la ligne sans lui.
 - **Compagnie** : « Délier cet acteur » vidait toute la liste au lieu de délier la seule ligne
   visée ; les autres lignes, le nom, le grade et les notes de la ligne sont désormais conservés.
+- **Combat** : un PNJ dont toutes les cases de blessure mortelle sont cochées est hors de combat.
+  Grisé dans le suivi, il ne prend plus la main et n'a plus d'initiative à lancer, au lieu de jouer
+  ses actions inconscient jusqu'à ce que le Meneur le marque vaincu. Décocher une case le ramène
+  dans le round.
 - **Guide du système** : les titres calligraphiés sont plus grands, et plus clairs en thème sombre.
 - **Thème sombre** : les titres des textes riches (« Lumière / Balance », « Obscurité » des
   arcanums…) prenaient la couleur claire de Foundry et disparaissaient sur le parchemin ; ils sont

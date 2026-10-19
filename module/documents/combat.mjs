@@ -21,8 +21,22 @@ export default class CdgCombat extends Combat {
     }
   }
 
+  /**
+   * Un combattant hors de combat ne compte plus pour l'initiative du round et ne prend plus la main :
+   * vaincu (marqué par le Meneur), ou adversaire dont toutes les cases de blessure mortelle sont
+   * cochées — inconscient, il ne se relèvera pas de lui-même, et le rappel de survie ne vaut que
+   * pour les personnages des joueurs. Décocher une case le fait revenir dans le round.
+   * @param {Combatant} combatant
+   * @returns {boolean}
+   */
+  static isOut(combatant) {
+    if (combatant.isDefeated) return true
+    const actor = combatant.actor
+    return actor?.type === "adversaire" && !!actor.system.isDying
+  }
+
   get activeCombatants() {
-    return this.combatants.filter((combatant) => !combatant.isDefeated)
+    return this.combatants.filter((combatant) => !this.constructor.isOut(combatant))
   }
 
   get duelists() {
@@ -133,7 +147,7 @@ export default class CdgCombat extends Combat {
         return this
       }
       combatant = this.combatants.get(this.duelAttackerId)
-    } else combatant = this.turns.find((turn) => !turn.isDefeated && turn.initiative > 0)
+    } else combatant = this.turns.find((turn) => !this.constructor.isOut(turn) && turn.initiative > 0)
 
     const turn = combatant ? this.turns.findIndex((entry) => entry.id === combatant.id) : null
     if (turn !== this.turn) await this.update({ turn })
@@ -152,7 +166,7 @@ export default class CdgCombat extends Combat {
     if (!combatant || !Number.isFinite(combatant.initiative)) return this
     await combatant.update({ initiative: combatant.initiative - SYSTEM.INITIATIVE_ACTION_COST })
     this.setupTurns()
-    const next = this.turns.find((turn) => !turn.isDefeated && turn.initiative > 0)
+    const next = this.turns.find((turn) => !this.constructor.isOut(turn) && turn.initiative > 0)
     if (!next) return this.nextRound()
     await this.update({ turn: this.turns.findIndex((turn) => turn.id === next.id) })
     return this
