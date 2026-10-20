@@ -2,6 +2,7 @@ import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
 import { resolveOutcome } from "../dice/roll-outcome.mjs"
+import { createChatMessage } from "../helpers/chat.mjs"
 
 /**
  * Rappel de fin de round pour un personnage joueur mourant (toutes les cases de blessure mortelle
@@ -42,7 +43,7 @@ export default class CdgDyingPrompt {
       message: game.i18n.format("CDG.combat.dying.chatMessage", { name: actor.name }),
     })
 
-    return ChatMessage.implementation.create({
+    return createChatMessage({
       speaker: ChatMessage.implementation.getSpeaker({ actor }),
       content,
       flags: { [SYSTEM.PACKAGE_ID]: { [this.FLAG]: { actorUuid: actor.uuid } } },
@@ -90,8 +91,8 @@ export default class CdgDyingPrompt {
   }
 
   /**
-   * Poste la carte du jet de survie comme un test isolé ordinaire (même rendu que `CdgRoll.post`),
-   * puis tranche : un échec applique le statut Foundry « Mort » (p. 46) et referme le drapeau
+   * Poste la carte du jet de survie comme un test isolé ordinaire (`CdgRoll.post`), puis tranche :
+   * un échec applique le statut Foundry « Mort » (p. 46) et referme le drapeau
    * `wounds.dying`, puisqu'un personnage mort n'a plus de rappel de fin de round à recevoir.
    *
    * Le dé conservé peut encore être outrepassé par le Meneur après coup (`CdgRoll#onKeepDie`),
@@ -102,13 +103,8 @@ export default class CdgDyingPrompt {
    * @returns {Promise<ChatMessage>}
    */
   static async #postSurvivalRoll(test, actor) {
-    const { roll, data } = await CdgRoll.roll(test)
-    const message = await ChatMessage.implementation.create({
-      speaker: ChatMessage.implementation.getSpeaker({ actor }),
-      content: await CdgRoll.renderCard(data),
-      rolls: [roll],
-      flags: { [SYSTEM.PACKAGE_ID]: { [CdgRoll.FLAG]: data } },
-    })
+    const message = await CdgRoll.post(test)
+    const data = CdgRoll.getTest(message)
 
     const outcome = resolveOutcome(data.results[data.keptIndex], data.sr)
     if (!outcome.success) {

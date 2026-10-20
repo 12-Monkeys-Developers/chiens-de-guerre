@@ -1,4 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
+import { createChatMessage, currentMessageMode } from "../helpers/chat.mjs"
 import { bestDieIndex, OUTCOMES, outcomeLabel, resolveOutcome, worstDieIndex } from "./roll-outcome.mjs"
 
 /**
@@ -47,20 +48,26 @@ export default class CdgRoll extends Roll {
   }
 
   /**
-   * Lance un test et poste sa carte.
+   * Lance un test et poste sa carte, dans le mode choisi dans le tchat.
+   *
+   * Le mode est retenu dans le test : le dépassement repasse par ici avec le test d'origine, et sa
+   * carte sort donc dans le même mode que la première, même si le sélecteur a changé depuis.
    * @param {Object} test Le test préparé par la fenêtre de jet (voir `CdgRollDialog`).
    * @returns {Promise<ChatMessage>}
    */
   static async post(test) {
-    const { roll, data } = await this.roll(test)
+    const { roll, data } = await this.roll({ ...test, messageMode: test.messageMode ?? currentMessageMode() })
 
     const actor = await fromUuid(test.actorUuid)
-    return ChatMessage.implementation.create({
-      speaker: ChatMessage.implementation.getSpeaker({ actor }),
-      content: await this.renderCard(data),
-      rolls: [roll],
-      flags: { [SYSTEM.PACKAGE_ID]: { [this.FLAG]: data } },
-    })
+    return createChatMessage(
+      {
+        speaker: ChatMessage.implementation.getSpeaker({ actor }),
+        content: await this.renderCard(data),
+        rolls: [roll],
+        flags: { [SYSTEM.PACKAGE_ID]: { [this.FLAG]: data } },
+      },
+      { messageMode: data.messageMode },
+    )
   }
 
   /**
