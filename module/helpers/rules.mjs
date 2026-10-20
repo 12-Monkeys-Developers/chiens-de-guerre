@@ -1,0 +1,61 @@
+import { SYSTEM } from "../config/system.mjs"
+
+/**
+ * Règles partagées entre les documents, les fiches et les assistants.
+ *
+ * Ce fichier est volontairement pur, comme `roll-outcome.mjs` : il ne touche ni à Foundry, ni aux
+ * documents, et se teste donc sous Node (`npm test`).
+ */
+
+/**
+ * Totaux des vices et des vertus, karma, puis allégeance.
+ *
+ * Le karma est la différence vertus moins vices ; l'allégeance est la tranche dans laquelle il
+ * tombe : Obscurité jusqu'à -3, Balance entre -2 et 2, Lumière à partir de 3. Seul le côté dominant
+ * d'un couple compte, l'autre est inhibé.
+ * @param {Object<string, {dominant: string|null, value: number}>} traits Les couples, par identifiant.
+ * @returns {{vices: number, virtues: number, value: number, allegiance: string, allegianceLabel: string}}
+ */
+export function computeKarma(traits) {
+  let vices = 0
+  let virtues = 0
+  for (const pair of Object.values(SYSTEM.TRAIT_PAIRS)) {
+    const trait = traits[pair.id]
+    if (trait?.dominant === SYSTEM.TRAIT_SIDES.vice.id) vices += trait.value
+    else if (trait?.dominant === SYSTEM.TRAIT_SIDES.virtue.id) virtues += trait.value
+  }
+  const value = virtues - vices
+
+  // Les tranches sont ordonnées par maximum croissant ; la dernière a un maximum nul et ramasse
+  // tout ce qui dépasse.
+  const allegiance = Object.values(SYSTEM.ALLEGIANCES).find((entry) => entry.max === null || value <= entry.max)
+  return { vices, virtues, value, allegiance: allegiance.id, allegianceLabel: allegiance.label }
+}
+
+/**
+ * Simule un plan de guérison de compagnie (p. 126) sur des blessures, sans rien écrire.
+ *
+ * Chaque opération améliore une blessure existante d'un ou deux crans : elle quitte sa case et en
+ * occupe une plus légère, ou disparaît si elle passe sous la légère. Une destination pleine invalide
+ * tout le plan — jamais d'application partielle.
+ * @param {Object<string, {value: number, max: number}>} wounds Les blessures, par gravité.
+ * @param {{level: string, steps: number}[]} operations
+ * @returns {Object<string, {value: number, max: number}>|null} Les blessures après le plan, ou `null`
+ *   si le plan ne s'applique pas.
+ */
+export function simulateCompanyHealing(wounds, operations) {
+  const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
+  const result = Object.fromEntries(levels.map((level) => [level.id, { value: wounds[level.id].value, max: wounds[level.id].max }]))
+
+  for (const operation of operations) {
+    const index = levels.findIndex((level) => level.id === operation?.level)
+    const steps = Number(operation?.steps)
+    if (index < 0 || ![1, 2].includes(steps) || result[operation.level].value <= 0) return null
+
+    const destination = index - steps
+    if (destination >= 0 && result[levels[destination].id].value >= result[levels[destination].id].max) return null
+    result[operation.level].value -= 1
+    if (destination >= 0) result[levels[destination].id].value += 1
+  }
+  return result
+}

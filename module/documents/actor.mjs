@@ -1,4 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
+import { simulateCompanyHealing } from "../helpers/rules.mjs"
 
 export default class CdgActor extends Actor {
   /** Tous les objets d'équipement, quel que soit le sous-type. */
@@ -478,21 +479,10 @@ export default class CdgActor extends Actor {
   async applyCompanyHealing(operations) {
     if (this.type !== "compagnie" || !Array.isArray(operations) || operations.length === 0) return false
 
-    const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
-    const wounds = Object.fromEntries(levels.map((level) => [level.id, { value: this.system.wounds[level.id].value, max: this.system.wounds[level.id].max }]))
+    const wounds = simulateCompanyHealing(this.system.wounds, operations)
+    if (!wounds) return false
 
-    for (const operation of operations) {
-      const index = levels.findIndex((level) => level.id === operation.level)
-      const steps = Number(operation.steps)
-      if (index < 0 || ![1, 2].includes(steps) || wounds[operation.level].value <= 0) return false
-
-      const destination = index - steps
-      if (destination >= 0 && wounds[levels[destination].id].value >= wounds[levels[destination].id].max) return false
-      wounds[operation.level].value -= 1
-      if (destination >= 0) wounds[levels[destination].id].value += 1
-    }
-
-    const updates = Object.fromEntries(levels.map((level) => [`system.wounds.${level.id}.value`, wounds[level.id].value]))
+    const updates = Object.fromEntries(Object.keys(SYSTEM.WOUND_LEVELS).map((id) => [`system.wounds.${id}.value`, wounds[id].value]))
     await this.update(updates)
     return true
   }

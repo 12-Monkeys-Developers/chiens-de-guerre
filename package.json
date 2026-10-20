@@ -7,6 +7,7 @@
     "build": "gulp",
     "compile": "gulp css",
     "lint": "eslint .",
+    "test": "node --test \"tests/**/*.test.mjs\"",
     "watch": "gulp",
     "gulp": "gulp",
     "YMLtoLDB": "node ./tools/YMLtoLDB.mjs",

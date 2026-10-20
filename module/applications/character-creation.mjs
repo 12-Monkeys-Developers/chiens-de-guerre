@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { customizationBudget, skillBudget, traitQuotas } from "../helpers/creation-calculations.mjs"
+import { computeKarma } from "../helpers/rules.mjs"
 import Utils from "../helpers/utils.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
@@ -608,16 +609,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     derived.languages = [...new Set([...this.#draft.languages, ...derived.grantedLanguages])]
 
     // Karma et allégeance, mêmes règles que sur la fiche.
-    let vices = 0
-    let virtues = 0
-    for (const pair of Object.values(SYSTEM.TRAIT_PAIRS)) {
-      const trait = this.#draft.traits[pair.id]
-      if (trait.dominant === SYSTEM.TRAIT_SIDES.vice.id) vices += trait.value
-      if (trait.dominant === SYSTEM.TRAIT_SIDES.virtue.id) virtues += trait.value
-    }
-    const karmaValue = virtues - vices
-    const allegiance = Object.values(SYSTEM.ALLEGIANCES).find((entry) => entry.max === null || karmaValue <= entry.max)
-    derived.karma = { vices, virtues, value: karmaValue, allegianceLabel: allegiance.label }
+    derived.karma = computeKarma(this.#draft.traits)
 
     // Quotas de la procédure : un dominant par couple, puis 5 à 10 traits au rang 2 ou plus, dont
     // 0 à 2 au rang 3. Un trait au rang 3 est passé par le rang 2 : il compte dans les deux.

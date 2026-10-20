@@ -1,4 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
+import { computeKarma } from "../helpers/rules.mjs"
 import CdgActorData from "./actor.mjs"
 import { TraitValue } from "./schemas/trait-value.mjs"
 
@@ -111,32 +112,9 @@ export default class CdgCharacterData extends CdgActorData {
     this.#prepareXp()
   }
 
-  /**
-   * Totaux des vices et des vertus, karma, puis allégeance.
-   *
-   * Le karma est la différence vertus moins vices ; l'allégeance est la tranche dans laquelle il
-   * tombe : Obscurité jusqu'à -3, Balance entre -2 et 2, Lumière à partir de 3.
-   */
+  /** Totaux des vices et des vertus, karma, puis allégeance — voir `computeKarma`. */
   #prepareKarma() {
-    let vices = 0
-    let virtues = 0
-    for (const pair of Object.values(SYSTEM.TRAIT_PAIRS)) {
-      const trait = this.traits[pair.id]
-      vices += trait.viceValue
-      virtues += trait.virtueValue
-    }
-
-    this.karma = {
-      vices,
-      virtues,
-      value: virtues - vices,
-    }
-
-    // Les tranches sont ordonnées par maximum croissant ; la dernière a un maximum nul et ramasse
-    // tout ce qui dépasse.
-    const allegiance = Object.values(SYSTEM.ALLEGIANCES).find((a) => a.max === null || this.karma.value <= a.max)
-    this.karma.allegiance = allegiance.id
-    this.karma.allegianceLabel = allegiance.label
+    this.karma = computeKarma(this.traits)
   }
 
   /** Solde mensuelle, en ducats, déduite du grade. */

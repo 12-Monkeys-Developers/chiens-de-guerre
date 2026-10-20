@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { createChatMessage, currentMessageMode } from "../helpers/chat.mjs"
+import { simulateCompanyHealing } from "../helpers/rules.mjs"
 import { bestDieIndex, OUTCOMES, outcomeLabel, resolveOutcome, worstDieIndex } from "./roll-outcome.mjs"
 
 /**
@@ -302,21 +303,9 @@ export default class CdgRoll extends Roll {
    */
   static #companyHealingPlans(actor, critical) {
     const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
-    const initial = Object.fromEntries(levels.map((level) => [level.id, { value: actor.system.wounds[level.id].value, max: actor.system.wounds[level.id].max }]))
     const name = (id) => game.i18n.localize(SYSTEM.WOUND_LEVELS[id].label)
-
-    const valid = (operations) => {
-      const wounds = foundry.utils.deepClone(initial)
-      for (const operation of operations) {
-        const index = levels.findIndex((level) => level.id === operation.level)
-        if (index < 0 || wounds[operation.level].value <= 0) return false
-        const destination = index - operation.steps
-        if (destination >= 0 && wounds[levels[destination].id].value >= wounds[levels[destination].id].max) return false
-        wounds[operation.level].value -= 1
-        if (destination >= 0) wounds[levels[destination].id].value += 1
-      }
-      return true
-    }
+    // Même simulation que `CdgActor#applyCompanyHealing` : un plan proposé ici s'appliquera.
+    const valid = (operations) => simulateCompanyHealing(actor.system.wounds, operations) !== null
 
     if (!critical) {
       return levels
