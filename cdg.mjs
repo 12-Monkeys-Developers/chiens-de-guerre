@@ -12,7 +12,9 @@ import * as combat from "./module/combat/_module.mjs"
 import * as dice from "./module/dice/_module.mjs"
 import * as helpers from "./module/helpers/_module.mjs"
 
-Hooks.once("init", async function () {
+// Le hook reste synchrone : le cœur appelle `init` sans l'attendre, si bien que tout ce qui suivrait
+// un `await` s'exécuterait après lui — et après l'`init` des modules, qui trouveraient CONFIG vide.
+Hooks.once("init", function () {
   console.info(SYSTEM.ASCII)
   console.info(helpers.Utils.log("Initialisation..."))
 
@@ -30,11 +32,6 @@ Hooks.once("init", async function () {
     // Raccourci de macro : `game.system.api.roll(actor)` ouvre la fenêtre de test.
     roll: (actor, seed) => applications.CdgRollDialog.open(actor, seed),
   }
-
-  // Partiel du corps d'un test, partagé par une carte de test isolé et chaque sous-jet d'une carte
-  // de confrontation : il doit être préchargé pour qu'un `{{> "chemin/vers/le/partiel.hbs"}}` le
-  // trouve au rendu, `renderTemplate` ne le résolvant pas tout seul depuis un simple chemin.
-  await foundry.applications.handlebars.loadTemplates([`${SYSTEM.PATH}/templates/chat/partials/test-body.hbs`])
 
   // Confrontation de combat : la cible n'étant jamais l'auteure du message d'attaque, elle ne peut
   // pas le mettre à jour elle-même (seuls l'auteur et le Meneur le peuvent) — elle passe par une
@@ -115,6 +112,12 @@ Hooks.once("init", async function () {
 
   helpers.registerHandlebarsHelpers()
   helpers.registerSystemSettings()
+
+  // Partiel du corps d'un test, partagé par une carte de test isolé et chaque sous-jet d'une carte
+  // de confrontation : il doit être préchargé pour qu'un `{{> "chemin/vers/le/partiel.hbs"}}` le
+  // trouve au rendu, `renderTemplate` ne le résolvant pas tout seul depuis un simple chemin. Lancé
+  // sans l'attendre, en dernier : il n'en faut le résultat qu'au rendu des cartes, bien après `ready`.
+  foundry.applications.handlebars.loadTemplates([`${SYSTEM.PATH}/templates/chat/partials/test-body.hbs`])
 
   console.info(helpers.Utils.log("Initialisé"))
 })

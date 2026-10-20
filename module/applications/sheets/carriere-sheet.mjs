@@ -43,9 +43,13 @@ export default class CdgCarriereSheet extends CdgBaseItemSheet {
     return context
   }
 
-  /** @inheritDoc */
-  async _onRender(context, options) {
-    await super._onRender(context, options)
+  /**
+   * Le dépôt est branché une seule fois : la fenêtre survit à ses rendus, un branchement par rendu
+   * empilerait les écouteurs et traiterait chaque dépôt autant de fois.
+   * @inheritDoc
+   */
+  async _onFirstRender(context, options) {
+    await super._onFirstRender(context, options)
     this.element.addEventListener("drop", this.#onDrop.bind(this))
     this.element.addEventListener("dragover", (event) => event.preventDefault())
   }
