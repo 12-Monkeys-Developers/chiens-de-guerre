@@ -77,6 +77,16 @@ export default class CdgActor extends Actor {
   static GRANT_FLAG = "grantedBy"
 
   /**
+   * Nom du drapeau qui relie un arcanum au bonus d'ascendance qui l'a monté d'un rang ou embarqué.
+   *
+   * Distinct de `GRANT_FLAG` : le bonus vise souvent un arcanum que la carrière a déjà accordé, et
+   * réutiliser le même drapeau effacerait cette provenance — retirer la carrière laisserait alors
+   * l'arcanum derrière elle.
+   * @type {string}
+   */
+  static ASCENDANCE_BONUS_FLAG = "ascendanceBonus"
+
+  /**
    * Les objets que cette origine a accordés à ce personnage.
    * @param {CdgItem} origin Un objet de type `peuple` ou `carriere` embarqué.
    * @returns {CdgItem[]}
@@ -267,7 +277,7 @@ export default class CdgActor extends Actor {
   async revokeAscendance(item) {
     if (item.type !== SYSTEM.ITEM_TYPE.ascendance) return
 
-    const bumped = this.grantedBy(item)[0]
+    const bumped = this.#ascendanceBonusItem(item)
     const content = bumped
       ? bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")
         ? game.i18n.format("CDG.origin.removeAscendanceGranted", { name: item.name, arcanum: bumped.name })
@@ -312,8 +322,8 @@ export default class CdgActor extends Actor {
    * Défait l'ancien choix d'arcanum de l'ascendance, puis applique le nouveau.
    *
    * L'arcanum visé est soit déjà possédé (son rang est alors simplement augmenté), soit absent
-   * (il est embarqué au rang minimum) — dans les deux cas un flag `GRANT_FLAG` le relie à
-   * l'ascendance, complété par `ascendanceGranted` pour savoir, au retrait, s'il faut le
+   * (il est embarqué au rang minimum) — dans les deux cas un drapeau `ASCENDANCE_BONUS_FLAG` le
+   * relie à l'ascendance, complété par `ascendanceGranted` pour savoir, au retrait, s'il faut le
    * supprimer entièrement ou seulement lui rendre son rang d'avant.
    * @param {CdgItem} ascendance L'ascendance embarquée sur ce personnage.
    * @param {string} previousUuid Ancien `system.arcanumBonus`, ou "" s'il n'y en avait pas.
@@ -337,12 +347,12 @@ export default class CdgActor extends Actor {
     if (existing) {
       if (existing.system.rank >= SYSTEM.ARCANUM_MAX_RANK) return ui.notifications.warn(game.i18n.format("CDG.origin.arcanumBonusCapped", { name: existing.name }))
       await existing.update({ "system.rank": existing.system.rank + 1 })
-      return existing.setFlag(SYSTEM.PACKAGE_ID, CdgActor.GRANT_FLAG, ascendance.id)
+      return existing.setFlag(SYSTEM.PACKAGE_ID, CdgActor.ASCENDANCE_BONUS_FLAG, ascendance.id)
     }
 
     const data = source.toObject()
     data.system.rank = SYSTEM.ARCANUM_MIN_RANK
-    foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.${CdgActor.GRANT_FLAG}`, ascendance.id)
+    foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.${CdgActor.ASCENDANCE_BONUS_FLAG}`, ascendance.id)
     foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.ascendanceGranted`, true)
     return this.createEmbeddedDocuments("Item", [data])
   }
@@ -353,11 +363,20 @@ export default class CdgActor extends Actor {
    * @param {CdgItem} ascendance
    */
   async #revertArcanumBonus(ascendance) {
-    const bumped = this.grantedBy(ascendance)[0]
+    const bumped = this.#ascendanceBonusItem(ascendance)
     if (!bumped) return
     if (bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")) return this.deleteEmbeddedDocuments("Item", [bumped.id])
     await bumped.update({ "system.rank": Math.max(SYSTEM.ARCANUM_MIN_RANK, bumped.system.rank - 1) })
-    return bumped.unsetFlag(SYSTEM.PACKAGE_ID, CdgActor.GRANT_FLAG)
+    return bumped.unsetFlag(SYSTEM.PACKAGE_ID, CdgActor.ASCENDANCE_BONUS_FLAG)
+  }
+
+  /**
+   * L'arcanum que le bonus de cette ascendance a monté ou embarqué, s'il y en a un.
+   * @param {CdgItem} ascendance
+   * @returns {CdgItem|undefined}
+   */
+  #ascendanceBonusItem(ascendance) {
+    return this.items.find((item) => item.getFlag(SYSTEM.PACKAGE_ID, CdgActor.ASCENDANCE_BONUS_FLAG) === ascendance.id)
   }
 
   /**

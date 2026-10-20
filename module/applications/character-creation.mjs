@@ -1698,7 +1698,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       if (items.length > 0) await actor.createEmbeddedDocuments("Item", items)
 
       if (this.#ascendanceItem) {
-        await actor.grantAscendance(this.#ascendanceItem, { notifySuccess: false })
+        await actor.grantAscendance(this.#ascendanceItem)
         // `grantAscendance` a repris le bonus inscrit sur l'objet source (le plus souvent aucun) :
         // s'il diffère du candidat choisi dans l'assistant, on défait l'un et pose l'autre, puis on
         // consigne le choix sur la copie embarquée — sans quoi retirer l'ascendance plus tard sur
