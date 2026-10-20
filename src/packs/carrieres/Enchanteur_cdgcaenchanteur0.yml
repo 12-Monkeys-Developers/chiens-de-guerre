@@ -15,6 +15,11 @@ system:
     façonner de rares objets magiques, véritables trésors très convoités (et
     parfois craints) pour la puissance qu'ils renferment.</p>
   abilityBonus: esprit
+  requiresReligion: false
+  startingGrade: ''
+  gradeUnlock:
+    grade: ''
+    cost: 0
   startingMoney: 30
   skills:
     - skill: artsArtisanats
@@ -62,44 +67,8 @@ effects:
           type: add
           value: 1
           phase: initial
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    start: null
-    duration:
-      value: null
-      units: seconds
-      expiry: null
-      expired: false
-    description: ''
-    origin: null
-    tint: '#ffffff'
-    statuses: []
-    showIcon: 1
-    folder: null
-    sort: 0
-    flags: {}
     _key: '!items.effects!cdgcaenchanteur0.cdgeaenchanteur0'
 folder: null
 sort: 0
 flags: {}
-_stats:
-  coreVersion: '14.367'
-  systemId: null
-  systemVersion: null
-  createdTime: null
-  modifiedTime: null
-  lastModifiedBy: null
-  compendiumSource: null
-  duplicateSource: null
-  exportSource: null
-ownership:
-  default: 0
 _key: '!items!cdgcaenchanteur0'

@@ -12,6 +12,11 @@ system:
     choix</h4><ul><li>Arme de corps-à-corps légère (dégâts 1) <em>ou</em> arme
     de corps-à-corps moyenne (dégâts 2).</li></ul>
   abilityBonus: esprit
+  requiresReligion: false
+  startingGrade: ''
+  gradeUnlock:
+    grade: ''
+    cost: 0
   startingMoney: 30
   skills:
     - skill: artsArtisanats
@@ -69,44 +74,8 @@ effects:
           type: add
           value: 1
           phase: initial
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    start: null
-    duration:
-      value: null
-      units: seconds
-      expiry: null
-      expired: false
-    description: ''
-    origin: null
-    tint: '#ffffff'
-    statuses: []
-    showIcon: 1
-    folder: null
-    sort: 0
-    flags: {}
     _key: '!items.effects!cdgcaingenieurba.cdgeaingenieurba'
 folder: null
 sort: 0
 flags: {}
-_stats:
-  coreVersion: '14.367'
-  systemId: null
-  systemVersion: null
-  createdTime: null
-  modifiedTime: null
-  lastModifiedBy: null
-  compendiumSource: null
-  duplicateSource: null
-  exportSource: null
-ownership:
-  default: 0
 _key: '!items!cdgcaingenieurba'

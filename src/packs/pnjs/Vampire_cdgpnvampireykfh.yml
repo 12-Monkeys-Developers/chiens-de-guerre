@@ -8,148 +8,80 @@ system:
       value: 14
       max: 14
       improvements: 0
-      bonuses:
-        sheet: 0
       restBonus: 0
     vivacite:
       value: 15
       max: 15
       improvements: 0
-      bonuses:
-        sheet: 0
       restBonus: 0
     esprit:
       value: 15
       max: 15
       improvements: 0
-      bonuses:
-        sheet: 0
       restBonus: 0
   skills:
     acrobatie:
       rank: 0
-      bonuses:
-        sheet: 0
     artsArtisanats:
       rank: 0
-      bonuses:
-        sheet: 0
     athletisme:
       rank: 0
-      bonuses:
-        sheet: 0
     autorite:
       rank: 0
-      bonuses:
-        sheet: 0
     baratin:
       rank: 0
-      bonuses:
-        sheet: 0
     blocage:
       rank: 2
-      bonuses:
-        sheet: 0
     commerce:
       rank: 0
-      bonuses:
-        sheet: 0
     discretion:
       rank: 0
-      bonuses:
-        sheet: 0
     eloquence:
       rank: 0
-      bonuses:
-        sheet: 0
     empathie:
       rank: 0
-      bonuses:
-        sheet: 0
     equitation:
       rank: 0
-      bonuses:
-        sheet: 0
     erudition:
       rank: 0
-      bonuses:
-        sheet: 0
     escamotage:
       rank: 0
-      bonuses:
-        sheet: 0
     esquive:
       rank: 2
-      bonuses:
-        sheet: 0
     etiquette:
       rank: 0
-      bonuses:
-        sheet: 0
     ingenierie:
       rank: 0
-      bonuses:
-        sheet: 0
     investigation:
       rank: 0
-      bonuses:
-        sheet: 0
     medecine:
       rank: 0
-      bonuses:
-        sheet: 0
     melee:
       rank: 2
-      bonuses:
-        sheet: 0
     portArmures:
       rank: 0
-      bonuses:
-        sheet: 0
     religionsLegendes:
       rank: 0
-      bonuses:
-        sheet: 0
     sciencesNaturelles:
       rank: 0
-      bonuses:
-        sheet: 0
     sensCombat:
       rank: 2
-      bonuses:
-        sheet: 0
     sensBatailles:
       rank: 0
-      bonuses:
-        sheet: 0
     sensDuels:
       rank: 2
-      bonuses:
-        sheet: 0
     survie:
       rank: 0
-      bonuses:
-        sheet: 0
     tactique:
       rank: 0
-      bonuses:
-        sheet: 0
     tir:
       rank: 1
-      bonuses:
-        sheet: 0
     vigilance:
       rank: 0
-      bonuses:
-        sheet: 0
     vigueur:
       rank: 0
-      bonuses:
-        sheet: 0
     volonte:
       rank: 0
-      bonuses:
-        sheet: 0
   woundSlots:
     legere: 3
     grave: 2
@@ -187,82 +119,6 @@ system:
 prototypeToken:
   actorLink: false
   disposition: -1
-  depth: 1
-  name: Vampire
-  displayName: 0
-  width: 1
-  height: 1
-  texture:
-    src: icons/svg/mystery-man.svg
-    anchorX: 0.5
-    anchorY: 0.5
-    fit: contain
-    scaleX: 1
-    scaleY: 1
-    tint: '#ffffff'
-    alphaThreshold: 0.75
-  lockRotation: false
-  rotation: 0
-  alpha: 1
-  displayBars: 0
-  bar1:
-    attribute: null
-  bar2:
-    attribute: null
-  light:
-    negative: false
-    priority: 0
-    alpha: 0.5
-    angle: 360
-    bright: 0
-    color: null
-    coloration: 1
-    dim: 0
-    attenuation: 0.5
-    luminosity: 0.5
-    saturation: 0
-    contrast: 0
-    shadows: 0
-    animation:
-      type: null
-      speed: 5
-      intensity: 5
-      reverse: false
-    darkness:
-      min: 0
-      max: 1
-  sight:
-    enabled: false
-    range: 0
-    angle: 360
-    visionMode: basic
-    color: null
-    attenuation: 0.1
-    brightness: 0
-    saturation: 0
-    contrast: 0
-  detectionModes: {}
-  occludable:
-    radius: 0
-  ring:
-    enabled: false
-    colors:
-      ring: null
-      background: null
-    effects: 1
-    subject:
-      scale: 1
-      texture: null
-  turnMarker:
-    mode: 1
-    animation: null
-    src: null
-    disposition: false
-  movementAction: null
-  flags: {}
-  randomImg: false
-  appendNumber: false
-  prependAdjective: false
 items:
   - _id: cdgpivampire0000
     name: Arme de corps-à-corps moyenne
@@ -275,16 +131,12 @@ items:
       quantity: 1
       damage:
         rank: 2
-        bonuses:
-          sheet: 0
       attack:
         ability: vivacite
         skill: melee
       category: moyenne
       protection:
         rank: 0
-        bonuses:
-          sheet: 0
       blockBonus: 0
       initMalus: 0
       price:
@@ -294,18 +146,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0000'
   - _id: cdgpivampire0001
     name: Armure légère
@@ -318,16 +158,12 @@ items:
       quantity: 1
       damage:
         rank: 0
-        bonuses:
-          sheet: 0
       attack:
         ability: vivacite
         skill: melee
       category: legere
       protection:
         rank: 1
-        bonuses:
-          sheet: 0
       blockBonus: 0
       initMalus: -1
       price:
@@ -337,18 +173,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0001'
   - _id: cdgpivampire0002
     name: Devito
@@ -406,18 +230,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0002'
   - _id: cdgpivampire0003
     name: Dextem
@@ -476,18 +288,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0003'
   - _id: cdgpivampire0004
     name: Fulmen
@@ -543,18 +343,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0004'
   - _id: cdgpivampire0005
     name: Impero
@@ -703,18 +491,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0005'
   - _id: cdgpivampire0006
     name: Induratus
@@ -770,18 +546,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0006'
   - _id: cdgpivampire0007
     name: Nebula
@@ -880,18 +644,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0007'
   - _id: cdgpivampire0008
     name: Rejuvnum
@@ -958,18 +710,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0008'
   - _id: cdgpivampire0009
     name: Vehementèr
@@ -1029,18 +769,6 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire0009'
   - _id: cdgpivampire000a
     name: Subjugatio
@@ -1160,35 +888,13 @@ items:
     folder: null
     sort: 0
     flags: {}
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    ownership:
-      default: 0
     _key: '!actors.items!cdgpnvampireykfh.cdgpivampire000a'
 effects: []
-folder: hEFoTV2jMRqwP47p
-sort: 1000000
+folder: null
+sort: 0
 ownership:
   default: 0
 flags:
   chiens-de-guerre:
     sourcePage: 74
-_stats:
-  coreVersion: '14.367'
-  systemId: null
-  systemVersion: null
-  createdTime: 1788019269598
-  modifiedTime: 1788019473834
-  lastModifiedBy: 2HmIAdGXgpWAT7mT
-  compendiumSource: null
-  duplicateSource: null
-  exportSource: null
 _key: '!actors!cdgpnvampireykfh'

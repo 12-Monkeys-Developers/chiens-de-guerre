@@ -17,6 +17,7 @@ system:
     un coût de 10 points de personnalisation lors de la création de
     personnage.</p>
   abilityBonus: corps
+  requiresReligion: false
   startingGrade: sergent
   gradeUnlock:
     grade: lieutenant
@@ -82,44 +83,8 @@ effects:
           type: add
           value: 1
           phase: initial
-    _stats:
-      coreVersion: '14.367'
-      systemId: null
-      systemVersion: null
-      createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
-      compendiumSource: null
-      duplicateSource: null
-      exportSource: null
-    start: null
-    duration:
-      value: null
-      units: seconds
-      expiry: null
-      expired: false
-    description: ''
-    origin: null
-    tint: '#ffffff'
-    statuses: []
-    showIcon: 1
-    folder: null
-    sort: 0
-    flags: {}
     _key: '!items.effects!cdgcaofficier000.cdgeaofficier000'
 folder: null
 sort: 0
 flags: {}
-_stats:
-  coreVersion: '14.367'
-  systemId: null
-  systemVersion: null
-  createdTime: null
-  modifiedTime: null
-  lastModifiedBy: null
-  compendiumSource: null
-  duplicateSource: null
-  exportSource: null
-ownership:
-  default: 0
 _key: '!items!cdgcaofficier000'
