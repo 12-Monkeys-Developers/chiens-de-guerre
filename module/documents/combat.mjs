@@ -73,7 +73,6 @@ export default class CdgCombat extends Combat {
     await this.setFlag(SYSTEM.PACKAGE_ID, "mode", mode)
     await this.resetAll({ updateTurn: false })
     await this.update({ turn: null })
-    if (this.started) this.#warnDuelConfiguration()
     return this
   }
 
@@ -180,13 +179,62 @@ export default class CdgCombat extends Combat {
     return this.nextRound()
   }
 
-  /** @override */
+  /**
+   * Passe au round suivant : initiatives remises à zéro, plus personne n'a la main, et l'attaquant
+   * désigné d'un duel à égalité est oublié.
+   *
+   * Tout part en une seule écriture, sur le modèle de `Combat#nextRound` du cœur (même hook
+   * `combatRound`, même avance du temps) : enchaîner le round, les combattants puis le tour laissait
+   * voir un tour fugitivement à 0.
+   *
+   * Seul le Meneur peut l'écrire — réinitialiser tous les combattants et toucher aux drapeaux du
+   * combat lui sont réservés. Un joueur qui clôt le round par sa dernière action le lui demande.
+   * @override
+   */
   async nextRound() {
-    await super.nextRound()
-    await this.resetAll({ updateTurn: false })
-    await this.unsetFlag(SYSTEM.PACKAGE_ID, "duel.attackerOverride")
-    await this.update({ turn: null })
+    if (!game.user.isGM) {
+      if (!game.users.activeGM) {
+        ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
+        return this
+      }
+      await game.users.activeGM.query("cdg.nextRound", { combatId: this.id })
+      return this
+    }
+
+    const nextRound = this.round + 1
+    const advanceTime = this.getTimeDelta(this.round, this.turn, nextRound, null)
+    // Comme `Combat#resetAll` : la remise à zéro est posée sur la source locale, puis la liste
+    // complète des combattants est envoyée sans calcul de différence.
+    for (const combatant of this.combatants) combatant.updateSource({ initiative: null })
+    const updateData = {
+      round: nextRound,
+      turn: null,
+      combatants: this.combatants.toObject(),
+      [`flags.${SYSTEM.PACKAGE_ID}.duel.attackerOverride`]: null,
+    }
+    const updateOptions = { direction: 1, worldTime: { delta: advanceTime }, diff: false }
+    Hooks.callAll("combatRound", this, updateData, updateOptions)
+    await this.update(updateData, updateOptions)
     return this
+  }
+
+  /**
+   * Requête `cdg.nextRound`, exécutée par le Meneur actif pour le compte d'un joueur.
+   *
+   * N'est accepté que le joueur qui pouvait déjà clore le round depuis le suivi : le propriétaire du
+   * combattant qui a la main (escarmouche) ou d'un des deux duellistes (duel).
+   * @param {{combatId: string}} data
+   * @param {{user: User}} context
+   * @returns {Promise<boolean>}
+   */
+  static async handleNextRoundQuery({ combatId } = {}, { user } = {}) {
+    if (!game.user.isGM) return false
+    const combat = game.combats.get(combatId)
+    if (!combat?.started || !user) return false
+    const candidates = combat.cdgMode === SYSTEM.COMBAT_MODES.duel.id ? combat.duelists : [combat.combatant].filter(Boolean)
+    if (!user.isGM && !candidates.some((combatant) => combatant.testUserPermission(user, "OWNER"))) return false
+    await combat.nextRound()
+    return true
   }
 
   /** @override */
