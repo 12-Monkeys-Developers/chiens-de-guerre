@@ -139,12 +139,13 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
   }
 
   /**
-   * Pose ou retire le statut Foundry « Inconscient » dès que les cases de blessure mortelle
-   * deviennent toutes cochées ou cessent de l'être, et initialise/efface au passage le drapeau
-   * `wounds.dying` qui gouverne le rappel de fin de round — quel que soit le chemin d'écriture
-   * (automatique ou case cochée à la main sur la fiche), pour n'avoir qu'un seul endroit qui
-   * porte cette règle.
+   * Initialise ou efface le drapeau `wounds.dying`, qui gouverne le rappel de fin de round, dès que
+   * les cases de blessure mortelle deviennent toutes cochées ou cessent de l'être — quel que soit le
+   * chemin d'écriture (automatique ou case cochée à la main sur la fiche), pour n'avoir qu'un seul
+   * endroit qui porte cette règle.
    *
+   * Le drapeau part dans la même écriture que la blessure ; le statut Foundry « Inconscient », qui
+   * est un effet actif à part entière, est posé ou retiré juste avant.
    * @override
    */
   async _preUpdate(changes, options, user) {
@@ -160,7 +161,9 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
     const isMortal = max > 0 && foundry.utils.getProperty(changes, "system.wounds.mortelle.value") >= max
     if (wasMortal === isMortal) return
 
+    // Le statut est attendu avant que la blessure ne s'écrive : qui attend la mise à jour (carte de
+    // confrontation, fiche) trouve l'acteur inconscient en même temps que sa dernière case cochée.
     await this.parent.toggleStatusEffect("unconscious", { active: isMortal })
-    await this.parent.update({ "system.wounds.dying": isMortal })
+    foundry.utils.setProperty(changes, "system.wounds.dying", isMortal)
   }
 }

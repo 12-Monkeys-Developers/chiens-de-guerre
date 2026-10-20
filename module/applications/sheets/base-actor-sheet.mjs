@@ -604,6 +604,11 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
         JSON.stringify({
           type: "cdg.macro",
           cdgMacro: "test",
+          // Une compagnie a ses propres caractéristiques et compétences : la macro doit savoir dans
+          // quelles tables chercher leur libellé, et viser cette compagnie-là plutôt que l'acteur
+          // sélectionné, qui est d'ordinaire le personnage du joueur.
+          actorType: this.document.type,
+          actorUuid: this.document.type === "compagnie" ? this.document.uuid : null,
           abilityId: target.closest("[data-ability]")?.dataset.ability ?? null,
           skillId: target.closest("[data-skill]")?.dataset.skill ?? null,
         }),

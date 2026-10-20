@@ -147,6 +147,9 @@ Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgConfrontation.act
 // Et pour le rappel de fin de round d'un personnage mourant.
 Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgDyingPrompt.activateListeners(message, html))
 
+// Une compagnie franche ne prend pas part à un combat.
+Hooks.on("preCreateCombatant", (combatant) => documents.CdgCombat.onPreCreateCombatant(combatant))
+
 // Les payloads enrichis par les fiches deviennent des macros de jet dans la barre utilisateur.
 Hooks.on("hotbarDrop", (bar, data, slot) => {
   if (!data?.cdgMacro) return true

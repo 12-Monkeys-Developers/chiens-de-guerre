@@ -46,14 +46,19 @@ export default class CdgMacros {
       case "test": {
         const isAbility = !!dropData.abilityId
         const id = dropData.abilityId ?? dropData.skillId
-        const definition = isAbility ? SYSTEM.ABILITIES[id] : SYSTEM.SKILLS[id]
+        const isCompany = dropData.actorType === "compagnie"
+        const abilities = isCompany ? SYSTEM.COMPANY_ABILITIES : SYSTEM.ABILITIES
+        const skills = isCompany ? SYSTEM.COMPANY_SKILLS : SYSTEM.SKILLS
+        const definition = isAbility ? abilities[id] : skills[id]
         if (!id || !definition) return null
         const label = game.i18n.localize(definition.label)
+        const args = [JSON.stringify(dropData.abilityId ?? null), JSON.stringify(dropData.skillId ?? null)]
+        if (isCompany && dropData.actorUuid) args.push(`await fromUuid(${JSON.stringify(dropData.actorUuid)})`)
         return {
           ...common,
           name: game.i18n.format(isAbility ? "CDG.macro.ability" : "CDG.macro.skill", { name: label }),
           img: "icons/svg/dice-target.svg",
-          command: `game.system.api.macros.rollTest(${JSON.stringify(dropData.abilityId ?? null)}, ${JSON.stringify(dropData.skillId ?? null)})`,
+          command: `game.system.api.macros.rollTest(${args.join(", ")})`,
         }
       }
       case "defense":
@@ -110,6 +115,8 @@ export default class CdgMacros {
   static async rollTest(abilityId = null, skillId = null, actor = null, { lockedPair = false, companyHealing = null } = {}) {
     actor ??= this.selectedActor()
     if (!actor) return null
+    // Le couple d'une compagnie n'est jamais libre (p. 124), qu'on lance depuis la fiche ou une macro.
+    if (actor.type === "compagnie") lockedPair = true
     return CdgRollDialog.open(actor, { abilityId, skillId, qualityDomain: "skill", lockedPair, companyHealing })
   }
 

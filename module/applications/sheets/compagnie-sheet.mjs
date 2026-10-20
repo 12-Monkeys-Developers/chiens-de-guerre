@@ -25,9 +25,6 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
       contentClasses: ["compagnie-content"],
     },
     actions: {
-      // Le couple caractéristique / compétence d'une compagnie est imposé (p. 124) : cette
-      // surcharge remplace, pour cette seule fiche, l'action `rollTest` héritée du socle commun.
-      rollTest: CdgCompagnieSheet.#onRollTest,
       addWound: CdgCompagnieSheet.#onAddWound,
       reactivate: CdgCompagnieSheet.#onReactivate,
       companyHealing: CdgCompagnieSheet.#onCompanyHealing,
@@ -90,19 +87,6 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
   }
 
   // #region Actions
-
-  /**
-   * Lance un test de compétence de compagnie. Le couple caractéristique / compétence n'est ici
-   * jamais libre (p. 124), à la différence du personnage : `lockedPair` reste vrai même si le
-   * joueur rouvre le sélecteur de caractéristique dans la fenêtre de jet.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target Porte, ou est contenu dans, un `data-skill` et un `data-ability`.
-   */
-  static async #onRollTest(event, target) {
-    return CdgMacros.rollTest(target.closest("[data-ability]")?.dataset.ability ?? null, target.closest("[data-skill]")?.dataset.skill ?? null, this.document, {
-      lockedPair: true,
-    })
-  }
 
   /**
    * Ajoute une blessure avec débordement, y compris au-delà de la dernière case mortelle.

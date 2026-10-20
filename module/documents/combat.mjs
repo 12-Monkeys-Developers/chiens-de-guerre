@@ -35,6 +35,18 @@ export default class CdgCombat extends Combat {
     return actor?.type === "adversaire" && !!actor.system.isDying
   }
 
+  /**
+   * Une compagnie franche n'a ni Vivacité ni initiative : elle ne prend pas part à un combat, et la
+   * fenêtre d'initiative n'aurait rien à lui faire lancer. Branché sur `preCreateCombatant`.
+   * @param {Combatant} combatant
+   * @returns {boolean|void} `false` pour empêcher la création.
+   */
+  static onPreCreateCombatant(combatant) {
+    if (combatant.actor?.type !== "compagnie") return
+    ui.notifications.warn(game.i18n.format("CDG.combat.companyCannotFight", { name: combatant.actor.name }))
+    return false
+  }
+
   get activeCombatants() {
     return this.combatants.filter((combatant) => !this.constructor.isOut(combatant))
   }

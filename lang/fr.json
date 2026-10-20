@@ -394,6 +394,7 @@
     "combat": {
       "end": "Fin combat",
       "modeLocked": "Le mode et les paramètres du combat ne peuvent plus être modifiés après son commencement.",
+      "companyCannotFight": "{name} est une compagnie franche : elle ne prend pas part à un combat.",
       "modes": {
         "skirmish": "Escarmouche",
         "duel": "Duel"
