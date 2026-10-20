@@ -33,11 +33,9 @@ Hooks.once("init", function () {
     roll: (actor, seed) => applications.CdgRollDialog.open(actor, seed),
   }
 
-  // Confrontation de combat : la cible n'étant jamais l'auteure du message d'attaque, elle ne peut
-  // pas le mettre à jour elle-même (seuls l'auteur et le Meneur le peuvent) — elle passe par une
-  // requête au Meneur actif, sur le même principe que `co2`.
-  CONFIG.queries["cdg.updateConfrontation"] = ({ messageId, updateData }) => game.messages.get(messageId)?.update(updateData)
-  CONFIG.queries["cdg.applyWound"] = combat.CdgConfrontation.handleApplyWoundQuery
+  // Confrontation de combat : le Meneur actif est le seul à écrire la carte partagée, chaque joueur
+  // lui confie l'étape qu'il vient de lancer (voir `CdgConfrontation#applyStep`).
+  CONFIG.queries["cdg.confrontationStep"] = combat.CdgConfrontation.handleStepQuery
   // Passage au round suivant, que seul le Meneur peut écrire.
   CONFIG.queries["cdg.nextRound"] = documents.CdgCombat.handleNextRoundQuery
 

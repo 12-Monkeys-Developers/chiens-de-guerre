@@ -377,6 +377,30 @@ export default class CdgActor extends Actor {
     return this.system.wealth?.ducat === amount ? amount : 0
   }
 
+  /**
+   * Se dépasser (p. 43) : un point de chacune des trois réserves, sans qu'aucune puisse tomber à
+   * zéro. Le triptyque suit le type d'acteur — Corps/Vivacité/Esprit pour un combattant,
+   * Effectifs/Logistique/Moral pour une compagnie.
+   *
+   * Seul endroit qui porte ce coût : le test isolé (`CdgRoll`) comme chaque sous-jet de
+   * confrontation (`CdgConfrontation`) passent par ici.
+   * @returns {Promise<boolean>} `false`, avec un avertissement, si une réserve est déjà à 1 ou moins.
+   */
+  async spendPush() {
+    const abilities = Object.values(this.system.constructor.ABILITIES)
+    const drained = abilities.filter((ability) => this.system.abilities[ability.id].value <= 1)
+    if (drained.length > 0) {
+      const names = drained.map((ability) => game.i18n.localize(ability.label)).join(", ")
+      ui.notifications.warn(game.i18n.format("CDG.roll.notif.cannotPush", { abilities: names }))
+      return false
+    }
+
+    const updates = {}
+    for (const ability of abilities) updates[`system.abilities.${ability.id}.value`] = this.system.abilities[ability.id].value - 1
+    await this.update(updates)
+    return true
+  }
+
   /** @override */
   getRollData() {
     return this.system.getRollData?.() ?? {}

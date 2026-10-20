@@ -13,7 +13,10 @@ import { resolveOpposedOutcome, resolveWound } from "./opposition.mjs"
  * sous `attackTest`/`defenseTest`/`damageTest`/`soakTest`. « Se dépasser » restant possible sur
  * chacune, l'opposition et la blessure sont recalculées à chaque changement plutôt que figées à
  * la première résolution, ce qui permet à un dépassement tardif de corriger un résultat déjà
- * affiché — y compris une blessure déjà posée sur la fiche (`#applyWound` en tient compte).
+ * affiché — y compris une blessure déjà posée sur la fiche (`#recomputeWound` en tient compte).
+ *
+ * Une fois la carte créée, seul le Meneur actif l'écrit : chaque joueur lance ses dés puis lui confie
+ * l'étape (`applyStep`), qu'il fusionne dans l'état relu à jour, une étape après l'autre.
  */
 export default class CdgConfrontation {
   /** Gabarit de la carte de chat. */
@@ -89,6 +92,7 @@ export default class CdgConfrontation {
       woundResolved: false,
     }
 
+    // Toujours publique, quel que soit le mode du tchat : la cible doit voir la carte pour s'y défendre.
     return ChatMessage.implementation.create({
       speaker: ChatMessage.implementation.getSpeaker({ actor }),
       content: await this.renderCard(state),
@@ -185,53 +189,136 @@ export default class CdgConfrontation {
     return context
   }
 
-  /**
-   * Réécrit la carte d'un message après un jet. Passe par `updateShared` : le message n'appartient
-   * qu'à l'attaquant, pas à la cible.
-   * @param {ChatMessage} message
-   * @param {Object} state
-   * @param {Roll} [newRoll] Le jet qui vient d'être ajouté, à conserver aux côtés des précédents.
-   * @returns {Promise<ChatMessage>}
-   */
-  static async #refresh(message, state, newRoll) {
-    const rolls = newRoll ? [...message.rolls, newRoll] : message.rolls
-    return this.updateShared(message, { content: await this.renderCard(state), rolls, [this.FLAG_PATH]: state })
-  }
+  // #endregion
+
+  // #region Écriture par le Meneur
+
+  /** Les quatre sous-jets d'une confrontation, dans l'ordre de la carte. */
+  static PHASES = ["attack", "defense", "damage", "soak"]
 
   /**
-   * Met à jour le message partagé, en tenant compte du fait que seuls l'auteur (l'attaquant) et le
-   * Meneur peuvent écrire un `ChatMessage` — la cible doit passer par le Meneur actif, comme le
-   * fait `co2`.
-   * @param {ChatMessage} message
-   * @param {Object} updateData
-   * @returns {Promise<ChatMessage|void>}
+   * La file d'attente de chaque message : les étapes d'une même confrontation s'appliquent l'une
+   * après l'autre, chacune sur l'état laissé par la précédente.
+   * @type {Map<string, Promise>}
    */
-  static async updateShared(message, updateData) {
-    if (game.user.isGM || message.isAuthor) return message.update(updateData)
-    if (!game.users.activeGM) return ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
-    return game.users.activeGM.query("cdg.updateConfrontation", { messageId: message.id, updateData })
-  }
+  static #queues = new Map()
 
   /**
-   * Point d'entrée de la requête exécutée par le Meneur pour appliquer une blessure à un acteur
-   * que le joueur ne possède pas (typiquement le PNJ synthétique d'un token non lié).
+   * Fait écrire une étape de la confrontation par le Meneur actif.
    *
-   * Les niveaux sont vérifiés avant de toucher au document : une requête fabriquée à la main ne
-   * doit pas pouvoir transformer des identifiants arbitraires en chemins de mise à jour.
-   * @param {Object} request
-   * @param {string} request.targetUuid
-   * @param {string|null} request.previousWoundId
-   * @param {string|null} request.newWoundId
-   * @returns {Promise<string|null>}
+   * Le Meneur est le seul écrivain de la carte. Les dégâts de l'attaquant et l'encaissement de la
+   * cible se lancent en même temps, sur deux postes : si chacun réécrivait tout l'état, le second à
+   * arriver effacerait le jet du premier, lu avant son arrivée. Les dés restent lancés chez le joueur
+   * — Dice So Nice, dépenses de réserve — ; seule l'écriture est confiée au Meneur, qui relit l'état
+   * à jour et n'y fusionne que la phase reçue.
+   * @param {Object} step Voir `applyStep`.
+   * @returns {Promise<boolean>}
    */
-  static async handleApplyWoundQuery({ targetUuid, previousWoundId = null, newWoundId = null } = {}) {
-    if (!game.user.isGM || typeof targetUuid !== "string") return null
-    const validLevels = new Set(Object.keys(SYSTEM.WOUND_LEVELS))
-    if ((previousWoundId !== null && !validLevels.has(previousWoundId)) || (newWoundId !== null && !validLevels.has(newWoundId))) return null
+  static async #submitStep(step) {
+    if (game.user.isGM) return this.applyStep(step, game.user)
+    if (!game.users.activeGM) {
+      ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
+      return false
+    }
+    return game.users.activeGM.query("cdg.confrontationStep", step)
+  }
 
-    const target = await fromUuid(targetUuid)
-    if (!(target instanceof Actor)) return null
-    return target.applyWoundOverflow(previousWoundId, newWoundId)
+  /**
+   * Requête `cdg.confrontationStep`, exécutée par le Meneur actif pour le compte d'un joueur.
+   * @param {Object} step
+   * @param {{user: User}} context
+   * @returns {Promise<boolean>}
+   */
+  static async handleStepQuery(step, { user } = {}) {
+    if (!game.user.isGM || !user) return false
+    return CdgConfrontation.applyStep(step, user)
+  }
+
+  /**
+   * Met l'étape dans la file de son message.
+   * @param {Object} step
+   * @param {string} step.messageId Le message de la confrontation.
+   * @param {"merge"|"push"|"keepDie"} step.type Nouveau sous-jet, dépassement, ou dé conservé changé.
+   * @param {"attack"|"defense"|"damage"|"soak"} step.phase
+   * @param {Object} [step.data] Le test lancé (`merge`, `push`).
+   * @param {Object} [step.roll] Le jet, sérialisé, à joindre au message (`merge`, `push`).
+   * @param {number} [step.index] Le dé à conserver (`keepDie`).
+   * @param {string} [step.defenseMethod] `dodge` ou `parry` (`merge` de la défense).
+   * @param {User} user L'utilisateur pour le compte de qui l'étape est écrite.
+   * @returns {Promise<boolean>}
+   */
+  static applyStep(step, user) {
+    const messageId = step?.messageId
+    const previous = this.#queues.get(messageId) ?? Promise.resolve()
+    const next = previous.catch(() => {}).then(() => this.#applyStep(step, user))
+    this.#queues.set(messageId, next)
+    next.finally(() => {
+      if (this.#queues.get(messageId) === next) this.#queues.delete(messageId)
+    })
+    return next
+  }
+
+  /**
+   * Applique une étape sur l'état relu du message.
+   *
+   * Tout est vérifié avant écriture : une requête fabriquée à la main ne doit ni viser un autre
+   * message, ni écrire la phase de l'autre camp, ni écraser un sous-jet déjà lancé.
+   * @param {Object} step
+   * @param {User} user
+   * @returns {Promise<boolean>}
+   */
+  static async #applyStep(step, user) {
+    const message = game.messages.get(step?.messageId)
+    const state = message ? this.getState(message) : null
+    if (!state || !this.PHASES.includes(step.phase) || !this.#canAct(step.phase, state, user)) return false
+
+    const key = `${step.phase}Test`
+    const current = state[key]
+    switch (step.type) {
+      case "merge":
+        if (current || !this.#isTest(step.data)) return false
+        // Dégâts et encaissement ne se lancent qu'une fois le coup porté.
+        if (["damage", "soak"].includes(step.phase) && !state.opposition?.hit) return false
+        state[key] = step.data
+        if (step.phase === "defense") state.defenseMethod = ["dodge", "parry"].includes(step.defenseMethod) ? step.defenseMethod : null
+        break
+      case "push":
+        if (!current || current.pushed || !this.#isTest(step.data)) return false
+        state[key] = { ...step.data, pushed: true, isPush: true }
+        break
+      case "keepDie": {
+        const index = Number(step.index)
+        if (!user.isGM || !current || !Number.isInteger(index) || index < 0 || index >= current.results.length) return false
+        state[key] = { ...current, keptIndex: index }
+        break
+      }
+      default:
+        return false
+    }
+
+    this.#recomputeOpposition(state)
+    await this.#recomputeWound(state)
+
+    const rolls = step.roll ? [...message.rolls, Roll.fromData(step.roll)] : message.rolls
+    await message.update({ content: await this.renderCard(state), rolls, [this.FLAG_PATH]: state })
+    return true
+  }
+
+  /**
+   * Un test lancé a-t-il la forme attendue : des dés, un indice de dé conservé parmi eux, un seuil ?
+   * @param {Object} test
+   * @returns {boolean}
+   */
+  static #isTest(test) {
+    return (
+      !!test &&
+      Array.isArray(test.results) &&
+      test.results.length > 0 &&
+      Number.isInteger(test.keptIndex) &&
+      test.keptIndex >= 0 &&
+      test.keptIndex < test.results.length &&
+      Number.isFinite(test.sr)
+    )
   }
 
   // #endregion
@@ -239,23 +326,16 @@ export default class CdgConfrontation {
   // #region Sous-jets
 
   /**
-   * Fusionne un sous-jet dans l'état de la confrontation, puis recalcule tout ce qui en dépend.
+   * Lance un sous-jet et le confie au Meneur, qui le fusionne et recalcule tout ce qui en dépend.
    * @param {ChatMessage} message
    * @param {"attack"|"defense"|"damage"|"soak"} phase
    * @param {Object} test Le test préparé par la fenêtre de jet, pas encore lancé.
-   * @param {Object} [extra] Champs additionnels à fusionner dans l'état (ex. `defenseMethod`).
-   * @returns {Promise<ChatMessage>}
+   * @param {Object} [extra] Champs propres à l'étape (ex. `defenseMethod`).
+   * @returns {Promise<boolean>}
    */
   static async #mergeSubTest(message, phase, test, extra = {}) {
     const { roll, data } = await CdgRoll.roll(test)
-    const state = this.getState(message)
-    state[`${phase}Test`] = data
-    Object.assign(state, extra)
-
-    this.#recomputeOpposition(state)
-    await this.#recomputeWound(state)
-
-    return this.#refresh(message, state, roll)
+    return this.#submitStep({ messageId: message.id, type: "merge", phase, data, roll: roll.toJSON(), ...extra })
   }
 
   /**
@@ -285,6 +365,9 @@ export default class CdgConfrontation {
    * Recalcule la gravité de la blessure (Phase 3) et l'applique sur la cible. Si un dépassement
    * change le résultat après une première application, la case précédente est libérée avant que
    * la nouvelle ne soit cochée — jamais les deux à la fois.
+   *
+   * Toujours exécuté par le Meneur (voir `applyStep`), qui peut écrire sur n'importe quelle cible,
+   * PNJ synthétique d'un token non lié compris.
    * @param {Object} state
    */
   static async #recomputeWound(state) {
@@ -308,28 +391,8 @@ export default class CdgConfrontation {
     const newRawWoundId = state.woundResolved ? state.woundId : null
     if (newRawWoundId === previousRawWoundId) return // Rien n'a changé depuis la dernière application
 
-    state.appliedWoundId = await this.#applyWound(previousAppliedWoundId, newRawWoundId, state.targetUuid)
-  }
-
-  /**
-   * Coche la nouvelle case de blessure sur la cible (avec débordement, voir
-   * `CdgActor#applyWoundOverflow`) et libère l'ancienne, quand l'une ou l'autre (ou les deux)
-   * existent — un dépassement peut aussi bien changer la gravité que faire disparaître une
-   * blessure déjà posée.
-   * @param {string|null} previousWoundId Case réellement cochée à libérer (débordement compris).
-   * @param {string|null} newWoundId Gravité brute résolue par `resolveWound`.
-   * @param {string} targetUuid
-   * @returns {Promise<string|null>} La case réellement cochée pour `newWoundId`.
-   */
-  static async #applyWound(previousWoundId, newWoundId, targetUuid) {
-    const target = await fromUuid(targetUuid)
-    if (!target) return null
-    if (game.user.isGM || target.isOwner) return target.applyWoundOverflow(previousWoundId, newWoundId)
-    if (!game.users.activeGM) {
-      ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
-      return null
-    }
-    return game.users.activeGM.query("cdg.applyWound", { targetUuid, previousWoundId, newWoundId })
+    const target = await fromUuid(state.targetUuid)
+    state.appliedWoundId = target ? await target.applyWoundOverflow(previousAppliedWoundId, newRawWoundId) : null
   }
 
   // #endregion
@@ -340,17 +403,18 @@ export default class CdgConfrontation {
    * Qui a le droit d'agir pour un sous-jet donné : l'attaquant pour l'attaque et les dégâts, la
    * cible pour la défense et l'encaissement — jamais l'autre, et toujours le Meneur.
    *
-   * Vérifié deux fois : ici, pour décider quels boutons brancher ou masquer, et à nouveau au tout
-   * début de chaque gestionnaire — masquer un bouton ne fait qu'écarter l'affichage, un client
-   * modifié pourrait encore déclencher l'action directement.
+   * Vérifié deux fois : ici, pour décider quels boutons brancher ou masquer, et à nouveau par le
+   * Meneur avant d'écrire l'étape, pour le compte de l'utilisateur qui la demande — masquer un bouton
+   * ne fait qu'écarter l'affichage, un client modifié pourrait encore envoyer la requête.
    * @param {"attack"|"defense"|"damage"|"soak"} phase
    * @param {Object} state
+   * @param {User} [user]
    * @returns {boolean}
    */
-  static #canAct(phase, state) {
-    if (game.user.isGM) return true
+  static #canAct(phase, state, user = game.user) {
+    if (user.isGM) return true
     const actorUuid = ["attack", "damage"].includes(phase) ? state.attackerUuid : state.targetUuid
-    return !!fromUuidSync(actorUuid)?.isOwner
+    return !!fromUuidSync(actorUuid)?.testUserPermission(user, "OWNER")
   }
 
   /**
@@ -401,7 +465,7 @@ export default class CdgConfrontation {
   }
 
   /**
-   * Le Meneur outrepasse le dé conservé d'un sous-jet et relance les calculs dérivés.
+   * Le Meneur outrepasse le dé conservé d'un sous-jet ; les calculs dérivés suivent.
    * @param {PointerEvent} event
    * @param {ChatMessage} message
    */
@@ -409,22 +473,14 @@ export default class CdgConfrontation {
     event.preventDefault()
     if (!game.user.isGM) return
     const button = event.currentTarget
-    const phase = button.dataset.phase
     const index = parseInt(button.dataset.index)
-    const state = this.getState(message)
-    const test = state?.[`${phase}Test`]
-    if (!test || isNaN(index) || index === test.keptIndex) return
-
-    state[`${phase}Test`] = { ...test, keptIndex: index }
-    this.#recomputeOpposition(state)
-    await this.#recomputeWound(state)
-
-    return this.#refresh(message, state)
+    if (isNaN(index)) return
+    return this.#submitStep({ messageId: message.id, type: "keepDie", phase: button.dataset.phase, index })
   }
 
   /**
    * Se dépasser sur un sous-jet de la confrontation — même coût, même limite d'une fois par test,
-   * que sur un jet isolé (voir `CdgRoll`).
+   * que sur un jet isolé (voir `CdgActor#spendPush`).
    * @param {PointerEvent} event
    * @param {ChatMessage} message
    */
@@ -438,25 +494,10 @@ export default class CdgConfrontation {
 
     const actor = await fromUuid(["attack", "damage"].includes(phase) ? state.attackerUuid : state.targetUuid)
     if (!actor) return ui.notifications.warn(game.i18n.localize("CDG.roll.notif.actorMissing"))
-
-    const drained = Object.values(SYSTEM.ABILITIES).filter((ability) => actor.system.abilities[ability.id].value <= 1)
-    if (drained.length > 0) {
-      const names = drained.map((ability) => game.i18n.localize(ability.label)).join(", ")
-      return ui.notifications.warn(game.i18n.format("CDG.roll.notif.cannotPush", { abilities: names }))
-    }
-
-    const updates = {}
-    for (const ability of Object.values(SYSTEM.ABILITIES)) {
-      updates[`system.abilities.${ability.id}.value`] = actor.system.abilities[ability.id].value - 1
-    }
-    await actor.update(updates)
+    if (!(await actor.spendPush())) return
 
     const { roll, data } = await CdgRoll.roll({ ...test, pushed: true, isPush: true })
-    state[`${phase}Test`] = data
-    this.#recomputeOpposition(state)
-    await this.#recomputeWound(state)
-
-    return this.#refresh(message, state, roll)
+    return this.#submitStep({ messageId: message.id, type: "push", phase, data, roll: roll.toJSON() })
   }
 
   /**
@@ -484,7 +525,8 @@ export default class CdgConfrontation {
       lockedPair: true,
       qualityDomain: defense === "parry" ? "parry" : null,
       postHandler: async (test) => {
-        await this.#mergeSubTest(message, "defense", test, { defenseMethod: defense })
+        // La défense n'est décomptée que si le Meneur a bien retenu le jet.
+        if (!(await this.#mergeSubTest(message, "defense", test, { defenseMethod: defense }))) return
         return defense === "dodge" ? target.update({ "system.combat.dodgesUsed": dodgeCount + 1 }) : target.update({ "system.combat.parryUsed": true })
       },
     })
