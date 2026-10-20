@@ -19,6 +19,31 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
 
   static SKILLS = SYSTEM.SKILLS
 
+  /**
+   * Réglages du jeton prototype posés à la création d'un acteur de ce type (`_preCreate`).
+   * @type {Object}
+   */
+  static get PROTOTYPE_TOKEN() {
+    return {}
+  }
+
+  /**
+   * Le bloc `combat` des types qui se battent (personnage, adversaire) : bonus d'initiative saisi,
+   * esquives et parade du round. La compagnie n'en a pas.
+   * @returns {SchemaField}
+   */
+  static defineCombatSchema() {
+    const fields = foundry.data.fields
+    const requiredInteger = { required: true, nullable: false, integer: true }
+    return new fields.SchemaField({
+      initiative: new fields.SchemaField({
+        bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+      }),
+      dodgesUsed: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+      parryUsed: new fields.BooleanField({ required: true, initial: false }),
+    })
+  }
+
   static defineSchema() {
     const fields = foundry.data.fields
     const schema = {}
@@ -59,6 +84,24 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
   }
 
   /**
+   * Jeton prototype propre au type d'acteur, et image par défaut — sauf pour un acteur dupliqué,
+   * importé d'un compendium ou réimporté, qui garde son image.
+   * @inheritDoc
+   */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user)
+    if (allowed === false) return false
+
+    const updates = { prototypeToken: this.constructor.PROTOTYPE_TOKEN }
+    const stats = this.parent._stats
+    if (!stats.duplicateSource && !stats.compendiumSource && !stats.exportSource && !foundry.utils.hasProperty(data, "img")) {
+      const img = SYSTEM.ACTOR_ICONS[this.parent.type]
+      if (img) updates.img = img
+    }
+    this.parent.updateSource(updates)
+  }
+
+  /**
    * Ouvre la corbeille où les effets déposent leurs bonus circonstanciels.
    *
    * Elle doit exister avant que les effets s'appliquent. L'ordre de la V14 le garantit :
@@ -91,6 +134,41 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
       ability.baseMax = ability.max
       ability.max = ability.baseMax + ability.bonus
     }
+  }
+
+  /**
+   * Défenses du round et modificateur d'initiative, pour les types qui ont un bloc `combat`.
+   *
+   * La première esquive du round est gratuite, chaque esquive supplémentaire coûte 2 points de plus
+   * que la précédente. Le malus d'initiative de l'armure est doublé quand elle est trop lourde pour
+   * le porteur (`armorOverloaded`, que seul le personnage évalue).
+   * @param {boolean} [armorOverloaded]
+   * @protected
+   */
+  _prepareCombat(armorOverloaded = false) {
+    if (!this.combat) return
+    const armor = this.parent.armor
+    const shield = this.parent.shield
+
+    this.combat.dodgeMalus = -2 * this.combat.dodgesUsed
+    this.combat.canParry = !this.combat.parryUsed
+    this.combat.armorOverloaded = armorOverloaded
+    const armorMalus = (armor?.system.initMalus ?? 0) * (armorOverloaded ? 2 : 1)
+    this.combat.initiative.modifier = this.combat.initiative.bonus + armorMalus + (shield?.system.initMalus ?? 0)
+    this.combat.blockBonus = shield?.system.blockBonus ?? 0
+  }
+
+  /**
+   * Données exposées aux formules de jet : chaque caractéristique (sa réserve) et chaque compétence
+   * (son rang) du type d'acteur, plus le malus de blessure.
+   * @returns {Object}
+   */
+  getRollData() {
+    const data = {}
+    for (const ability of Object.values(this.constructor.ABILITIES)) data[ability.id] = this.abilities[ability.id].value
+    for (const skill of Object.values(this.constructor.SKILLS)) data[skill.id] = this.skills[skill.id].rank
+    data.blessures = this.wounds.malus
+    return data
   }
 
   /**

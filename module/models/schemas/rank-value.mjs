@@ -11,9 +11,6 @@ export class RankValue extends foundry.abstract.DataModel {
     const fields = foundry.data.fields
     return {
       rank: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0, max: SYSTEM.MAX_RANK }),
-      bonuses: new fields.SchemaField({
-        sheet: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
-      }),
     }
   }
 

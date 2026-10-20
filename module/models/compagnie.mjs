@@ -17,6 +17,11 @@ export default class CdgCompagnieData extends CdgActorData {
   /** @override */
   static SKILLS = SYSTEM.COMPANY_SKILLS
 
+  /** @override */
+  static get PROTOTYPE_TOKEN() {
+    return { actorLink: true, disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY }
+  }
+
   static defineSchema() {
     const fields = foundry.data.fields
     const schema = {}
@@ -52,29 +57,6 @@ export default class CdgCompagnieData extends CdgActorData {
     })
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
-  }
-
-  /** @inheritDoc */
-  async _preCreate(data, options, user) {
-    const allowed = await super._preCreate(data, options, user)
-    if (allowed === false) return false
-
-    const updates = {
-      prototypeToken: {
-        actorLink: true,
-        disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
-      },
-    }
-
-    const stats = this.parent._stats
-    if (!stats.duplicateSource && !stats.compendiumSource && !stats.exportSource) {
-      if (!foundry.utils.hasProperty(data, "img")) {
-        const img = SYSTEM.ACTOR_ICONS[this.parent.type]
-        if (img) updates.img = img
-      }
-    }
-
-    this.parent.updateSource(updates)
   }
 
   /**
@@ -121,21 +103,5 @@ export default class CdgCompagnieData extends CdgActorData {
     foundry.utils.setProperty(changes, "system.abilities.effectifs.max", nextMax)
     foundry.utils.setProperty(changes, "system.abilities.effectifs.value", Math.min(nextValue, nextMax))
     if (nextMax === 0) foundry.utils.setProperty(changes, "system.state.dissolved", true)
-  }
-
-  /**
-   * Données exposées aux formules de jet.
-   * @returns {Object}
-   */
-  getRollData() {
-    const data = {}
-    for (const ability of Object.values(SYSTEM.COMPANY_ABILITIES)) {
-      data[ability.id] = this.abilities[ability.id].value
-    }
-    for (const skill of Object.values(SYSTEM.COMPANY_SKILLS)) {
-      data[skill.id] = this.skills[skill.id].rank
-    }
-    data.blessures = this.wounds.malus
-    return data
   }
 }

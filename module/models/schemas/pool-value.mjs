@@ -22,9 +22,6 @@ export class PoolValue extends foundry.abstract.DataModel {
       // caractéristique d'un peuple ou d'une carrière s'ajoute ainsi au Corps, à la Vivacité ou à
       // l'Esprit sans jamais réécrire la base — voir `CdgActorData#prepareDerivedData`.
       bonus: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
-      bonuses: new fields.SchemaField({
-        sheet: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
-      }),
       // Points regagnés en plus lors du repos quotidien. Cible d'effet : le trait orque
       // Infatigable ajoute ainsi +1 au seul Corps, sans toucher aux deux autres réserves.
       restBonus: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),

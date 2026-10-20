@@ -16,6 +16,11 @@ export default class CdgAdversaireData extends CdgActorData {
   /** @override */
   static SKILLS = SYSTEM.ADVERSARY_SKILLS
 
+  /** @override */
+  static get PROTOTYPE_TOKEN() {
+    return { actorLink: false, disposition: CONST.TOKEN_DISPOSITIONS.HOSTILE }
+  }
+
   static defineSchema() {
     const fields = foundry.data.fields
     const requiredInteger = { required: true, nullable: false, integer: true }
@@ -30,13 +35,7 @@ export default class CdgAdversaireData extends CdgActorData {
       }, {}),
     )
 
-    schema.combat = new fields.SchemaField({
-      initiative: new fields.SchemaField({
-        bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-      }),
-      dodgesUsed: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
-      parryUsed: new fields.BooleanField({ required: true, initial: false }),
-    })
+    schema.combat = this.defineCombatSchema()
 
     schema.details = new fields.SchemaField({
       // Ce qui tient lieu de fiche de créature : nature, tactique, faiblesses.
@@ -53,57 +52,10 @@ export default class CdgAdversaireData extends CdgActorData {
     return this.woundSlots
   }
 
-  /** @inheritDoc */
-  async _preCreate(data, options, user) {
-    const allowed = await super._preCreate(data, options, user)
-    if (allowed === false) return false
-
-    const updates = {
-      prototypeToken: {
-        actorLink: false,
-        disposition: CONST.TOKEN_DISPOSITIONS.HOSTILE,
-      },
-    }
-
-    const stats = this.parent._stats
-    if (!stats.duplicateSource && !stats.compendiumSource && !stats.exportSource) {
-      if (!foundry.utils.hasProperty(data, "img")) {
-        const img = SYSTEM.ACTOR_ICONS[this.parent.type]
-        if (img) updates.img = img
-      }
-    }
-
-    this.parent.updateSource(updates)
-  }
-
   /** @override */
   prepareDerivedData() {
     super.prepareDerivedData()
-
-    this.combat.dodgeMalus = -2 * this.combat.dodgesUsed
-    this.combat.canParry = !this.combat.parryUsed
-
     // Pas de règle de port d'armures ici : un adversaire porte ce que le MJ lui donne.
-    const armor = this.parent.armor
-    const shield = this.parent.shield
-    this.combat.armorOverloaded = false
-    this.combat.initiative.modifier = this.combat.initiative.bonus + (armor?.system.initMalus ?? 0) + (shield?.system.initMalus ?? 0)
-    this.combat.blockBonus = shield?.system.blockBonus ?? 0
-  }
-
-  /**
-   * Données exposées aux formules de jet.
-   * @returns {Object}
-   */
-  getRollData() {
-    const data = {}
-    for (const ability of Object.values(SYSTEM.ABILITIES)) {
-      data[ability.id] = this.abilities[ability.id].value
-    }
-    for (const skill of Object.values(SYSTEM.ADVERSARY_SKILLS)) {
-      data[skill.id] = this.skills[skill.id].rank
-    }
-    data.blessures = this.wounds.malus
-    return data
+    this._prepareCombat()
   }
 }

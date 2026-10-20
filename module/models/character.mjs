@@ -9,6 +9,11 @@ export default class CdgCharacterData extends CdgActorData {
 
   static SKILLS = SYSTEM.SKILLS
 
+  /** @override */
+  static get PROTOTYPE_TOKEN() {
+    return { actorLink: true, disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY, sight: { enabled: true, visionMode: "basic" } }
+  }
+
   static defineSchema() {
     const fields = foundry.data.fields
     const requiredInteger = { required: true, nullable: false, integer: true }
@@ -37,19 +42,9 @@ export default class CdgCharacterData extends CdgActorData {
       invokedThisSession: new fields.ArrayField(new fields.StringField()),
     })
 
-    schema.karma = new fields.SchemaField({
-      value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-      vices: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-      virtues: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-    })
+    // Le karma n'est pas stocké : il se déduit des traits à chaque préparation (`#prepareKarma`).
 
-    schema.combat = new fields.SchemaField({
-      initiative: new fields.SchemaField({
-        bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-      }),
-      dodgesUsed: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
-      parryUsed: new fields.BooleanField({ required: true, initial: false }),
-    })
+    schema.combat = this.defineCombatSchema()
 
     schema.languages = new fields.ArrayField(new fields.StringField())
 
@@ -76,38 +71,22 @@ export default class CdgCharacterData extends CdgActorData {
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
 
-  /** @inheritDoc */
-  async _preCreate(data, options, user) {
-    const allowed = await super._preCreate(data, options, user)
-    if (allowed === false) return false
-
-    const updates = {
-      prototypeToken: {
-        actorLink: true,
-        disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
-        sight: { enabled: true, visionMode: "basic" },
-      },
-    }
-
-    const stats = this.parent._stats
-    // Un acteur dupliqué, importé d'un compendium ou réimporté garde son image et son token.
-    if (!stats.duplicateSource && !stats.compendiumSource && !stats.exportSource) {
-      if (!foundry.utils.hasProperty(data, "img")) {
-        const img = SYSTEM.ACTOR_ICONS[this.parent.type]
-        if (img) updates.img = img
-      }
-    }
-
-    this.parent.updateSource(updates)
+  /**
+   * Le karma ne dépend que des traits stockés : il est calculé dès la préparation de base, car
+   * l'application des effets actifs lit `getRollData()` — karma compris — avant la préparation
+   * dérivée.
+   * @override
+   */
+  prepareBaseData() {
+    super.prepareBaseData()
+    this.#prepareKarma()
   }
 
   /** @override */
   prepareDerivedData() {
     super.prepareDerivedData()
-    this.#prepareKarma()
     this.#preparePay()
-    this.#prepareDodge()
-    this.#prepareInitiativeModifier()
+    this.#prepareCombat()
     this.#prepareWealth()
     this.#prepareXp()
   }
@@ -123,38 +102,14 @@ export default class CdgCharacterData extends CdgActorData {
   }
 
   /**
-   * Malus de la prochaine esquive du round. La première est gratuite, chaque esquive supplémentaire
-   * coûte 2 points de plus que la précédente.
+   * Défenses et initiative (voir `CdgActorData#_prepareCombat`), avec la règle du port d'armures :
+   * si le rang du personnage dans la compétence est inférieur à celui qu'exige la catégorie de
+   * l'armure, le malus de cette armure est doublé.
    */
-  #prepareDodge() {
-    this.combat.dodgeMalus = -2 * this.combat.dodgesUsed
-    this.combat.canParry = !this.combat.parryUsed
-  }
-
-  /**
-   * Modificateur total d'initiative : le bonus saisi sur la fiche, plus les malus de l'armure et du
-   * bouclier portés.
-   *
-   * Règle du port d'armures : si le rang du personnage dans la compétence est inférieur à celui
-   * qu'exige la catégorie de l'armure, le malus de cette armure est doublé.
-   */
-  #prepareInitiativeModifier() {
+  #prepareCombat() {
     const armor = this.parent.armor
-    const shield = this.parent.shield
-
-    let armorMalus = 0
-    let armorOverloaded = false
-    if (armor) {
-      const required = SYSTEM.ARMOR_CATEGORIES[armor.system.category]?.requiredRank ?? 0
-      armorOverloaded = this.skills.portArmures.rank < required
-      armorMalus = armor.system.initMalus * (armorOverloaded ? 2 : 1)
-    }
-
-    const shieldMalus = shield ? shield.system.initMalus : 0
-
-    this.combat.armorOverloaded = armorOverloaded
-    this.combat.initiative.modifier = this.combat.initiative.bonus + armorMalus + shieldMalus
-    this.combat.blockBonus = shield ? shield.system.blockBonus : 0
+    const required = armor ? (SYSTEM.ARMOR_CATEGORIES[armor.system.category]?.requiredRank ?? 0) : 0
+    this._prepareCombat(!!armor && this.skills.portArmures.rank < required)
   }
 
   /** Fortune totale exprimée en deniers, pour comparer deux bourses sans se tromper de monnaie. */
@@ -168,19 +123,10 @@ export default class CdgCharacterData extends CdgActorData {
   }
 
   /**
-   * Données exposées aux formules de jet.
-   * @returns {Object}
+   * Données exposées aux formules de jet, karma compris.
+   * @override
    */
   getRollData() {
-    const data = {}
-    for (const ability of Object.values(SYSTEM.ABILITIES)) {
-      data[ability.id] = this.abilities[ability.id].value
-    }
-    for (const skill of Object.values(SYSTEM.SKILLS)) {
-      data[skill.id] = this.skills[skill.id].rank
-    }
-    data.karma = this.karma.value
-    data.blessures = this.wounds.malus
-    return data
+    return { ...super.getRollData(), karma: this.karma.value }
   }
 }
