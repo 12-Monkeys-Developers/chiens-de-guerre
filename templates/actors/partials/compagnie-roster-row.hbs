@@ -17,7 +17,6 @@
     <select class="roster-grade" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.grade"
       aria-label="{{localize 'CDG.label.long.grade'}}">
       {{selectOptions @root.choiceGrades selected=entry.grade blank="" localize=true labelAttr="label" valueAttr="id"}}
-      {{#if entry.gradeLegacy}}<option value="{{entry.gradeLegacy}}" selected>{{entry.gradeLegacy}}</option>{{/if}}
     </select>
     <input type="text" class="roster-notes" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.notes"
       value="{{entry.notes}}" placeholder="{{localize 'CDG.label.long.notes'}}" spellcheck="false" />

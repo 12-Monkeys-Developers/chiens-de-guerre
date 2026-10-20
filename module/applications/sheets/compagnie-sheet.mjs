@@ -76,23 +76,17 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
 
   /**
    * Résout, pour chaque ligne du roster, l'acteur qu'elle référence — s'il y en a un — et le
-   * libellé de son grade. Un grade qui n'est pas un identifiant connu (ancien texte libre) est
-   * affiché tel quel et proposé en plus dans la liste, pour ne pas être perdu au premier envoi du
-   * formulaire.
+   * libellé de son grade.
    * @param {Object[]} entries
    * @returns {Object[]}
    */
   #prepareRoster(entries) {
-    return entries.map((entry, index) => {
-      const grade = Object.hasOwn(SYSTEM.COMPANY_GRADES, entry.grade) ? SYSTEM.COMPANY_GRADES[entry.grade] : null
-      return {
-        ...entry,
-        index,
-        actor: entry.actorUuid ? fromUuidSync(entry.actorUuid) : null,
-        gradeLabel: grade ? game.i18n.localize(grade.label) : entry.grade,
-        gradeLegacy: !grade && entry.grade ? entry.grade : "",
-      }
-    })
+    return entries.map((entry, index) => ({
+      ...entry,
+      index,
+      actor: entry.actorUuid ? fromUuidSync(entry.actorUuid) : null,
+      gradeLabel: entry.grade ? game.i18n.localize(SYSTEM.COMPANY_GRADES[entry.grade].label) : "",
+    }))
   }
 
   // #region Actions
