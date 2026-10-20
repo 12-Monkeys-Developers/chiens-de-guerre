@@ -22,14 +22,4 @@ export class TraitValue extends foundry.abstract.DataModel {
       value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0, max: 3 }),
     }
   }
-
-  /** Valeur comptée dans le total des vices : 0 si c'est la vertu qui domine. */
-  get viceValue() {
-    return this.dominant === SYSTEM.TRAIT_SIDES.vice.id ? this.value : 0
-  }
-
-  /** Valeur comptée dans le total des vertus : 0 si c'est le vice qui domine. */
-  get virtueValue() {
-    return this.dominant === SYSTEM.TRAIT_SIDES.virtue.id ? this.value : 0
-  }
 }

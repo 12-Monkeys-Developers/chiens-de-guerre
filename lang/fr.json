@@ -75,11 +75,6 @@
         "corps": "Corps",
         "vivacite": "Vivacité",
         "esprit": "Esprit"
-      },
-      "short": {
-        "corps": "COR",
-        "vivacite": "VIV",
-        "esprit": "ESP"
       }
     },
     "skills": {
@@ -149,7 +144,6 @@
       "cannotReactivate": "Restaurez d'abord un maximum d'Effectifs supérieur à zéro.",
       "addWound": "Ajouter une blessure avec débordement",
       "healing": {
-        "title": "Guérison et repos",
         "recovery": "Récupération naturelle — Effectifs / Cohésion",
         "care": "Soins au repos — Logistique / Soins",
         "reserves": "Récupération nocturne des réserves",
@@ -330,9 +324,7 @@
     "roll": {
       "title": "Faire un test",
       "titleFor": "Test — {name}",
-      "pair": "Caractéristique et compétence",
       "target": "Cible :",
-      "skill": "Compétence",
       "noSkill": "Aucune compétence pertinente",
       "modifiers": "Modificateurs",
       "difficulty": "Difficulté",
@@ -604,7 +596,6 @@
         "religion": "Religion",
         "carriere": "Carrière",
         "grade": "Grade",
-        "solde": "Solde mensuelle",
         "ascendance": "Ascendance",
         "compulsion": "Compulsion",
         "arcanumChoices": "Arcanums candidats",
@@ -618,18 +609,13 @@
         "allegiance": "Allégeance",
         "passion": "Passion",
         "initiative": "Initiative",
-        "initiativeValue": "Score",
         "initiativeModifier": "Modificateur Initiative",
         "modifier": "Modificateur",
         "initiativeBonus": "Bonus",
-        "dodgesUsed": "Esquives utilisées",
         "malus": "Malus :",
         "nextDodge": "Malus prochaine esquive",
-        "parry": "Parade",
         "wounds": "Blessures",
         "currentWoundMalus": "Malus courant :",
-        "weapons": "Armes",
-        "protections": "Protections",
         "weaponsAndProtections": "Armes et protections",
         "damage": "Dégâts",
         "attackTest": "Test d'attaque",
@@ -645,7 +631,6 @@
         "rank": "Rang",
         "linkedSkill": "Compétence bonifiée",
         "activationCost": "Coût d'activation",
-        "effect": "Effet",
         "specialTraits": "Traits spéciaux",
         "languages": "Langues maîtrisées",
         "startingLanguages": "Langues de départ",
@@ -663,7 +648,6 @@
         "price": "Prix",
         "subtype": "Type",
         "description": "Description",
-        "origin": "Origine",
         "biography": "Biographie",
         "notesPrivate": "Notes privées",
         "vice": "Vice",
@@ -685,7 +669,8 @@
         "name": "Nom",
         "notes": "Notes",
         "date": "Date",
-        "event": "Événement"
+        "event": "Événement",
+        "actionscombat": "Actions de combat"
       },
       "short": {
         "init": "Init.",
@@ -725,7 +710,6 @@
       "clearInvokedTraits": "Nouvelle session : libérer tous les traits",
       "invokeTraitHint": "Marquer ce trait comme invoqué pour la session.",
       "passionHint": "Dépenser un jeton ajoute la valeur d'un trait dominant au seuil de réussite. S'imposer ce malus en rapporte un. Céder à sa compulsion : +1 jeton ; y résister : -1.",
-      "initiativeModifierHint": "Bonus de la fiche, plus les malus de l'armure et du bouclier portés.",
       "armorOverloaded": "Rang de Port d'armures insuffisant : le malus de l'armure est doublé.",
       "parryHint": "Une seule parade par round.",
       "parryAvailable": "Parade disponible",

@@ -5,8 +5,9 @@ import CdgItemData from "./item.mjs"
  * La carrière du mercenaire : elle fixe l'ajustement de caractéristique de départ, les rangs de
  * compétences de base, les arcanums et l'équipement initial.
  *
- * Comme le peuple, elle sert de mémo à la création — rien n'est recopié automatiquement sur le
- * personnage.
+ * Comme le peuple, déposée sur un personnage, elle lui accorde ce qu'elle référence — arcanums,
+ * équipement, rangs plancher et argent de départ (`CdgActor#grantOrigin`) — et son ajustement passe
+ * par l'effet actif qu'elle porte.
  */
 export default class CdgCarriereData extends CdgItemData {
   /** @override */

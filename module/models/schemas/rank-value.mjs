@@ -14,7 +14,7 @@ export class RankValue extends foundry.abstract.DataModel {
     }
   }
 
-  /** Formule de dés correspondant au rang, par exemple `2d20kl` au rang 2. */
+  /** Poignée de dés correspondant au rang, par exemple `2d20` au rang 2 (lancée brute, voir `SYSTEM.RANKS`). */
   get formula() {
     return SYSTEM.RANKS[this.rank]?.formula ?? SYSTEM.RANKS[SYSTEM.DEFAULT_RANK].formula
   }

@@ -4,8 +4,9 @@ import CdgItemData from "./item.mjs"
 /**
  * Le peuple d'origine : Aduatons, Tolèniens, Darguanites, Tuhéens...
  *
- * Il fixe l'ajustement de caractéristique, les traits spéciaux et les langues de départ. Rien n'est
- * appliqué automatiquement au personnage à ce stade : le peuple sert de mémo à la création.
+ * Il fixe l'ajustement de caractéristique, les traits spéciaux et les langues de départ. Déposé sur
+ * un personnage, il lui accorde ses traits et ses langues (`CdgActor#grantOrigin`) ; l'ajustement
+ * passe par l'effet actif qu'il porte, `abilityBonus` n'étant qu'un mémo pour l'assistant de création.
  */
 export default class CdgPeupleData extends CdgItemData {
   /** @override */

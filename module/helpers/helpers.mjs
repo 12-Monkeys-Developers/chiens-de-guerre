@@ -16,31 +16,6 @@ export function registerHandlebarsHelpers() {
     return values
   })
 
-  /** Vrai si le rang atteint le cran dessiné : sert à noircir un écusson. */
-  Handlebars.registerHelper("rankFilled", function (rank, position) {
-    return parseInt(rank) >= parseInt(position)
-  })
-
-  /** Les compétences d'une colonne de la fiche. */
-  Handlebars.registerHelper("skillsInColumn", function (column) {
-    return Object.values(SYSTEM.SKILLS).filter((skill) => skill.column === parseInt(column))
-  })
-
-  /** Libellé long d'une caractéristique. */
-  Handlebars.registerHelper("abilityLabel", function (ability) {
-    return game.i18n.localize(SYSTEM.ABILITIES[ability]?.label ?? ability)
-  })
-
-  /** Libellé d'une compétence. */
-  Handlebars.registerHelper("skillLabel", function (skill) {
-    return game.i18n.localize(SYSTEM.SKILLS[skill]?.label ?? skill)
-  })
-
-  /** Poignée de dés d'un rang, affichée en info-bulle. */
-  Handlebars.registerHelper("rankFormula", function (rank) {
-    return SYSTEM.RANKS[rank]?.formula ?? SYSTEM.RANKS[SYSTEM.DEFAULT_RANK].formula
-  })
-
   /** Info-bulle d'un rang : « Professionnel — 2d20, le meilleur ». */
   Handlebars.registerHelper("rankTooltip", function (rank) {
     const entry = SYSTEM.RANKS[rank] ?? SYSTEM.RANKS[SYSTEM.DEFAULT_RANK]
@@ -51,16 +26,6 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("signed", function (value) {
     const number = parseInt(value) || 0
     return number > 0 ? `+${number}` : `${number}`
-  })
-
-  /** Somme de deux nombres. */
-  Handlebars.registerHelper("add", function (a, b) {
-    return (parseInt(a) || 0) + (parseInt(b) || 0)
-  })
-
-  /** Vrai si la valeur figure dans le tableau : cases de langues, listes de choix. */
-  Handlebars.registerHelper("includes", function (array, value) {
-    return Array.isArray(array) && array.includes(value)
   })
 
   Handlebars.registerHelper("formulabreakdown", function (parts) {

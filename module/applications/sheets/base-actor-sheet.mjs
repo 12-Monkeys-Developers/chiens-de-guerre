@@ -5,7 +5,6 @@ import CdgRollDialog from "../roll-dialog.mjs"
 
 const { sheets } = foundry.applications
 const { HandlebarsApplicationMixin } = foundry.applications.api
-const { DragDrop } = foundry.applications.ux
 
 /**
  * Socle des fiches d'acteur.
@@ -83,23 +82,13 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     return this.isVisible && !this.isObserver && !this.isEditable
   }
 
-  /** @inheritDoc */
+  /**
+   * Le glisser-déposer est déjà branché par `ActorSheetV2#_onRender` (sélecteur `.draggable`,
+   * `_onDragStart`, `_onDrop`) : seul l'interrupteur de mode reste à poser.
+   * @inheritDoc
+   */
   async _onRender(context, options) {
     await super._onRender(context, options)
-
-    new DragDrop.implementation({
-      dragSelector: ".draggable",
-      permissions: {
-        dragstart: this._canDragStart.bind(this),
-        drop: this._canDragDrop.bind(this),
-      },
-      callbacks: {
-        dragstart: this._onDragStart.bind(this),
-        dragover: this._onDragOver.bind(this),
-        drop: this._onDrop.bind(this),
-      },
-    }).bind(this.element)
-
     this._renderModeToggle(this.element)
   }
 

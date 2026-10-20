@@ -63,8 +63,8 @@ export const COMPANY_WOUND_SLOTS_BY_COHESION = {
   3: { legere: 3, grave: 3, mortelle: 3 },
 }
 
-/** Bornes de saisie d'une caractéristique de compagnie à la création (p. 126), hors périmètre tant
- *  qu'aucun assistant de création dédié n'existe — gardées ici pour ne pas les reperdre. */
+/** Enveloppe et bornes de saisie des caractéristiques de compagnie à la création (p. 126), que suit
+ *  l'assistant de création de compagnie. */
 export const COMPANY_ABILITY_POINTS = 34
 export const COMPANY_ABILITY_MIN = 8
 export const COMPANY_ABILITY_MAX = 14

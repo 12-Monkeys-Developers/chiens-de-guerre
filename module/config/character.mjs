@@ -273,8 +273,5 @@ export const TRAIT_RANK3_MAX = 2
 /** Nombre d'augmentations possibles d'une caractéristique par rapport à son score de départ. */
 export const ABILITY_MAX_IMPROVEMENTS = 3
 
-/** Coût en expérience d'une augmentation de caractéristique. */
-export const ABILITY_IMPROVEMENT_COST = 5
-
 /** Jetons de passion en début de session. */
 export const BASE_PASSION_TOKENS = 1

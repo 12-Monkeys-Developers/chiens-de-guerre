@@ -1,4 +1,4 @@
-/** Les cinq types d'objet du système. */
+/** Les six types d'objet du système. */
 export const ITEM_TYPE = {
   equipment: "equipment",
   arcanum: "arcanum",

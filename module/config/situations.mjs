@@ -1,16 +1,4 @@
 /**
- * Les situations dans lesquelles un bonus circonstanciel s'applique.
- *
- * Les traits de peuple ne bonifient pas des compétences mais des *intentions* : « se montrer
- * charmant » n'est pas une compétence, c'est ce que le personnage cherche à obtenir. Un même
- * bonus peut donc tomber sur Baratin, Éloquence ou Étiquette selon la scène, et il ne tombe pas
- * dès que l'une de ces compétences est employée à autre chose.
- *
- * D'où la liste close ci-dessous : elle nomme les intentions, pas les compétences. `skills`
- * n'énumère que les compétences par lesquelles l'intention passe le plus souvent, et ne sert
- * qu'à pré-cocher le bonus dans le dialogue de jet. Le dernier mot reste au meneur.
- */
-/**
  * Le type de change qui porte un bonus circonstanciel.
  *
  * Un change de ce type n'écrit jamais rien sur la fiche : il est recueilli pour le dialogue de jet.
@@ -28,6 +16,18 @@ export const SITUATIONAL_CHANGE_TYPE = "cdg.situational"
  */
 export const SITUATIONAL_CHANGE_KEY = "system.modifiers.sr"
 
+/**
+ * Les situations dans lesquelles un bonus circonstanciel s'applique.
+ *
+ * Les traits de peuple ne bonifient pas des compétences mais des *intentions* : « se montrer
+ * charmant » n'est pas une compétence, c'est ce que le personnage cherche à obtenir. Un même
+ * bonus peut donc tomber sur Baratin, Éloquence ou Étiquette selon la scène, et il ne tombe pas
+ * dès que l'une de ces compétences est employée à autre chose.
+ *
+ * D'où la liste close ci-dessous : elle nomme les intentions, pas les compétences. `skills`
+ * n'énumère que les compétences par lesquelles l'intention passe le plus souvent, et ne sert
+ * qu'à pré-cocher le bonus dans le dialogue de jet. Le dernier mot reste au meneur.
+ */
 export const SITUATIONS = {
   charme: {
     id: "charme",

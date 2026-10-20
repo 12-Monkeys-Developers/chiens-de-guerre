@@ -4,9 +4,6 @@
  */
 export const DODGE_MALUS = [0, -2, -4, -6, -8]
 
-/** Nombre maximum d'esquives suivies par la fiche (les cases imprimées de 0 à -8). */
-export const MAX_TRACKED_DODGES = DODGE_MALUS.length - 1
-
 /** Chaque action entreprise pendant un round retire ce nombre de points d'initiative. */
 export const INITIATIVE_ACTION_COST = 10
 
@@ -27,6 +24,3 @@ export const DUEL_TOUCH_TARGETS = [1, 2, 3]
 
 /** Bonus d'initiative lorsque deux armes de mêlée légères ou moyennes sont effectivement tenues. */
 export const DUAL_WIELD_INITIATIVE_BONUS = [0, 0, 1, 2]
-
-/** Un personnage ne peut tenter qu'une seule parade (blocage) par round. */
-export const MAX_PARRY_PER_ROUND = 1

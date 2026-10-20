@@ -50,7 +50,7 @@ export default class CdgPartySheet extends HandlebarsApplicationMixin(Applicatio
     context.abilityColumns = Object.values(SYSTEM.ABILITIES).map((ability) => ({ ...ability, name: game.i18n.localize(ability.label) }))
 
     context.members = game.users
-      .filter((user) => !user.isGM && user.hasPlayerOwner && user.active && user.character?.type === "character")
+      .filter((user) => !user.isGM && user.active && user.character?.type === "character")
       .map((user) => {
         const actor = user.character
         return {
