@@ -102,12 +102,13 @@ Hooks.once("init", async function () {
     decimals: 0,
   }
 
-  // Onglet du système dans la barre latérale : pour l'instant, la seule porte d'entrée du tableau
-  // de bord des joueurs. « Chiens de guerre » désigne des mercenaires, pas des chiens au sens
-  // propre : des épées croisées illustrent l'onglet, pas un animal.
+  // Onglet du système dans la barre latérale : tableau de bord des joueurs et assistants de
+  // création. « Chiens de guerre » désigne des mercenaires, pas des chiens au sens propre : l'onglet
+  // porte l'étendard de la compagnie franche. Les épées croisées étaient déjà l'icône du suivi de
+  // combat de Foundry, deux onglets plus haut.
   CONFIG.ui.sidebar.TABS.cdg = {
     active: false,
-    icon: "fa-solid fa-swords",
+    icon: "fa-solid fa-flag-swallowtail",
     tooltip: SYSTEM.SYSTEM_DESCRIPTION,
   }
   CONFIG.ui.cdg = applications.CdgSidebarMenu

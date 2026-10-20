@@ -38,7 +38,7 @@ pages:
             <div class="guide-image guide-image-narrow"><img src="systems/chiens-de-guerre/assets/guide/barre-laterale.webp" alt="Onglet Chiens de guerre de la barre latérale" /></div>
             <div>
               <p>
-                Le système ajoute un onglet à la barre latérale, marqué de deux épées croisées <i class="fa-solid fa-swords"></i>. Il rassemble les points d'entrée des outils du système :
+                Le système ajoute un onglet à la barre latérale, marqué d'un étendard <i class="fa-solid fa-flag-swallowtail"></i>. Il rassemble les points d'entrée des outils du système :
               </p>
               <ul>
                 <li><strong>Tableau de bord des joueurs</strong> (meneur seulement) : l'état des personnages des joueurs connectés, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.d6qJxIR42RlaHXOi]{Macros et outils du meneur} ;</li>
@@ -168,7 +168,7 @@ pages:
         <div class="cdg-guide">
           <h2>L'assistant de création</h2>
           <p>
-            L'assistant conduit la création d'un Marqué en neuf étapes, dans l'ordre du livre. On l'ouvre depuis l'onglet <i class="fa-solid fa-swords"></i> de la barre
+            L'assistant conduit la création d'un Marqué en neuf étapes, dans l'ordre du livre. On l'ouvre depuis l'onglet <i class="fa-solid fa-flag-swallowtail"></i> de la barre
             latérale, bouton <strong>Création de personnage</strong>.
           </p>
           <ul>
@@ -758,7 +758,7 @@ pages:
           </p>
 
           <h2>L'assistant de création</h2>
-          <p>On l'ouvre depuis l'onglet <i class="fa-solid fa-swords"></i> de la barre latérale, bouton <strong>Création de compagnie</strong>. Il compte trois étapes.</p>
+          <p>On l'ouvre depuis l'onglet <i class="fa-solid fa-flag-swallowtail"></i> de la barre latérale, bouton <strong>Création de compagnie</strong>. Il compte trois étapes.</p>
           <div class="guide-row">
             <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/compagnie-creation-caracteristiques.webp" alt="Caractéristiques de la compagnie" /></div>
             <div>
@@ -1197,7 +1197,7 @@ pages:
           <h2>Le tableau de bord des joueurs</h2>
           <div class="guide-image"><img src="systems/chiens-de-guerre/assets/guide/tableau-de-bord.webp" alt="Tableau de bord des joueurs" /></div>
           <p>
-            Réservé au meneur, il s'ouvre depuis l'onglet <i class="fa-solid fa-swords"></i> de la barre latérale. Il liste, pour chaque joueur connecté qui a un
+            Réservé au meneur, il s'ouvre depuis l'onglet <i class="fa-solid fa-flag-swallowtail"></i> de la barre latérale. Il liste, pour chaque joueur connecté qui a un
             personnage attribué : ses caractéristiques (réserve sur maximum), ses jetons de passion et ses blessures, avec le malus courant. Il se met à jour tout seul
             quand une fiche change ou qu'un joueur se connecte ; un clic sur le portrait ou le nom ouvre la fiche.
           </p>
