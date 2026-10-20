@@ -317,7 +317,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
     const confirmed = await foundry.applications.api.DialogV2.confirm({
       window: { title: game.i18n.localize("CDG.ui.deleteItemTitle") },
-      content: `<p>${game.i18n.format("CDG.ui.deleteItemContent", { name: item.name })}</p>`,
+      content: `<p>${game.i18n.format("CDG.ui.deleteItemContent", { name: foundry.utils.escapeHTML(item.name) })}</p>`,
     })
     if (confirmed) return item.delete()
   }

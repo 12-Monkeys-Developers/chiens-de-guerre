@@ -254,10 +254,11 @@ export default class CdgActor extends Actor {
 
     const granted = this.grantedBy(item)
     const refund = this.#revokedStartingMoney(item)
+    // Les noms sont saisis librement : échappés avant d'entrer dans le HTML de la confirmation.
+    const name = foundry.utils.escapeHTML(item.name)
     const content =
-      (granted.length > 0
-        ? game.i18n.format("CDG.origin.removeContent", { name: item.name, count: granted.length })
-        : game.i18n.format("CDG.origin.removeContentAlone", { name: item.name })) + (refund > 0 ? game.i18n.format("CDG.origin.removeMoney", { amount: refund }) : "")
+      (granted.length > 0 ? game.i18n.format("CDG.origin.removeContent", { name, count: granted.length }) : game.i18n.format("CDG.origin.removeContentAlone", { name })) +
+      (refund > 0 ? game.i18n.format("CDG.origin.removeMoney", { amount: refund }) : "")
 
     const confirmed = await foundry.applications.api.DialogV2.confirm({
       window: { title: game.i18n.format("CDG.origin.removeTitle", { type: game.i18n.localize(`TYPES.Item.${item.type}`) }) },
@@ -279,11 +280,13 @@ export default class CdgActor extends Actor {
     if (item.type !== SYSTEM.ITEM_TYPE.ascendance) return
 
     const bumped = this.#ascendanceBonusItem(item)
+    const name = foundry.utils.escapeHTML(item.name)
+    const arcanum = bumped ? foundry.utils.escapeHTML(bumped.name) : ""
     const content = bumped
       ? bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")
-        ? game.i18n.format("CDG.origin.removeAscendanceGranted", { name: item.name, arcanum: bumped.name })
-        : game.i18n.format("CDG.origin.removeAscendanceBumped", { name: item.name, arcanum: bumped.name })
-      : game.i18n.format("CDG.origin.removeContentAlone", { name: item.name })
+        ? game.i18n.format("CDG.origin.removeAscendanceGranted", { name, arcanum })
+        : game.i18n.format("CDG.origin.removeAscendanceBumped", { name, arcanum })
+      : game.i18n.format("CDG.origin.removeContentAlone", { name })
 
     const confirmed = await foundry.applications.api.DialogV2.confirm({
       window: { title: game.i18n.format("CDG.origin.removeTitle", { type: game.i18n.localize(`TYPES.Item.${item.type}`) }) },
