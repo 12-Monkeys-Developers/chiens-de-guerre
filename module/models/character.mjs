@@ -5,7 +5,7 @@ import { TraitValue } from "./schemas/trait-value.mjs"
 export default class CdgCharacterData extends CdgActorData {
   /** @override */
   static LOCALIZATION_PREFIXES = ["CDG.Character"]
-  
+
   static SKILLS = SYSTEM.SKILLS
 
   static defineSchema() {

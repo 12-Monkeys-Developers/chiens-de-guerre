@@ -6,6 +6,7 @@
   "scripts": {
     "build": "gulp",
     "compile": "gulp css",
+    "lint": "eslint .",
     "watch": "gulp",
     "gulp": "gulp",
     "YMLtoLDB": "node ./tools/YMLtoLDB.mjs",

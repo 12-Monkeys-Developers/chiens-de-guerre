@@ -207,9 +207,12 @@ Deux éléments de la fiche papier sont **dessinés en CSS** plutôt qu'extraits
 ## Vérifications passées
 
 - `npm run compile` : `css/cdg.css` produit sans erreur LESS.
-- `npx eslint .` : aucune erreur. Restent deux avertissements dans
+- `npm run lint` (`eslint .`) : aucune erreur. `source/` (maquettes de l'éditeur, non versionnées)
+  et les macros générées de `tools/scripts/` sont exclus. Restent 11 avertissements connus : deux dans
   `module/elements/slide-toggle.mjs`, repris tel quel de co2 (lectures de `offsetHeight` destinées à
-  forcer un recalcul de mise en page, que la règle `no-unused-expressions` ne peut pas distinguer).
+  forcer un recalcul de mise en page, que la règle `no-unused-expressions` ne peut pas distinguer), et
+  neuf `no-useless-concat` dans `tools/scripts/arcanums.mjs`, où de longs textes d'arcanums sont
+  coupés en deux chaînes.
 - Tous les gabarits Handlebars se précompilent.
 - Tous les chemins de gabarits référencés dans le code existent, et aucun gabarit n'est orphelin.
 - Toutes les clés de traduction employées dans le code et les gabarits existent dans `lang/fr.json`.

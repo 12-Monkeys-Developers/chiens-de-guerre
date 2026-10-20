@@ -145,10 +145,7 @@ export default class CdgActor extends Actor {
     // La copie de l'origine doit désormais référencer les objets qui viennent d'être embarqués,
     // jamais leurs modèles du monde ou du compendium. Chaque identifiant, imposé à la création,
     // retrouve son objet quel que soit l'ordre dans lequel ils ont été créés.
-    const references = groups.map((group) => [
-      `system.${group.field}`,
-      createdIds[group.field].map((id) => this.items.get(id)?.uuid).filter((uuid) => uuid),
-    ])
+    const references = groups.map((group) => [`system.${group.field}`, createdIds[group.field].map((id) => this.items.get(id)?.uuid).filter((uuid) => uuid)])
     await origin.update(Object.fromEntries(references))
 
     const updates =

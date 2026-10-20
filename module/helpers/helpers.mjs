@@ -66,14 +66,14 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("formulabreakdown", function (parts) {
     let stringFormula = ""
     for (let part of parts) {
-      stringFormula += part.label + " " + part.value + " "
+      stringFormula += `${part.label} ${part.value} `
     }
     return stringFormula
   })
 
-    Handlebars.registerHelper("allegeanceIcon", function (value) {
-      if(value==="obscurite") return "fas fa-moon";
-      if(value==="balance") return "fas fa-scale-balanced";
-      return "fa-light fa-sun";
+  Handlebars.registerHelper("allegeanceIcon", function (value) {
+    if (value === "obscurite") return "fas fa-moon"
+    if (value === "balance") return "fas fa-scale-balanced"
+    return "fa-light fa-sun"
   })
 }

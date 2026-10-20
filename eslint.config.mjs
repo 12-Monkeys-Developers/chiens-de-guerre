@@ -5,10 +5,19 @@ import configPrettier from "eslint-config-prettier"
 export default [
   // Exclusion générale. Un objet qui ne porte que `ignores` s'applique à toute la configuration,
   // là où le même champ posé à côté d'autres clés ne vaudrait que pour ce bloc-là.
-  // Ces 3 fichiers sont générés : ce sont des corps de macro Foundry, où un `return` de premier
+  // Ces 4 fichiers sont générés : ce sont des corps de macro Foundry, où un `return` de premier
   // niveau est légitime, ce qu'un parseur de module ES refuse. Le reste de `tools/scripts/` (les
   // scripts et données à la main) reste couvert par le lint.
-  { ignores: ["tools/scripts/macro-compendiums.js", "tools/scripts/macro-pnjs.js", "tools/scripts/macro-pretires.js"] },
+  // `source/` contient les visuels et les maquettes de l'éditeur : non versionné, hors du système.
+  {
+    ignores: [
+      "source/",
+      "tools/scripts/macro-compendiums.js",
+      "tools/scripts/macro-pnjs.js",
+      "tools/scripts/macro-pnjs-acteurs.js",
+      "tools/scripts/macro-pretires.js",
+    ],
+  },
   {
     ignores: ["node_modules/", "eslint.config.mjs", "build.mjs", "gulpfile.js"],
     languageOptions: {

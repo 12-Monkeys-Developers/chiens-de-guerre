@@ -34,7 +34,7 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
     primary: {
       tabs: [
         { id: "combat", cssClass: "tabName" },
-        { id: "description", cssClass: "tabName" }
+        { id: "description", cssClass: "tabName" },
       ],
       initial: "combat",
       labelPrefix: "CDG.sheet.tabs",
