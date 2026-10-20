@@ -1,4 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
+import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const TEMPLATES = `${SYSTEM.PATH}/templates/dialogs`
@@ -99,7 +100,7 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     const effortMax = canUseEffort ? Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1)) : 0
     draft.effort = Math.clamp(parseInt(draft.effort) || 0, 0, effortMax)
 
-    const passion = this.#passion(actor, draft)
+    const passion = invocablePassions(actor, draft)
     const wound = draft.wound !== false ? (system.wounds?.malus ?? 0) : 0
     const equipment = draft.equipment !== false ? (system.combat?.initiative?.modifier ?? 0) : 0
     const dualWieldEligible = actor.canDualWield
@@ -144,31 +145,6 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
   }
 
   /**
-   * Calcule les traits invocables avec les mêmes contraintes que le test normal.
-   * @param {CdgActor} actor
-   * @param {Object} draft
-   */
-  static #passion(actor, draft) {
-    if (actor.type !== "character") return { available: false, choices: [], selected: null, value: 0 }
-    const invoked = new Set(actor.system.passion.invokedThisSession)
-    const choices = Object.values(SYSTEM.TRAIT_PAIRS)
-      .map((pair) => ({ pair, trait: actor.system.traits[pair.id] }))
-      .filter(({ pair, trait }) => trait.dominant && trait.value > 0 && !invoked.has(pair.id))
-      .map(({ pair, trait }) => ({
-        id: pair.id,
-        label: game.i18n.localize(trait.dominant === SYSTEM.TRAIT_SIDES.vice.id ? pair.vice : pair.virtue),
-        value: trait.value,
-      }))
-      .sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang))
-
-    const selected = choices.find((choice) => choice.id === draft.passionPairId) ?? null
-    const canSpend = actor.system.passion.tokens > 0
-    if (!canSpend && draft.passionMode === "bonus") draft.passionMode = "malus"
-    const value = selected ? (draft.passionMode === "bonus" ? selected.value : -selected.value) : 0
-    return { available: true, choices, selected, value, tokens: actor.system.passion.tokens, canSpend, mode: draft.passionMode }
-  }
-
-  /**
    * Évalue les dés, applique les dépenses et inscrit le total sur le Combatant.
    * @param {Combatant} combatant
    * @param {Object} data
@@ -183,10 +159,7 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     const updates = {}
     const effort = data.effort ?? 0
     if (effort > 0) updates["system.abilities.vivacite.value"] = data.pool.value - effort
-    if (data.passion.selected) {
-      updates["system.passion.tokens"] = actor.system.passion.tokens + (data.passion.mode === "bonus" ? -1 : 1)
-      updates["system.passion.invokedThisSession"] = [...actor.system.passion.invokedThisSession, data.passion.selected.id]
-    }
+    Object.assign(updates, passionUpdates(actor, data.passion.selected, data.passion.mode))
     if (!foundry.utils.isEmpty(updates)) await actor.update(updates)
     await combatant.update({ initiative: total })
 

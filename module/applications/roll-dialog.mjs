@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
+import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
 import Utils from "../helpers/utils.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
@@ -319,39 +320,12 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   }
 
   /**
-   * L'invocation de passion — règles p. 41.
-   *
-   * Un trait n'est invocable que s'il est dominant, et une seule fois par session. Le bonus coûte un
-   * jeton ; s'imposer le malus correspondant en rapporte un, ce qui reste toujours possible.
+   * L'invocation de passion (voir `invocablePassions`), fermée au test restreint du jet de survie.
    * @returns {Object}
    */
   #computePassion() {
-    const draft = this.#draft
-    if (!this.hasPassion || this.#restricted) return { available: false, choices: [], selected: null, value: 0 }
-
-    const system = this.#actor.system
-    const invoked = new Set(system.passion.invokedThisSession)
-
-    const choices = Object.values(SYSTEM.TRAIT_PAIRS)
-      .map((pair) => ({ pair, trait: system.traits[pair.id] }))
-      .filter(({ pair, trait }) => trait.dominant && trait.value > 0 && !invoked.has(pair.id))
-      .map(({ pair, trait }) => {
-        const label = game.i18n.localize(trait.dominant === SYSTEM.TRAIT_SIDES.vice.id ? pair.vice : pair.virtue)
-        return { id: pair.id, label, value: trait.value, option: `${label} (${trait.value})` }
-      })
-      .sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang))
-
-    // Un trait choisi puis devenu indisponible ne doit pas rester silencieusement dans la somme.
-    if (draft.passionPairId && !choices.some((choice) => choice.id === draft.passionPairId)) draft.passionPairId = ""
-
-    const tokens = system.passion.tokens
-    const canSpend = tokens > 0
-    if (!canSpend && draft.passionMode === "bonus") draft.passionMode = "malus"
-
-    const selected = choices.find((choice) => choice.id === draft.passionPairId) ?? null
-    const value = selected ? (draft.passionMode === "bonus" ? selected.value : -selected.value) : 0
-
-    return { available: true, choices, selected, value, tokens, canSpend, mode: draft.passionMode }
+    if (this.#restricted) return { available: false, choices: [], selected: null, value: 0 }
+    return invocablePassions(this.#actor, this.#draft)
   }
 
   /**
@@ -554,10 +528,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
 
     const updates = {}
     if (draft.effort > 0) updates[`system.abilities.${draft.abilityId}.value`] = derived.pool.value - draft.effort
-    if (test.passion) {
-      updates["system.passion.tokens"] = actor.system.passion.tokens + (draft.passionMode === "bonus" ? -1 : 1)
-      updates["system.passion.invokedThisSession"] = [...actor.system.passion.invokedThisSession, test.passion.pairId]
-    }
+    Object.assign(updates, passionUpdates(actor, derived.passion.selected, draft.passionMode))
     if (!foundry.utils.isEmpty(updates)) await actor.update(updates)
 
     const post = this.#postHandler ?? ((posted) => CdgRoll.post(posted))
