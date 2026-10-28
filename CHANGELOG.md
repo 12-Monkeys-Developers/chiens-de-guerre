@@ -15,6 +15,7 @@
 - **Fenêtre de jet** : la liste des compétences s'écrit plus petit ; dépliée, elle ne déborde plus largement de la fenêtre.
 - **Fiche de PNJ** : les bandeaux Arcanums et Spécial ne mordent plus la liste des armes.
 - **Fiche de PNJ** : le malus courant et l'état « Mourant » s'affichent sous les blessures, sur leur propre ligne, au lieu d'être repoussés hors de vue dans une fenêtre étroite ; sans malus, la ligne n'apparaît pas.
+- **Fiche de PNJ** : toutes les compétences sont disponibles, et plus seulement les six de combat. En édition, les compétences de combat viennent en tête, puis les autres sous un filet ; en lecture, seules celles qui ont un rang s'affichent, dans le même ordre.
 - **Tableau de bord des joueurs** : en thème sombre, le tableau gardait les couleurs grises de Foundry sur le parchemin et ses intitulés s'y perdaient ; il a maintenant le même aspect qu'en thème clair.
 - **Création de compagnie** : les compteurs de l'étape Compétences se lisent « Rang 3 : 0 / 5 ».
 - **Compagnie** : le grade d'un membre se choisit dans une liste qui suit la hiérarchie de la compagnie (Capitaine, Lieutenant, Sergent, Duplicator, Homme d'armes, Valet, ou aucun) au lieu d'un champ libre.

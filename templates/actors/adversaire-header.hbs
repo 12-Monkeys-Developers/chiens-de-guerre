@@ -47,14 +47,14 @@
   </div>
   <div class="npc-skills">
   {{#if hasSkills}}
-    <div class="skill-columns">
+    {{#each skillGroups as |skillColumns|}}<div class="skill-columns">
       {{#each skillColumns as |column|}}<ul class="skill-column">
         {{#each column as |skill|}}<li class="skill{{#if @root.unlocked}} draggable{{/if}}" data-skill="{{skill.id}}" data-cdg-macro="test">
           <span class="skill-name" data-action="rollTest" data-tooltip="{{localize 'CDG.roll.title'}}">{{localize skill.label}}</span>
           {{> "systems/chiens-de-guerre/templates/shared/rank-shields.hbs" path=(concat "system.skills." skill.id ".rank") rank=(lookup (lookup @root.skills skill.id) "rank") editable=@root.unlocked}}
         </li>{{/each}}
       </ul>{{/each}}
-    </div>
+    </div>{{/each}}
   {{else}}<p class="empty">{{localize "CDG.ui.noSkill"}}</p>{{/if}}
   </div>
   

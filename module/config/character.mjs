@@ -58,6 +58,9 @@ export const SKILLS = {
   vigueur: { id: "vigueur", label: "CDG.skills.vigueur", column: 2 },
   volonte: { id: "volonte", label: "CDG.skills.volonte", column: 2 },
 }
+/**
+ * Les compétences de combat, affichées en tête de la fiche de PNJ avant toutes les autres.
+ */
 export const ADVERSARY_SKILLS = {
   blocage: { id: "blocage", label: "CDG.skills.blocage", column: 1 },
   esquive: { id: "esquive", label: "CDG.skills.esquive", column: 1 },

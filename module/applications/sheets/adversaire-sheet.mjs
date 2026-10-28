@@ -52,14 +52,18 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
     context.hasSpecial = !!this.document.system.details.special?.trim()
     context.adversaireAbilities = [SYSTEM.ABILITIES.corps, SYSTEM.ABILITIES.esprit, SYSTEM.ABILITIES.vivacite]
 
-    const skills = Object.values(SYSTEM.ADVERSARY_SKILLS)
-    if (this.isEditMode) {
-      const columnSize = Math.ceil(skills.length / 4)
-      context.skillColumns = Array.from({ length: 4 }, (_, column) => skills.slice(column * columnSize, (column + 1) * columnSize))
-    } else {
-      context.skillColumns = [1, 2].map((column) => skills.filter((skill) => skill.column === column && this.document.system.skills[skill.id].rank > 0))
-    }
-    context.hasSkills = context.skillColumns.some((column) => column.length > 0)
+    // Les compétences de combat d'abord, puis toutes les autres : toutes en édition, seules celles
+    // qui ont un rang en lecture. Chaque groupe se lit en deux colonnes, de haut en bas.
+    const combat = Object.values(SYSTEM.ADVERSARY_SKILLS)
+    const others = Object.values(SYSTEM.SKILLS).filter((skill) => !SYSTEM.ADVERSARY_SKILLS[skill.id])
+    context.skillGroups = [combat, others]
+      .map((skills) => (this.isEditMode ? skills : skills.filter((skill) => this.document.system.skills[skill.id].rank > 0)))
+      .filter((skills) => skills.length > 0)
+      .map((skills) => {
+        const columnSize = Math.ceil(skills.length / 2)
+        return [skills.slice(0, columnSize), skills.slice(columnSize)]
+      })
+    context.hasSkills = context.skillGroups.length > 0
 
     return context
   }

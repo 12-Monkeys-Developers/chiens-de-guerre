@@ -14,7 +14,7 @@ export default class CdgAdversaireData extends CdgActorData {
   static LOCALIZATION_PREFIXES = ["CDG.Adversaire"]
 
   /** @override */
-  static SKILLS = SYSTEM.ADVERSARY_SKILLS
+  static SKILLS = SYSTEM.SKILLS
 
   /** @override */
   static get PROTOTYPE_TOKEN() {
