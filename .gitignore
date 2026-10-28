@@ -15,6 +15,9 @@ source/
 # compendiums et les prétirés. Tout est reconstructible depuis le livre des règles.
 /tools/scripts/
 
+# Images des personnages prétirés : les prétirés ne sont pas distribués avec le système.
+/assets/images/pretires/
+
 # Tools
 .claudeignore
 CLAUDE.md

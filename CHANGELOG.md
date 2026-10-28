@@ -30,10 +30,6 @@
 - **Guide du système** : les titres calligraphiés sont plus grands, et plus clairs en thème sombre.
 - **Thème sombre** : les titres des textes riches (« Lumière / Balance », « Obscurité » des arcanums…) prenaient la couleur claire de Foundry et disparaissaient sur le parchemin ; ils sont désormais à l'encre.
 
-### Personnages prétirés
-
-- Les cinq prétirés (Châtaigne, Fringant, Gueule-de-Caillou, Fêlée, Vérole) ont leur dessin de la fiche du livre : en pied sur la fiche, en buste sur le token (`assets/images/pretires/`).
-
 ### Corrections
 
 - **Bestiaire** : 25 PNJ et créatures (Troll, Ogre, Goule, Loup, Ours, Officiers, Archers, Duellistes, Guerriers de choc…) pointaient vers des icônes absentes de Foundry V14 et s'affichaient sans portrait. Elles sont remplacées par des icônes du cœur, dans le générateur comme dans les sources du compendium.

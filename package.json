@@ -14,7 +14,7 @@
     "LDBtoYML": "node ./tools/LDBtoYML.mjs",
     "guide": "node ./guide/build-guide.mjs",
     "build:compendiums": "node ./tools/scripts/build-compendiums.mjs",
-    "build:pretires": "node ./tools/scripts/build-pretires.mjs"
+    "build:pretires": "node ./tools/scripts/internal/build-pretires.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
