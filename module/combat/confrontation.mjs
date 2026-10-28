@@ -151,10 +151,10 @@ export default class CdgConfrontation {
       canChooseDefense: !state.defenseTest,
       parryBlocked: !!target?.system.combat.parryUsed,
       parryNeedsShield: !!weapon?.system.isRangedWeapon && !target?.shield,
-      // La confrontation est close une fois l'encaissement résolu : les phases précédentes se
-      // replient d'office pour que la carte cesse de grandir et de repousser hors champ ce qui
-      // reste interactif. Toujours dépliables à la main malgré tout — `<details>`, pas masquées.
-      collapsePriorPhases: state.woundResolved,
+      // Une confrontation résolue replie toutes ses phases : la carte cesse de grandir, et seuls le
+      // verdict et la blessure restent à lire. Toujours dépliables à la main — `<details>`, pas masquées.
+      resolved: this.isResolved(state),
+      collapsePriorPhases: this.isResolved(state),
       SYSTEM,
     }
 
@@ -171,6 +171,13 @@ export default class CdgConfrontation {
 
     if (state.damageTest) context.damage = CdgRoll.cardContext(state.damageTest)
     if (state.soakTest) context.soak = CdgRoll.cardContext(state.soakTest)
+
+    // Une fois les dégâts engagés, le coup est acquis : on ne se dépasse plus pour toucher ni pour
+    // se défendre.
+    if (this.#touchSettled(state)) {
+      attack.canPush = false
+      if (context.defense) context.defense.canPush = false
+    }
 
     if (state.woundResolved) {
       context.woundResolved = true
@@ -192,6 +199,25 @@ export default class CdgConfrontation {
   // #endregion
 
   // #region Écriture par le Meneur
+
+  /**
+   * Une confrontation est résolue quand la blessure est appliquée, ou quand le coup a manqué : il n'y
+   * a alors ni dégâts ni encaissement. Se dépasser sur un coup manqué peut la rouvrir.
+   * @param {Object} state
+   * @returns {boolean}
+   */
+  static isResolved(state) {
+    return !!state.woundResolved || (!!state.opposition && !state.opposition.hit)
+  }
+
+  /**
+   * Le stade des dégâts est atteint dès qu'un test de dégâts ou d'encaissement a été lancé.
+   * @param {Object} state
+   * @returns {boolean}
+   */
+  static #touchSettled(state) {
+    return !!(state.damageTest || state.soakTest)
+  }
 
   /** Les quatre sous-jets d'une confrontation, dans l'ordre de la carte. */
   static PHASES = ["attack", "defense", "damage", "soak"]
@@ -284,6 +310,7 @@ export default class CdgConfrontation {
         break
       case "push":
         if (!current || current.pushed || !this.#isTest(step.data)) return false
+        if (["attack", "defense"].includes(step.phase) && this.#touchSettled(state)) return false
         state[key] = { ...step.data, pushed: true, isPush: true }
         break
       case "keepDie": {
@@ -413,8 +440,28 @@ export default class CdgConfrontation {
    */
   static #canAct(phase, state, user = game.user) {
     if (user.isGM) return true
-    const actorUuid = ["attack", "damage"].includes(phase) ? state.attackerUuid : state.targetUuid
-    return !!fromUuidSync(actorUuid)?.testUserPermission(user, "OWNER")
+    return !!this.#phaseActor(phase, state)?.testUserPermission(user, "OWNER")
+  }
+
+  /**
+   * L'acteur qui agit à cette étape : l'attaquant pour l'attaque et les dégâts, la cible sinon.
+   * @param {"attack"|"defense"|"damage"|"soak"} phase
+   * @param {Object} state
+   * @returns {Actor|null}
+   */
+  static #phaseActor(phase, state) {
+    return fromUuidSync(["attack", "damage"].includes(phase) ? state.attackerUuid : state.targetUuid) ?? null
+  }
+
+  /**
+   * Le Meneur voit tous les boutons, pour débloquer une situation, mais ceux qui reviennent à un
+   * joueur sont en retrait : ceux des PNJ, qu'il doit cliquer lui-même, ressortent d'emblée.
+   * @param {HTMLButtonElement} button
+   * @param {"attack"|"defense"|"damage"|"soak"} phase
+   * @param {Object} state
+   */
+  static #markPlayerSide(button, phase, state) {
+    if (game.user.isGM && this.#phaseActor(phase, state)?.hasPlayerOwner) button.classList.add("player-side")
   }
 
   /**
@@ -426,6 +473,8 @@ export default class CdgConfrontation {
   static activateListeners(message, html) {
     const state = this.getState(message)
     if (!state) return
+    // Le message entier se repère comme clos dans le tchat, pas seulement la carte.
+    html.classList.toggle("cdg-resolved", this.isResolved(state))
 
     for (const button of html.querySelectorAll("[data-action='keepDie']")) {
       if (!game.user.isGM) {
@@ -440,6 +489,7 @@ export default class CdgConfrontation {
         button.style.display = "none"
         continue
       }
+      this.#markPlayerSide(button, button.dataset.phase, state)
       button.addEventListener("click", (event) => this.#onPushTest(event, message))
     }
 
@@ -448,19 +498,26 @@ export default class CdgConfrontation {
         button.style.display = "none"
         continue
       }
+      this.#markPlayerSide(button, "defense", state)
       button.addEventListener("click", (event) => this.#onChooseDefense(event, message))
     }
 
     const damageButton = html.querySelector("[data-action='rollDamage']")
     if (damageButton) {
       if (!this.#canAct("damage", state)) damageButton.style.display = "none"
-      else damageButton.addEventListener("click", () => this.#onRollDamage(message))
+      else {
+        this.#markPlayerSide(damageButton, "damage", state)
+        damageButton.addEventListener("click", () => this.#onRollDamage(message))
+      }
     }
 
     const soakButton = html.querySelector("[data-action='rollSoak']")
     if (soakButton) {
       if (!this.#canAct("soak", state)) soakButton.style.display = "none"
-      else soakButton.addEventListener("click", () => this.#onRollSoak(message))
+      else {
+        this.#markPlayerSide(soakButton, "soak", state)
+        soakButton.addEventListener("click", () => this.#onRollSoak(message))
+      }
     }
   }
 

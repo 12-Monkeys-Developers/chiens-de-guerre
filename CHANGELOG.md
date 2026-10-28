@@ -42,6 +42,9 @@
 - **Assistant de création** : à l'étape 8, le bandeau « Bourse » ne recouvre plus le montant.
 - **Personnage mourant** : l'état Mourant (et le statut Inconscient) n'est plus posé dès la première case de blessure mortelle cochée, mais seulement quand elles le sont toutes (p. 46).
 - **Tchat** : l'en-tête des messages montre le portrait du personnage à côté de son nom (l'avatar du joueur pour un message sans personnage, ou dont le contenu est caché). La carte de confrontation garde son bandeau attaquant → cible.
+- **Tchat, côté Meneur** : les boutons qui reviennent à un joueur (défense, dégâts, encaissement, se dépasser, jet de survie de son personnage) sont grisés ; ceux des PNJ ressortent. Ils restent cliquables pour débloquer une situation et reprennent leur éclat au survol.
+- **Confrontation** : une fois les dégâts ou l'encaissement lancés, le bouton « Se dépasser » de l'attaque et de la défense disparaît : le coup est acquis.
+- **Confrontation** : une fois résolue (blessure appliquée ou coup raté), la carte se replie entièrement, le message est bordé de vert-de-gris et porte la mention « Confrontation résolue » ; le verdict et la blessure restent lisibles.
 - **Jet de survie** : dans le rappel du tchat, le bouton se détache du message et se centre.
 - **Jet de survie** : le malus de blessure ne s'applique plus au test de Corps / Vigueur du mourant ; la ligne reste dans la fenêtre de jet, décochée.
 - **Combat** : un joueur qui terminait la dernière action du round (ou un échange de duel) ne pouvait pas faire passer au round suivant : les initiatives n'étaient pas remises à zéro. Le passage se fait désormais par le Meneur connecté, en une seule fois.

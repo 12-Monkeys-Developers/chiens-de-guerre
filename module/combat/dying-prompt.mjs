@@ -63,10 +63,13 @@ export default class CdgDyingPrompt {
     const button = html.querySelector("[data-action='rollSurvival']")
     if (!button) return
 
-    if (!game.user.isGM && !fromUuidSync(state.actorUuid)?.isOwner) {
+    const actor = fromUuidSync(state.actorUuid)
+    if (!game.user.isGM && !actor?.isOwner) {
       button.style.display = "none"
       return
     }
+    // Comme sur la carte de confrontation : le Meneur voit le bouton du joueur, mais en retrait.
+    if (game.user.isGM && actor?.hasPlayerOwner) button.classList.add("player-side")
     button.addEventListener("click", () => this.#onRollSurvival(state.actorUuid))
   }
 

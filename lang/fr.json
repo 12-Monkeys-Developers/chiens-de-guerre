@@ -452,6 +452,7 @@
       "miss": "Raté",
       "ignoreArmor": "Armure ignorée",
       "noWound": "Aucune blessure",
+      "resolved": "Confrontation résolue",
       "woundOverflow": {
         "grave": "{wound} devenue grave",
         "mortelle": "{wound} devenue mortelle"

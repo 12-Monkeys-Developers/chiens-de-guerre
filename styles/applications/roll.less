@@ -481,6 +481,19 @@
 
 // --- Carte de chat ---
 
+// Vu par le Meneur, un bouton qui revient à un joueur (défense, dégâts, encaissement, dépassement,
+// survie de son personnage) est en retrait : ceux des PNJ, qu'il doit cliquer, ressortent. Il reste
+// cliquable pour débloquer une situation, et reprend son plein éclat au survol.
+.chat-message button.player-side {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+
+  &:hover {
+    opacity: 1;
+    filter: none;
+  }
+}
+
 // En-tête d'un message : le portrait du locuteur devant son nom (`CdgChatMessage`). Les portraits
 // des personnages sont au format étendard, en hauteur : le recadrage par le haut garde la tête.
 .chat-message .message-sender.cdg-sender {

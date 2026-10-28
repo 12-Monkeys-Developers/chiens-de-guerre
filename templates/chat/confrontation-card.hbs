@@ -8,7 +8,7 @@
   fois que l'encaissement a clos la confrontation (`collapsePriorPhases`) — sinon la carte ne cesse
   de grandir et le bouton « Se dépasser » d'une phase déjà passée finit hors champ.
 }}
-<div class="cdg-confrontation-card">
+<div class="cdg-confrontation-card{{#if resolved}} resolved{{/if}}">
 
   <header class="confrontation-header">
     <div class="party attacker">
@@ -80,7 +80,7 @@
     {{/if}}
 
     {{#if soak}}
-      <details class="confrontation-phase phase-soak" open>
+      <details class="confrontation-phase phase-soak" {{#unless collapsePriorPhases}}open{{/unless}}>
         <summary class="phase-title">{{localize "CDG.combat.soakTest"}}</summary>
         <div class="cdg-roll-card embedded {{soak.outcomeId}}">
           {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" soak phase="soak"}}
@@ -93,6 +93,12 @@
     <div class="confrontation-wound {{#if state.appliedWoundId}}{{state.appliedWoundId}}{{else}}none{{/if}}">
       <i class="fa-solid fa-heart-crack" inert></i>
       <span>{{woundLabel}}</span>
+    </div>
+  {{/if}}
+
+  {{#if resolved}}
+    <div class="confrontation-resolved">
+      <i class="fa-solid fa-flag-checkered" inert></i> {{localize "CDG.confrontation.resolved"}}
     </div>
   {{/if}}
 

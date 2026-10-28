@@ -172,3 +172,26 @@
     }
   }
 }
+
+// Confrontation résolue (blessure appliquée ou coup manqué) : tout est replié, et le message entier
+// porte un liseré vert-de-gris — la couleur des intitulés, distincte du rouge des blessures — pour
+// se distinguer d'un échange en cours quand on fait défiler le tchat.
+// Le fond des messages est une texture (`--chat-message-background`) : la teinte est posée en voile
+// par-dessus, sans la remplacer.
+.chat-message.cdg-resolved {
+  border-color: var(--cdg-label);
+  border-left-width: 5px;
+  box-shadow: inset 0 0 0 100vmax rgb(74 90 72 / 8%);
+}
+
+.cdg-confrontation-card .confrontation-resolved {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  font-size: 0.8rem;
+  color: var(--cdg-label);
+}
