@@ -481,6 +481,31 @@
 
 // --- Carte de chat ---
 
+// En-tête d'un message : le portrait du locuteur devant son nom (`CdgChatMessage`). Les portraits
+// des personnages sont au format étendard, en hauteur : le recadrage par le haut garde la tête.
+.chat-message .message-sender.cdg-sender {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  .sender-portrait {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid var(--cdg-ink);
+    border-radius: var(--cdg-radius);
+  }
+
+  .sender-name {
+    font-family: var(--cdg-font-text);
+    font-size: 1.05rem;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+}
+
 .cdg.initiative-card h3 {
   font-family: var(--cdg-font-text);
 }

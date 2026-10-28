@@ -93,6 +93,9 @@ Hooks.once("init", function () {
 
   // Combat : la remise à zéro des esquives et de la parade en fin de round vit dans CdgCombat.
   CONFIG.Combat.documentClass = documents.CdgCombat
+
+  // Tchat : le portrait du locuteur dans l'en-tête des messages.
+  CONFIG.ChatMessage.documentClass = documents.CdgChatMessage
   CONFIG.ui.combat = applications.CdgCombatTracker
   CONFIG.Combat.initiative = {
     formula: "1d20",
