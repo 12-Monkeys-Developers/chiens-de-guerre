@@ -1016,7 +1016,10 @@ pages:
               </p>
               <h3>Escarmouche</h3>
               <ul>
-                <li>L'initiative se lance une fois le combat commencé, avec <strong>Vivacité + Sens du combat</strong>.</li>
+                <li>
+                  L'initiative se lance avec <strong>Vivacité + Sens du combat</strong>, depuis le suivi une fois le combat commencé, ou dès avant depuis la fiche :
+                  le total est conservé au début du combat.
+                </li>
                 <li>
                   Le combattant qui a la plus haute initiative agit. <strong>Fin action</strong> lui retire <strong>10 points</strong> d'initiative et passe la main à la plus
                   haute initiative restante. La ligne de chaque combattant indique combien d'actions il lui reste.

@@ -192,26 +192,25 @@ export default class CdgMacros {
   }
 
   /**
-   * Ouvre le dialogue d'initiative du combattant correspondant à l'acteur.
+   * Ouvre le dialogue d'initiative du combattant correspondant à l'acteur, que le combat ait commencé
+   * ou non. Sans combat, ou pour un acteur absent du combat, le jet ne s'inscrit nulle part et
+   * n'apparaît que dans le tchat.
    * @param {Actor|null} actor
    */
   static async rollInitiative(actor = null) {
     actor ??= this.selectedActor()
     if (!actor) return null
-    const combat = game.combat
-    if (!combat) return ui.notifications.warn("CDG.macro.noCombat", { localize: true })
-    if (!combat.started) return ui.notifications.warn("CDG.combat.initiative.notStarted", { localize: true })
 
-    const candidates = combat.combatants.filter((combatant) => combatant.actor && (combatant.actor.uuid === actor.uuid || combatant.actor.id === actor.id))
+    const candidates = game.combat?.combatants.filter((combatant) => combatant.actor && (combatant.actor.uuid === actor.uuid || combatant.actor.id === actor.id)) ?? []
     let combatant = candidates.find((entry) => entry.actor.uuid === actor.uuid)
     if (!combatant && candidates.length === 1) combatant = candidates[0]
     if (!combatant && candidates.length > 1) {
       const selected = this.selectedActor({ warn: false })
       combatant = candidates.find((entry) => entry.actor.uuid === selected?.uuid)
     }
-    if (!combatant) return ui.notifications.warn(game.i18n.format("CDG.macro.noCombatant", { name: actor.name }))
-    if (!combatant.isOwner) return ui.notifications.warn(game.i18n.format("CDG.macro.combatantPermission", { name: combatant.name }))
-    return CdgInitiativeDialog.open(combatant)
+    if (combatant && !combatant.isOwner) return ui.notifications.warn(game.i18n.format("CDG.macro.combatantPermission", { name: combatant.name }))
+    if (!combatant && !actor.isOwner) return null
+    return CdgInitiativeDialog.open(combatant ?? actor)
   }
 
   /**

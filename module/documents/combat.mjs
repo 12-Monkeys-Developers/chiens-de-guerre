@@ -124,10 +124,11 @@ export default class CdgCombat extends Combat {
   /** @override */
   async startCombat() {
     this.#warnDuelConfiguration()
-    await this.resetAll({ updateTurn: false })
+    // Les initiatives lancées avant le début (depuis une fiche) sont conservées ; si chacun a déjà
+    // la sienne, le premier tour revient aussitôt à la plus haute.
     await super.startCombat()
     await this.update({ turn: null })
-    return this
+    return this.activateHighestInitiative()
   }
 
   /** @override */

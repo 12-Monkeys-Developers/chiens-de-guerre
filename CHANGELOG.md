@@ -51,6 +51,7 @@
 - **Visibilité des jets** : les cartes de test suivent le mode choisi dans le tchat (public, MJ seulement, à l'aveugle, pour soi), qu'elles ignoraient ; un dépassement sort dans le même mode que le jet d'origine. La carte de confrontation reste publique, puisque la cible doit y répondre.
 - **Compagnie** : une compétence ou une caractéristique glissée de la fiche de compagnie vers la barre de macros ne créait rien ; la macro est désormais créée, vise cette compagnie et garde le couple imposé.
 - **Compagnie** : une compagnie ne peut plus être ajoutée à un combat, où elle n'a ni Vivacité ni initiative.
+- **Initiative** : le bouton de la fiche (et sa macro) lance l'initiative même avant le début du combat ; le total est inscrit dans le suivi et conservé quand le combat commence. Sans combat, ou pour un personnage qui n'y participe pas, le jet s'affiche dans le tchat.
 - **Effets d'un objet** : un effet désactivé sur un trait spécial ou un arcanum ne pouvait plus être réactivé, édité ni supprimé ; ses boutons répondent de nouveau.
 
 ## 0.6.2

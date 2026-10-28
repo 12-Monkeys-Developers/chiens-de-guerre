@@ -43,8 +43,6 @@
       "weapon": "Attaque — {name}",
       "noActor": "Sélectionnez un token ou un acteur avant d’utiliser ce raccourci.",
       "weaponMissing": "L’arme « {name} » est introuvable.",
-      "noCombat": "Aucun combat n’est actif.",
-      "noCombatant": "{name} ne participe pas au combat actif.",
       "combatantPermission": "Vous ne pouvez pas lancer l’initiative de {name}."
     },
     "sheet": {

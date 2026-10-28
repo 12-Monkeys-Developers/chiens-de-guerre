@@ -4,7 +4,13 @@ import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const TEMPLATES = `${SYSTEM.PATH}/templates/dialogs`
 
-/** Fenêtre du jet spécial d'initiative, qui produit un total et jamais une réussite. */
+/**
+ * Fenêtre du jet spécial d'initiative, qui produit un total et jamais une réussite.
+ *
+ * Elle travaille sur un combattant, dont elle inscrit le total, ou sur un acteur seul : lancée depuis
+ * la fiche sans combat, ou pour un personnage absent du combat, l'initiative ne s'inscrit nulle part
+ * et n'apparaît que dans le tchat.
+ */
 export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   /** @override */
   static DEFAULT_OPTIONS = {
@@ -30,33 +36,47 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
 
   #combatant
 
+  #actor
+
   #draft = { effort: 0, passionPairId: "", passionMode: "bonus", modifier: 0, wound: true, equipment: true, dualWield: true }
 
   #derived = {}
 
   /**
-   * Construit la fenêtre pour un combattant.
-   * @param {Combatant} combatant
+   * Construit la fenêtre pour un combattant ou un acteur hors combat.
+   * @param {Combatant|Actor} target
    * @param {Object} options
    */
-  constructor(combatant, options = {}) {
+  constructor(target, options = {}) {
     super(options)
+    const { actor, combatant } = this.constructor.subject(target)
+    this.#actor = actor
     this.#combatant = combatant
   }
 
   /**
-   * Ouvre une seule fenêtre par combattant.
-   * @param {Combatant} combatant
+   * L'acteur qui lance et, s'il y en a un, le combattant qui reçoit le total.
+   * @param {Combatant|Actor} target
+   * @returns {{actor: Actor|null, combatant: Combatant|null}}
    */
-  static async open(combatant) {
-    if (!combatant?.actor) return null
-    const id = `cdg-initiative-${combatant.uuid.replaceAll(".", "-")}`
+  static subject(target) {
+    if (target?.documentName === "Combatant") return { actor: target.actor, combatant: target }
+    return { actor: target ?? null, combatant: null }
+  }
+
+  /**
+   * Ouvre une seule fenêtre par combattant ou par acteur.
+   * @param {Combatant|Actor} target
+   */
+  static async open(target) {
+    if (!this.subject(target).actor) return null
+    const id = `cdg-initiative-${target.uuid.replaceAll(".", "-")}`
     const existing = foundry.applications.instances.get(id)
     if (existing) {
       existing.bringToFront()
       return existing
     }
-    return new this(combatant, { id }).render({ force: true })
+    return new this(target, { id }).render({ force: true })
   }
 
   /**
@@ -71,26 +91,26 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
 
   /** @override */
   get title() {
-    return game.i18n.format("CDG.combat.initiative.titleFor", { name: this.#combatant.name })
+    return game.i18n.format("CDG.combat.initiative.titleFor", { name: this.#combatant?.name ?? this.#actor.name })
   }
 
   /** @override */
   async _prepareContext(options) {
     const context = await super._prepareContext(options)
-    this.#derived = this.constructor.compute(this.#combatant, this.#draft)
-    Object.assign(context, this.#derived, { draft: this.#draft, actor: this.#combatant.actor, SYSTEM })
+    this.#derived = this.constructor.compute(this.#combatant ?? this.#actor, this.#draft)
+    Object.assign(context, this.#derived, { draft: this.#draft, actor: this.#actor, SYSTEM })
     return context
   }
 
   /**
-   * Construit le total et les choix sans modifier l'acteur.
-   * @param {Combatant} combatant
+   * Construit le total et les choix sans modifier l'acteur. Hors combat, l'escarmouche fait foi.
+   * @param {Combatant|Actor} target
    * @param {Object} draft
    */
-  static compute(combatant, draft = {}) {
-    const actor = combatant.actor
+  static compute(target, draft = {}) {
+    const { actor, combatant } = this.subject(target)
     const system = actor.system
-    const mode = combatant.combat?.cdgMode ?? SYSTEM.COMBAT_MODES.skirmish.id
+    const mode = combatant?.combat?.cdgMode ?? SYSTEM.COMBAT_MODES.skirmish.id
     const skillId = SYSTEM.COMBAT_MODES[mode]?.skill ?? SYSTEM.COMBAT_MODES.skirmish.skill
     const skill = SYSTEM.SKILLS[skillId]
     const rank = system.skills[skillId]?.rank ?? 0
@@ -145,12 +165,12 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
   }
 
   /**
-   * Évalue les dés, applique les dépenses et inscrit le total sur le Combatant.
-   * @param {Combatant} combatant
+   * Évalue les dés, applique les dépenses et inscrit le total sur le combattant, s'il y en a un.
+   * @param {Combatant|Actor} target
    * @param {Object} data
    */
-  static async resolve(combatant, data) {
-    const actor = combatant.actor
+  static async resolve(target, data) {
+    const { actor, combatant } = this.subject(target)
     const roll = await new Roll(data.rankEntry.formula).evaluate()
     const results = roll.dice[0]?.results.map((result) => result.result) ?? []
     const kept = data.rankEntry.keep === "worst" ? Math.min(...results) : Math.max(...results)
@@ -161,17 +181,17 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     if (effort > 0) updates["system.abilities.vivacite.value"] = data.pool.value - effort
     Object.assign(updates, passionUpdates(actor, data.passion.selected, data.passion.mode))
     if (!foundry.utils.isEmpty(updates)) await actor.update(updates)
-    await combatant.update({ initiative: total })
+    await combatant?.update({ initiative: total })
 
     const breakdown = data.parts.map((part) => `<li><span>${part.label}</span><strong>${part.value > 0 ? "+" : ""}${part.value}</strong></li>`).join("")
-    const name = foundry.utils.escapeHTML(combatant.name)
+    const name = foundry.utils.escapeHTML(combatant?.name ?? actor.name)
     const content = `<section class="cdg chat-card initiative-card"><header><h3>${game.i18n.localize("CDG.combat.initiative.chatTitle")}</h3><strong>${name}</strong></header><p>${data.initiativeSkillLabel} (${data.rankName}) : ${results.join(", ")} — ${game.i18n.localize("CDG.combat.initiative.kept")} <strong>${kept}</strong></p><ul>${breakdown}</ul><div class="initiative-total">${game.i18n.localize("CDG.label.long.initiative")} <strong>${total}</strong></div></section>`
     // L'initiative d'un PNJ reste une information réservée au Meneur, que son combattant soit
     // masqué ou visible dans le tracker. Un combattant masqué conserve la même confidentialité
     // quel que soit son type d'acteur.
-    const whisper = actor.type === "adversaire" || combatant.hidden ? ChatMessage.getWhisperRecipients("GM").map((user) => user.id) : []
-    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content, rolls: [roll], whisper, flags: { "core.initiativeRoll": true } })
-    await combatant.combat?.activateHighestInitiative()
+    const whisper = actor.type === "adversaire" || combatant?.hidden ? ChatMessage.getWhisperRecipients("GM").map((user) => user.id) : []
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content, rolls: [roll], whisper, flags: { "core.initiativeRoll": !!combatant } })
+    await combatant?.combat?.activateHighestInitiative()
     return total
   }
 
@@ -193,7 +213,7 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
 
   static async #onRoll() {
     const data = { ...this.#derived, effort: this.#draft.effort }
-    await this.constructor.resolve(this.#combatant, data)
+    await this.constructor.resolve(this.#combatant ?? this.#actor, data)
     return this.close()
   }
 
