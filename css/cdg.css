@@ -2778,7 +2778,7 @@ cdg-toggle-switch[checked] thumb {
 .cdg .effects .effect-row {
   align-items: flex-start;
 }
-.cdg .effects .effect-row.disabled {
+.cdg .effects .effect-row.inactive {
   opacity: 0.5;
 }
 .cdg .effects .effect-body {

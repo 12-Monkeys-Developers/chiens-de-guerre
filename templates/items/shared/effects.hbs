@@ -10,7 +10,7 @@
 
   <ul class="item-list">
     {{#each effects as |effect|}}
-      <li class="item-row effect-row {{#if effect.disabled}}disabled{{/if}}" data-effect-id="{{effect.id}}">
+      <li class="item-row effect-row {{#if effect.disabled}}inactive{{/if}}" data-effect-id="{{effect.id}}">
         <img class="item-img" src="{{effect.img}}" alt="{{effect.name}}" />
         <div class="effect-body">
           <span class="item-name">{{effect.name}}</span>

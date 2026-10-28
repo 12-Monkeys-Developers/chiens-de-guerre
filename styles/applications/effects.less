@@ -32,8 +32,9 @@
       align-items: flex-start;
 
       // Un effet désactivé reste lisible mais visiblement en retrait : le masquer ferait croire
-      // à une suppression.
-      &.disabled {
+      // à une suppression. Pas de classe `disabled` : le cœur y coupe les clics, et les boutons de
+      // la ligne (réactiver, éditer, supprimer) ne répondraient plus.
+      &.inactive {
         opacity: 0.5;
       }
     }
