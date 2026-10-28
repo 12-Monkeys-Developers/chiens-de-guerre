@@ -485,6 +485,13 @@
   font-family: var(--cdg-font-text);
 }
 
+// Rappel du mourant : le bouton du jet de survie se détache du message et se centre sous lui.
+.cdg.dying-prompt-card button[data-action="rollSurvival"] {
+  display: flex;
+  width: auto;
+  margin: 0.6rem auto 0;
+}
+
 .cdg-roll-card {
   --cdg-font-title: var(--cdg-font-text);
   --cdg-font-label: var(--cdg-font-text);

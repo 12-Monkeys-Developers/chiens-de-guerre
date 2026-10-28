@@ -40,6 +40,7 @@
 - **Fiche de personnage, mode édition** : l'ascendance ne déborde plus sur les onglets.
 - **Assistant de création** : à l'étape 8, le bandeau « Bourse » ne recouvre plus le montant.
 - **Personnage mourant** : l'état Mourant (et le statut Inconscient) n'est plus posé dès la première case de blessure mortelle cochée, mais seulement quand elles le sont toutes (p. 46).
+- **Jet de survie** : dans le rappel du tchat, le bouton se détache du message et se centre.
 - **Jet de survie** : le malus de blessure ne s'applique plus au test de Corps / Vigueur du mourant ; la ligne reste dans la fenêtre de jet, décochée.
 - **Combat** : un joueur qui terminait la dernière action du round (ou un échange de duel) ne pouvait pas faire passer au round suivant : les initiatives n'étaient pas remises à zéro. Le passage se fait désormais par le Meneur connecté, en une seule fois.
 - **Confrontation** : quand l'attaquant lançait les dégâts et la cible l'encaissement au même moment, l'un des deux jets pouvait disparaître de la carte. Le Meneur connecté écrit désormais chaque étape à la suite, sans en perdre aucune.
