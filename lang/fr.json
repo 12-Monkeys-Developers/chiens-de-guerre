@@ -452,7 +452,7 @@
       "miss": "Raté",
       "ignoreArmor": "Armure ignorée",
       "noWound": "Aucune blessure",
-      "resolved": "Confrontation résolue",
+      "resolved": "Attaque résolue",
       "woundOverflow": {
         "grave": "{wound} devenue grave",
         "mortelle": "{wound} devenue mortelle"
@@ -460,6 +460,8 @@
       "woundSaturated": "Sans effet — case déjà au maximum",
       "notif": {
         "needSingleTarget": "Désignez exactement une cible avant d'attaquer.",
+        "noTarget": "{name} attaque sans cible : le jet restera isolé, sans défense, dégâts ni encaissement. Ciblez un adversaire pour ouvrir une confrontation.",
+        "noTargetGM": "{user} : {name} attaque sans cible, le jet reste isolé.",
         "noGM": "Aucun Meneur de jeu connecté : impossible de faire progresser cette confrontation."
       },
       "parryNeedsShield": "Un projectile ne se pare qu'avec un bouclier."

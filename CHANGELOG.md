@@ -1,3 +1,14 @@
+## 0.8.0
+
+- **Initiative** : le bouton de la fiche (et sa macro) lance l'initiative même avant le début du combat ; le total est inscrit dans le suivi et conservé quand le combat commence. Sans combat, ou pour un personnage qui n'y participe pas, le jet s'affiche dans le tchat.
+- **Attaque sans cible** : une notification d'avertissement rappelle que le jet reste isolé (ni défense, ni dégâts, ni encaissement) : au joueur dès l'ouverture de la fenêtre de jet, aux Meneurs connectés une fois le jet lancé. Lancée par le Meneur, l'attaque n'avertit que lui.
+- **Confrontation** : une fois les dégâts ou l'encaissement lancés, le bouton « Se dépasser » de l'attaque et de la défense disparaît : le coup est acquis.
+- **Confrontation** : une fois résolue (blessure appliquée ou coup raté), la carte se replie entièrement, le message est bordé de vert-de-gris et porte la mention « Confrontation résolue » ; le verdict et la blessure restent lisibles.
+- **Tchat, côté Meneur** : les boutons qui reviennent à un joueur (défense, dégâts, encaissement, se dépasser, jet de survie de son personnage) sont grisés ; ceux des PNJ ressortent. Ils restent cliquables pour débloquer une situation et reprennent leur éclat au survol.
+- **Jet de survie** : dans le rappel du tchat, le bouton se détache du message et se centre.
+- **Tchat** : l'en-tête des messages montre le portrait du personnage à côté de son nom (l'avatar du joueur pour un message sans personnage, ou dont le contenu est caché). La carte de confrontation garde son bandeau attaquant → cible.
+- **Fiche de PNJ** : toutes les compétences sont disponibles, et plus seulement les six de combat. En édition, les compétences de combat viennent en tête, puis les autres sous un filet ; en lecture, seules celles qui ont un rang s'affichent, dans le même ordre.
+
 ## 0.7.0
 
 ### Guide du système
@@ -15,7 +26,6 @@
 - **Fenêtre de jet** : la liste des compétences s'écrit plus petit ; dépliée, elle ne déborde plus largement de la fenêtre.
 - **Fiche de PNJ** : les bandeaux Arcanums et Spécial ne mordent plus la liste des armes.
 - **Fiche de PNJ** : le malus courant et l'état « Mourant » s'affichent sous les blessures, sur leur propre ligne, au lieu d'être repoussés hors de vue dans une fenêtre étroite ; sans malus, la ligne n'apparaît pas.
-- **Fiche de PNJ** : toutes les compétences sont disponibles, et plus seulement les six de combat. En édition, les compétences de combat viennent en tête, puis les autres sous un filet ; en lecture, seules celles qui ont un rang s'affichent, dans le même ordre.
 - **Tableau de bord des joueurs** : en thème sombre, le tableau gardait les couleurs grises de Foundry sur le parchemin et ses intitulés s'y perdaient ; il a maintenant le même aspect qu'en thème clair.
 - **Création de compagnie** : les compteurs de l'étape Compétences se lisent « Rang 3 : 0 / 5 ».
 - **Compagnie** : le grade d'un membre se choisit dans une liste qui suit la hiérarchie de la compagnie (Capitaine, Lieutenant, Sergent, Duplicator, Homme d'armes, Valet, ou aucun) au lieu d'un champ libre.
@@ -41,11 +51,6 @@
 - **Fiche de personnage, mode édition** : l'ascendance ne déborde plus sur les onglets.
 - **Assistant de création** : à l'étape 8, le bandeau « Bourse » ne recouvre plus le montant.
 - **Personnage mourant** : l'état Mourant (et le statut Inconscient) n'est plus posé dès la première case de blessure mortelle cochée, mais seulement quand elles le sont toutes (p. 46).
-- **Tchat** : l'en-tête des messages montre le portrait du personnage à côté de son nom (l'avatar du joueur pour un message sans personnage, ou dont le contenu est caché). La carte de confrontation garde son bandeau attaquant → cible.
-- **Tchat, côté Meneur** : les boutons qui reviennent à un joueur (défense, dégâts, encaissement, se dépasser, jet de survie de son personnage) sont grisés ; ceux des PNJ ressortent. Ils restent cliquables pour débloquer une situation et reprennent leur éclat au survol.
-- **Confrontation** : une fois les dégâts ou l'encaissement lancés, le bouton « Se dépasser » de l'attaque et de la défense disparaît : le coup est acquis.
-- **Confrontation** : une fois résolue (blessure appliquée ou coup raté), la carte se replie entièrement, le message est bordé de vert-de-gris et porte la mention « Confrontation résolue » ; le verdict et la blessure restent lisibles.
-- **Jet de survie** : dans le rappel du tchat, le bouton se détache du message et se centre.
 - **Jet de survie** : le malus de blessure ne s'applique plus au test de Corps / Vigueur du mourant ; la ligne reste dans la fenêtre de jet, décochée.
 - **Combat** : un joueur qui terminait la dernière action du round (ou un échange de duel) ne pouvait pas faire passer au round suivant : les initiatives n'étaient pas remises à zéro. Le passage se fait désormais par le Meneur connecté, en une seule fois.
 - **Confrontation** : quand l'attaquant lançait les dégâts et la cible l'encaissement au même moment, l'un des deux jets pouvait disparaître de la carte. Le Meneur connecté écrit désormais chaque étape à la suite, sans en perdre aucune.
@@ -53,7 +58,6 @@
 - **Visibilité des jets** : les cartes de test suivent le mode choisi dans le tchat (public, MJ seulement, à l'aveugle, pour soi), qu'elles ignoraient ; un dépassement sort dans le même mode que le jet d'origine. La carte de confrontation reste publique, puisque la cible doit y répondre.
 - **Compagnie** : une compétence ou une caractéristique glissée de la fiche de compagnie vers la barre de macros ne créait rien ; la macro est désormais créée, vise cette compagnie et garde le couple imposé.
 - **Compagnie** : une compagnie ne peut plus être ajoutée à un combat, où elle n'a ni Vivacité ni initiative.
-- **Initiative** : le bouton de la fiche (et sa macro) lance l'initiative même avant le début du combat ; le total est inscrit dans le suivi et conservé quand le combat commence. Sans combat, ou pour un personnage qui n'y participe pas, le jet s'affiche dans le tchat.
 - **Effets d'un objet** : un effet désactivé sur un trait spécial ou un arcanum ne pouvait plus être réactivé, édité ni supprimé ; ses boutons répondent de nouveau.
 
 ## 0.6.2

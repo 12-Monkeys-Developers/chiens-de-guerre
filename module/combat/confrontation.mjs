@@ -50,10 +50,14 @@ export default class CdgConfrontation {
     const target = targets.size === 1 ? targets.first().actor : null
 
     if (!target) {
+      // Prévenu dès l'ouverture, le joueur peut encore annuler et cibler ; les Meneurs ne le sont
+      // qu'une fois le jet réellement lancé.
+      ui.notifications.warn(game.i18n.format("CDG.confrontation.notif.noTarget", { name: actor.name }))
       return CdgRollDialog.open(actor, {
         abilityId: weapon.system.attack.ability,
         skillId: weapon.system.attack.skill,
         qualityDomain: "attack",
+        afterRoll: () => this.#warnGMsNoTarget(actor),
       })
     }
 
@@ -65,6 +69,27 @@ export default class CdgConfrontation {
       targetUuid: target.uuid,
       postHandler: (test) => this.#postAttack(test, actor, target, weapon),
     })
+  }
+
+  /**
+   * Signale aux Meneurs connectés l'attaque sans cible d'un joueur : un test isolé, que ni défense, ni
+   * dégâts, ni encaissement ne suivront. Le joueur a déjà eu sa notification ; un Meneur qui attaque
+   * n'avertit que lui-même.
+   * @param {CdgActor} actor
+   */
+  static #warnGMsNoTarget(actor) {
+    if (game.user.isGM) return
+    const data = { name: actor.name, user: game.user.name }
+    for (const gm of game.users.filter((user) => user.isGM && user.active)) gm.query("cdg.noTargetWarning", data).catch(() => {})
+  }
+
+  /**
+   * Côté Meneur : affiche l'avertissement d'une attaque sans cible lancée par un joueur.
+   * @param {{name: string, user: string}} data
+   */
+  static handleNoTargetQuery({ name, user } = {}) {
+    ui.notifications.warn(game.i18n.format("CDG.confrontation.notif.noTargetGM", { name, user }))
+    return true
   }
 
   /**

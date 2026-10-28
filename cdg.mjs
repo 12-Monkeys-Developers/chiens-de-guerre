@@ -36,6 +36,8 @@ Hooks.once("init", function () {
   // Confrontation de combat : le Meneur actif est le seul à écrire la carte partagée, chaque joueur
   // lui confie l'étape qu'il vient de lancer (voir `CdgConfrontation#applyStep`).
   CONFIG.queries["cdg.confrontationStep"] = combat.CdgConfrontation.handleStepQuery
+  // Attaque d'un joueur sans cible : les Meneurs en sont avertis par une notification.
+  CONFIG.queries["cdg.noTargetWarning"] = combat.CdgConfrontation.handleNoTargetQuery
   // Passage au round suivant, que seul le Meneur peut écrire.
   CONFIG.queries["cdg.nextRound"] = documents.CdgCombat.handleNextRoundQuery
 
