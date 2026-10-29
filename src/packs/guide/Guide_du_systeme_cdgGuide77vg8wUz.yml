@@ -684,7 +684,10 @@ pages:
                 initiative, armes et protections, arcanums et règles spéciales.
               </p>
               <ul>
-                <li>En consultation, seules les compétences dont le rang n'est pas nul sont affichées ; en édition, les 31 sont accessibles.</li>
+                <li>
+                  Les compétences de combat viennent en tête, puis les autres sous un filet. En consultation, seules celles dont le rang n'est pas nul sont affichées ; en
+                  édition, les 31 sont accessibles.
+                </li>
                 <li>Un clic sur une caractéristique ou une compétence ouvre un test, comme sur la fiche de personnage.</li>
                 <li>
                   Le nombre de cases de chaque gravité de blessure se règle à la main en mode édition : un PNJ n'a pas de rang de Vigueur qui les calcule.
@@ -807,6 +810,7 @@ pages:
           </p>
 
           <h3>Les membres</h3>
+          <div class="guide-image"><img src="systems/chiens-de-guerre/assets/guide/compagnie-membres.webp" alt="Onglet Membres de la fiche de compagnie" /></div>
           <p>
             Deux colonnes côte à côte : <strong>Personnages joueurs</strong> et <strong>Personnages non joueurs</strong>. Chaque
             colonne défile seule. Chaque ligne porte un grade, un nom et des notes. Le grade se choisit dans la hiérarchie de la compagnie : Capitaine, Lieutenant,
@@ -935,7 +939,7 @@ pages:
             <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/carte-jet.webp" alt="Carte d'un test réussi" /></div>
             <div>
               <p>
-                La carte rappelle le couple et le SR, puis montre tous les dés : le dé conservé est encadré, les autres restent visibles, estompés. Sous les dés, le
+                L'en-tête du message montre le portrait du personnage à côté de son nom. La carte rappelle le couple et le SR, puis montre tous les dés : le dé conservé est encadré, les autres restent visibles, estompés. Sous les dés, le
                 verdict :
               </p>
               <ul>
@@ -1064,8 +1068,10 @@ pages:
             <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/fenetre-initiative.webp" alt="Fenêtre d'initiative" /></div>
             <div>
               <p>
-                Le dé d20 d'un combattant dans le suivi, le bouton <strong>Initiative</strong> de la fiche ou sa macro ouvrent la fenêtre d'initiative. Le total vaut le dé
-                conservé (selon le rang de la compétence d'initiative) plus la <strong>Vivacité</strong> courante, et :
+                Le dé d20 d'un combattant dans le suivi, le bouton <strong>Initiative</strong> de la fiche ou sa macro ouvrent la fenêtre d'initiative. Depuis la fiche,
+                on peut la lancer avant même le début du combat : le total est conservé quand le combat commence. Sans combat, ou pour un personnage qui n'y participe pas,
+                le jet ne s'affiche que dans le tchat. Le total vaut le dé conservé (selon le rang de la compétence d'initiative) plus la <strong>Vivacité</strong>
+                courante, et :
               </p>
               <ul>
                 <li>l'effort et la passion, comme pour un test ;</li>
@@ -1083,7 +1089,8 @@ pages:
           <p>
             Une attaque se mène de bout en bout dans <strong>une seule carte</strong> de tchat, mise à jour à chaque jet. Désignez <strong>une</strong> cible sur la scène
             (touche <kbd>T</kbd>), puis cliquez sur l'icône d'attaque <i class="fas fa-sword"></i> d'une arme tenue en main, sur la fiche ou depuis la barre de macros.
-            Sans cible, l'attaque est un test ordinaire ; avec plusieurs cibles, elle est refusée.
+            Sans cible, l'attaque est un test ordinaire, et une notification le rappelle à l'attaquant (et au meneur, quand c'est un joueur qui attaque) ; avec
+            plusieurs cibles, elle est refusée.
           </p>
           <div class="guide-row">
             <div class="guide-image guide-image-card"><img src="systems/chiens-de-guerre/assets/guide/confrontation-attaque.webp" alt="Carte de confrontation après l'attaque" /></div>
@@ -1119,9 +1126,17 @@ pages:
                 </li>
               </ol>
               <p>
-                Chaque étape garde son bouton <strong>Se dépasser</strong>, réservé à celui qui l'a lancée et au meneur. Un dépassement tardif, ou un dé conservé changé
-                par le meneur, recalcule l'opposition et corrige la blessure déjà posée. Une fois l'encaissement résolu, les étapes précédentes se replient ; elles restent
-                dépliables.
+                Chaque étape garde son bouton <strong>Se dépasser</strong>, réservé à celui qui l'a lancée et au meneur ; celui de l'attaque et de la défense disparaît
+                dès que les dégâts ou l'encaissement sont lancés. Un dépassement tardif, ou un dé conservé changé par le meneur, recalcule l'opposition et corrige la
+                blessure déjà posée.
+              </p>
+              <p>
+                Une confrontation <strong>résolue</strong> (blessure appliquée, ou coup raté) replie toutes ses étapes, qui restent dépliables : seuls le verdict et la
+                blessure restent à lire. Le message prend un liseré vert-de-gris et porte la mention « Attaque résolue ».
+              </p>
+              <p>
+                Le meneur voit tous les boutons de la carte, pour pouvoir débloquer une situation, mais ceux qui reviennent à un joueur sont grisés : les boutons des PNJ,
+                qu'il doit cliquer lui-même, ressortent d'emblée. Un bouton grisé reste cliquable et reprend son éclat au survol.
               </p>
               <p class="guide-astuce">
                 La carte appartient à l'attaquant : les jets de la cible passent par le meneur. Un meneur doit donc être connecté pour qu'une confrontation progresse.

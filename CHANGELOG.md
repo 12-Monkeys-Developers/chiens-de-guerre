@@ -9,7 +9,7 @@
 - **Initiative** : le bouton de la fiche (et sa macro) lance l'initiative même avant le début du combat ; le total est inscrit dans le suivi et conservé quand le combat commence. Sans combat, ou pour un personnage qui n'y participe pas, le jet s'affiche dans le tchat.
 - **Attaque sans cible** : une notification d'avertissement rappelle que le jet reste isolé (ni défense, ni dégâts, ni encaissement) : au joueur dès l'ouverture de la fenêtre de jet, aux Meneurs connectés une fois le jet lancé. Lancée par le Meneur, l'attaque n'avertit que lui.
 - **Confrontation** : une fois les dégâts ou l'encaissement lancés, le bouton « Se dépasser » de l'attaque et de la défense disparaît : le coup est acquis.
-- **Confrontation** : une fois résolue (blessure appliquée ou coup raté), la carte se replie entièrement, le message est bordé de vert-de-gris et porte la mention « Confrontation résolue » ; le verdict et la blessure restent lisibles.
+- **Confrontation** : une fois résolue (blessure appliquée ou coup raté), la carte se replie entièrement, le message est bordé de vert-de-gris et porte la mention « Attaque résolue » ; le verdict et la blessure restent lisibles.
 - **Tchat, côté Meneur** : les boutons qui reviennent à un joueur (défense, dégâts, encaissement, se dépasser, jet de survie de son personnage) sont grisés ; ceux des PNJ ressortent. Ils restent cliquables pour débloquer une situation et reprennent leur éclat au survol.
 - **Jet de survie** : dans le rappel du tchat, le bouton se détache du message et se centre.
 - **Tchat** : l'en-tête des messages montre le portrait du personnage à côté de son nom (l'avatar du joueur pour un message sans personnage, ou dont le contenu est caché). La carte de confrontation garde son bandeau attaquant → cible.
