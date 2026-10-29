@@ -3288,6 +3288,10 @@ cdg-toggle-switch[checked] thumb {
 .cdg.creation .creation-step {
   padding: 0.7rem 0.9rem 1rem;
 }
+.cdg.creation .creation-step > .section-title {
+  margin-top: 0.8rem;
+  margin-bottom: 1.6rem;
+}
 .cdg.creation .creation-step .intro {
   font-size: 0.82rem;
   font-style: italic;
@@ -3452,6 +3456,9 @@ cdg-toggle-switch[checked] thumb {
   font-size: 1.1rem;
   margin-left: auto;
 }
+.cdg.creation .step-origine [data-bandeau="langues"] {
+  margin-top: 1.8rem;
+}
 .cdg.creation .step-origine .language-list {
   list-style: none;
   margin: 0;
@@ -3463,6 +3470,7 @@ cdg-toggle-switch[checked] thumb {
 .cdg.creation .step-origine button.language {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.35rem;
   width: 100%;
   background: none;
@@ -3765,6 +3773,9 @@ cdg-toggle-switch[checked] thumb {
   color: var(--cdg-blood);
   font-family: var(--font-sans);
 }
+.cdg.creation .step-personnalisation [data-bandeau="bourse"] {
+  margin-top: 1.6rem;
+}
 .cdg.creation .step-personnalisation .spendings {
   list-style: none;
   margin: 0 0 0.8rem;
@@ -3910,6 +3921,13 @@ cdg-toggle-switch[checked] thumb {
 .cdg.creation .step-personnalisation .purse {
   display: flex;
   gap: 1.2rem;
+}
+.cdg.creation .step-combat [data-bandeau="blessures"],
+.cdg.creation .step-combat [data-bandeau="bourse"] {
+  margin-top: 1.6rem;
+}
+.cdg.creation .step-combat [data-bandeau="bourse"] {
+  margin-bottom: 1.2rem;
 }
 .cdg.creation .step-combat .combat-card {
   width: 250px;

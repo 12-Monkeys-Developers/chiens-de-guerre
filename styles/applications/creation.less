@@ -179,6 +179,13 @@
   .creation-step {
     padding: 0.7rem 0.9rem 1rem;
 
+    // Le titre de l'étape (bandeau calligraphié ou lame) déborde de sa boîte : de l'air au-dessus et
+    // au-dessous l'empêche de mordre sur le bandeau des étapes et sur l'introduction.
+    > .section-title {
+      margin-top: 0.8rem;
+      margin-bottom: 1.6rem;
+    }
+
     .intro {
       font-size: 0.82rem;
       font-style: italic;
@@ -362,6 +369,12 @@
 
   // ---------------------------------------------------------------- Étape 2 : origine
   .step-origine {
+    // Le bandeau des langues déborde vers le haut : sans cet écart, il recouvrait la consigne du
+    // peuple (« Rattacher une fiche de peuple… »).
+    [data-bandeau="langues"] {
+      margin-top: 1.8rem;
+    }
+
     .language-list {
       list-style: none;
       margin: 0;
@@ -371,9 +384,12 @@
       gap: 0.2rem;
     }
 
+    // Les boutons de Foundry centrent leur contenu : calé à gauche, chaque case tombe sous celle de
+    // la ligne précédente.
     button.language {
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       gap: 0.35rem;
       width: 100%;
       background: none;
@@ -746,6 +762,10 @@
 
   // ---------------------------------------------------------------- Étape 7 : personnalisation
   .step-personnalisation {
+    [data-bandeau="bourse"] {
+      margin-top: 1.6rem;
+    }
+
     // Le relevé des dépenses : les postes à zéro s'effacent, ceux qui coûtent ressortent.
     .spendings {
       list-style: none;
@@ -928,6 +948,16 @@
 
   // ---------------------------------------------------------------- Étape 8 : combat
   .step-combat {
+    // Bandeaux Blessures et Bourse : de l'air au-dessus, et sous la Bourse avant l'équipement.
+    [data-bandeau="blessures"],
+    [data-bandeau="bourse"] {
+      margin-top: 1.6rem;
+    }
+
+    [data-bandeau="bourse"] {
+      margin-bottom: 1.2rem;
+    }
+
     .combat-card {
       width: 250px;
       border: 1px solid var(--cdg-parchment-line);

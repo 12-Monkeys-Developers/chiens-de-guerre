@@ -823,7 +823,6 @@
         "range": "Bornes de la création : {min} à {max} par caractéristique. Les bonus du peuple et de la carrière viennent par-dessus, sans se prendre sur ces points."
       },
       "origine": {
-        "intro": "L'Escannie est un pays dévasté par l'annexion darguanite. Le peuple dont vous êtes issu vous marque autant que la guerre elle-même.",
         "peupleName": "Peuple",
         "peupleItem": "Fiche de peuple",
         "peupleHint": "Rattacher une fiche de peuple reporte son bonus de caractéristique, ses traits et ses langues. Vous pouvez aussi la déposer directement sur cette fenêtre.",
@@ -833,7 +832,7 @@
         "languagesPriceHint": "Les langues du peuple sont gratuites ; toute autre coûte {cost} points de personnalisation."
       },
       "carriere": {
-        "intro": "Au sein de la Compagnie Franche, chaque homme a une fonction. Définissez votre rôle avant que le désert ne vous dévore.",
+        "intro": "Au sein de la Compagnie Franche, chaque homme a une fonction.",
         "name": "Carrière",
         "item": "Fiche de carrière",
         "hint": "Rattacher une fiche de carrière reporte son bonus de caractéristique, ses rangs de compétences plancher et son paquetage. Vous pouvez aussi la déposer sur cette fenêtre.",
@@ -847,7 +846,7 @@
         "gradeBelowFloorShort": "Inférieur au grade de départ"
       },
       "ascendance": {
-        "intro": "La Marque n'est jamais gratuite. Tout Marqué est lié à une origine surnaturelle qui engendre une faille morale irrépressible : chaque ascendance est une fiche du monde, qui porte sa propre compulsion.",
+        "intro": "La Marque n'est jamais gratuite. Tout Marqué est lié à une origine surnaturelle qui engendre une faille morale irrépressible.",
         "name": "Ascendance",
         "item": "Fiche d'ascendance",
         "hint": "Rattacher une fiche d'ascendance en reporte la compulsion. Vous pouvez aussi la déposer sur cette fenêtre."
@@ -873,7 +872,7 @@
         "hint": "Les coûts se cumulent : ouvrir une compétence au rang 2 depuis rien coûte 3 points. Les rangs accordés par la carrière sont gratuits et verrouillés."
       },
       "traits": {
-        "intro": "Vos traits définissent votre psyché tourmentée. Un trait au rang 3 est passé par le rang 2 : il compte dans les deux quotas. Donnez un dominant au rang 1 à chaque couple, poussez ensuite 5 à 10 de ces traits au rang 2, puis 0 à 2 d'entre eux jusqu'au rang 3.",
+        "intro": "Un trait au rang 3 est passé par le rang 2 : il compte dans les deux quotas. Donnez un dominant au rang 1 à chaque couple, poussez ensuite 5 à 10 de ces traits au rang 2, puis 0 à 2 d'entre eux jusqu'au rang 3.",
         "quotaDominant": "Couples tranchés",
         "quotaRank2": "Traits au rang 2 ou plus",
         "quotaRank3": "Traits au rang 3",
@@ -921,7 +920,6 @@
         "woundsHint": "Cases dérivées du rang de Vigueur (rang {rank}).",
         "effectsIncluded": "Les cases supplémentaires accordées par les traits d'origine sont incluses.",
         "confessionTitle": "Confession",
-        "confessionIntro": "Votre allégeance spirituelle est souvent le seul ancrage qui vous sépare du néant.",
         "noReligion": "Aucune",
         "noReligionHint": "Ni dieux, ni credo : le champ religion reste vide sur la fiche.",
         "religionRequired": "Un aumônier ne peut pas rester sans allégeance spirituelle.",
@@ -940,7 +938,7 @@
         "marquePlaceholder": "Cicatrice de lame, brûlure ésotérique, regard vitreux…",
         "marqueHint": "Ce texte sera consigné dans les traits spéciaux du personnage.",
         "histoire": "Origine et histoire",
-        "histoirePlaceholder": "Comment avez-vous fini dans les Chiens de Guerre ?",
+        "histoirePlaceholder": "Comment avez-vous fini dans votre compagnie ?",
         "histoireHint": "Ce texte devient la biographie du personnage."
       },
       "recap": {

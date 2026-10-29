@@ -30,7 +30,6 @@
 
   <div class="block">
     <h3>{{localize "CDG.creation.combat.confessionTitle"}}</h3>
-    <p class="intro">{{localize "CDG.creation.combat.confessionIntro"}}</p>
     <ol class="religion-cards">
       {{#each religions as |religion|}}
         <li class="religion-card {{#if (eq religion.id @root.draft.religion)}}selected{{/if}}">
