@@ -67,6 +67,9 @@ export const BATTLE_ARMY_QUALITIES = {
  *
  * 16 et 20 (officier ou Marqué/Élu) restent en attente : Marqué et Élu modifient un profil existant
  * (p. 61), ce que le système ne sait pas encore faire. Sans profil, le Meneur choisit lui-même.
+ *
+ * C'est la table par défaut : le Meneur remplace les profils de chaque tranche dans les réglages du
+ * système (réglage `battleAdversaries`, voir `CdgBattle.adversaryTable`).
  */
 export const BATTLE_ADVERSARIES = [
   { min: 1, max: 1, label: "CDG.battle.adversaries.peasant", actors: ["cdgpnpaysan01bqh", "cdgpncitadinynv9"] },

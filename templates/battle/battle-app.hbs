@@ -132,7 +132,7 @@
         {{/if}}
         {{#if generals.company}}<p class="result">{{generals.company}}</p>{{/if}}
         {{#if canRollCompany}}
-          <button type="button" data-action="rollGeneralCompany"><i class="fa-solid fa-dice-d20" inert></i>
+          <button type="button" data-action="rollGeneralCompany" {{#if generals.company}}disabled{{/if}}><i class="fa-solid fa-dice-d20" inert></i>
             {{#if chiefName}}{{localize "CDG.battle.generals.roll"}}{{else}}{{localize "CDG.battle.generals.rollCompany"}}{{/if}}</button>
         {{/if}}
       </div>
@@ -141,7 +141,7 @@
         <p>{{localize "CDG.battle.modifierMirror"}}</p>
         {{#if generals.enemy}}<p class="result">{{generals.enemy}}</p>{{/if}}
         {{#if isGM}}
-          <button type="button" data-action="rollGeneralEnemy"><i class="fa-solid fa-dice-d20" inert></i> {{localize "CDG.battle.generals.roll"}}</button>
+          <button type="button" data-action="rollGeneralEnemy" {{#if generals.enemy}}disabled{{/if}}><i class="fa-solid fa-dice-d20" inert></i> {{localize "CDG.battle.generals.roll"}}</button>
         {{/if}}
       </div>
       {{#if generals.result}}
@@ -155,7 +155,7 @@
       <p>{{localize "CDG.battle.losses.hint"}} {{#if lossModifier}}({{localize "CDG.battle.lossModifier"}} {{signed lossModifier}}){{/if}}</p>
       {{#if losses}}<p class="result">{{losses.outcome}} — {{losses.wound}}</p>{{/if}}
       {{#if company.isOwner}}
-        <button type="button" data-action="rollLosses"><i class="fa-solid fa-dice-d20" inert></i> {{localize "CDG.battle.losses.roll"}}</button>
+        <button type="button" data-action="rollLosses" {{#if losses}}disabled{{/if}}><i class="fa-solid fa-dice-d20" inert></i> {{localize "CDG.battle.losses.roll"}}</button>
       {{/if}}
     </section>
   {{/if}}

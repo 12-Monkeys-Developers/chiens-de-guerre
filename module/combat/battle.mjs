@@ -1,7 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
-import { outcomeLabel, resolveOutcome } from "../dice/roll-outcome.mjs"
+import { resolveOutcome } from "../dice/roll-outcome.mjs"
 import { createChatMessage } from "../helpers/chat.mjs"
 import { adversaryEntry, battleWinner, canMove, fightConsequence, generalsResult, keptAdversaryDie, lossesWound, shiftWound } from "./battle-rules.mjs"
 import { resolveOpposedOutcome } from "./opposition.mjs"
@@ -35,6 +35,9 @@ export default class CdgBattle {
 
   /** Compendium des adversaires de la table p. 52. */
   static PACK = `${SYSTEM.PACKAGE_ID}.pnjs`
+
+  /** Réglage du monde qui remplace les profils de la table des adversaires. */
+  static ADVERSARIES_SETTING = "battleAdversaries"
 
   static TEMPLATES = {
     card: `${SYSTEM.PATH}/templates/chat/battle-card.hbs`,
@@ -580,6 +583,16 @@ export default class CdgBattle {
   }
 
   /**
+   * Libellé d'une issue dans une bataille : les tables des p. 52-54 ne lisent que les quatre
+   * paliers — échec critique, échec, réussite, réussite critique —, pas « Oui, mais… » ni « Oui ».
+   * @param {Object|null} outcome Le retour de `resolveOutcome`.
+   * @returns {string|null}
+   */
+  static outcomeName(outcome) {
+    return outcome ? game.i18n.localize(`CDG.battle.outcomes.${outcome.outcome}`) : null
+  }
+
+  /**
    * L'action d'éclat est-elle ouverte à ce PJ : acquise d'emblée, ou gagnée par un test d'Esprit /
    * Tactique réussi.
    * @param {Object} member
@@ -594,6 +607,38 @@ export default class CdgBattle {
   // #region Adversaire et escarmouche
 
   /**
+   * La table des adversaires en vigueur : les tranches du livre, dont les profils (des uuid
+   * d'acteurs) viennent du réglage du monde s'il les a changés, du bestiaire du système sinon.
+   * @returns {{min: number, max: number, label: string, actors: string[], custom: boolean}[]}
+   */
+  static adversaryTable() {
+    const custom = game.settings.get(SYSTEM.PACKAGE_ID, this.ADVERSARIES_SETTING) ?? {}
+    return SYSTEM.BATTLE_ADVERSARIES.map((entry) => {
+      const key = this.adversaryKey(entry)
+      const actors = Array.isArray(custom[key]) ? custom[key] : entry.actors.map((id) => `Compendium.${this.PACK}.Actor.${id}`)
+      return { ...entry, actors, custom: Array.isArray(custom[key]) }
+    })
+  }
+
+  /**
+   * Clé d'une tranche dans le réglage : ses bornes, qui ne changent pas.
+   * @param {{min: number, max: number}} entry
+   * @returns {string}
+   */
+  static adversaryKey(entry) {
+    return `${entry.min}-${entry.max}`
+  }
+
+  /**
+   * Nom d'un profil de la table, sans charger le document (index du compendium ou acteur du monde).
+   * @param {string} uuid
+   * @returns {string}
+   */
+  static adversaryName(uuid) {
+    return fromUuidSync(uuid)?.name ?? uuid
+  }
+
+  /**
    * Tire l'adversaire du PJ sur la table p. 52, selon la composition de l'armée adverse.
    * @param {CdgActor} company
    * @param {string} actorId
@@ -605,8 +650,9 @@ export default class CdgBattle {
     const roll = await new Roll(quality.formula).evaluate()
     const results = roll.dice[0].results.map((die) => die.result)
     const die = keptAdversaryDie(results, state.armyQuality)
-    const entry = adversaryEntry(die)
-    const label = game.i18n.localize(entry.label)
+    const entry = adversaryEntry(die, this.adversaryTable())
+    // Une tranche modifiée par le Meneur porte le nom de ses profils, et non plus celui du livre.
+    const label = entry.custom && entry.actors.length ? entry.actors.map((uuid) => this.adversaryName(uuid)).join(" / ") : game.i18n.localize(entry.label)
 
     await roll.toMessage({
       speaker: ChatMessage.implementation.getSpeaker({ actor: game.actors.get(actorId) }),
@@ -621,21 +667,24 @@ export default class CdgBattle {
    * Copie, jeton et combat disparaissent à la fin du round (voir `onDeleteCombat`).
    * @param {CdgActor} company
    * @param {string} actorId
-   * @param {string} adversaryId Identifiant du profil dans le compendium.
+   * @param {string} adversaryUuid Le profil retenu, dans un compendium ou parmi les acteurs du monde.
    */
-  static async startSkirmish(company, actorId, adversaryId) {
+  static async startSkirmish(company, actorId, adversaryUuid) {
     const state = this.getState(company)
     const member = state?.members[actorId]
     const actor = game.actors.get(actorId)
-    if (!game.user.isGM || !actor || !member?.adversary?.actors.includes(adversaryId) || member.adversary.skirmish) return
+    if (!game.user.isGM || !actor || !member?.adversary?.actors.includes(adversaryUuid) || member.adversary.skirmish) return
 
-    const pack = game.packs.get(this.PACK)
-    const source = await pack?.getDocument(adversaryId)
-    if (!source) return ui.notifications.error("CDG.battle.notif.adversaryMissing", { localize: true })
+    const source = await fromUuid(adversaryUuid)
+    if (source?.documentName !== "Actor") return ui.notifications.error("CDG.battle.notif.adversaryMissing", { localize: true })
 
+    // Toujours une copie, même d'un acteur du monde : ses blessures ne doivent pas survivre à l'escarmouche.
+    const data = source.pack ? game.actors.fromCompendium(source) : source.toObject()
+    delete data._id
+    delete data.folder
     const adversary = await Actor.implementation.create({
-      ...game.actors.fromCompendium(source),
-      flags: { [SYSTEM.PACKAGE_ID]: { [this.TEMPORARY_FLAG]: true } },
+      ...data,
+      flags: { ...data.flags, [SYSTEM.PACKAGE_ID]: { ...data.flags?.[SYSTEM.PACKAGE_ID], [this.TEMPORARY_FLAG]: true } },
     })
 
     const scene = canvas.scene
@@ -664,7 +713,23 @@ export default class CdgBattle {
     await combat.startCombat()
     ui.combat.render({ force: true })
 
-    return this.request(company, { type: "skirmish", actorId, skirmish: { status: "running", combatId: combat.id, name: adversary.name } })
+    return this.request(company, {
+      type: "skirmish",
+      actorId,
+      skirmish: { status: "running", combatId: combat.id, name: adversary.name, adversaryUuid: (adversaryToken?.actor ?? adversary).uuid },
+    })
+  }
+
+  /**
+   * Ouvre la fiche de l'adversaire d'une escarmouche en cours — celle du jeton s'il est sur la
+   * scène, puisque c'est lui qui encaisse —, pour lancer ses jets.
+   * @param {CdgActor} company
+   * @param {string} actorId Le PJ qu'il affronte.
+   */
+  static async openAdversary(company, actorId) {
+    const uuid = this.getState(company)?.members[actorId]?.adversary?.skirmish?.adversaryUuid
+    const adversary = uuid ? await fromUuid(uuid) : null
+    return adversary?.sheet.render(true)
   }
 
   /**
@@ -750,8 +815,7 @@ export default class CdgBattle {
     if (!member || !actor) return null
     const fightPhase = [SYSTEM.BATTLE_PHASES.fights.id, SYSTEM.BATTLE_PHASES.exploits.id].includes(state.phase)
     const fight = member.fight
-    const locked = !!(member.protection || member.adversary || member.tactique)
-    const label = (outcome) => (outcome ? game.i18n.localize(outcomeLabel(outcome)) : null)
+    const label = (outcome) => this.outcomeName(outcome)
     const woundLabel = (id) => (id ? game.i18n.localize(SYSTEM.WOUND_LEVELS[id].label) : game.i18n.localize("CDG.battle.noWound"))
 
     const view = {
@@ -765,7 +829,10 @@ export default class CdgBattle {
         active: position.id === member.position,
         allowed: canMove(member.previousPosition, position.id),
       })),
-      canRollFight: fightPhase && !!member.position && !locked,
+      // Le bouton reste affiché mais grisé une fois le test lancé : une relance passe par « Se
+      // dépasser » sur la carte du test, pas par un second jet.
+      showFight: fightPhase && !!member.position,
+      canRollFight: fightPhase && !!member.position && !member.fight,
       fight: fight ? { ...fight, label: label(fight.outcome) } : null,
     }
     if (!fight) return view
@@ -789,7 +856,7 @@ export default class CdgBattle {
           pending: adversary.actors.length === 0,
           skirmish: adversary.skirmish,
           skirmishResult: adversary.skirmish?.result ? game.i18n.localize(`CDG.battle.skirmish.${adversary.skirmish.result}`) : null,
-          choices: adversary.skirmish ? [] : adversary.actors.map((id) => ({ id, name: game.packs.get(this.PACK)?.index.get(id)?.name ?? id })),
+          choices: adversary.skirmish ? [] : adversary.actors.map((uuid) => ({ uuid, name: this.adversaryName(uuid) })),
         }
       }
     }
@@ -860,7 +927,7 @@ export default class CdgBattle {
    */
   static recapContext(company, state) {
     const wound = (id) => (id ? game.i18n.localize(SYSTEM.WOUND_LEVELS[id].label) : game.i18n.localize("CDG.battle.noWound"))
-    const outcome = (result) => (result ? game.i18n.localize(outcomeLabel(result)) : null)
+    const outcome = (result) => this.outcomeName(result)
     return {
       company,
       state,
@@ -940,7 +1007,9 @@ export default class CdgBattle {
       case "drawAdversary":
         return this.drawAdversary(company, actorId)
       case "startSkirmish":
-        return this.startSkirmish(company, actorId, target.dataset.adversaryId)
+        return this.startSkirmish(company, actorId, target.dataset.adversaryUuid)
+      case "openAdversary":
+        return this.openAdversary(company, actorId)
       case "grantExploit":
         return this.request(company, { type: "exploit", actorId })
       case "openBattle":

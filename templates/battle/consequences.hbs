@@ -4,8 +4,8 @@
   chaque client retire ceux qui ne le concernent pas (`CdgBattle.filterButtons`).
 }}
 <div class="battle-consequences">
-  {{#if member.canRollFight}}
-    <button type="button" data-action="battleAction" data-battle-action="rollFight" data-requires="owner">
+  {{#if member.showFight}}
+    <button type="button" data-action="battleAction" data-battle-action="rollFight" data-requires="owner" {{#unless member.canRollFight}}disabled{{/unless}}>
       <i class="fa-solid fa-dice-d20" inert></i> {{localize "CDG.battle.fight.roll"}}
     </button>
   {{/if}}
@@ -31,11 +31,15 @@
             → {{member.adversary.label}} ({{member.adversary.die}})
             {{#if member.adversary.pending}}<span class="hint">{{localize "CDG.battle.adversary.pending"}}</span>{{/if}}
             {{#each member.adversary.choices as |choice|}}
-              <button type="button" data-action="battleAction" data-battle-action="startSkirmish" data-adversary-id="{{choice.id}}" data-requires="gm">
+              <button type="button" data-action="battleAction" data-battle-action="startSkirmish" data-adversary-uuid="{{choice.uuid}}" data-requires="gm">
                 {{localize "CDG.battle.skirmish.start" name=choice.name}}
               </button>
             {{/each}}
-            {{#if member.adversary.skirmishResult}}— <strong>{{member.adversary.skirmishResult}}</strong>{{else if member.adversary.skirmish}}— {{localize "CDG.battle.skirmish.running"}}{{/if}}
+            {{#if member.adversary.skirmishResult}}— <strong>{{member.adversary.skirmishResult}}</strong>{{else if member.adversary.skirmish}}— {{localize "CDG.battle.skirmish.running"}}
+              <button type="button" data-action="battleAction" data-battle-action="openAdversary" data-requires="gm">
+                <i class="fa-solid fa-user-ninja" inert></i> {{localize "CDG.battle.skirmish.openSheet" name=member.adversary.skirmish.name}}
+              </button>
+            {{/if}}
           {{else if member.canDraw}}
             <button type="button" data-action="battleAction" data-battle-action="drawAdversary" data-requires="gm">{{localize "CDG.battle.adversary.draw"}}</button>
           {{/if}}

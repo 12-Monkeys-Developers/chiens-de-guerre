@@ -122,10 +122,11 @@ export function keptAdversaryDie(results, qualityId) {
 /**
  * La tranche de la table des adversaires (p. 52) qui répond à un d20.
  * @param {number} die
- * @returns {Object|null} Une entrée de `SYSTEM.BATTLE_ADVERSARIES`.
+ * @param {Object[]} [table] La table en vigueur, celle du livre par défaut.
+ * @returns {Object|null} Une entrée de la table.
  */
-export function adversaryEntry(die) {
-  return SYSTEM.BATTLE_ADVERSARIES.find((entry) => die >= entry.min && die <= entry.max) ?? null
+export function adversaryEntry(die, table = SYSTEM.BATTLE_ADVERSARIES) {
+  return table.find((entry) => die >= entry.min && die <= entry.max) ?? null
 }
 
 /**

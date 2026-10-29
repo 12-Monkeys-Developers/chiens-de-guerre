@@ -964,6 +964,11 @@
       "autoResetRoundCounters": {
         "name": "Réinitialiser esquives et parade",
         "hint": "Remet à zéro les esquives utilisées et la parade de chaque combattant à la fin de chaque round."
+      },
+      "battleAdversaries": {
+        "name": "Table des adversaires en bataille",
+        "label": "Configurer la table",
+        "hint": "Les profils tirés au d20 quand un PJ rencontre un adversaire pendant une bataille (p. 52)."
       }
     },
     "Character": {
@@ -1296,7 +1301,8 @@
         "running": "escarmouche en cours",
         "won": "adversaire hors de combat",
         "lost": "PJ hors de combat",
-        "separated": "la mêlée les sépare"
+        "separated": "la mêlée les sépare",
+        "openSheet": "Fiche de {name}"
       },
       "exploit": {
         "ifTactique": "Action d'éclat si Esprit / Tactique réussi",
@@ -1333,7 +1339,25 @@
       },
       "points": "Points de victoire",
       "pointsAdd": "Ajouter un point de victoire",
-      "pointsRemove": "Retirer un point de victoire"
+      "pointsRemove": "Retirer un point de victoire",
+      "outcomes": {
+        "criticalFailure": "Échec critique",
+        "failure": "Échec",
+        "success": "Réussite",
+        "criticalSuccess": "Réussite critique"
+      },
+      "adversariesConfig": {
+        "title": "Table des adversaires en bataille",
+        "hint": "Retirez un profil avec la corbeille, puis déposez sur sa ligne un PNJ du compendium ou de la barre latérale. Plusieurs profils sur une ligne : le Meneur choisit au tirage.",
+        "die": "d20",
+        "adversary": "Adversaire",
+        "remove": "Retirer ce profil",
+        "drop": "Déposez un PNJ ici",
+        "reset": "Table du livre",
+        "save": "Enregistrer",
+        "saved": "Table des adversaires enregistrée.",
+        "adversaryOnly": "Seul un PNJ peut figurer dans la table."
+      }
     }
   }
 }

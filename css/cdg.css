@@ -4633,6 +4633,94 @@ cdg-toggle-switch[checked] thumb {
   color: var(--cdg-parchment);
   background: var(--cdg-blood);
 }
+.cdg.battle-adversaries .window-content {
+  padding: 0.6rem 0.8rem;
+  font-family: var(--cdg-font-text);
+  color: var(--cdg-text);
+}
+.cdg.battle-adversaries .hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--cdg-muted);
+}
+.cdg.battle-adversaries .adversary-head,
+.cdg.battle-adversaries .adversary-row {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 0.6rem;
+  align-items: center;
+}
+.cdg.battle-adversaries .adversary-head {
+  font-family: var(--cdg-font-label);
+  font-variant: small-caps;
+  border-bottom: 2px solid var(--cdg-ink);
+  padding-bottom: 0.2rem;
+}
+.cdg.battle-adversaries .adversary-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 28rem;
+  overflow-y: auto;
+}
+.cdg.battle-adversaries .adversary-row {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--cdg-parchment-line);
+}
+.cdg.battle-adversaries .adversary-row .col-die {
+  text-align: center;
+  font-weight: bold;
+  color: var(--cdg-blood);
+}
+.cdg.battle-adversaries .adversary-row .col-actors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  min-height: 1.8rem;
+  align-items: center;
+}
+.cdg.battle-adversaries .adversary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.1rem 0.2rem 0.1rem 0.1rem;
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+}
+.cdg.battle-adversaries .adversary-chip img {
+  width: 1.5rem;
+  height: 1.5rem;
+  object-fit: cover;
+  border: none;
+}
+.cdg.battle-adversaries .adversary-chip button {
+  width: 1.4rem;
+  height: 1.4rem;
+  line-height: 1.2rem;
+  padding: 0;
+  font-size: 0.7rem;
+}
+.cdg.battle-adversaries .adversary-chip.missing {
+  border-color: var(--cdg-blood);
+  color: var(--cdg-blood);
+}
+.cdg.battle-adversaries .drop-hint {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--cdg-muted);
+  border: 1px dashed var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+  padding: 0.1rem 0.5rem;
+}
+.cdg.battle-adversaries .adversaries-footer {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+.cdg.battle-adversaries .adversaries-footer button {
+  flex: 1 1 0;
+}
 :root {
   --cdg-guide-accent: var(--cdg-blood);
   --cdg-guide-tip-background: rgba(122, 16, 16, 0.07);

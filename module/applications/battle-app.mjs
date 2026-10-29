@@ -1,6 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgBattle from "../combat/battle.mjs"
-import { outcomeLabel } from "../dice/roll-outcome.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
@@ -111,7 +110,7 @@ export default class CdgBattleApp extends HandlebarsApplicationMixin(Application
     const phaseIndex = phases.findIndex((phase) => phase.id === state.phase)
     const isPhase = (id) => state.phase === id
     const chief = CdgBattle.chief(state)
-    const outcome = (result) => (result ? game.i18n.localize(outcomeLabel(result)) : null)
+    const outcome = (result) => CdgBattle.outcomeName(result)
 
     return Object.assign(context, {
       phases: phases.map((phase, index) => ({ ...phase, current: index === phaseIndex, done: index < phaseIndex })),
