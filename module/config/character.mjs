@@ -170,6 +170,9 @@ export const WOUND_LEVELS = {
   mortelle: { id: "mortelle", label: "CDG.wounds.mortelle", labelComp: "CDG.woundsComp.mortelle", malus: -6, order: 3 },
 }
 
+/** Les gravités de blessure de la plus légère à la plus grave : l'ordre du débordement et des soins. */
+export const WOUND_LEVELS_ORDERED = Object.freeze(Object.values(WOUND_LEVELS).sort((a, b) => a.order - b.order))
+
 /**
  * Nombre de cases de blessure par gravité, selon le rang dans la compétence Vigueur.
  *

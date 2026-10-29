@@ -2,7 +2,7 @@ import { SYSTEM } from "../config/system.mjs"
 import { createChatMessage, currentMessageMode } from "../helpers/chat.mjs"
 import { simulateCompanyHealing } from "../helpers/rules.mjs"
 import Utils from "../helpers/utils.mjs"
-import { bestDieIndex, OUTCOMES, outcomeLabel, resolveOutcome, worstDieIndex } from "./roll-outcome.mjs"
+import { bestDieIndex, keptOutcome, OUTCOMES, outcomeLabel, resolveOutcome, worstDieIndex } from "./roll-outcome.mjs"
 
 /**
  * Le jet d'un test de Chiens de guerre, et la carte de chat qui le porte.
@@ -65,9 +65,8 @@ export default class CdgRoll extends Roll {
    */
   static summary(test) {
     const couple = [test.abilityLabel, test.skillLabel].filter(Boolean).join(" / ")
-    const kept = test.results[test.keptIndex]
-    const outcome = game.i18n.localize(outcomeLabel(resolveOutcome(kept, test.sr)))
-    return `${test.actorName} — ${couple}, SR ${test.sr} : ${test.results.join(", ")} → ${kept} (${outcome})`
+    const outcome = keptOutcome(test)
+    return `${test.actorName} — ${couple}, SR ${test.sr} : ${test.results.join(", ")} → ${outcome.die} (${game.i18n.localize(outcomeLabel(outcome))})`
   }
 
   /**
@@ -143,7 +142,7 @@ export default class CdgRoll extends Roll {
       }
     })
 
-    const outcome = resolveOutcome(test.results[test.keptIndex], test.sr)
+    const outcome = keptOutcome(test)
 
     return {
       test,
@@ -280,7 +279,7 @@ export default class CdgRoll extends Roll {
     if (!actor.isOwner) return ui.notifications.warn("CDG.company.healing.notOwner", { localize: true })
     if (actor.system.dissolved) return ui.notifications.warn("CDG.company.cannotRollDissolved", { localize: true })
 
-    const outcome = resolveOutcome(test.results[test.keptIndex], test.sr)
+    const outcome = keptOutcome(test)
     let summary = game.i18n.localize(`CDG.company.healing.result.${outcome.outcome}`)
 
     if (outcome.outcome === OUTCOMES.criticalFailure.id) {
@@ -327,7 +326,7 @@ export default class CdgRoll extends Roll {
    * @returns {{label: string, operations: {level: string, steps: number}[]}[]}
    */
   static #companyHealingPlans(actor, critical) {
-    const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
+    const levels = SYSTEM.WOUND_LEVELS_ORDERED
     const name = (id) => game.i18n.localize(SYSTEM.WOUND_LEVELS[id].label)
     // Même simulation que `CdgActor#applyCompanyHealing` : un plan proposé ici s'appliquera.
     const valid = (operations) => simulateCompanyHealing(actor.system.wounds, operations) !== null

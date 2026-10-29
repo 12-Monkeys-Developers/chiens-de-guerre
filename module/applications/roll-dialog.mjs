@@ -1,17 +1,11 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
+import { signed } from "../helpers/format.mjs"
 import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
 import Utils from "../helpers/utils.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const TEMPLATES = `${SYSTEM.PATH}/templates/dialogs`
-
-/**
- * Nombre signé, pour les libellés composés ici plutôt que dans les gabarits.
- * @param {number} value
- * @returns {string}
- */
-const signed = (value) => (value > 0 ? `+${value}` : `${value}`)
 
 /**
  * La fenêtre de test — règles p. 40-41.
@@ -293,9 +287,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       rankName: game.i18n.localize(rankEntry.label),
       rankHint: game.i18n.localize(rankEntry.hint),
       difficulty,
-      difficultyChoices: Object.values(SYSTEM.DIFFICULTIES)
-        .sort((a, b) => a.order - b.order)
-        .map((entry) => ({ id: entry.id, label: `${game.i18n.localize(entry.label)} (${signed(entry.modifier)})` })),
+      difficultyChoices: SYSTEM.DIFFICULTIES_ORDERED.map((entry) => ({ id: entry.id, label: `${game.i18n.localize(entry.label)} (${signed(entry.modifier)})` })),
       canUseEffort,
       effortMax,
       effortSteps: Array.fromRange(SYSTEM.MAX_EFFORT + 1).map((step) => ({

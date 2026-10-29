@@ -1,4 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
+import { signed } from "./format.mjs"
 
 /**
  * Enregistre les helpers Handlebars du système.
@@ -24,8 +25,7 @@ export function registerHandlebarsHelpers() {
 
   /** Nombre signé, pour les malus et les modificateurs. */
   Handlebars.registerHelper("signed", function (value) {
-    const number = parseInt(value) || 0
-    return number > 0 ? `+${number}` : `${number}`
+    return signed(parseInt(value) || 0)
   })
 
   Handlebars.registerHelper("formulabreakdown", function (parts) {

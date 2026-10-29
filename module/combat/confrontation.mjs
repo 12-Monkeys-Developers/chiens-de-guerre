@@ -2,7 +2,7 @@ import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
 import Utils from "../helpers/utils.mjs"
-import { OUTCOMES, resolveOutcome } from "../dice/roll-outcome.mjs"
+import { keptOutcome, OUTCOMES } from "../dice/roll-outcome.mjs"
 import { resolveOpposedOutcome, resolveWound } from "./opposition.mjs"
 
 /**
@@ -429,8 +429,8 @@ export default class CdgConfrontation {
       return
     }
 
-    const attackOutcome = resolveOutcome(state.attackTest.results[state.attackTest.keptIndex], state.attackTest.sr)
-    const defenseOutcome = resolveOutcome(state.defenseTest.results[state.defenseTest.keptIndex], state.defenseTest.sr)
+    const attackOutcome = keptOutcome(state.attackTest)
+    const defenseOutcome = keptOutcome(state.defenseTest)
     const result = resolveOpposedOutcome(attackOutcome, defenseOutcome)
 
     state.opposition = {
@@ -466,8 +466,8 @@ export default class CdgConfrontation {
       state.woundId = null
       state.woundResolved = false
     } else {
-      const damageOutcome = resolveOutcome(state.damageTest.results[state.damageTest.keptIndex], state.damageTest.sr)
-      const soakOutcome = resolveOutcome(state.soakTest.results[state.soakTest.keptIndex], state.soakTest.sr)
+      const damageOutcome = keptOutcome(state.damageTest)
+      const soakOutcome = keptOutcome(state.soakTest)
       state.woundId = resolveWound(damageOutcome, soakOutcome)
       state.woundResolved = true
       Utils.debug(

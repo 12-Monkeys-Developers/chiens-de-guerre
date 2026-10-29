@@ -59,6 +59,16 @@ export function resolveOutcome(die, sr) {
 }
 
 /**
+ * L'issue d'un test lancé : son dé conservé face à son seuil. C'est ce que lisent la carte, la
+ * confrontation, la bataille et le jet de survie, qui ne doivent jamais relire un autre dé.
+ * @param {{results: number[], keptIndex: number, sr: number}} test Un test tel que le pose `CdgRoll.roll`.
+ * @returns {Object} Le retour de `resolveOutcome`.
+ */
+export function keptOutcome(test) {
+  return resolveOutcome(test.results[test.keptIndex], test.sr)
+}
+
+/**
  * Tranche de qualité d'une réussite : de justesse jusqu'à 5, franche au-delà (p. 42).
  * @param {number} quality
  * @returns {string} `"weak"` ou `"standard"`

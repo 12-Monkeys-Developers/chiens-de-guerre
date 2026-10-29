@@ -113,7 +113,7 @@ export default class CdgBattleApp extends HandlebarsApplicationMixin(Application
     Object.assign(context, { company, isGM: game.user.isGM, state, SYSTEM })
     if (!state) return Object.assign(context, this.#setupContext())
 
-    const phases = Object.values(SYSTEM.BATTLE_PHASES).sort((a, b) => a.order - b.order)
+    const phases = SYSTEM.BATTLE_PHASES_ORDERED
     const phaseIndex = phases.findIndex((phase) => phase.id === state.phase)
     const isPhase = (id) => state.phase === id
     const chief = CdgBattle.chief(state)

@@ -1,8 +1,9 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
-import { resolveOutcome } from "../dice/roll-outcome.mjs"
+import { keptOutcome } from "../dice/roll-outcome.mjs"
 import { createChatMessage } from "../helpers/chat.mjs"
+import { signed } from "../helpers/format.mjs"
 import Utils from "../helpers/utils.mjs"
 import { adversaryEntry, battleWinner, canMove, fightConsequence, generalsResult, keptAdversaryDie, lossesWound, shiftWound } from "./battle-rules.mjs"
 import { resolveOpposedOutcome } from "./opposition.mjs"
@@ -293,7 +294,7 @@ export default class CdgBattle {
    * @returns {Promise<boolean>} `false` si la bataille vient d'être conclue (l'état n'existe plus).
    */
   static async #nextPhase(company, state) {
-    const phases = Object.values(SYSTEM.BATTLE_PHASES).sort((a, b) => a.order - b.order)
+    const phases = SYSTEM.BATTLE_PHASES_ORDERED
     const index = phases.findIndex((phase) => phase.id === state.phase)
     const last = index === phases.length - 1
 
@@ -320,7 +321,7 @@ export default class CdgBattle {
    * @param {Object} state
    */
   static #previousPhase(state) {
-    const phases = Object.values(SYSTEM.BATTLE_PHASES).sort((a, b) => a.order - b.order)
+    const phases = SYSTEM.BATTLE_PHASES_ORDERED
     const index = phases.findIndex((phase) => phase.id === state.phase)
     if (index > 0) state.phase = phases[index - 1].id
   }
@@ -547,7 +548,7 @@ export default class CdgBattle {
     const tag = test?.battle
     if (!tag || tag.battleId !== state.id || tag.turn !== state.turn) return false
 
-    const outcome = resolveOutcome(test.results[test.keptIndex], test.sr)
+    const outcome = keptOutcome(test)
     Utils.debug("battle", `Résultat ${tag.kind}${tag.actorId ? ` de ${game.actors.get(tag.actorId)?.name}` : ""} : ${CdgRoll.summary(test)}`)
     const phase = state.phase
     const fightPhases = [SYSTEM.BATTLE_PHASES.fights.id, SYSTEM.BATTLE_PHASES.exploits.id]
@@ -812,8 +813,7 @@ export default class CdgBattle {
    */
   static modifierLabel(value) {
     const preset = SYSTEM.BATTLE_MODIFIERS.find((entry) => entry.value === value)
-    const signed = value > 0 ? `+${value}` : `${value}`
-    return preset ? `${signed} (${game.i18n.localize(preset.label)})` : signed
+    return preset ? `${signed(value)} (${game.i18n.localize(preset.label)})` : signed(value)
   }
 
   /**

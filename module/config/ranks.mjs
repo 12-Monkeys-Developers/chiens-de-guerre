@@ -79,5 +79,8 @@ export const DIFFICULTIES = {
   tresDifficile: { id: "tresDifficile", label: "CDG.difficulties.tresDifficile", modifier: -10, order: 7 },
 }
 
+/** Les difficultés dans l'ordre du sélecteur, de la plus facile à la plus difficile. */
+export const DIFFICULTIES_ORDERED = Object.freeze(Object.values(DIFFICULTIES).sort((a, b) => a.order - b.order))
+
 /** Difficulté proposée par défaut à l'ouverture de la fenêtre de jet. */
 export const DEFAULT_DIFFICULTY = "moyenne"

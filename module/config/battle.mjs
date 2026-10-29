@@ -35,6 +35,9 @@ export const BATTLE_PHASES = {
   losses: { id: "losses", label: "CDG.battle.phases.losses", order: 5 },
 }
 
+/** Les phases dans l'ordre où elles se jouent, pour passer de l'une à la suivante. */
+export const BATTLE_PHASES_ORDERED = Object.freeze(Object.values(BATTLE_PHASES).sort((a, b) => a.order - b.order))
+
 /**
  * Localisation d'un PJ, de l'arrière au front (p. 52). `step` mesure la distance entre deux
  * positions : on ne change que d'un cran par tour. `chiefMalus` pénalise le test d'Esprit / Tactique

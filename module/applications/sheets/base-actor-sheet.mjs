@@ -1,4 +1,5 @@
 import { SYSTEM } from "../../config/system.mjs"
+import { signed } from "../../helpers/format.mjs"
 import CdgMacros from "../../helpers/macros.mjs"
 import Utils from "../../helpers/utils.mjs"
 import CdgRollDialog from "../roll-dialog.mjs"
@@ -187,7 +188,6 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    * @returns {Record<string, string>} Une info-bulle HTML par caractéristique concernée.
    */
   _prepareAbilityMaxTooltips() {
-    const signed = (value) => (value > 0 ? `+${value}` : `${value}`)
     const lines = {}
 
     for (const effect of this.document.appliedEffects) {
@@ -222,7 +222,6 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
   _prepareInitiativeModifierTooltip() {
     const actor = this.document
     if (!actor.system.combat) return null
-    const signed = (value) => (value > 0 ? `+${value}` : `${value}`)
     const lines = [`${game.i18n.localize("CDG.label.long.initiativeBonus")} : <strong>${signed(actor.system.combat.initiative.bonus)}</strong>`]
 
     if (actor.armor) {

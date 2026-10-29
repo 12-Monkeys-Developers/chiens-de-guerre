@@ -1,6 +1,6 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { bestDieIndex, OUTCOMES, outcomeScore, resolveOutcome, worstDieIndex } from "../module/dice/roll-outcome.mjs"
+import { bestDieIndex, keptOutcome, OUTCOMES, outcomeScore, resolveOutcome, worstDieIndex } from "../module/dice/roll-outcome.mjs"
 
 const outcome = (die, sr) => resolveOutcome(die, sr).outcome
 
@@ -54,4 +54,11 @@ test("l'ordre des issues : échec critique < échec < réussite < réussite crit
     [...scores].sort((a, b) => a - b),
     scores,
   )
+})
+
+test("issue d'un test lancé : seul le dé conservé compte, pas le meilleur de la poignée", () => {
+  const test = { results: [12, 4, 20], keptIndex: 1, sr: 12 }
+  assert.deepEqual(keptOutcome(test), resolveOutcome(4, 12))
+  assert.equal(keptOutcome({ ...test, keptIndex: 0 }).outcome, OUTCOMES.criticalSuccess.id)
+  assert.equal(keptOutcome({ ...test, keptIndex: 2 }).outcome, OUTCOMES.criticalFailure.id)
 })

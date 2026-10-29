@@ -12,12 +12,7 @@ import { OUTCOMES } from "../dice/roll-outcome.mjs"
 const { criticalFailure: CF, failure: F, success: S, criticalSuccess: CS } = Object.fromEntries(Object.entries(OUTCOMES).map(([key, value]) => [key, value.id]))
 
 /** Gravités de blessure de la moins à la plus grave, précédées de l'absence de blessure. */
-const WOUND_SCALE = [
-  null,
-  ...Object.values(SYSTEM.WOUND_LEVELS)
-    .sort((a, b) => a.order - b.order)
-    .map((level) => level.id),
-]
+const WOUND_SCALE = [null, ...SYSTEM.WOUND_LEVELS_ORDERED.map((level) => level.id)]
 
 /**
  * Table du déroulement des combats (p. 52) : la position du PJ en colonne, l'issue de son test

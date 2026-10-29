@@ -44,7 +44,7 @@ export function computeKarma(traits) {
  *   si le plan ne s'applique pas.
  */
 export function simulateCompanyHealing(wounds, operations) {
-  const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
+  const levels = SYSTEM.WOUND_LEVELS_ORDERED
   const result = Object.fromEntries(levels.map((level) => [level.id, { value: wounds[level.id].value, max: wounds[level.id].max }]))
 
   for (const operation of operations) {

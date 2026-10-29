@@ -473,7 +473,7 @@ export default class CdgActor extends Actor {
     let appliedLevelId = null
     let start = -1
     if (newLevelId) {
-      const levels = Object.values(SYSTEM.WOUND_LEVELS).sort((a, b) => a.order - b.order)
+      const levels = SYSTEM.WOUND_LEVELS_ORDERED
       start = levels.findIndex((entry) => entry.id === newLevelId)
       for (let index = start; index !== -1 && index < levels.length && !appliedLevelId; index++) {
         const level = levels[index]

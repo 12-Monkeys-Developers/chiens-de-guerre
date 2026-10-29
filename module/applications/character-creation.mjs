@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { customizationBudget, skillBudget, traitQuotas } from "../helpers/creation-calculations.mjs"
+import { fromDeniers, toDeniers } from "../helpers/money.mjs"
 import { computeKarma } from "../helpers/rules.mjs"
 import Utils from "../helpers/utils.mjs"
 
@@ -879,28 +880,8 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     // Ce que l'équipement supplémentaire de l'étape 8 a coûté sur cette bourse — jamais celui de
     // la carrière, offert. Le solde qui en ressort est celui que le personnage aura vraiment à sa
     // création (`#actorSystemData`), pas seulement un affichage.
-    derived.equipmentCost = this.#droppedItems.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment).reduce((total, item) => total + this.#toDeniers(item.system.price), 0)
-    derived.wealthRemaining = this.#fromDeniers(this.#toDeniers(derived.wealth) + derived.carriereStartingMoney * SYSTEM.DENIERS_PER_DUCAT - derived.equipmentCost)
-  }
-
-  /**
-   * Solde total en deniers, l'unité de compte interne (1 ducat = {@link SYSTEM.DENIERS_PER_DUCAT}
-   * deniers).
-   * @param {{ducat?: number, denier?: number}} wealth
-   * @returns {number}
-   */
-  #toDeniers(wealth) {
-    return Object.values(SYSTEM.CURRENCIES).reduce((total, currency) => total + (wealth?.[currency.id] ?? 0) * currency.inBaseUnit, 0)
-  }
-
-  /**
-   * Reconvertit un total de deniers en ducats et deniers, jamais sous zéro.
-   * @param {number} deniers
-   * @returns {{ducat: number, denier: number}}
-   */
-  #fromDeniers(deniers) {
-    const total = Math.max(0, deniers)
-    return { ducat: Math.floor(total / SYSTEM.DENIERS_PER_DUCAT), denier: total % SYSTEM.DENIERS_PER_DUCAT }
+    derived.equipmentCost = this.#droppedItems.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment).reduce((total, item) => total + toDeniers(item.system.price), 0)
+    derived.wealthRemaining = fromDeniers(toDeniers(derived.wealth) + derived.carriereStartingMoney * SYSTEM.DENIERS_PER_DUCAT - derived.equipmentCost)
   }
 
   /**
@@ -1587,8 +1568,8 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         break
       case SYSTEM.ITEM_TYPE.equipment: {
         if (this.#draft.items.includes(item.uuid)) return
-        const cost = this.#toDeniers(item.system.price)
-        if (cost > this.#toDeniers(this.#derived.wealthRemaining)) {
+        const cost = toDeniers(item.system.price)
+        if (cost > toDeniers(this.#derived.wealthRemaining)) {
           ui.notifications.warn(game.i18n.localize("CDG.creation.combat.tooExpensive"))
           return
         }
@@ -1678,7 +1659,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       // la carrière est bien sur la fiche : jamais avant, sous peine d'un solde négatif écrêté à
       // zéro par le schéma alors que l'assistant l'aurait couvert avec cet argent-là.
       if (this.#derived.equipmentCost > 0) {
-        const wealth = this.#fromDeniers(this.#toDeniers(actor.system.wealth) - this.#derived.equipmentCost)
+        const wealth = fromDeniers(toDeniers(actor.system.wealth) - this.#derived.equipmentCost)
         await actor.update({ "system.wealth.ducat": wealth.ducat, "system.wealth.denier": wealth.denier })
       }
 

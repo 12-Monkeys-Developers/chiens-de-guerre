@@ -1,7 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
-import { resolveOutcome } from "../dice/roll-outcome.mjs"
+import { keptOutcome } from "../dice/roll-outcome.mjs"
 import { createChatMessage } from "../helpers/chat.mjs"
 import Utils from "../helpers/utils.mjs"
 
@@ -112,7 +112,7 @@ export default class CdgDyingPrompt {
     const message = await CdgRoll.post(test)
     const data = CdgRoll.getTest(message)
 
-    const outcome = resolveOutcome(data.results[data.keptIndex], data.sr)
+    const outcome = keptOutcome(data)
     Utils.debug("wounds", `Jet de survie de ${actor.name} : ${outcome.success ? "réussi" : "raté, marqué mort"}`)
     if (!outcome.success) {
       await actor.toggleStatusEffect("dead", { active: true })

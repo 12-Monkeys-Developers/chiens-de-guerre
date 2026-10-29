@@ -1,4 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
+import { signed } from "../helpers/format.mjs"
 import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
 import Utils from "../helpers/utils.mjs"
 
@@ -189,7 +190,7 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
       { parts: data.parts, effort, passion: data.passion.selected },
     )
 
-    const breakdown = data.parts.map((part) => `<li><span>${part.label}</span><strong>${part.value > 0 ? "+" : ""}${part.value}</strong></li>`).join("")
+    const breakdown = data.parts.map((part) => `<li><span>${part.label}</span><strong>${signed(part.value)}</strong></li>`).join("")
     const name = foundry.utils.escapeHTML(combatant?.name ?? actor.name)
     const content = `<section class="cdg chat-card initiative-card"><header><h3>${game.i18n.localize("CDG.combat.initiative.chatTitle")}</h3><strong>${name}</strong></header><p>${data.initiativeSkillLabel} (${data.rankName}) : ${results.join(", ")} — ${game.i18n.localize("CDG.combat.initiative.kept")} <strong>${kept}</strong></p><ul>${breakdown}</ul><div class="initiative-total">${game.i18n.localize("CDG.label.long.initiative")} <strong>${total}</strong></div></section>`
     // L'initiative d'un PNJ reste une information réservée au Meneur, que son combattant soit

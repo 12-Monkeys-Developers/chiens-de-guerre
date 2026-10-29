@@ -1,4 +1,5 @@
 import { SYSTEM } from "../../config/system.mjs"
+import { signed } from "../../helpers/format.mjs"
 import Utils from "../../helpers/utils.mjs"
 
 const { sheets } = foundry.applications
@@ -79,15 +80,16 @@ export default class CdgBaseItemSheet extends HandlebarsApplicationMixin(sheets.
    */
   #describeChange(change) {
     const value = Number(change.value)
-    const signed = Number.isFinite(value) && value > 0 ? `+${value}` : `${change.value}`
+    // Une valeur qui n'est pas un nombre (une formule) s'affiche telle qu'elle a été saisie.
+    const amount = Number.isFinite(value) ? signed(value) : `${change.value}`
 
     if (change.type === SYSTEM.SITUATIONAL_CHANGE_TYPE) {
       const situation = SYSTEM.SITUATIONS[change.situation]
       const label = situation ? game.i18n.localize(situation.label) : game.i18n.localize("CDG.effect.anySituation")
-      return game.i18n.format("CDG.effect.summary.situational", { value: signed, situation: label })
+      return game.i18n.format("CDG.effect.summary.situational", { value: amount, situation: label })
     }
 
-    return game.i18n.format("CDG.effect.summary.permanent", { value: signed, key: change.key })
+    return game.i18n.format("CDG.effect.summary.permanent", { value: amount, key: change.key })
   }
 
   /**
