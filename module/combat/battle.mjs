@@ -900,7 +900,7 @@ export default class CdgBattle {
   static async #refreshCards(company, previous, state) {
     if (previous.turn !== state.turn) return
     for (const [actorId, member] of Object.entries(state.members)) {
-      if (!member.cardId || foundry.utils.objectsEqual(member, previous.members[actorId] ?? {})) continue
+      if (!member.cardId || foundry.utils.equals(member, previous.members[actorId] ?? {})) continue
       const message = game.messages.get(member.cardId)
       if (message) await message.update({ content: await this.#renderCard(company, state, actorId) })
     }

@@ -110,7 +110,7 @@ export default class CdgBattleAdversariesConfig extends HandlebarsApplicationMix
     for (const entry of SYSTEM.BATTLE_ADVERSARIES) {
       const key = CdgBattle.adversaryKey(entry)
       const defaults = entry.actors.map((id) => `Compendium.${CdgBattle.PACK}.Actor.${id}`)
-      if (!foundry.utils.objectsEqual(this.#draft[key], defaults)) custom[key] = this.#draft[key]
+      if (!foundry.utils.equals(this.#draft[key], defaults)) custom[key] = this.#draft[key]
     }
     await game.settings.set(SYSTEM.PACKAGE_ID, CdgBattle.ADVERSARIES_SETTING, custom)
     ui.notifications.info("CDG.battle.adversariesConfig.saved", { localize: true })
