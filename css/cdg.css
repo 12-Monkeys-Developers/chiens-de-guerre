@@ -7,6 +7,7 @@
   --cdg-parchment: #f2ece0;
   --cdg-parchment-dark: #ded4c2;
   --cdg-parchment-line: #b9ab92;
+  --cdg-company-background: #dcdad5;
   --cdg-label: #4a5a48;
   --cdg-text: #241d18;
   --cdg-muted: #7c7266;
@@ -1623,7 +1624,9 @@ cdg-toggle-switch[checked] thumb {
   min-height: 4rem;
 }
 .cdg.actor.compagnie .window-content {
-  background-image: url("../ui/bck-company.webp");
+  background-color: var(--cdg-company-background);
+  background-image: url("../ui/parchemin.webp");
+  background-blend-mode: luminosity;
 }
 .cdg.actor.compagnie .sheet-header {
   background-image: none;
@@ -1733,6 +1736,20 @@ cdg-toggle-switch[checked] thumb {
   flex: 1 1 auto;
   min-width: 8rem;
   font-size: 0.8rem;
+  border: 1px solid var(--cdg-parchment-line);
+  border-radius: var(--cdg-radius);
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--cdg-ink);
+}
+.cdg.actor.compagnie .company-rest button:hover:not(:disabled) {
+  border-color: var(--cdg-blood);
+  color: var(--cdg-blood);
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: none;
+  text-shadow: none;
+}
+.cdg.actor.compagnie .company-rest button:disabled {
+  color: var(--cdg-muted);
 }
 .cdg.actor.compagnie .company-rest h3 {
   margin: 0.5rem 0 0.25rem;

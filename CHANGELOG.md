@@ -1,5 +1,7 @@
 ## 0.8.0
 
+- **Fiche de compagnie** : fond gris léger au lieu du parchemin rouge.
+- **Fiche de compagnie, thème sombre** : les boutons « Récupération naturelle » et « Soins au repos » prenaient le fond noir de Foundry, sur lequel leur libellé brun était illisible ; ils ont désormais l'aspect des boutons de repos.
 - **Assistant de création de personnage** : textes d'introduction resserrés (étapes 2, 3, 4, 6 et Confession), l'histoire demande « Comment avez-vous fini dans votre compagnie ? », les langues sont alignées en colonnes, et les bandeaux Langues, Blessures et Bourse ne chevauchent plus le texte voisin.
 - **Assistants de création** (personnage et compagnie) : le titre de chaque étape a de l'espace au-dessus et au-dessous, et ne chevauche plus le bandeau des étapes ni le texte qui suit.
 - **Initiative** : le bouton de la fiche (et sa macro) lance l'initiative même avant le début du combat ; le total est inscrit dans le suivi et conservé quand le combat commence. Sans combat, ou pour un personnage qui n'y participe pas, le jet s'affiche dans le tchat.

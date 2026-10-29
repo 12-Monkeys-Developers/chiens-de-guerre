@@ -1,6 +1,10 @@
 .cdg.actor.compagnie {
+  // La compagnie se distingue des fiches de personnage par un fond gris clair, sans changer de
+  // texture : le parchemin commun, fondu en luminosité, n'y laisse que son grain.
   .window-content {
-    background-image: url("@{cdg-redparchment-image}");
+    background-color: var(--cdg-company-background);
+    background-image: url("@{cdg-parchment-image}");
+    background-blend-mode: luminosity;
   }
   .sheet-header {
     background-image: none;
@@ -116,10 +120,28 @@
       height:40px;
     }
 
+    // Les boutons de guérison suivent ceux du repos plutôt que le thème de Foundry : en thème
+    // sombre, son fond noir laissait le libellé brun illisible.
     button {
       flex: 1 1 auto;
       min-width: 8rem;
       font-size: 0.8rem;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      background: rgb(255 255 255 / 45%);
+      color: var(--cdg-ink);
+
+      &:hover:not(:disabled) {
+        border-color: var(--cdg-blood);
+        color: var(--cdg-blood);
+        background: rgb(255 255 255 / 45%);
+        box-shadow: none;
+        text-shadow: none;
+      }
+
+      &:disabled {
+        color: var(--cdg-muted);
+      }
     }
 
     h3 {
