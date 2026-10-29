@@ -1,3 +1,7 @@
+## 0.8.1
+
+- **Bestiaire** : dans le compendium des PNJ, les créatures sont de nouveau rangées dans leurs trois dossiers (Animaux courants, Hommes et autres peuples humanoïdes, Monstres et autres créatures abjectes) ; depuis la 0.7.0, elles s'affichaient en vrac hors des dossiers.
+
 ## 0.8.0
 
 - **Fiche de compagnie** : les boutons « + » des blessés sont retirés ; les blessés se cochent directement sur les cases.
