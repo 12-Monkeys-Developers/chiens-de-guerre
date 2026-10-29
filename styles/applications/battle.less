@@ -1,0 +1,410 @@
+// Batailles (p. 51-54) : la fenêtre de bataille d'une compagnie et ses cartes de tchat (début,
+// conséquences de la phase 2, récapitulatif).
+
+// Liste des conséquences d'un PJ, commune à la fenêtre et à la carte.
+.battle-consequences {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+
+  p {
+    margin: 0;
+  }
+
+  .consequence-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    li {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    i {
+      color: var(--cdg-blood);
+      width: 1rem;
+      text-align: center;
+    }
+  }
+
+  button {
+    width: auto;
+    flex: 0 0 auto;
+    line-height: 1.4rem;
+    font-size: 0.8rem;
+    padding: 0 0.5rem;
+  }
+
+  .hint {
+    font-style: italic;
+    color: var(--cdg-muted);
+  }
+}
+
+.cdg.battle {
+  .window-content {
+    padding: 0.6rem 0.8rem;
+    font-family: var(--cdg-font-text);
+    color: var(--cdg-text);
+  }
+
+  .battle-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .hint {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--cdg-muted);
+    margin: 0;
+  }
+
+  h2,
+  h3 {
+    font-family: var(--cdg-font-label);
+    font-variant: small-caps;
+    border: none;
+    margin: 0;
+  }
+
+  // Préparation
+  .battle-setup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .general-drop {
+      border: 1px dashed var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      padding: 0.4rem;
+      text-align: center;
+    }
+
+    .general-fields {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+
+      label {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        flex: 1 1 0;
+      }
+
+      input[type="number"] {
+        width: 3.5rem;
+        flex: 0 0 auto;
+      }
+    }
+
+    .general-actor {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      img {
+        width: 2.4rem;
+        height: 2.4rem;
+        object-fit: cover;
+        border: 1px solid var(--cdg-parchment-line);
+      }
+
+      button {
+        width: auto;
+        margin-left: auto;
+      }
+    }
+
+    .battle-start {
+      align-self: center;
+      width: auto;
+      padding: 0 1.5rem;
+    }
+  }
+
+  // Tableau des scores
+  .battle-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--cdg-ink);
+
+    h2 {
+      color: var(--cdg-blood);
+      font-size: 1.4rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--cdg-muted);
+    }
+  }
+
+  .battle-score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    .side {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1 1 0;
+
+      &.company {
+        justify-content: flex-end;
+      }
+    }
+
+    .side-name {
+      font-family: var(--cdg-font-label);
+      font-variant: small-caps;
+    }
+
+    // Comme les jetons de passion de la fiche : la valeur encadrée de « − » et « + » (Meneur).
+    .side-points {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      > a {
+        display: inline-flex;
+        align-items: center;
+        height: 1.4rem;
+        line-height: 1;
+      }
+    }
+
+    // Pas la police de titre : son zéro se lit comme un « o ».
+    .points-value {
+      font-family: var(--cdg-font-label);
+      font-weight: bold;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: var(--cdg-blood);
+      min-width: 1.5rem;
+      text-align: center;
+    }
+
+    // Le numéro du tour, en pastille entre les deux camps.
+    .score-separator {
+      font-family: var(--cdg-font-label);
+      font-variant: small-caps;
+      font-weight: bold;
+      font-size: 1rem;
+      color: var(--cdg-parchment);
+      background: var(--cdg-ink-soft);
+      border-radius: var(--cdg-radius);
+      padding: 0.15rem 0.6rem;
+      white-space: nowrap;
+    }
+  }
+
+  .battle-winner {
+    margin: 0;
+    padding: 0.3rem;
+    text-align: center;
+    font-family: var(--cdg-font-label);
+    font-variant: small-caps;
+    color: var(--cdg-parchment);
+    background: var(--cdg-blood);
+    border-radius: var(--cdg-radius);
+  }
+
+  // Les cinq phases
+  .battle-phases {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 0.2rem;
+
+    li {
+      flex: 1 1 0;
+      text-align: center;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.2rem;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+      color: var(--cdg-muted);
+
+      &.done {
+        color: var(--cdg-text);
+      }
+
+      &.current {
+        color: var(--cdg-parchment);
+        background: var(--cdg-blood);
+        border-color: var(--cdg-blood);
+      }
+    }
+  }
+
+  // Les PJ
+  .battle-members {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .battle-member {
+    display: grid;
+    grid-template-columns: 11rem 15rem 1fr;
+    gap: 0.6rem;
+    align-items: start;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+
+    .member-identity {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      img {
+        width: 2rem;
+        height: 2rem;
+        object-fit: cover;
+        border: 1px solid var(--cdg-parchment-line);
+        cursor: pointer;
+      }
+    }
+
+    .member-position {
+      display: flex;
+      gap: 0.2rem;
+
+      .position {
+        flex: 1 1 0;
+        font-size: 0.75rem;
+        line-height: 1.5rem;
+        padding: 0 0.3rem;
+        text-align: center;
+        border: 1px solid var(--cdg-parchment-line);
+        border-radius: var(--cdg-radius);
+
+        &.active {
+          color: var(--cdg-parchment);
+          background: var(--cdg-ink-soft);
+        }
+      }
+    }
+  }
+
+  // Généraux et pertes
+  .battle-generals {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+
+    .general-side {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.4rem;
+      border: 1px solid var(--cdg-parchment-line);
+      border-radius: var(--cdg-radius);
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .generals-result {
+      grid-column: 1 / -1;
+      margin: 0;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+
+  .battle-losses p {
+    margin: 0 0 0.3rem;
+  }
+
+  .result {
+    font-weight: bold;
+    color: var(--cdg-blood);
+  }
+
+  .battle-footer {
+    display: flex;
+    gap: 0.4rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid var(--cdg-parchment-line);
+
+    .next {
+      flex: 2 1 0;
+    }
+  }
+}
+
+// Cartes de tchat
+.cdg-battle-card {
+  font-family: var(--cdg-font-text);
+  color: var(--cdg-text);
+
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.4rem;
+
+    .test-name {
+      font-variant: small-caps;
+      letter-spacing: 0.03em;
+      font-size: 0.9rem;
+    }
+
+    .card-position {
+      color: var(--cdg-blood);
+      font-size: 0.8rem;
+    }
+  }
+
+  p {
+    margin: 0 0 0.3rem;
+  }
+
+  &.battle-recap {
+    h3,
+    h4 {
+      font-variant: small-caps;
+      border: none;
+      margin: 0.4rem 0 0.2rem;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1rem;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// Bouton de la fiche de compagnie : rouge tant qu'une bataille est en cours.
+.cdg.actor.compagnie .compagnie-header .open-battle {
+  width: auto;
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+
+  &.active {
+    color: var(--cdg-parchment);
+    background: var(--cdg-blood);
+  }
+}

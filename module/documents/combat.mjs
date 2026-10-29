@@ -1,5 +1,6 @@
 import CdgInitiativeDialog from "../applications/initiative-dialog.mjs"
 import { SYSTEM } from "../config/system.mjs"
+import CdgBattle from "../combat/battle.mjs"
 import CdgDyingPrompt from "../combat/dying-prompt.mjs"
 import Utils from "../helpers/utils.mjs"
 
@@ -213,6 +214,9 @@ export default class CdgCombat extends Combat {
       await game.users.activeGM.query("cdg.nextRound", { combatId: this.id })
       return this
     }
+
+    // Escarmouche ouverte par une bataille : un seul round, puis la mêlée sépare les combattants (p. 52).
+    if (this.started && this.round >= 1 && this.getFlag(SYSTEM.PACKAGE_ID, CdgBattle.SKIRMISH_FLAG)) return CdgBattle.endSkirmish(this)
 
     const nextRound = this.round + 1
     const advanceTime = this.getTimeDelta(this.round, this.turn, nextRound, null)

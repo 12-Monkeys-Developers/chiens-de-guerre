@@ -11,6 +11,10 @@
       {{localize "CDG.party.title"}}
     </button>
   {{/if}}
+  <button type="button" class="button" data-action="openApp" data-app="battle" data-tooltip="{{localize 'CDG.battle.openTooltip'}}">
+    <i class="fa-solid fa-chess-rook" inert></i>
+    {{localize "CDG.battle.open"}}
+  </button>
   {{#if canCreateActor}}
     <button type="button" class="button" data-action="openApp" data-app="character-creation" data-tooltip="{{localize 'CDG.sidebar.characterCreationTooltip'}}">
       <i class="fa-solid fa-user-plus" inert></i>

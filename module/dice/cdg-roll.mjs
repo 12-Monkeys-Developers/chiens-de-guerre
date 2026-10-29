@@ -59,10 +59,11 @@ export default class CdgRoll extends Roll {
   static async post(test) {
     const { roll, data } = await this.roll({ ...test, messageMode: test.messageMode ?? currentMessageMode() })
 
-    const actor = await fromUuid(test.actorUuid)
+    // Un test sans acteur — le général adverse saisi à la main dans une bataille — parle sous son nom.
+    const actor = test.actorUuid ? await fromUuid(test.actorUuid) : null
     return createChatMessage(
       {
-        speaker: ChatMessage.implementation.getSpeaker({ actor }),
+        speaker: actor ? ChatMessage.implementation.getSpeaker({ actor }) : { alias: test.actorName },
         content: await this.renderCard(data),
         rolls: [roll],
         flags: { [SYSTEM.PACKAGE_ID]: { [this.FLAG]: data } },

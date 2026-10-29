@@ -1,0 +1,8 @@
+{{!-- Carte de conséquences d'un PJ (phase 2), réécrite par le Meneur à chaque étape. --}}
+<div class="cdg-battle-card" data-actor-id="{{member.actorId}}">
+  <header class="card-header">
+    <span class="test-name">{{localize "CDG.battle.cardTitle" turn=state.turn}}</span>
+    <span class="card-position">{{member.positionLabel}}</span>
+  </header>
+  {{> "systems/chiens-de-guerre/templates/battle/consequences.hbs" member=member}}
+</div>

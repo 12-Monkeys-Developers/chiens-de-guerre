@@ -1,0 +1,21 @@
+{{!-- Récapitulatif d'une bataille : carte de fin et page du journal des batailles. --}}
+<div class="cdg-battle-card battle-recap">
+  <h3>{{stake}}</h3>
+  <p><strong>{{winnerLabel}}</strong> ({{state.points.company}} – {{state.points.enemy}})</p>
+  <p>{{company.name}} — {{general}} · {{localize "CDG.battle.modifier"}} {{modifier}}</p>
+  {{#each turns as |turn|}}
+    <h4>{{localize "CDG.battle.turn" turn=turn.turn}} ({{turn.points.company}} – {{turn.points.enemy}})</h4>
+    <ul>
+      {{#each turn.members as |member|}}
+        <li>
+          <strong>{{member.name}}</strong> ({{member.positionLabel}}){{#if member.fightLabel}} : {{member.fightLabel}}{{/if}}
+          {{#if member.wound}} — {{member.woundLabel}}{{/if}}
+          {{#if member.adversary}} — {{member.adversary}}{{#if member.skirmishLabel}} ({{member.skirmishLabel}}){{/if}}{{/if}}
+          {{#if member.exploit}} — {{localize "CDG.battle.exploit.success"}}{{/if}}
+        </li>
+      {{/each}}
+      {{#if turn.generalsLabel}}<li>{{localize "CDG.battle.phases.generals"}} : {{turn.generalsLabel}}</li>{{/if}}
+      {{#if turn.lossesLabel}}<li>{{localize "CDG.battle.phases.losses"}} : {{turn.lossesLabel}}</li>{{/if}}
+    </ul>
+  {{/each}}
+</div>

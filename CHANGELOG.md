@@ -1,3 +1,14 @@
+## 0.9.0
+
+- **Batailles** (p. 51-54) : nouvelle fenêtre « Bataille », ouverte depuis la fiche de compagnie ou l'onglet du système. Le Meneur fixe l'enjeu, le modificateur de bataille (repères de la table p. 51), la composition de l'armée adverse, le général adverse (PNJ déposé, ou nom, Esprit et rang de Tactique saisis) et le chef d'armée (la compagnie ou l'un de ses PJ), puis mène les tours phase par phase jusqu'à trois points de victoire, égalité départagée par de nouveaux tours.
+  - **Localisation** : chaque joueur place son PJ en soutien, engagé ou au front, un cran de changement par tour ; le Meneur peut forcer une position.
+  - **Déroulement des combats** : le test d'Esprit / Sens des batailles poste une carte de conséquences lue dans la table de la p. 52, avec ses boutons : encaisser (Corps / Protection, blessure décalée d'un ou deux crans, plafonnée à mortelle, puis cochée), tirer l'adversaire (1d20, ou 2d20 en gardant le plus bas ou le plus haut selon l'armée adverse), test d'Esprit / Tactique pour l'action d'éclat. L'adversaire tiré est importé du bestiaire pour une escarmouche d'un round : jeton à côté du PJ, combat démarré, puis combat, jeton et copie retirés à la fin du round. Les résultats 16 et 20 (Marqué/Élu) n'ont pas encore de profil.
+  - **Actions d'éclat** : le Meneur valide un succès éclatant (+1 point de victoire).
+  - **Opposition des généraux** : Effectifs / Tactique de la compagnie, ou Esprit / Tactique du PJ chef d'armée (−1 engagé, −3 au front), contre le général adverse au modificateur inversé ; points de victoire et modificateur de pertes appliqués d'office.
+  - **Pertes** : Effectifs / Bataille au modificateur de pertes, la case de blessés est cochée sur la fiche de compagnie.
+  - **Fin** : une carte récapitule la bataille tour par tour, et une page s'ajoute au journal « Batailles » de la compagnie, lisible par les joueurs.
+- **Fenêtre de jet** : elle accepte des modificateurs imposés par l'appelant (modificateur de bataille, malus du chef d'armée), cochés par défaut et décochables.
+
 ## 0.8.1
 
 - **Bestiaire** : dans le compendium des PNJ, les créatures sont de nouveau rangées dans leurs trois dossiers (Animaux courants, Hommes et autres peuples humanoïdes, Monstres et autres créatures abjectes) ; depuis la 0.7.0, elles s'affichaient en vrac hors des dossiers.

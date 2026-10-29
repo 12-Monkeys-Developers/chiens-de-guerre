@@ -167,7 +167,7 @@
       "unlinkActor": "Délier cet acteur",
       "dragToReorder": "Glisser pour déplacer dans la liste",
       "sortByGrade": "Ranger par grade",
-      "alreadyInRoster": "{name} figure déjà au roster de la compagnie.",
+      "alreadyInRoster": "{name} fait déjà partie de la compagnie.",
       "noRoster": "Aucun nom.",
       "noChronicles": "Aucun événement consigné."
     },
@@ -1191,6 +1191,149 @@
           "label": "Argent de départ"
         }
       }
+    },
+    "battle": {
+      "title": "Bataille — {company}",
+      "open": "Ouvrir la bataille",
+      "openTooltip": "Livrer une bataille rangée (p. 51-54)",
+      "chooseCompany": "Choisir la compagnie",
+      "noCompany": "Aucune compagnie franche visible.",
+      "startTitle": "La bataille s'engage",
+      "cardTitle": "Bataille — tour {turn}",
+      "stake": "Enjeu",
+      "stakePlaceholder": "Empêcher la cité de tomber…",
+      "noStake": "Bataille",
+      "modifier": "Modificateur de bataille",
+      "modifierMirror": "Modificateur de bataille (inversé)",
+      "lossModifier": "Modificateur de pertes",
+      "chiefMalus": "Chef d'armée {position}",
+      "rosterCount": "Personnages joueurs de la compagnie engagés : {count}.",
+      "start": "Engager la bataille",
+      "waiting": "Aucune bataille en cours. Le Meneur la prépare.",
+      "turn": "Tour {turn}",
+      "tie": "Égalité au-delà de trois points : on continue jusqu'à départage.",
+      "nextPhase": "Phase suivante",
+      "previousPhase": "Phase précédente",
+      "nextTurn": "Tour suivant",
+      "conclude": "Conclure la bataille",
+      "abandon": "Abandonner la bataille",
+      "abandonConfirm": "Abandonner la bataille en cours, sans récapitulatif ni archive ? Les blessures déjà cochées restent.",
+      "protectionTest": "Encaisser (Corps / Protection)",
+      "noWound": "aucune blessure",
+      "noLosses": "aucune perte",
+      "modifiers": {
+        "desperate": "Bataille désespérée",
+        "slim": "Chance infime",
+        "tense": "Bataille tendue",
+        "balanced": "Bataille équilibrée",
+        "goodOmen": "Bon présage",
+        "won": "Bataille gagnée d'avance",
+        "formality": "Simple formalité"
+      },
+      "phases": {
+        "location": "Localisation",
+        "fights": "Déroulement des combats",
+        "exploits": "Actions d'éclat",
+        "generals": "Opposition des généraux",
+        "losses": "Pertes"
+      },
+      "positions": {
+        "soutien": "Soutien",
+        "engage": "Engagé",
+        "front": "Au front",
+        "none": "Hors de la bataille"
+      },
+      "army": {
+        "label": "Armée adverse",
+        "normal": "Ordinaire (1d20)",
+        "weak": "Piètres combattants (2d20, le plus bas)",
+        "elite": "Troupes d'élite (2d20, le plus haut)"
+      },
+      "general": {
+        "label": "Général adverse",
+        "defaultName": "Général adverse",
+        "name": "Nom",
+        "drop": "Déposez ici un PNJ (un officier du bestiaire, par exemple), ou saisissez son Esprit et son rang de Tactique.",
+        "clear": "Retirer ce PNJ",
+        "adversaryOnly": "Seul un PNJ peut commander l'armée adverse."
+      },
+      "chief": {
+        "label": "Chef d'armée",
+        "company": "La compagnie (Effectifs / Tactique)",
+        "hint": "Un PJ de l'état-major (sergent ou mieux, d'ordinaire) peut tester Esprit / Tactique à la place : −1 s'il est engagé, −3 au front.",
+        "icon": "Chef d'armée : teste Esprit / Tactique pour la compagnie à l'opposition des généraux (−1 engagé, −3 au front)"
+      },
+      "fight": {
+        "roll": "Esprit / Sens des batailles",
+        "combat": "Combat",
+        "nothing": "il s'en tire sans dommage"
+      },
+      "adversary": {
+        "draw": "Tirer l'adversaire",
+        "flavor": "Adversaire en bataille ({army}) : {die} — {adversary}",
+        "pending": "profil à choisir par le Meneur"
+      },
+      "adversaries": {
+        "peasant": "Paysan ou Citadin",
+        "conscript": "Conscrit",
+        "soldierWeak": "Soldat faible",
+        "soldierAverage": "Soldat moyen",
+        "heavyWeak": "Guerrier lourd faible",
+        "shockWeak": "Guerrier de choc faible",
+        "duellistWeak": "Duelliste faible",
+        "soldierVeteran": "Soldat vétéran",
+        "heavyAverage": "Guerrier lourd moyen",
+        "shockAverage": "Guerrier de choc moyen",
+        "duellistAverage": "Duelliste moyen",
+        "officerWeak": "Officier faible ou Marqué/Élu faible",
+        "heavyVeteran": "Guerrier lourd vétéran",
+        "shockVeteran": "Guerrier de choc vétéran",
+        "duellistVeteran": "Duelliste vétéran",
+        "officerAverage": "Officier moyen ou Marqué/Élu moyen"
+      },
+      "skirmish": {
+        "start": "Escarmouche contre {name}",
+        "running": "escarmouche en cours",
+        "won": "adversaire hors de combat",
+        "lost": "PJ hors de combat",
+        "separated": "la mêlée les sépare"
+      },
+      "exploit": {
+        "ifTactique": "Action d'éclat si Esprit / Tactique réussi",
+        "rollTactique": "Esprit / Tactique",
+        "granted": "Action d'éclat",
+        "grant": "Succès éclatant (+1 point de victoire)",
+        "revoke": "Annuler le succès éclatant",
+        "success": "Succès éclatant"
+      },
+      "generals": {
+        "roll": "Esprit / Tactique",
+        "points": {
+          "company": "{company} marque {points} point(s) de victoire",
+          "enemy": "{enemy} marque {points} point(s) de victoire"
+        },
+        "rollCompany": "Effectifs / Tactique"
+      },
+      "losses": {
+        "hint": "Test de compagnie Effectifs / Bataille.",
+        "roll": "Effectifs / Bataille"
+      },
+      "winner": {
+        "company": "Victoire de {company}",
+        "enemy": "Victoire de {enemy}"
+      },
+      "journal": {
+        "name": "Batailles — {company}",
+        "page": "Bataille {number}"
+      },
+      "notif": {
+        "noMembers": "Aucun personnage joueur lié à la compagnie.",
+        "adversaryMissing": "Profil introuvable dans le compendium des PNJ.",
+        "skirmishOver": "Fin du round : la mêlée sépare les combattants."
+      },
+      "points": "Points de victoire",
+      "pointsAdd": "Ajouter un point de victoire",
+      "pointsRemove": "Retirer un point de victoire"
     }
   }
 }
