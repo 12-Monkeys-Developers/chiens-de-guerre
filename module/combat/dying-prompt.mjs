@@ -3,6 +3,7 @@ import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
 import { resolveOutcome } from "../dice/roll-outcome.mjs"
 import { createChatMessage } from "../helpers/chat.mjs"
+import Utils from "../helpers/utils.mjs"
 
 /**
  * Rappel de fin de round pour un personnage joueur mourant (toutes les cases de blessure mortelle
@@ -29,7 +30,9 @@ export default class CdgDyingPrompt {
   static async postForCombat(combat) {
     for (const combatant of combat.combatants) {
       const actor = combatant.actor
-      if (actor?.type === "character" && actor.system.wounds.dying) await this.#post(actor)
+      if (actor?.type !== "character" || !actor.system.wounds.dying) continue
+      Utils.debug("wounds", `${actor.name} est mourant : rappel du jet de survie posté`)
+      await this.#post(actor)
     }
   }
 
@@ -110,6 +113,7 @@ export default class CdgDyingPrompt {
     const data = CdgRoll.getTest(message)
 
     const outcome = resolveOutcome(data.results[data.keptIndex], data.sr)
+    Utils.debug("wounds", `Jet de survie de ${actor.name} : ${outcome.success ? "réussi" : "raté, marqué mort"}`)
     if (!outcome.success) {
       await actor.toggleStatusEffect("dead", { active: true })
       await actor.update({ "system.wounds.dying": false })

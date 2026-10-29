@@ -11,6 +11,21 @@ export default class Utils {
   }
 
   /**
+   * Trace de débogage, écrite seulement si sa catégorie est active (`CONFIG.debug.cdg`, posé au
+   * `ready` d'après le réglage « Mode débogage » du poste).
+   *
+   * `console.log` plutôt que `console.debug` : ce dernier n'apparaît qu'au niveau « Détaillé » de
+   * la console, et on croyait le mode sans effet. Les objets suivent le message pour rester dépliables.
+   * @param {"sheets"|"rolls"|"confrontation"|"combat"|"wounds"|"battle"|"origins"} category
+   * @param {string} message
+   * @param {...*} data
+   */
+  static debug(category, message, ...data) {
+    if (!CONFIG.debug.cdg?.[category]) return
+    console.log(this.log(`[${category}] ${message}`), ...data)
+  }
+
+  /**
    * Un champ HTML dit-il quelque chose ?
    *
    * ProseMirror n'écrit jamais une chaîne vide : refermer un éditeur qu'on a vidé y laisse un

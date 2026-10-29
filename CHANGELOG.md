@@ -8,6 +8,7 @@
   - **Opposition des généraux** : Effectifs / Tactique de la compagnie, ou Esprit / Tactique du PJ chef d'armée (−1 engagé, −3 au front), contre le général adverse au modificateur inversé ; points de victoire et modificateur de pertes appliqués d'office.
   - **Pertes** : Effectifs / Bataille au modificateur de pertes, la case de blessés est cochée sur la fiche de compagnie.
   - **Fin** : une carte récapitule la bataille tour par tour, et une page s'ajoute au journal « Batailles » de la compagnie, lisible par les joueurs et en thème sombre. La fenêtre de bataille se ferme chez tout le monde quand la bataille est conclue ou abandonnée.
+- **Mode débogage** : le réglage est désormais propre à chaque poste. Les traces s'affichent dans la console sans le niveau « Détaillé » et couvrent les jets, les confrontations (dont la raison d'une étape refusée par le Meneur), le combat, les blessures et le repos, les batailles et les origines, en plus du contexte des fiches.
 - **Fenêtre de jet** : elle accepte des modificateurs imposés par l'appelant (modificateur de bataille, malus du chef d'armée), cochés par défaut et décochables.
 
 ## 0.8.1

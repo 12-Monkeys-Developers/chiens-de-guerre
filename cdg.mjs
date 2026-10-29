@@ -131,10 +131,9 @@ Hooks.once("init", function () {
 
 Hooks.once("ready", function () {
   const debug = game.settings.get(SYSTEM.PACKAGE_ID, "debugMode")
-  CONFIG.debug.cdg = {
-    sheets: debug,
-    combat: debug,
-  }
+  // Toutes les catégories suivent le réglage ; on peut en couper une à la console, le contexte
+  // des fiches étant bavard (`CONFIG.debug.cdg.sheets = false`).
+  CONFIG.debug.cdg = Object.fromEntries(["sheets", "rolls", "confrontation", "combat", "wounds", "battle", "origins"].map((category) => [category, debug]))
 
   // Tableau de bord des joueurs : un singleton, jamais ouvert d'office — seul le bouton de la
   // barre latérale le fait apparaître.

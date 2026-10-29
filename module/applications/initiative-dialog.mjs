@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
+import Utils from "../helpers/utils.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const TEMPLATES = `${SYSTEM.PATH}/templates/dialogs`
@@ -182,6 +183,11 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     Object.assign(updates, passionUpdates(actor, data.passion.selected, data.passion.mode))
     if (!foundry.utils.isEmpty(updates)) await actor.update(updates)
     await combatant?.update({ initiative: total })
+    Utils.debug(
+      "combat",
+      `Initiative : ${combatant?.name ?? actor.name} — ${results.join(", ")} → ${kept} + ${data.fixedTotal} = ${total}, ${combatant ? "inscrite au combat" : "hors combat, tchat seulement"}`,
+      { parts: data.parts, effort, passion: data.passion.selected },
+    )
 
     const breakdown = data.parts.map((part) => `<li><span>${part.label}</span><strong>${part.value > 0 ? "+" : ""}${part.value}</strong></li>`).join("")
     const name = foundry.utils.escapeHTML(combatant?.name ?? actor.name)

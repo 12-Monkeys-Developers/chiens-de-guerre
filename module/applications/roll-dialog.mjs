@@ -228,7 +228,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     context.target = this.#targetUuid ? fromUuidSync(this.#targetUuid) : null
     context.SYSTEM = SYSTEM
 
-    if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
+    Utils.debug("sheets", `${this.constructor.name} - contexte`, context)
 
     return context
   }

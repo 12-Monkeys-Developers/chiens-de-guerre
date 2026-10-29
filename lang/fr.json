@@ -959,7 +959,7 @@
     "settings": {
       "debugMode": {
         "name": "Mode débogage",
-        "hint": "Affiche dans la console les informations de débogage des fiches et du combat."
+        "hint": "Affiche dans la console du navigateur (F12) le détail des jets, des confrontations, du combat, des blessures, des batailles, des origines et des fiches, sur ce poste seulement."
       },
       "autoResetRoundCounters": {
         "name": "Réinitialiser esquives et parade",

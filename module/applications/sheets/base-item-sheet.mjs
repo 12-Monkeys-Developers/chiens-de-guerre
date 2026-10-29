@@ -48,7 +48,7 @@ export default class CdgBaseItemSheet extends HandlebarsApplicationMixin(sheets.
 
     context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.description ?? "")
 
-    if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
+    Utils.debug("sheets", `${this.constructor.name} - contexte`, context)
 
     return context
   }

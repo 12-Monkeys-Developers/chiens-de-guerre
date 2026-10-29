@@ -3,6 +3,7 @@ import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
 import { resolveOutcome } from "../dice/roll-outcome.mjs"
 import { createChatMessage } from "../helpers/chat.mjs"
+import Utils from "../helpers/utils.mjs"
 import { adversaryEntry, battleWinner, canMove, fightConsequence, generalsResult, keptAdversaryDie, lossesWound, shiftWound } from "./battle-rules.mjs"
 import { resolveOpposedOutcome } from "./opposition.mjs"
 
@@ -141,7 +142,9 @@ export default class CdgBattle {
       ui.notifications.error("CDG.confrontation.notif.noGM", { localize: true })
       return false
     }
-    return game.users.activeGM.query("cdg.battleStep", payload)
+    const applied = await game.users.activeGM.query("cdg.battleStep", payload)
+    if (!applied) Utils.debug("battle", `Étape refusée par le Meneur (${game.users.activeGM.name}) : ${step.type} — la raison est tracée dans sa console`, payload)
+    return applied
   }
 
   /**
@@ -162,7 +165,19 @@ export default class CdgBattle {
    * @returns {Promise<boolean>}
    */
   static applyStep(step, user) {
-    return this.#enqueue(step?.companyUuid, () => this.#applyStep(step, user))
+    return this.#enqueue(step?.companyUuid, async () => {
+      const company = fromUuidSync(step?.companyUuid)
+      const before = company ? this.getState(company) : null
+      const applied = await this.#applyStep(step, user)
+      const after = company ? this.getState(company) : null
+      const context = before ? `tour ${before.turn}, phase ${before.phase}` : "aucune bataille en cours"
+      Utils.debug("battle", `Étape ${step?.type} demandée par ${user.name}${user.isGM ? " (Meneur)" : ""} : ${applied ? "appliquée" : "refusée"} — ${context}`, {
+        step,
+        avant: before,
+        après: after,
+      })
+      return applied
+    })
   }
 
   static #enqueue(key, task) {
@@ -533,6 +548,7 @@ export default class CdgBattle {
     if (!tag || tag.battleId !== state.id || tag.turn !== state.turn) return false
 
     const outcome = resolveOutcome(test.results[test.keptIndex], test.sr)
+    Utils.debug("battle", `Résultat ${tag.kind}${tag.actorId ? ` de ${game.actors.get(tag.actorId)?.name}` : ""} : ${CdgRoll.summary(test)}`)
     const phase = state.phase
     const fightPhases = [SYSTEM.BATTLE_PHASES.fights.id, SYSTEM.BATTLE_PHASES.exploits.id]
     const member = tag.actorId ? state.members[tag.actorId] : null

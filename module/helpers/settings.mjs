@@ -8,7 +8,7 @@ export function registerSystemSettings() {
   game.settings.register(SYSTEM.PACKAGE_ID, "debugMode", {
     name: "CDG.settings.debugMode.name",
     hint: "CDG.settings.debugMode.hint",
-    scope: "world",
+    scope: "client",
     config: true,
     type: Boolean,
     default: false,
