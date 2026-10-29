@@ -1,0 +1,37 @@
+{{!
+  Les membres de la compagnie : personnages joueurs et non joueurs côte à côte, chaque colonne
+  défilant seule. Les PJ suivent l'ordre fixé à la main, par leur poignée ; les PNJ sont rangés par
+  grade en lecture (`#prepareRoster`), dans l'ordre de saisie en édition.
+}}
+<section class="tab tab-membres{{#if tabs.membres.active}} active{{/if}}" data-group="primary" data-tab="membres">
+  <section class="roster-pj" data-roster="pj">
+    <h2 class="section-title section-title-left section-title-art" data-bandeau="pjs">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/pjs.webp" alt="{{localize 'CDG.label.long.rosterPJ'}}" />
+      {{#if unlocked}}
+        <a data-action="addRosterEntry" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>
+        <a data-action="sortRosterByGrade" data-tooltip="{{localize 'CDG.company.sortByGrade'}}"><i class="fa-solid fa-arrow-down-wide-short"></i></a>
+      {{/if}}
+    </h2>
+    <ul class="item-list">
+      {{#each rosterPJ as |entry|}}
+        {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-roster-row.hbs" entry=entry roster="pj"}}
+      {{else}}
+        <li class="empty">{{localize "CDG.company.noRoster"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section class="roster-pnj" data-roster="pnj">
+    <h2 class="section-title section-title-right section-title-art" data-bandeau="pnjs">
+      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/pnjs.webp" alt="{{localize 'CDG.label.long.rosterPNJ'}}" />
+      {{#if unlocked}}<a data-action="addRosterEntry" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
+    </h2>
+    <ul class="item-list">
+      {{#each rosterPNJ as |entry|}}
+        {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-roster-row.hbs" entry=entry roster="pnj"}}
+      {{else}}
+        <li class="empty">{{localize "CDG.company.noRoster"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+</section>

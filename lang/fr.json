@@ -56,6 +56,9 @@
       "peuple": "Fiche de peuple",
       "carriere": "Fiche de carrière",
       "tabs": {
+        "compagnie": "Compagnie",
+        "membres": "Membres",
+        "chroniques": "Chroniques",
         "competences": "Compétences et Personnalité",
         "combat": "Combat",
         "equipement": "Équipement",
@@ -140,7 +143,6 @@
       "cannotRollDissolved": "Cette compagnie est dissoute et ne peut plus effectuer de test.",
       "reactivate": "Réactiver la compagnie",
       "cannotReactivate": "Restaurez d'abord un maximum d'Effectifs supérieur à zéro.",
-      "addWound": "Ajouter une blessure avec débordement",
       "healing": {
         "recovery": "Récupération naturelle — Effectifs / Cohésion",
         "care": "Soins au repos — Logistique / Soins",
@@ -163,6 +165,8 @@
         }
       },
       "unlinkActor": "Délier cet acteur",
+      "dragToReorder": "Glisser pour déplacer dans la liste",
+      "sortByGrade": "Ranger par grade",
       "alreadyInRoster": "{name} figure déjà au roster de la compagnie.",
       "noRoster": "Aucun nom.",
       "noChronicles": "Aucun événement consigné."

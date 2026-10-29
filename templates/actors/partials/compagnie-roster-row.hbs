@@ -4,6 +4,10 @@
   `index`, `actorUuid`, `name`, `grade`, `notes` et `actor` (résolu, ou `null`).
 }}
 <li class="item-row roster-row" data-roster="{{roster}}" data-roster-row data-index="{{entry.index}}">
+  {{!-- Les PJ se réordonnent à la main, en édition : la poignée seule se saisit, pour ne pas gêner la saisie des champs. --}}
+  {{#if (and (eq roster "pj") @root.unlocked)}}
+    <span class="roster-grip draggable" data-tooltip="{{localize 'CDG.company.dragToReorder'}}"><i class="fa-solid fa-grip-vertical" inert></i></span>
+  {{/if}}
   {{#if entry.actor}}
     <img class="item-img" src="{{entry.actor.img}}" data-action="openRosterActor" data-tooltip="{{localize 'CDG.origin.open'}}" />
   {{/if}}
@@ -21,8 +25,9 @@
     <input type="text" class="roster-notes" name="system.{{#if (eq roster 'pj')}}rosterPJ{{else}}rosterPNJ{{/if}}.{{entry.index}}.notes"
       value="{{entry.notes}}" placeholder="{{localize 'CDG.label.long.notes'}}" spellcheck="false" />
   {{else}}
-    <span class="roster-name">{{#if entry.actor}}{{entry.actor.name}}{{else}}{{entry.name}}{{/if}}</span>
+    {{!-- Le grade d'abord, comme un état des effectifs : les lignes sont rangées par grade. --}}
     <span class="roster-grade">{{entry.gradeLabel}}</span>
+    <span class="roster-name">{{entry.displayName}}</span>
     <span class="roster-notes">{{entry.notes}}</span>
   {{/if}}
 

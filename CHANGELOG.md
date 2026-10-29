@@ -1,5 +1,7 @@
 ## 0.8.0
 
+- **Fiche de compagnie** : les boutons « + » des blessés sont retirés ; les blessés se cochent directement sur les cases.
+- **Fiche de compagnie** : un en-tête compact (emblème, nom, réserves, malus courant des blessés) au-dessus de trois onglets, Compagnie, Membres et Chroniques ; la fiche tient en 720 px même avec une douzaine de PNJ. Les membres sont côte à côte et chaque colonne défile seule. En mode édition, les personnages joueurs se réordonnent par glisser-déposer (poignée en début de ligne), un nouveau venu prend place selon son grade, et « Ranger par grade » remet la liste dans l'ordre hiérarchique ; les PNJ sont rangés par grade en consultation.
 - **Fiche de compagnie** : fond gris léger au lieu du parchemin rouge.
 - **Fiche de compagnie, thème sombre** : les boutons « Récupération naturelle » et « Soins au repos » prenaient le fond noir de Foundry, sur lequel leur libellé brun était illisible ; ils ont désormais l'aspect des boutons de repos.
 - **Assistant de création de personnage** : textes d'introduction resserrés (étapes 2, 3, 4, 6 et Confession), l'histoire demande « Comment avez-vous fini dans votre compagnie ? », les langues sont alignées en colonnes, et les bandeaux Langues, Blessures et Bourse ne chevauchent plus le texte voisin.

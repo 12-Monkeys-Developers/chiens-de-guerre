@@ -6,17 +6,6 @@
     background-image: url("@{cdg-parchment-image}");
     background-blend-mode: luminosity;
   }
-  .sheet-header {
-    background-image: none;
-    height: auto;
-
-    .portrait .actor-img {
-      max-height: 140px;
-      object-fit: cover;
-      border: 2px solid var(--cdg-ink);
-      border-radius: var(--cdg-radius);
-    }
-  }
 
   .soustitre {
     font-family: "cinzel";
@@ -29,62 +18,140 @@
     border-bottom: 1px solid var(--cdg-parchment-line);
     margin-bottom: 0.15rem;
   }
+  // En-tête compact, commun aux trois onglets : l'emblème à gauche, puis le nom et l'état de la
+  // compagnie — ses trois réserves et le malus courant des blessés.
   .compagnie-header {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1.5fr;
-    // Les deux listes du roster occupent toute la hauteur de leur colonne : ce sont les zones où
-    // l'on dépose un acteur, et elles s'arrêtaient sous leur dernière ligne, laissant un grand vide
-    // sous le titre qui n'acceptait rien.
-    align-items: stretch;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    height: auto;
+    padding: 0.5rem 0.9rem 0.4rem;
+    background-image: none;
+    border-bottom: 1px solid var(--cdg-parchment-line);
+    margin-bottom: 0.5rem;
 
-    .compagnie-colpj,
-    .compagnie-colpnj {
-      display: flex;
-      flex-direction: column;
+    .portrait .actor-img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border: 2px solid var(--cdg-ink);
+      border-radius: var(--cdg-radius);
+    }
 
-      > section {
-        flex: 1 1 auto;
-      }
+    .compagnie-identity {
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
     .name-line {
-      grid-column: 1 / 4;
-      text-align: center;
-      margin: 0px;
+      margin: 0;
+
       .name {
         font-family: var(--cdg-font-title);
-        font-size: 3rem;
+        font-size: 2.4rem;
+        line-height: 1.1;
         color: #000;
         -webkit-text-stroke: 1px #ba1c41;
       }
-      // Centré comme le nom affiché en consultation, et pas plus large que l'espace entre les deux
-      // bandeaux du dessous : aligné à gauche, il passait sous « Personnages joueurs ».
+
       input[type="text"] {
-        display: block;
-        width: 50%;
-        margin: 0 auto;
-        text-align: center;
+        width: 100%;
+        height: 3rem;
         font-family: var(--cdg-font-title);
-        font-size: 3rem;
-        height: 64px;
+        font-size: 2.2rem;
       }
     }
-    .compagnie-colcentral {
-      align-self: start;
-      border: 5px 15px 5px 15px;
+
+    .company-status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 1.4rem;
+      margin: 0.6rem 0 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.3rem;
+      }
+
+      .status-label {
+        font-family: var(--cdg-font-label);
+        font-variant: small-caps;
+        font-size: 1rem;
+        color: var(--cdg-label);
+      }
+
+      strong {
+        font-size: 1.15rem;
+      }
+
+      .status-max {
+        font-size: 1rem;
+        color: var(--cdg-muted);
+      }
+
+      .status-malus.wounded strong {
+        color: var(--cdg-blood);
+      }
     }
-      .item-list {
-    padding-top: 20px;
   }
+
+  // Le trait sous l'en-tête suffit : le filet supérieur que le cœur pose sur les languettes doublait.
+  nav.tabs {
+    border-top: none;
   }
-  .compagnie-body {
-    display: flex;
-    flex-direction: column;
+
+  // Seul l'onglet actif occupe la hauteur restante sous l'en-tête et les languettes, et défile.
+  .tab.active {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
+  }
+
+  .tab-compagnie.active,
+  .tab-chroniques.active {
+    display: flex;
+    flex-direction: column;
     gap: 0.6rem;
-    padding: 0.6rem 0.8rem 1rem;
+  }
+
+  // Les bandeaux du haut d'onglet débordent vers le haut : sans cet écart, ils mordaient les
+  // languettes.
+  .tab-membres > section > .section-title-art,
+  .tab-chroniques > section:first-child > .section-title-art {
+    margin-top: 0.8rem;
+  }
+
+  .tab-chroniques .notes-section {
+    margin-top: 0.8rem;
+  }
+
+  .tab-chroniques .chronicles .item-list {
+    padding-top: 0.6rem;
+  }
+
+  // Les membres : deux colonnes côte à côte, chacune avec sa liste qui défile seule. La colonne
+  // entière reste la zone de dépôt d'un acteur.
+  .tab-membres.active {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    overflow: hidden;
+
+    > section {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .item-list {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      padding-top: 1rem;
+    }
   }
     .skill-name {
       color: black;
@@ -340,15 +407,6 @@
       color: var(--cdg-label);
     }
 
-    .wound-add {
-      color: var(--cdg-label);
-      font-size: 0.65rem;
-
-      &:hover {
-        color: var(--cdg-blood);
-      }
-    }
-
     .wound-boxes {
       display: flex;
       gap: 2px;
@@ -369,5 +427,18 @@
   .reactivate {
     margin-top: 0.25rem;
     font-size: 0.75rem;
+  }
+}
+
+// Poignée de déplacement d'un personnage joueur dans sa colonne.
+.cdg.actor.compagnie .roster-row .roster-grip {
+  flex: 0 0 auto;
+  cursor: grab;
+  color: var(--cdg-muted);
+  font-size: 0.8rem;
+  padding: 0 0.2rem;
+
+  &:hover {
+    color: var(--cdg-blood);
   }
 }

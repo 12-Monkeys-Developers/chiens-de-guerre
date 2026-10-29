@@ -10,8 +10,10 @@ const ROSTER_ROW = `${SYSTEM.PATH}/templates/actors/partials/compagnie-roster-ro
 const CHRONICLE_ROW = `${SYSTEM.PATH}/templates/actors/partials/compagnie-chronicle-row.hbs`
 
 /**
- * Fiche de compagnie franche (p. 171) : une seule page, pas d'onglets — caractéristiques et
- * compétences propres, roster de personnages joueurs/non joueurs, chroniques, notes.
+ * Fiche de compagnie franche (p. 171). Un en-tête compact (emblème, nom, réserves et malus courant)
+ * reste visible au-dessus de trois onglets : la compagnie (caractéristiques, compétences, blessés,
+ * guérison), ses membres (personnages joueurs et non joueurs), ses chroniques et notes. Une
+ * compagnie peut compter une douzaine de PNJ : sur une seule page, la fiche n'en finissait plus.
  */
 export default class CdgCompagnieSheet extends CdgBaseActorSheet {
   /** @override */
@@ -19,13 +21,12 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     classes: ["compagnie"],
     position: {
       width: 860,
-      height: 900,
+      height: 720,
     },
     window: {
       contentClasses: ["compagnie-content"],
     },
     actions: {
-      addWound: CdgCompagnieSheet.#onAddWound,
       reactivate: CdgCompagnieSheet.#onReactivate,
       companyHealing: CdgCompagnieSheet.#onCompanyHealing,
       addChronicle: CdgCompagnieSheet.#onAddChronicle,
@@ -34,15 +35,31 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
       removeRosterEntry: CdgCompagnieSheet.#onRemoveRosterEntry,
       openRosterActor: CdgCompagnieSheet.#onOpenRosterActor,
       unlinkRosterActor: CdgCompagnieSheet.#onUnlinkRosterActor,
+      sortRosterByGrade: CdgCompagnieSheet.#onSortRosterByGrade,
     },
   }
 
   /** @override */
   static PARTS = {
-    // Les compétences (et leur partiel d'écussons) sont remontées dans l'en-tête, sous le nom de
-    // la compagnie — caractéristiques à gauche, compétences à droite.
-    header: { template: `${SYSTEM.PATH}/templates/actors/compagnie-header.hbs`, templates: [RANK_SHIELDS] },
-    body: { template: `${SYSTEM.PATH}/templates/actors/compagnie-body.hbs`, templates: [ROSTER_ROW, CHRONICLE_ROW], scrollable: [""] },
+    header: { template: `${SYSTEM.PATH}/templates/actors/compagnie-header.hbs` },
+    tabs: { template: "templates/generic/tab-navigation.hbs" },
+    compagnie: { template: `${SYSTEM.PATH}/templates/actors/compagnie-tab-compagnie.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
+    // Chaque colonne de membres défile seule : c'est elle, et non l'onglet, qui retient sa position.
+    membres: { template: `${SYSTEM.PATH}/templates/actors/compagnie-tab-membres.hbs`, templates: [ROSTER_ROW], scrollable: [".roster-pj .item-list", ".roster-pnj .item-list"] },
+    chroniques: { template: `${SYSTEM.PATH}/templates/actors/compagnie-tab-chroniques.hbs`, templates: [CHRONICLE_ROW], scrollable: [""] },
+  }
+
+  /** @override */
+  static TABS = {
+    primary: {
+      tabs: [
+        { id: "compagnie", cssClass: "tabName" },
+        { id: "membres", cssClass: "tabName" },
+        { id: "chroniques", cssClass: "tabName" },
+      ],
+      initial: "compagnie",
+      labelPrefix: "CDG.sheet.tabs",
+    },
   }
 
   /** @override */
@@ -57,8 +74,10 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
       skills: Object.values(SYSTEM.COMPANY_SKILLS).filter((skill) => skill.ability === ability.id),
     }))
 
+    // Les PJ suivent l'ordre fixé à la main (glisser-déposer) ; les PNJ, nombreux et sans ordre
+    // propre, sont rangés par grade en consultation.
     context.rosterPJ = this.#prepareRoster(this.document.system.rosterPJ)
-    context.rosterPNJ = this.#prepareRoster(this.document.system.rosterPNJ)
+    context.rosterPNJ = this.#prepareRoster(this.document.system.rosterPNJ, { sortByGrade: !this.isEditMode })
     context.chronicles = this.document.system.chronicles.map((chronicle, index) => ({ ...chronicle, index }))
     context.dissolved = this.document.system.dissolved
     context.hasWounds = Object.values(SYSTEM.WOUND_LEVELS).some((level) => this.document.system.wounds[level.id].value > 0)
@@ -72,33 +91,56 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
   }
 
   /**
-   * Résout, pour chaque ligne du roster, l'acteur qu'elle référence — s'il y en a un — et le
-   * libellé de son grade.
+   * Résout, pour chaque ligne du roster, l'acteur qu'elle référence — s'il y en a un —, le nom à
+   * afficher et le libellé de son grade.
    * @param {Object[]} entries
+   * @param {Object} [options]
+   * @param {boolean} [options.sortByGrade] Ranger les lignes par grade, pour l'affichage seulement.
    * @returns {Object[]}
    */
-  #prepareRoster(entries) {
-    return entries.map((entry, index) => ({
-      ...entry,
-      index,
-      actor: entry.actorUuid ? fromUuidSync(entry.actorUuid) : null,
-      gradeLabel: entry.grade ? game.i18n.localize(SYSTEM.COMPANY_GRADES[entry.grade].label) : "",
-    }))
+  #prepareRoster(entries, { sortByGrade = false } = {}) {
+    const rows = entries.map((entry, index) => {
+      const actor = entry.actorUuid ? fromUuidSync(entry.actorUuid) : null
+      return {
+        ...entry,
+        index,
+        actor,
+        displayName: actor?.name ?? entry.name,
+        gradeLabel: entry.grade ? game.i18n.localize(SYSTEM.COMPANY_GRADES[entry.grade].label) : "",
+      }
+    })
+    if (!sortByGrade) return rows
+
+    // Un état des effectifs : du Capitaine au Valet, puis les sans-grade, chaque grade par ordre
+    // alphabétique. Chaque ligne garde son `index` dans le tableau d'origine.
+    const rank = this.constructor.#gradeRank
+    return rows.toSorted((a, b) => rank(a.grade) - rank(b.grade) || (a.displayName ?? "").localeCompare(b.displayName ?? "", game.i18n.lang))
+  }
+
+  /**
+   * Rang d'un grade dans la hiérarchie de la compagnie, du Capitaine (0) au Valet ; sans grade, après.
+   * @param {string} grade
+   * @returns {number}
+   */
+  static #gradeRank(grade) {
+    const grades = Object.keys(SYSTEM.COMPANY_GRADES)
+    return grade && grades.includes(grade) ? grades.indexOf(grade) : grades.length
+  }
+
+  /**
+   * Insère une ligne de PJ à la place de son grade, après ceux de même grade : la liste reste
+   * rangée par grade tant qu'on ne la réordonne pas à la main.
+   * @param {Object[]} roster
+   * @param {Object} line
+   * @returns {Object[]}
+   */
+  static #insertByGrade(roster, line) {
+    const rank = this.#gradeRank(line.grade)
+    const at = roster.findIndex((entry) => this.#gradeRank(entry.grade) > rank)
+    return at === -1 ? [...roster, line] : roster.toSpliced(at, 0, line)
   }
 
   // #region Actions
-
-  /**
-   * Ajoute une blessure avec débordement, y compris au-delà de la dernière case mortelle.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target
-   */
-  static async #onAddWound(event, target) {
-    if (!this.isEditable || this.document.system.dissolved) return
-    const level = target.closest("[data-level]")?.dataset.level
-    if (!SYSTEM.WOUND_LEVELS[level]) return
-    return this.document.applyWoundOverflow(null, level)
-  }
 
   /** Rend jouable une compagnie conservée après dissolution, une fois ses Effectifs corrigés. */
   static async #onReactivate() {
@@ -151,6 +193,14 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     const key = roster === "pj" ? "rosterPJ" : roster === "pnj" ? "rosterPNJ" : null
     if (!key) return
     return this.document.update({ [`system.${key}`]: [...this.document.system[key], { actorUuid: "", name: "", grade: "", notes: "" }] })
+  }
+
+  /** Range les personnages joueurs par grade, du Capitaine au Valet ; l'ordre reste ensuite modifiable. */
+  static async #onSortRosterByGrade() {
+    if (!this.isEditable) return
+    const rank = this.constructor.#gradeRank
+    const roster = this.document.system.rosterPJ.toSorted((a, b) => rank(a.grade) - rank(b.grade))
+    return this.document.update({ "system.rosterPJ": roster })
   }
 
   /**
@@ -221,6 +271,7 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
    */
   async _onDrop(event) {
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
+    if (data.type === "cdg.rosterMove") return this.isEditable && this.isEditMode ? this.#moveRosterPJ(event, data.index) : undefined
     if (data.type !== "Actor") return super._onDrop(event)
     if (!this.isEditable) return
 
@@ -238,7 +289,35 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     }
 
     const newline = { actorUuid: actor.uuid, name: actor.name, grade: this.constructor.#gradeOf(actor), notes: "" }
-    return this.document.update({ [`system.${key}`]: [...this.document.system[key], newline] })
+    const entries = key === "rosterPJ" ? this.constructor.#insertByGrade(rosterPJ, newline) : [...rosterPNJ, newline]
+    return this.document.update({ [`system.${key}`]: entries })
+  }
+
+  /**
+   * Saisie d'un personnage joueur par sa poignée (mode édition), pour le déplacer dans sa colonne. Tout autre
+   * glissement (macros de test, objets) reste au socle commun.
+   * @param {DragEvent} event
+   */
+  _onDragStart(event) {
+    const row = event.currentTarget.closest("[data-roster-row]")
+    if (row?.dataset.roster !== "pj") return super._onDragStart(event)
+    event.dataTransfer.setData("text/plain", JSON.stringify({ type: "cdg.rosterMove", index: Number(row.dataset.index) }))
+  }
+
+  /**
+   * Déplace un personnage joueur à la place de la ligne sur laquelle il est lâché — avant elle en
+   * remontant, après elle en descendant —, ou en fin de liste sous la dernière ligne.
+   * @param {DragEvent} event
+   * @param {number} from
+   */
+  async #moveRosterPJ(event, from) {
+    const roster = this.document.system.rosterPJ
+    if (!event.target.closest?.('[data-roster="pj"]') || !Number.isInteger(from) || !roster[from]) return
+    const over = event.target.closest("[data-roster-row]")
+    const to = over ? Number(over.dataset.index) : roster.length - 1
+    if (to === from) return
+    const moved = roster.toSpliced(from, 1).toSpliced(to, 0, roster[from])
+    return this.document.update({ "system.rosterPJ": moved })
   }
 
   /**

@@ -1,4 +1,4 @@
-<div class="compagnie-body">
+<section class="tab tab-compagnie{{#if tabs.compagnie.active}} active{{/if}}" data-group="primary" data-tab="compagnie">
   <div class="skillrow">
     <section class="section-skills">
       <div class="skill-columns">
@@ -56,9 +56,6 @@
           {{#with (lookup @root.wounds level.id) as |wound|}}
             <li class="wound-level" data-level="{{level.id}}">
               <span class="wound-name">{{localize level.labelComp}}</span>
-              {{#if @root.isEditable}}
-                <a class="wound-add" data-action="addWound" data-tooltip="{{localize 'CDG.company.addWound'}}"><i class="fa-solid fa-plus" inert></i></a>
-              {{/if}}
               <div class="wound-boxes">
                 {{#each (range 1 wound.max) as |box|}}
                   <a class="shield {{#if (gte wound.value box)}}filled{{/if}}"
@@ -96,27 +93,4 @@
     </div>
   </section>
   </div>
-  <section class="chronicles">
-      <h2 class="section-title section-title-left section-title-art" data-bandeau="chroniques">
-      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/chroniques.webp" alt="{{localize 'CDG.label.long.chronicles'}}" />
-      {{#if unlocked}}<a data-action="addChronicle" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
-    </h2>
-    <ul class="item-list">
-      {{#each chronicles as |chronicle|}}
-        {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-chronicle-row.hbs" entry=chronicle}}
-      {{else}}
-        <li class="empty">{{localize "CDG.company.noChronicles"}}</li>
-      {{/each}}
-    </ul>
-  </section>
-
-  <section class="notes-section">
-      <h2 class="section-title section-title-left section-title-art" data-bandeau="notes">
-      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/notes.webp" alt="{{localize 'CDG.label.long.notes'}}" />
-      </h2>
-    <div class="free-text">
-      {{formInput systemFields.notes value=system.notes enriched=enrichedNotes name="system.notes" toggled=true}}
-    </div>
-  </section>
-
-</div>
+</section>

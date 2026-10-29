@@ -800,11 +800,17 @@ pages:
 
           <h2>La fiche de la compagnie</h2>
           <div class="guide-image"><img src="systems/chiens-de-guerre/assets/guide/compagnie-fiche.webp" alt="Fiche de la compagnie franche" /></div>
+          <p>
+            L'en-tête reste visible quel que soit l'onglet : l'emblème, le nom, les réserves d'Effectifs, de Logistique et de Moral, et le malus courant des blessés.
+            Dessous, trois onglets : <strong>Compagnie</strong> (caractéristiques, compétences, blessés, guérison et repos), <strong>Membres</strong> et
+            <strong>Chroniques</strong> (chroniques et notes).
+          </p>
 
           <h3>Les membres</h3>
           <p>
-            Deux listes encadrent l'emblème : <strong>Personnages joueurs</strong> et <strong>Personnages non joueurs</strong>. Chaque ligne porte un nom, un grade et des
-            notes. Le grade se choisit dans la hiérarchie de la compagnie : Capitaine, Lieutenant, Sergent, Duplicator, Homme d'armes ou Valet.
+            Deux colonnes côte à côte : <strong>Personnages joueurs</strong> et <strong>Personnages non joueurs</strong>. Chaque
+            colonne défile seule. Chaque ligne porte un grade, un nom et des notes. Le grade se choisit dans la hiérarchie de la compagnie : Capitaine, Lieutenant,
+            Sergent, Duplicator, Homme d'armes ou Valet. En mode édition, les personnages joueurs se déplacent dans leur colonne par glisser-déposer, en saisissant la poignée <i class="fa-solid fa-grip-vertical"></i> en début de ligne ; un nouveau venu prend place selon son grade, et en mode édition <i class="fa-solid fa-arrow-down-wide-short"></i> range toute la liste par grade. Les personnages non joueurs sont rangés par grade, du Capitaine au Valet, en consultation, et dans l'ordre de saisie en édition.
           </p>
           <ul>
             <li>Déposez un acteur de la barre latérale sur une liste : une ligne s'ajoute, liée à l'acteur (portrait, clic pour ouvrir sa fiche). Lâché ailleurs sur la fiche, un personnage rejoint les personnages joueurs et un adversaire les non joueurs. Un acteur déjà présent n'est pas ajouté une seconde fois.</li>
@@ -825,8 +831,7 @@ pages:
               trois mortelles ; le rang de <strong>Cohésion</strong> ajoute des cases légères puis graves.
             </li>
             <li>
-              Le <i class="fa-solid fa-plus"></i> d'une ligne ajoute une blessure <strong>avec débordement</strong> : si la gravité est pleine, la blessure passe à la
-              gravité supérieure.
+              Un clic sur une case coche les blessés de cette gravité jusqu'à elle ; un clic sur la dernière case cochée la décoche.
             </li>
             <li>Chaque blessé mortel nouvellement coché fait perdre <strong>1 point d'Effectifs</strong>, définitivement (maximum et réserve).</li>
             <li>

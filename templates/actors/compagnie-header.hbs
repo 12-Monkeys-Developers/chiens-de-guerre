@@ -1,55 +1,42 @@
+{{!
+  En-tête compact, commun aux trois onglets : l'emblème, le nom, et l'état de la compagnie qu'on
+  consulte en jouant — les trois réserves et le malus courant des blessés.
+}}
 <header class="sheet-header compagnie-header">
-      <div class="name-line">
+  <div class="portrait">
+    <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
+      {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} />
+  </div>
+
+  <div class="compagnie-identity">
+    <div class="name-line">
       {{#if unlocked}}
         <input type="text" name="name" value="{{actor.name}}" spellcheck="false" />
       {{else}}
         <span class="value name">{{actor.name}}</span>
       {{/if}}
-        {{#if dissolved}}
-          <p class="warning">{{localize "CDG.company.dissolved"}}</p>
-          {{#if unlocked}}
-            <button type="button" class="reactivate" data-action="reactivate">{{localize "CDG.company.reactivate"}}</button>
-          {{/if}}
-        {{/if}}
     </div>
-  <div class="compagnie-colpj">
-    <section class="roster-pj" data-roster="pj">
-      <h2 class="section-title section-title-left section-title-art" data-bandeau="pjs">
-      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/pjs.webp" alt="{{localize 'CDG.label.long.rosterPJ'}}" />
-        {{#if unlocked}}<a data-action="addRosterEntry" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
-      </h2>
-      <ul class="item-list">
-        {{#each rosterPJ as |entry|}}
-          {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-roster-row.hbs" entry=entry roster="pj"}}
-        {{else}}
-          <li class="empty">{{localize "CDG.company.noRoster"}}</li>
-        {{/each}}
-      </ul>
-    </section>
-  </div>
-  <div class="compagnie-colcentral">
-    <div class="banner">
-      <div class="portrait">
-        <img class="actor-img" src="{{actor.img}}" data-tooltip="{{actor.name}}"
-          {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} />
-      </div>
-    </div>
-  </div>
-  <div class="compagnie-colpnj">
-    <section class="roster-pnj" data-roster="pnj">
-    <h2 class="section-title section-title-right section-title-art" data-bandeau="pnjs">
-      <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/pnjs.webp" alt="{{localize 'CDG.label.long.rosterPNJ'}}" />
 
-        {{#if unlocked}}<a data-action="addRosterEntry" data-tooltip="{{localize 'CDG.ui.add'}}"><i class="fas fa-plus"></i></a>{{/if}}
-      </h2>
-      <ul class="item-list">
-        {{#each rosterPNJ as |entry|}}
-          {{> "systems/chiens-de-guerre/templates/actors/partials/compagnie-roster-row.hbs" entry=entry roster="pnj"}}
-        {{else}}
-          <li class="empty">{{localize "CDG.company.noRoster"}}</li>
-        {{/each}}
-      </ul>
-    </section>
-  </div>
+    <ul class="company-status">
+      {{#each companyAbilities as |ability id|}}
+        {{#with (lookup @root.abilities id) as |pool|}}
+          <li class="status-pool">
+            <span class="status-label">{{localize ability.label}}</span>
+            <strong>{{pool.value}}</strong><span class="status-max">/ {{pool.max}}</span>
+          </li>
+        {{/with}}
+      {{/each}}
+      <li class="status-malus{{#if wounds.malus}} wounded{{/if}}">
+        <span class="status-label">{{localize "CDG.label.long.currentWoundMalus"}}</span>
+        <strong>{{signed wounds.malus}}</strong>
+      </li>
+    </ul>
 
+    {{#if dissolved}}
+      <p class="warning">{{localize "CDG.company.dissolved"}}</p>
+      {{#if unlocked}}
+        <button type="button" class="reactivate" data-action="reactivate">{{localize "CDG.company.reactivate"}}</button>
+      {{/if}}
+    {{/if}}
+  </div>
 </header>
