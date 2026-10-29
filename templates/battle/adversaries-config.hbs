@@ -1,0 +1,32 @@
+{{!-- Table des adversaires en bataille (p. 52) : tranche du d20 à gauche, profils à droite. --}}
+<div class="adversaries-config">
+  <p class="hint">{{localize "CDG.battle.adversariesConfig.hint"}}</p>
+  <div class="adversary-head">
+    <span class="col-die">{{localize "CDG.battle.adversariesConfig.die"}}</span>
+    <span class="col-actors">{{localize "CDG.battle.adversariesConfig.adversary"}}</span>
+  </div>
+  <ol class="adversary-rows">
+    {{#each rows as |row|}}
+      <li class="adversary-row" data-key="{{row.key}}">
+        <span class="col-die" data-tooltip="{{row.hint}}">{{row.die}}</span>
+        <span class="col-actors">
+          {{#each row.actors as |actor|}}
+            <span class="adversary-chip{{#if actor.missing}} missing{{/if}}">
+              <img src="{{actor.img}}" alt="" {{#unless actor.missing}}data-action="openAdversary" data-uuid="{{actor.uuid}}" data-tooltip="{{localize 'CDG.battle.adversariesConfig.open'}}"{{/unless}} />
+              <span>{{actor.name}}</span>
+              <button type="button" data-action="removeAdversary" data-uuid="{{actor.uuid}}" data-tooltip="{{localize 'CDG.battle.adversariesConfig.remove'}}">
+                <i class="fa-solid fa-trash" inert></i>
+              </button>
+            </span>
+          {{else}}
+            <span class="drop-hint">{{localize "CDG.battle.adversariesConfig.drop"}}</span>
+          {{/each}}
+        </span>
+      </li>
+    {{/each}}
+  </ol>
+  <footer class="adversaries-footer">
+    <button type="button" data-action="reset"><i class="fa-solid fa-rotate-left" inert></i> {{localize "CDG.battle.adversariesConfig.reset"}}</button>
+    <button type="button" data-action="save"><i class="fa-solid fa-floppy-disk" inert></i> {{localize "CDG.battle.adversariesConfig.save"}}</button>
+  </footer>
+</div>

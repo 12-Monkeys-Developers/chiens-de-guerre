@@ -1,0 +1,13 @@
+{{!--
+  Début de bataille. Les joueurs ne voient que l'enjeu : le général adverse et le modificateur de
+  bataille (`.gm-only`) sont retirés à l'affichage pour qui n'est pas Meneur (voir
+  `CdgBattle.activateListeners`). Le nom de la compagnie est déjà dans l'en-tête du message.
+--}}
+<div class="cdg-battle-card battle-start">
+  <header class="card-header">
+    <span class="test-name">{{localize "CDG.battle.startTitle"}}</span>
+  </header>
+  <p><strong>{{#if state.stake}}{{state.stake}}{{else}}{{localize "CDG.battle.noStake"}}{{/if}}</strong></p>
+  <p class="gm-only">{{localize "CDG.battle.general.label"}} : {{state.general.name}} · {{localize "CDG.battle.modifier"}} {{modifier}}</p>
+  <button type="button" data-battle-action="openBattle"><i class="fa-solid fa-chess-rook" inert></i> {{localize "CDG.battle.open"}}</button>
+</div>

@@ -32,6 +32,10 @@
       </li>
     </ul>
 
+    <button type="button" class="open-battle{{#if battleActive}} active{{/if}}" data-action="openBattle" data-tooltip="{{localize 'CDG.battle.openTooltip'}}">
+      <i class="fa-solid fa-chess-rook" inert></i> {{localize "CDG.battle.open"}}
+    </button>
+
     {{#if dissolved}}
       <p class="warning">{{localize "CDG.company.dissolved"}}</p>
       {{#if unlocked}}

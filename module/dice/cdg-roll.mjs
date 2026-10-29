@@ -1,6 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import { createChatMessage, currentMessageMode } from "../helpers/chat.mjs"
 import { simulateCompanyHealing } from "../helpers/rules.mjs"
+import Utils from "../helpers/utils.mjs"
 import { bestDieIndex, OUTCOMES, outcomeLabel, resolveOutcome, worstDieIndex } from "./roll-outcome.mjs"
 
 /**
@@ -45,7 +46,28 @@ export default class CdgRoll extends Roll {
     await roll.evaluate()
 
     const results = roll.dice[0].results.map((die) => die.result)
-    return { roll, data: { ...test, results, keptIndex: this.#autoKeptIndex(test, results) } }
+    const data = { ...test, results, keptIndex: this.#autoKeptIndex(test, results) }
+    Utils.debug("rolls", `${test.isPush ? "Dépassement" : "Jet"} : ${this.summary(data)}`, {
+      seuil: data.breakdown,
+      conservation: data.keep,
+      effort: data.effort,
+      passion: data.passion,
+      test: data,
+    })
+    return { roll, data }
+  }
+
+  /**
+   * Résumé d'une ligne d'un test lancé, pour les traces : qui, quel couple, contre quel seuil, les
+   * dés et celui qui est conservé.
+   * @param {Object} test
+   * @returns {string}
+   */
+  static summary(test) {
+    const couple = [test.abilityLabel, test.skillLabel].filter(Boolean).join(" / ")
+    const kept = test.results[test.keptIndex]
+    const outcome = game.i18n.localize(outcomeLabel(resolveOutcome(kept, test.sr)))
+    return `${test.actorName} — ${couple}, SR ${test.sr} : ${test.results.join(", ")} → ${kept} (${outcome})`
   }
 
   /**
@@ -59,10 +81,11 @@ export default class CdgRoll extends Roll {
   static async post(test) {
     const { roll, data } = await this.roll({ ...test, messageMode: test.messageMode ?? currentMessageMode() })
 
-    const actor = await fromUuid(test.actorUuid)
+    // Un test sans acteur — le général adverse saisi à la main dans une bataille — parle sous son nom.
+    const actor = test.actorUuid ? await fromUuid(test.actorUuid) : null
     return createChatMessage(
       {
-        speaker: ChatMessage.implementation.getSpeaker({ actor }),
+        speaker: actor ? ChatMessage.implementation.getSpeaker({ actor }) : { alias: test.actorName },
         content: await this.renderCard(data),
         rolls: [roll],
         flags: { [SYSTEM.PACKAGE_ID]: { [this.FLAG]: data } },
@@ -212,7 +235,9 @@ export default class CdgRoll extends Roll {
     const test = this.getTest(message)
     if (!test || isNaN(index) || index === test.keptIndex) return
 
-    return this.#refresh(message, { ...test, keptIndex: index })
+    const updated = { ...test, keptIndex: index }
+    Utils.debug("rolls", `Dé conservé changé par le Meneur : ${this.summary(test)} ⇒ ${this.summary(updated)}`)
+    return this.#refresh(message, updated)
   }
 
   /**

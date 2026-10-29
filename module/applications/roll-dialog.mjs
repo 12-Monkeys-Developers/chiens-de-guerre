@@ -95,6 +95,13 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   #restricted = false
 
   /**
+   * Modificateurs imposés par l'appelant, hors de la fiche : le modificateur de bataille, le malus
+   * de position d'un chef d'armée... Proposés cochés, mais décochables comme les autres.
+   * @type {{id: string, label: string, value: number, hint?: string}[]}
+   */
+  #extraModifiers = []
+
+  /**
    * Le volet « Modificateurs » est déplié d'emblée. Son état vit ici et non dans le DOM : chaque
    * rendu reconstruit le gabarit, et un `<details>` neuf se replierait à chaque clic sur un effort,
    * une passion ou un modificateur.
@@ -142,6 +149,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#qualityDomain = Object.hasOwn(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS, seed.qualityDomain) ? seed.qualityDomain : null
     this.#companyHealing = ["recovery", "care"].includes(seed.companyHealing) && actor.type === "compagnie" ? seed.companyHealing : null
     this.#restricted = !!seed.restricted
+    this.#extraModifiers = Array.isArray(seed.extraModifiers) ? seed.extraModifiers : []
   }
 
   /**
@@ -192,6 +200,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     this.#qualityDomain = Object.hasOwn(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS, seed.qualityDomain) ? seed.qualityDomain : null
     this.#companyHealing = ["recovery", "care"].includes(seed.companyHealing) && this.#actor.type === "compagnie" ? seed.companyHealing : null
     this.#restricted = !!seed.restricted
+    this.#extraModifiers = Array.isArray(seed.extraModifiers) ? seed.extraModifiers : []
   }
 
   /** @override */
@@ -219,7 +228,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     context.target = this.#targetUuid ? fromUuidSync(this.#targetUuid) : null
     context.SYSTEM = SYSTEM
 
-    if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
+    Utils.debug("sheets", `${this.constructor.name} - contexte`, context)
 
     return context
   }
@@ -356,6 +365,8 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       if (!draft.skillId || arcanum.system.linkedSkill !== draft.skillId) continue
       add(`arcanum.${arcanum.id}`, arcanum.name, arcanum.system.bonus, game.i18n.localize("CDG.roll.hint.arcanum"), true)
     }
+
+    for (const modifier of this.#extraModifiers) add(`extra.${modifier.id}`, modifier.label, modifier.value, modifier.hint ?? "", true)
 
     if (draft.skillId === "esquive") add("dodge", game.i18n.localize("CDG.roll.dodge"), system.combat.dodgeMalus, game.i18n.localize("CDG.roll.hint.dodge"), true)
     if (draft.skillId === "blocage") add("block", game.i18n.localize("CDG.roll.block"), system.combat.blockBonus, game.i18n.localize("CDG.roll.hint.block"), true)

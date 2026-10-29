@@ -278,7 +278,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       },
     }
 
-    if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
+    Utils.debug("sheets", `${this.constructor.name} - contexte`, context)
     return context
   }
 

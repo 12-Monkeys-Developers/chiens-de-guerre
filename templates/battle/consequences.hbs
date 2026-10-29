@@ -1,0 +1,70 @@
+{{!
+  Ce que la phase 2 réserve à un PJ et ce qu'il lui reste à jouer. Partagé par la fenêtre de
+  bataille et la carte de conséquences du tchat : les boutons portent `data-requires` (owner/gm),
+  chaque client retire ceux qui ne le concernent pas (`CdgBattle.filterButtons`).
+}}
+<div class="battle-consequences">
+  {{#if member.showFight}}
+    <button type="button" data-action="battleAction" data-battle-action="rollFight" data-requires="owner" {{#unless member.canRollFight}}disabled{{/unless}}>
+      <i class="fa-solid fa-dice-d20" inert></i> {{localize "CDG.battle.fight.roll"}}
+    </button>
+  {{/if}}
+  {{#if member.fight}}
+    <p class="fight-result"><strong>{{member.fight.label}}</strong>
+      {{#unless (or member.consequences.wound member.consequences.combat member.consequences.exploit)}} — {{localize "CDG.battle.fight.nothing"}}{{/unless}}
+    </p>
+    <ul class="consequence-list">
+      {{#if member.consequences.wound}}
+        <li>
+          <i class="fa-solid fa-droplet" inert></i> {{member.consequences.wound}}
+          {{#if member.protection}}
+            → {{member.protection.label}} : <strong>{{member.protection.wound}}</strong>
+          {{else if member.canRollProtection}}
+            <button type="button" data-action="battleAction" data-battle-action="rollProtection" data-requires="owner">{{localize "CDG.battle.protectionTest"}}</button>
+          {{/if}}
+        </li>
+      {{/if}}
+      {{#if member.consequences.combat}}
+        <li>
+          <i class="fa-solid fa-swords" inert></i> {{localize "CDG.battle.fight.combat"}}
+          {{#if member.adversary}}
+            → {{member.adversary.label}} ({{member.adversary.die}})
+            {{#if member.adversary.pending}}<span class="hint">{{localize "CDG.battle.adversary.pending"}}</span>{{/if}}
+            {{#each member.adversary.choices as |choice|}}
+              <button type="button" data-action="battleAction" data-battle-action="startSkirmish" data-adversary-uuid="{{choice.uuid}}" data-requires="gm">
+                {{localize "CDG.battle.skirmish.start" name=choice.name}}
+              </button>
+            {{/each}}
+            {{#if member.adversary.skirmishResult}}— <strong>{{member.adversary.skirmishResult}}</strong>{{else if member.adversary.skirmish}}— {{localize "CDG.battle.skirmish.running"}}
+              <button type="button" data-action="battleAction" data-battle-action="openAdversary" data-requires="gm">
+                <i class="fa-solid fa-user-ninja" inert></i> {{localize "CDG.battle.skirmish.openSheet" name=member.adversary.skirmish.name}}
+              </button>
+            {{/if}}
+          {{else if member.canDraw}}
+            <button type="button" data-action="battleAction" data-battle-action="drawAdversary" data-requires="gm">{{localize "CDG.battle.adversary.draw"}}</button>
+          {{/if}}
+        </li>
+      {{/if}}
+      {{#if (eq member.consequences.exploit "test")}}
+        <li>
+          <i class="fa-solid fa-star" inert></i> {{localize "CDG.battle.exploit.ifTactique"}}
+          {{#if member.tactique}}
+            → {{member.tactique.label}}
+          {{else if member.canRollTactique}}
+            <button type="button" data-action="battleAction" data-battle-action="rollTactique" data-requires="owner">{{localize "CDG.battle.exploit.rollTactique"}}</button>
+          {{/if}}
+        </li>
+      {{else if (eq member.consequences.exploit "granted")}}
+        <li><i class="fa-solid fa-star" inert></i> {{localize "CDG.battle.exploit.granted"}}</li>
+      {{/if}}
+      {{#if member.exploitAvailable}}
+        <li class="exploit">
+          {{#if member.exploitGranted}}<strong><i class="fa-solid fa-trophy" inert></i> {{localize "CDG.battle.exploit.success"}}</strong>{{/if}}
+          <button type="button" data-action="battleAction" data-battle-action="grantExploit" data-requires="gm">
+            {{#if member.exploitGranted}}{{localize "CDG.battle.exploit.revoke"}}{{else}}{{localize "CDG.battle.exploit.grant"}}{{/if}}
+          </button>
+        </li>
+      {{/if}}
+    </ul>
+  {{/if}}
+</div>

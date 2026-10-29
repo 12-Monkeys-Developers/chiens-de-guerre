@@ -1,6 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgCharacterCreation from "./character-creation.mjs"
 import CdgCompanyCreation from "./company-creation.mjs"
+import CdgBattleApp from "./battle-app.mjs"
 
 const { HandlebarsApplicationMixin } = foundry.applications.api
 const { AbstractSidebarTab } = foundry.applications.sidebar
@@ -49,7 +50,30 @@ export default class CdgSidebarMenu extends HandlebarsApplicationMixin(AbstractS
         return CdgCharacterCreation.open()
       case "company-creation":
         return CdgCompanyCreation.open()
+      case "battle":
+        return CdgSidebarMenu.#openBattle()
     }
+  }
+
+  /**
+   * Ouvre la fenêtre de bataille : directement s'il n'y a qu'une compagnie visible (ou une seule
+   * engagée dans une bataille), sinon après le choix de la compagnie.
+   */
+  static async #openBattle() {
+    const companies = game.actors.filter((actor) => actor.type === "compagnie" && actor.visible)
+    if (!companies.length) return ui.notifications.warn("CDG.battle.noCompany", { localize: true })
+    const engaged = companies.filter((actor) => actor.getFlag(SYSTEM.PACKAGE_ID, "battle"))
+    const candidates = engaged.length === 1 ? engaged : companies
+    if (candidates.length === 1) return CdgBattleApp.open(candidates[0])
+
+    const options = candidates.map((actor) => `<option value="${actor.id}">${foundry.utils.escapeHTML(actor.name)}</option>`).join("")
+    const id = await foundry.applications.api.DialogV2.prompt({
+      window: { title: game.i18n.localize("CDG.battle.chooseCompany") },
+      content: `<div class="form-group"><select name="company">${options}</select></div>`,
+      ok: { callback: (event, button) => button.form.elements.company.value },
+      rejectClose: false,
+    })
+    if (id) return CdgBattleApp.open(game.actors.get(id))
   }
 
   /** @inheritDoc */

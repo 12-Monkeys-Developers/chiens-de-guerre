@@ -1,6 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
+import Utils from "../helpers/utils.mjs"
 import { OUTCOMES, resolveOutcome } from "../dice/roll-outcome.mjs"
 import { resolveOpposedOutcome, resolveWound } from "./opposition.mjs"
 
@@ -50,6 +51,7 @@ export default class CdgConfrontation {
     const target = targets.size === 1 ? targets.first().actor : null
 
     if (!target) {
+      Utils.debug("confrontation", `Attaque sans cible : ${actor.name} (${weapon.name}), test isolé sans confrontation`)
       // Prévenu dès l'ouverture, le joueur peut encore annuler et cibler ; les Meneurs ne le sont
       // qu'une fois le jet réellement lancé.
       ui.notifications.warn(game.i18n.format("CDG.confrontation.notif.noTarget", { name: actor.name }))
@@ -61,6 +63,7 @@ export default class CdgConfrontation {
       })
     }
 
+    Utils.debug("confrontation", `Attaque : ${actor.name} (${weapon.name}) contre ${target.name}`)
     return CdgRollDialog.open(actor, {
       abilityId: weapon.system.attack.ability,
       skillId: weapon.system.attack.skill,
@@ -271,7 +274,10 @@ export default class CdgConfrontation {
       ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
       return false
     }
-    return game.users.activeGM.query("cdg.confrontationStep", step)
+    const applied = await game.users.activeGM.query("cdg.confrontationStep", step)
+    if (!applied)
+      Utils.debug("confrontation", `Étape refusée par le Meneur (${game.users.activeGM.name}) : ${step.type} ${step.phase} — la raison est tracée dans sa console`, step)
+    return applied
   }
 
   /**
@@ -319,33 +325,42 @@ export default class CdgConfrontation {
    * @returns {Promise<boolean>}
    */
   static async #applyStep(step, user) {
+    Utils.debug("confrontation", `Étape reçue : ${step?.type} ${step?.phase}, demandée par ${user.name}`, step)
     const message = game.messages.get(step?.messageId)
     const state = message ? this.getState(message) : null
-    if (!state || !this.PHASES.includes(step.phase) || !this.#canAct(step.phase, state, user)) return false
+    if (!state) return this.#reject(step, user, "message introuvable ou sans confrontation")
+    if (!this.PHASES.includes(step.phase)) return this.#reject(step, user, "phase inconnue")
+    if (!this.#canAct(step.phase, state, user))
+      return this.#reject(step, user, `${user.name} ne possède pas ${this.#phaseActor(step.phase, state)?.name ?? "l'acteur de cette phase"}`)
 
     const key = `${step.phase}Test`
     const current = state[key]
     switch (step.type) {
       case "merge":
-        if (current || !this.#isTest(step.data)) return false
+        if (current) return this.#reject(step, user, "ce sous-jet est déjà lancé")
+        if (!this.#isTest(step.data)) return this.#reject(step, user, "test mal formé")
         // Dégâts et encaissement ne se lancent qu'une fois le coup porté.
-        if (["damage", "soak"].includes(step.phase) && !state.opposition?.hit) return false
+        if (["damage", "soak"].includes(step.phase) && !state.opposition?.hit) return this.#reject(step, user, "le coup n'a pas porté")
         state[key] = step.data
         if (step.phase === "defense") state.defenseMethod = ["dodge", "parry"].includes(step.defenseMethod) ? step.defenseMethod : null
         break
       case "push":
-        if (!current || current.pushed || !this.#isTest(step.data)) return false
-        if (["attack", "defense"].includes(step.phase) && this.#touchSettled(state)) return false
+        if (!current) return this.#reject(step, user, "aucun sous-jet à dépasser")
+        if (current.pushed) return this.#reject(step, user, "ce sous-jet a déjà été dépassé")
+        if (!this.#isTest(step.data)) return this.#reject(step, user, "test mal formé")
+        if (["attack", "defense"].includes(step.phase) && this.#touchSettled(state)) return this.#reject(step, user, "dégâts ou encaissement déjà lancés")
         state[key] = { ...step.data, pushed: true, isPush: true }
         break
       case "keepDie": {
         const index = Number(step.index)
-        if (!user.isGM || !current || !Number.isInteger(index) || index < 0 || index >= current.results.length) return false
+        if (!user.isGM) return this.#reject(step, user, "seul le Meneur change le dé conservé")
+        if (!current || !Number.isInteger(index) || index < 0 || index >= current.results.length) return this.#reject(step, user, "dé inexistant")
         state[key] = { ...current, keptIndex: index }
+        Utils.debug("confrontation", `Dé conservé changé (${step.phase}) : ${CdgRoll.summary(current)} ⇒ ${CdgRoll.summary(state[key])}`)
         break
       }
       default:
-        return false
+        return this.#reject(step, user, "type d'étape inconnu")
     }
 
     this.#recomputeOpposition(state)
@@ -354,6 +369,18 @@ export default class CdgConfrontation {
     const rolls = step.roll ? [...message.rolls, Roll.fromData(step.roll)] : message.rolls
     await message.update({ content: await this.renderCard(state), rolls, [this.FLAG_PATH]: state })
     return true
+  }
+
+  /**
+   * Écarte une étape en traçant pourquoi : sans quoi le clic du joueur semble simplement sans effet.
+   * @param {Object} step
+   * @param {User} user
+   * @param {string} reason
+   * @returns {false}
+   */
+  static #reject(step, user, reason) {
+    Utils.debug("confrontation", `Étape refusée : ${step?.type} ${step?.phase} demandée par ${user.name} — ${reason}`, step)
+    return false
   }
 
   /**
@@ -411,6 +438,11 @@ export default class CdgConfrontation {
       hit: result === OUTCOMES.success.id || result === OUTCOMES.criticalSuccess.id,
       ignoreArmor: result === OUTCOMES.criticalSuccess.id,
     }
+    Utils.debug(
+      "confrontation",
+      `Opposition : attaque ${attackOutcome.outcome} (${attackOutcome.die}/${attackOutcome.sr}) contre défense ${defenseOutcome.outcome} (${defenseOutcome.die}/${defenseOutcome.sr}) → ${result}${state.opposition.hit ? ", touché" : ", raté"}${state.opposition.ignoreArmor ? ", armure ignorée" : ""}`,
+      { attackOutcome, defenseOutcome },
+    )
   }
 
   /**
@@ -438,6 +470,11 @@ export default class CdgConfrontation {
       const soakOutcome = resolveOutcome(state.soakTest.results[state.soakTest.keptIndex], state.soakTest.sr)
       state.woundId = resolveWound(damageOutcome, soakOutcome)
       state.woundResolved = true
+      Utils.debug(
+        "confrontation",
+        `Blessure : dégâts ${damageOutcome.outcome} (${damageOutcome.die}/${damageOutcome.sr}) contre encaissement ${soakOutcome.outcome} (${soakOutcome.die}/${soakOutcome.sr}) → ${state.woundId ?? "aucune"}`,
+        { damageOutcome, soakOutcome },
+      )
     }
 
     const newRawWoundId = state.woundResolved ? state.woundId : null
@@ -445,6 +482,10 @@ export default class CdgConfrontation {
 
     const target = await fromUuid(state.targetUuid)
     state.appliedWoundId = target ? await target.applyWoundOverflow(previousAppliedWoundId, newRawWoundId) : null
+    Utils.debug(
+      "confrontation",
+      `Blessure appliquée à ${target?.name ?? "cible introuvable"} — case libérée : ${previousAppliedWoundId ?? "aucune"}, case cochée : ${state.appliedWoundId ?? "aucune"}`,
+    )
   }
 
   // #endregion

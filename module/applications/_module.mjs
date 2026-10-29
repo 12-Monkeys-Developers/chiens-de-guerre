@@ -5,6 +5,8 @@ export { default as CdgSidebarMenu } from "./sidebar-menu.mjs"
 export { default as CdgPartySheet } from "./party-sheet.mjs"
 export { default as CdgCharacterCreation } from "./character-creation.mjs"
 export { default as CdgCompanyCreation } from "./company-creation.mjs"
+export { default as CdgBattleApp } from "./battle-app.mjs"
+export { default as CdgBattleAdversariesConfig } from "./battle-adversaries-config.mjs"
 
 export { default as CdgBaseActorSheet } from "./sheets/base-actor-sheet.mjs"
 export { default as CdgCharacterSheet } from "./sheets/character-sheet.mjs"

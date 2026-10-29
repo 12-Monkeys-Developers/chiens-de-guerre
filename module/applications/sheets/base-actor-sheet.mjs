@@ -172,7 +172,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     context.peuple = this.document.peuple
     context.carriere = this.document.carriere
 
-    if (CONFIG.debug.cdg?.sheets) console.debug(Utils.log(`${this.constructor.name} - contexte`), context)
+    Utils.debug("sheets", `${this.constructor.name} - contexte`, context)
 
     return context
   }

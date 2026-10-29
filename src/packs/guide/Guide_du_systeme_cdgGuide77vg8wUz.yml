@@ -124,8 +124,10 @@ pages:
               </p>
               <h3>Mode débogage</h3>
               <p>
-                Désactivé par défaut. Affiche dans la console du navigateur le détail du calcul des fiches et du combat. Il ne sert qu'à signaler un problème ; il demande
-                un rechargement de la page.
+                Désactivé par défaut, et propre à chaque poste : le Meneur peut l'activer chez lui sans toucher aux joueurs. Il affiche dans la console du navigateur (F12)
+                le détail des jets (seuil, dés, dé conservé), des confrontations (étapes reçues, refus et leur raison, opposition, blessure appliquée), du combat
+                (initiatives, main passée, nouveaux rounds), des blessures et du repos, des batailles, des origines posées ou retirées, et du contexte des fiches. Il sert
+                à comprendre un résultat inattendu ou à signaler un problème ; il demande un rechargement de la page.
               </p>
             </div>
           </div>

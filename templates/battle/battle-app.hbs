@@ -1,0 +1,171 @@
+{{!
+  Fenêtre de bataille (p. 51-54). Sans bataille en cours : la préparation (Meneur) ou une attente
+  (joueurs). Pendant la bataille : le tableau des scores, les cinq phases, les PJ et, selon la
+  phase, l'opposition des généraux ou les pertes.
+}}
+<div class="battle-body">
+{{#unless state}}
+  {{#if isGM}}
+    <section class="battle-setup">
+      <div class="form-group">
+        <label>{{localize "CDG.battle.stake"}}</label>
+        <input type="text" name="stake" value="{{draft.stake}}" placeholder="{{localize 'CDG.battle.stakePlaceholder'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize "CDG.battle.modifier"}}</label>
+        <select name="modifier">{{selectOptions modifierChoices selected=draft.modifier valueAttr="value" labelAttr="label"}}</select>
+      </div>
+      <div class="form-group">
+        <label>{{localize "CDG.battle.army.label"}}</label>
+        <select name="armyQuality">{{selectOptions armyChoices selected=draft.armyQuality valueAttr="id" labelAttr="label"}}</select>
+      </div>
+      <fieldset class="battle-general">
+        <legend>{{localize "CDG.battle.general.label"}}</legend>
+        {{#if generalActor}}
+          <div class="general-actor">
+            <img src="{{generalActor.img}}" alt="" />
+            <span>{{generalActor.name}}</span>
+            <button type="button" data-action="clearGeneral" data-tooltip="{{localize 'CDG.battle.general.clear'}}"><i class="fa-solid fa-xmark" inert></i></button>
+          </div>
+        {{else}}
+          <p class="general-drop hint">{{localize "CDG.battle.general.drop"}}</p>
+          <div class="general-fields">
+            <label>{{localize "CDG.battle.general.name"}} <input type="text" name="general.name" value="{{draft.general.name}}" /></label>
+            <label>{{localize "CDG.abilities.long.esprit"}} <input type="number" name="general.esprit" value="{{draft.general.esprit}}" min="1" max="30" /></label>
+            <label>{{localize "CDG.skills.tactique"}}
+              <select name="general.tactique" data-dtype="Number">{{selectOptions rankChoices selected=draft.general.tactique valueAttr="id" labelAttr="label"}}</select>
+            </label>
+          </div>
+        {{/if}}
+      </fieldset>
+      <div class="form-group">
+        <label>{{localize "CDG.battle.chief.label"}}</label>
+        <select name="chiefUuid">{{selectOptions chiefChoices selected=draft.chiefUuid valueAttr="value" labelAttr="label"}}</select>
+        <p class="hint">{{localize "CDG.battle.chief.hint"}}</p>
+      </div>
+      <p class="hint">{{localize "CDG.battle.rosterCount" count=rosterCount}}</p>
+      <button type="button" class="battle-start" data-action="start"><i class="fa-solid fa-flag" inert></i> {{localize "CDG.battle.start"}}</button>
+    </section>
+  {{else}}
+    <p class="battle-waiting hint">{{localize "CDG.battle.waiting"}}</p>
+  {{/if}}
+{{else}}
+  <header class="battle-header">
+    <div class="battle-stake">
+      <h2>{{#if state.stake}}{{state.stake}}{{else}}{{localize "CDG.battle.noStake"}}{{/if}}</h2>
+      <p>
+        {{localize "CDG.battle.modifier"}} {{modifier}} · {{armyLabel}} ·
+        {{localize "CDG.battle.general.label"}} : {{state.general.name}}
+      </p>
+    </div>
+    <div class="battle-score">
+      <div class="side company">
+        <span class="side-name">{{company.name}}</span>
+        <span class="side-points">
+          {{#if isGM}}<a data-action="points" data-side="company" data-delta="-1" data-tooltip="{{localize 'CDG.battle.pointsRemove'}}"><i class="fas fa-square-minus" inert></i></a>{{/if}}
+          <span class="points-value" data-tooltip="{{localize 'CDG.battle.points'}}">{{state.points.company}}</span>
+          {{#if isGM}}<a data-action="points" data-side="company" data-delta="1" data-tooltip="{{localize 'CDG.battle.pointsAdd'}}"><i class="fas fa-square-plus" inert></i></a>{{/if}}
+        </span>
+      </div>
+      <span class="score-separator">{{localize "CDG.battle.turn" turn=state.turn}}</span>
+      <div class="side enemy">
+        <span class="side-name">{{state.general.name}}</span>
+        <span class="side-points">
+          {{#if isGM}}<a data-action="points" data-side="enemy" data-delta="-1" data-tooltip="{{localize 'CDG.battle.pointsRemove'}}"><i class="fas fa-square-minus" inert></i></a>{{/if}}
+          <span class="points-value" data-tooltip="{{localize 'CDG.battle.points'}}">{{state.points.enemy}}</span>
+          {{#if isGM}}<a data-action="points" data-side="enemy" data-delta="1" data-tooltip="{{localize 'CDG.battle.pointsAdd'}}"><i class="fas fa-square-plus" inert></i></a>{{/if}}
+        </span>
+      </div>
+    </div>
+  </header>
+
+  {{#if winnerLabel}}<p class="battle-winner"><i class="fa-solid fa-trophy" inert></i> {{winnerLabel}}</p>{{/if}}
+  {{#if tie}}<p class="battle-tie hint">{{localize "CDG.battle.tie"}}</p>{{/if}}
+
+  <ol class="battle-phases">
+    {{#each phases as |phase|}}
+      <li class="{{#if phase.current}}current{{/if}}{{#if phase.done}} done{{/if}}">{{phase.order}}. {{localize phase.label}}</li>
+    {{/each}}
+  </ol>
+
+  <section class="battle-members">
+    {{#each members as |member|}}
+      <div class="battle-member" data-actor-id="{{member.actorId}}">
+        <div class="member-identity">
+          <img src="{{member.img}}" alt="" data-action="openActor" />
+          <a data-action="openActor">{{member.name}}</a>
+          {{#if (eq member.actorId @root.chiefId)}}<i class="fa-solid fa-chess-king chief-icon" data-tooltip="{{localize 'CDG.battle.chief.icon'}}"></i>{{/if}}
+        </div>
+        <div class="member-position">
+          {{#if @root.phaseLocation}}
+            {{#each member.positions as |position|}}
+              <button type="button" class="position{{#if position.active}} active{{/if}}" data-action="setPosition" data-position="{{position.id}}"
+                data-requires="{{#if position.allowed}}owner{{else}}gm{{/if}}">{{localize position.label}}</button>
+            {{/each}}
+          {{else if member.positionLabel}}
+            <span class="position active">{{member.positionLabel}}</span>
+          {{else}}
+            <span class="hint">{{localize "CDG.battle.positions.none"}}</span>
+          {{/if}}
+        </div>
+        <div class="member-fight">
+          {{#if @root.phaseFights}}
+            {{> "systems/chiens-de-guerre/templates/battle/consequences.hbs" member=member exploits=@root.phaseExploits}}
+          {{else if member.fight}}
+            <span class="hint">{{member.fight.label}}</span>
+          {{/if}}
+        </div>
+      </div>
+    {{else}}
+      <p class="hint">{{localize "CDG.battle.notif.noMembers"}}</p>
+    {{/each}}
+  </section>
+
+  {{#if phaseGenerals}}
+    <section class="battle-generals">
+      <div class="general-side">
+        <h3>{{company.name}}</h3>
+        {{#if isGM}}
+          <select name="chiefUuid">{{selectOptions chiefChoices selected=state.chiefUuid valueAttr="value" labelAttr="label"}}</select>
+        {{else}}
+          <p>{{#if chiefName}}{{chiefName}}{{else}}{{localize "CDG.battle.chief.company"}}{{/if}}</p>
+        {{/if}}
+        {{#if generals.company}}<p class="result">{{generals.company}}</p>{{/if}}
+        {{#if canRollCompany}}
+          <button type="button" data-action="rollGeneralCompany" {{#if generals.company}}disabled{{/if}}><i class="fa-solid fa-dice-d20" inert></i>
+            {{#if chiefName}}{{localize "CDG.battle.generals.roll"}}{{else}}{{localize "CDG.battle.generals.rollCompany"}}{{/if}}</button>
+        {{/if}}
+      </div>
+      <div class="general-side">
+        <h3>{{state.general.name}}</h3>
+        <p>{{localize "CDG.battle.modifierMirror"}}</p>
+        {{#if generals.enemy}}<p class="result">{{generals.enemy}}</p>{{/if}}
+        {{#if isGM}}
+          <button type="button" data-action="rollGeneralEnemy" {{#if generals.enemy}}disabled{{/if}}><i class="fa-solid fa-dice-d20" inert></i> {{localize "CDG.battle.generals.roll"}}</button>
+        {{/if}}
+      </div>
+      {{#if generals.result}}
+        <p class="generals-result">{{generals.result}} — {{localize "CDG.battle.lossModifier"}} {{signed generals.lossModifier}}</p>
+      {{/if}}
+    </section>
+  {{/if}}
+
+  {{#if phaseLosses}}
+    <section class="battle-losses">
+      <p>{{localize "CDG.battle.losses.hint"}} {{#if lossModifier}}({{localize "CDG.battle.lossModifier"}} {{signed lossModifier}}){{/if}}</p>
+      {{#if losses}}<p class="result">{{losses.outcome}} — {{losses.wound}}</p>{{/if}}
+      {{#if company.isOwner}}
+        <button type="button" data-action="rollLosses" {{#if losses}}disabled{{/if}}><i class="fa-solid fa-dice-d20" inert></i> {{localize "CDG.battle.losses.roll"}}</button>
+      {{/if}}
+    </section>
+  {{/if}}
+
+  {{#if isGM}}
+    <footer class="battle-footer">
+      <button type="button" data-action="abandon"><i class="fa-solid fa-flag-checkered" inert></i> {{localize "CDG.battle.abandon"}}</button>
+      <button type="button" data-action="phase" data-direction="-1" {{#if phaseLocation}}disabled{{/if}}><i class="fa-solid fa-backward-step" inert></i> {{localize "CDG.battle.previousPhase"}}</button>
+      <button type="button" class="next" data-action="phase" data-direction="1">{{localize nextLabel}} <i class="fa-solid fa-forward-step" inert></i></button>
+    </footer>
+  {{/if}}
+{{/unless}}
+</div>

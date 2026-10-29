@@ -1,5 +1,6 @@
 import CdgInitiativeDialog from "../applications/initiative-dialog.mjs"
 import { SYSTEM } from "../config/system.mjs"
+import CdgBattle from "../combat/battle.mjs"
 import CdgDyingPrompt from "../combat/dying-prompt.mjs"
 import Utils from "../helpers/utils.mjs"
 
@@ -108,6 +109,7 @@ export default class CdgCombat extends Combat {
     if (!combatant || !game.user.isGM) return this
     const touches = Math.max(0, this.touchesFor(combatant) + delta)
     await combatant.setFlag(SYSTEM.PACKAGE_ID, "duelTouches", touches)
+    Utils.debug("combat", `Duel : ${combatant.name} a ${touches} touche(s)`)
     const settings = this.duelSettings
     if (settings.type === SYSTEM.DUEL_TYPES.plaisance.id && touches >= settings.target) {
       ui.notifications.info(game.i18n.format("CDG.combat.duel.victory", { name: combatant.name, touches }))
@@ -117,6 +119,7 @@ export default class CdgCombat extends Combat {
 
   async assignDuelAttacker(combatantId) {
     if (!this.duelists.some((combatant) => combatant.id === combatantId)) return this
+    Utils.debug("combat", `Duel à égalité : ${this.combatants.get(combatantId)?.name} désigné attaquant`)
     await this.setDuelSetting("attackerOverride", combatantId)
     return this.activateHighestInitiative()
   }
@@ -127,6 +130,11 @@ export default class CdgCombat extends Combat {
     // Les initiatives lancées avant le début (depuis une fiche) sont conservées ; si chacun a déjà
     // la sienne, le premier tour revient aussitôt à la plus haute.
     await super.startCombat()
+    Utils.debug(
+      "combat",
+      `Début du combat (${this.cdgMode}) : initiatives déjà lancées`,
+      Object.fromEntries(this.combatants.map((combatant) => [combatant.name, combatant.initiative])),
+    )
     await this.update({ turn: null })
     return this.activateHighestInitiative()
   }
@@ -162,6 +170,8 @@ export default class CdgCombat extends Combat {
     } else combatant = this.turns.find((turn) => !this.constructor.isOut(turn) && turn.initiative > 0)
 
     const turn = combatant ? this.turns.findIndex((entry) => entry.id === combatant.id) : null
+    const out = this.combatants.filter((entry) => this.constructor.isOut(entry)).map((entry) => entry.name)
+    Utils.debug("combat", `La main passe à ${combatant?.name ?? "personne"}${out.length ? ` (hors de combat : ${out.join(", ")})` : ""}`)
     if (turn !== this.turn) await this.update({ turn })
     return this
   }
@@ -176,9 +186,14 @@ export default class CdgCombat extends Combat {
   async completeSkirmishAction() {
     const combatant = this.combatant
     if (!combatant || !Number.isFinite(combatant.initiative)) return this
-    await combatant.update({ initiative: combatant.initiative - SYSTEM.INITIATIVE_ACTION_COST })
+    const before = combatant.initiative
+    await combatant.update({ initiative: before - SYSTEM.INITIATIVE_ACTION_COST })
     this.setupTurns()
     const next = this.turns.find((turn) => !this.constructor.isOut(turn) && turn.initiative > 0)
+    Utils.debug(
+      "combat",
+      `Fin d'action de ${combatant.name} : initiative ${before} → ${combatant.initiative}, ${next ? `main à ${next.name}` : "plus personne de positif, nouveau round"}`,
+    )
     if (!next) return this.nextRound()
     await this.update({ turn: this.turns.findIndex((turn) => turn.id === next.id) })
     return this
@@ -210,11 +225,16 @@ export default class CdgCombat extends Combat {
         ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
         return this
       }
-      await game.users.activeGM.query("cdg.nextRound", { combatId: this.id })
+      const accepted = await game.users.activeGM.query("cdg.nextRound", { combatId: this.id })
+      Utils.debug("combat", `Nouveau round demandé au Meneur (${game.users.activeGM.name}) : ${accepted ? "accepté" : "refusé"}`)
       return this
     }
 
+    // Escarmouche ouverte par une bataille : un seul round, puis la mêlée sépare les combattants (p. 52).
+    if (this.started && this.round >= 1 && this.getFlag(SYSTEM.PACKAGE_ID, CdgBattle.SKIRMISH_FLAG)) return CdgBattle.endSkirmish(this)
+
     const nextRound = this.round + 1
+    Utils.debug("combat", `Round ${nextRound} : initiatives remises à zéro`)
     const advanceTime = this.getTimeDelta(this.round, this.turn, nextRound, null)
     // Comme `Combat#resetAll` : la remise à zéro est posée sur la source locale, puis la liste
     // complète des combattants est envoyée sans calcul de différence.
@@ -243,9 +263,18 @@ export default class CdgCombat extends Combat {
   static async handleNextRoundQuery({ combatId } = {}, { user } = {}) {
     if (!game.user.isGM) return false
     const combat = game.combats.get(combatId)
-    if (!combat?.started || !user) return false
+    if (!combat?.started || !user) {
+      Utils.debug("combat", `Nouveau round refusé à ${user?.name} : combat introuvable ou pas commencé`)
+      return false
+    }
     const candidates = combat.cdgMode === SYSTEM.COMBAT_MODES.duel.id ? combat.duelists : [combat.combatant].filter(Boolean)
-    if (!user.isGM && !candidates.some((combatant) => combatant.testUserPermission(user, "OWNER"))) return false
+    if (!user.isGM && !candidates.some((combatant) => combatant.testUserPermission(user, "OWNER"))) {
+      Utils.debug(
+        "combat",
+        `Nouveau round refusé à ${user.name} : il ne possède pas ${candidates.map((combatant) => combatant.name).join(" ni ") || "le combattant qui a la main"}`,
+      )
+      return false
+    }
     await combat.nextRound()
     return true
   }
@@ -255,7 +284,7 @@ export default class CdgCombat extends Combat {
     await super._onEndRound(context)
     if (game.settings.get(SYSTEM.PACKAGE_ID, "autoResetRoundCounters")) {
       for (const combatant of this.combatants) await combatant.actor?.resetRoundCounters()
-      if (CONFIG.debug.cdg?.combat) console.debug(Utils.log("Fin de round : esquives et parade réinitialisées"))
+      Utils.debug("combat", "Fin de round : esquives et parade réinitialisées")
     }
     await CdgDyingPrompt.postForCombat(this)
   }

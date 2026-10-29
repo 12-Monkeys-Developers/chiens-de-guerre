@@ -38,6 +38,8 @@ Hooks.once("init", function () {
   CONFIG.queries["cdg.confrontationStep"] = combat.CdgConfrontation.handleStepQuery
   // Attaque d'un joueur sans cible : les Meneurs en sont avertis par une notification.
   CONFIG.queries["cdg.noTargetWarning"] = combat.CdgConfrontation.handleNoTargetQuery
+  // Bataille : comme la confrontation, le Meneur actif est le seul à écrire son état.
+  CONFIG.queries["cdg.battleStep"] = combat.CdgBattle.handleStepQuery
   // Passage au round suivant, que seul le Meneur peut écrire.
   CONFIG.queries["cdg.nextRound"] = documents.CdgCombat.handleNextRoundQuery
 
@@ -122,17 +124,16 @@ Hooks.once("init", function () {
   // de confrontation : il doit être préchargé pour qu'un `{{> "chemin/vers/le/partiel.hbs"}}` le
   // trouve au rendu, `renderTemplate` ne le résolvant pas tout seul depuis un simple chemin. Lancé
   // sans l'attendre, en dernier : il n'en faut le résultat qu'au rendu des cartes, bien après `ready`.
-  foundry.applications.handlebars.loadTemplates([`${SYSTEM.PATH}/templates/chat/partials/test-body.hbs`])
+  foundry.applications.handlebars.loadTemplates([`${SYSTEM.PATH}/templates/chat/partials/test-body.hbs`, combat.CdgBattle.TEMPLATES.consequences])
 
   console.info(helpers.Utils.log("Initialisé"))
 })
 
 Hooks.once("ready", function () {
   const debug = game.settings.get(SYSTEM.PACKAGE_ID, "debugMode")
-  CONFIG.debug.cdg = {
-    sheets: debug,
-    combat: debug,
-  }
+  // Toutes les catégories suivent le réglage ; on peut en couper une à la console, le contexte
+  // des fiches étant bavard (`CONFIG.debug.cdg.sheets = false`).
+  CONFIG.debug.cdg = Object.fromEntries(["sheets", "rolls", "confrontation", "combat", "wounds", "battle", "origins"].map((category) => [category, debug]))
 
   // Tableau de bord des joueurs : un singleton, jamais ouvert d'office — seul le bouton de la
   // barre latérale le fait apparaître.
@@ -151,6 +152,17 @@ Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgConfrontation.act
 
 // Et pour le rappel de fin de round d'un personnage mourant.
 Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgDyingPrompt.activateListeners(message, html))
+
+// Et pour les cartes de bataille (début, conséquences de la phase 2).
+Hooks.on("renderChatMessageHTML", (message, html) => combat.CdgBattle.activateListeners(message, html))
+
+// Le Meneur range dans la bataille le résultat de chaque test qui lui est rattaché, y compris après
+// un changement de dé conservé ou un dépassement.
+Hooks.on("createChatMessage", (message) => combat.CdgBattle.onRollMessage(message))
+Hooks.on("updateChatMessage", (message) => combat.CdgBattle.onRollMessage(message))
+
+// Fin d'une escarmouche de bataille : issue notée, jeton et copie de l'adversaire retirés.
+Hooks.on("deleteCombat", (combatDocument) => combat.CdgBattle.onDeleteCombat(combatDocument))
 
 // Une compagnie franche ne prend pas part à un combat.
 Hooks.on("preCreateCombatant", (combatant) => documents.CdgCombat.onPreCreateCombatant(combatant))

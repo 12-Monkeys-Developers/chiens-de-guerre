@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { simulateCompanyHealing } from "../helpers/rules.mjs"
+import Utils from "../helpers/utils.mjs"
 
 export default class CdgActor extends Actor {
   /** Tous les objets d'équipement, quel que soit le sous-type. */
@@ -163,6 +164,14 @@ export default class CdgActor extends Actor {
       item.type === SYSTEM.ITEM_TYPE.peuple ? this.#grantLanguages(item, details) : { ...this.#grantSkillRanks(item, details), ...this.#grantStartingMoney(item, details) }
     if (!foundry.utils.isEmpty(updates)) await this.update(updates)
 
+    Utils.debug(
+      "origins",
+      `${typeLabel} ${item.name} posé sur ${this.name}${details.length ? ` : ${details.join(", ")}` : ""}${missing ? `, ${missing} référence(s) introuvable(s)` : ""}`,
+      {
+        objets: created.map((data) => `${data.name} (${data.type})`),
+        miseAJour: updates,
+      },
+    )
     if (missing > 0) ui.notifications.warn(game.i18n.format("CDG.origin.missingGrant", { name: item.name, count: missing }))
     if (notifySuccess) {
       ui.notifications.info(
@@ -266,6 +275,9 @@ export default class CdgActor extends Actor {
     })
     if (!confirmed) return
 
+    Utils.debug("origins", `${item.name} retiré de ${this.name} : ${granted.length} objet(s) accordé(s) supprimé(s), ${refund} ducat(s) repris ; langues et rangs conservés`, {
+      objets: granted.map((entry) => entry.name),
+    })
     if (refund > 0) await this.update({ "system.wealth.ducat": this.system.wealth.ducat - refund })
     return this.deleteEmbeddedDocuments("Item", [item.id, ...granted.map((entry) => entry.id)])
   }
@@ -348,6 +360,10 @@ export default class CdgActor extends Actor {
     if (!source) return ui.notifications.warn(game.i18n.format("CDG.origin.missingGrant", { name: ascendance.name, count: 1 }))
 
     const existing = this.arcanums.find((arcanum) => arcanum.name === source.name)
+    Utils.debug(
+      "origins",
+      `Ascendance ${ascendance.name} : arcanum ${source.name} ${existing ? `déjà possédé, rang ${existing.system.rank} → ${existing.system.rank + 1}` : `embarqué au rang ${SYSTEM.ARCANUM_MIN_RANK}`}`,
+    )
     if (existing) {
       if (existing.system.rank >= SYSTEM.ARCANUM_MAX_RANK) return ui.notifications.warn(game.i18n.format("CDG.origin.arcanumBonusCapped", { name: existing.name }))
       await existing.update({ "system.rank": existing.system.rank + 1 })
@@ -369,7 +385,12 @@ export default class CdgActor extends Actor {
   async #revertArcanumBonus(ascendance) {
     const bumped = this.#ascendanceBonusItem(ascendance)
     if (!bumped) return
-    if (bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")) return this.deleteEmbeddedDocuments("Item", [bumped.id])
+    const granted = bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")
+    Utils.debug(
+      "origins",
+      `Ascendance ${ascendance.name} : bonus d'arcanum défait, ${bumped.name} ${granted ? "supprimé" : `ramené au rang ${Math.max(SYSTEM.ARCANUM_MIN_RANK, bumped.system.rank - 1)}`}`,
+    )
+    if (granted) return this.deleteEmbeddedDocuments("Item", [bumped.id])
     await bumped.update({ "system.rank": Math.max(SYSTEM.ARCANUM_MIN_RANK, bumped.system.rank - 1) })
     return bumped.unsetFlag(SYSTEM.PACKAGE_ID, CdgActor.ASCENDANCE_BONUS_FLAG)
   }
@@ -468,6 +489,11 @@ export default class CdgActor extends Actor {
     // dissoute. On conserve sa fiche au lieu de la supprimer, afin que cet état reste réversible
     // en cas d'erreur de saisie ou de décision du Meneur.
     if (!appliedLevelId && newLevelId && start >= 0 && this.type === "compagnie") updates["system.state.dissolved"] = true
+    Utils.debug(
+      "wounds",
+      `${this.name} : blessure ${newLevelId ?? "aucune"} demandée${appliedLevelId && appliedLevelId !== newLevelId ? `, débordement jusqu'à ${appliedLevelId}` : ""}${newLevelId && !appliedLevelId ? ", aucune case libre" : ""}${previousLevelId ? `, ${previousLevelId} libérée` : ""}${updates["system.state.dissolved"] ? ", compagnie dissoute" : ""}`,
+      updates,
+    )
     if (!foundry.utils.isEmpty(updates)) await this.update(updates)
     return appliedLevelId
   }
@@ -483,6 +509,7 @@ export default class CdgActor extends Actor {
     if (this.type !== "compagnie" || !Array.isArray(operations) || operations.length === 0) return false
 
     const wounds = simulateCompanyHealing(this.system.wounds, operations)
+    Utils.debug("wounds", `${this.name} : guérison ${wounds ? "appliquée" : "rejetée (destination pleine)"}`, operations)
     if (!wounds) return false
 
     const updates = Object.fromEntries(Object.keys(SYSTEM.WOUND_LEVELS).map((id) => [`system.wounds.${id}.value`, wounds[id].value]))
@@ -519,6 +546,7 @@ export default class CdgActor extends Actor {
       const pool = this.system.abilities[abilityId]
       updates[`system.abilities.${abilityId}.value`] = Math.min(pool.max, pool.value + condition.recovery + pool.restBonus)
     }
+    Utils.debug("wounds", `${this.name} : repos ${conditionId}, +${condition.recovery} par réserve, plus son bonus de repos`, updates)
     return this.update(updates)
   }
 }
