@@ -12,7 +12,7 @@
         <span class="col-actors">
           {{#each row.actors as |actor|}}
             <span class="adversary-chip{{#if actor.missing}} missing{{/if}}">
-              <img src="{{actor.img}}" alt="" />
+              <img src="{{actor.img}}" alt="" {{#unless actor.missing}}data-action="openAdversary" data-uuid="{{actor.uuid}}" data-tooltip="{{localize 'CDG.battle.adversariesConfig.open'}}"{{/unless}} />
               <span>{{actor.name}}</span>
               <button type="button" data-action="removeAdversary" data-uuid="{{actor.uuid}}" data-tooltip="{{localize 'CDG.battle.adversariesConfig.remove'}}">
                 <i class="fa-solid fa-trash" inert></i>

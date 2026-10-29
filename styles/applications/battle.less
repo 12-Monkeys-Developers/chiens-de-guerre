@@ -396,6 +396,12 @@
   }
 }
 
+// Le récapitulatif archivé dans le journal suit le thème de la page : sans cela, le brun de la
+// carte de tchat se perd sur le fond noir du thème sombre.
+.journal-entry-page .cdg-battle-card {
+  color: inherit;
+}
+
 // Bouton de la fiche de compagnie : rouge tant qu'une bataille est en cours.
 .cdg.actor.compagnie .compagnie-header .open-battle {
   width: auto;
@@ -411,10 +417,21 @@
 
 // Réglage de la table des adversaires : tranche du d20 à gauche, profils à droite.
 .cdg.battle-adversaries {
+  // Toute la table tient dans la fenêtre si elle est assez haute ; sinon seule la liste défile,
+  // entre l'en-tête et les boutons.
   .window-content {
+    display: flex;
+    flex-direction: column;
     padding: 0.6rem 0.8rem;
     font-family: var(--cdg-font-text);
     color: var(--cdg-text);
+  }
+
+  .adversaries-config {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
   .hint {
@@ -443,8 +460,8 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    // La liste défile seule : les boutons du bas restent visibles.
-    max-height: 28rem;
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
   }
 
@@ -480,6 +497,7 @@
       height: 1.5rem;
       object-fit: cover;
       border: none;
+      cursor: pointer;
     }
 
     button {

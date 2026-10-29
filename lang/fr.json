@@ -1356,7 +1356,8 @@
         "reset": "Table du livre",
         "save": "Enregistrer",
         "saved": "Table des adversaires enregistrée.",
-        "adversaryOnly": "Seul un PNJ peut figurer dans la table."
+        "adversaryOnly": "Seul un PNJ peut figurer dans la table.",
+        "open": "Ouvrir la fiche"
       }
     }
   }

@@ -23,6 +23,7 @@ export default class CdgBattleAdversariesConfig extends HandlebarsApplicationMix
       resizable: true,
     },
     actions: {
+      openAdversary: CdgBattleAdversariesConfig.#onOpen,
       removeAdversary: CdgBattleAdversariesConfig.#onRemove,
       reset: CdgBattleAdversariesConfig.#onReset,
       save: CdgBattleAdversariesConfig.#onSave,
@@ -77,6 +78,16 @@ export default class CdgBattleAdversariesConfig extends HandlebarsApplicationMix
     if (actor?.type !== "adversaire") return ui.notifications.warn("CDG.battle.adversariesConfig.adversaryOnly", { localize: true })
     if (!this.#draft[key].includes(actor.uuid)) this.#draft[key].push(actor.uuid)
     this.render()
+  }
+
+  /**
+   * Ouvre la fiche d'un profil, du compendium ou du monde.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte `data-uuid`.
+   */
+  static async #onOpen(event, target) {
+    const actor = await fromUuid(target.dataset.uuid)
+    return actor?.sheet.render(true)
   }
 
   static async #onRemove(event, target) {

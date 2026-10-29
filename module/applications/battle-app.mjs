@@ -52,6 +52,9 @@ export default class CdgBattleApp extends HandlebarsApplicationMixin(Application
   /** La préparation en cours de saisie, avant que le Meneur n'engage la bataille. */
   #draft = { stake: "", modifier: 0, armyQuality: "normal", chiefUuid: "", general: { actorUuid: "", name: "", esprit: 10, tactique: 1 } }
 
+  /** La bataille affichée, pour fermer la fenêtre quand elle se termine. */
+  #battleId = null
+
   /** Le crochet qui retrace la fenêtre au moindre changement de la compagnie ou d'un PJ. */
   #hookId = null
 
@@ -86,6 +89,9 @@ export default class CdgBattleApp extends HandlebarsApplicationMixin(Application
     await super._onFirstRender(context, options)
     this.#hookId = Hooks.on("updateActor", (actor) => {
       const state = CdgBattle.getState(this.#company)
+      // Bataille conclue ou abandonnée : la fenêtre se ferme chez tout le monde, plutôt que de
+      // retomber sur la préparation.
+      if (actor === this.#company && this.#battleId && state?.id !== this.#battleId) return this.close()
       if (actor === this.#company || state?.members[actor.id]) this.render()
     })
   }
@@ -103,6 +109,7 @@ export default class CdgBattleApp extends HandlebarsApplicationMixin(Application
     const context = await super._prepareContext(options)
     const company = this.#company
     const state = CdgBattle.getState(company)
+    this.#battleId = state?.id ?? null
     Object.assign(context, { company, isGM: game.user.isGM, state, SYSTEM })
     if (!state) return Object.assign(context, this.#setupContext())
 

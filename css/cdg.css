@@ -4623,6 +4623,9 @@ cdg-toggle-switch[checked] thumb {
   padding-left: 1rem;
   font-size: 0.85rem;
 }
+.journal-entry-page .cdg-battle-card {
+  color: inherit;
+}
 .cdg.actor.compagnie .compagnie-header .open-battle {
   width: auto;
   align-self: flex-start;
@@ -4634,9 +4637,17 @@ cdg-toggle-switch[checked] thumb {
   background: var(--cdg-blood);
 }
 .cdg.battle-adversaries .window-content {
+  display: flex;
+  flex-direction: column;
   padding: 0.6rem 0.8rem;
   font-family: var(--cdg-font-text);
   color: var(--cdg-text);
+}
+.cdg.battle-adversaries .adversaries-config {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 .cdg.battle-adversaries .hint {
   margin: 0 0 0.5rem;
@@ -4661,7 +4672,8 @@ cdg-toggle-switch[checked] thumb {
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 28rem;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
 }
 .cdg.battle-adversaries .adversary-row {
@@ -4693,6 +4705,7 @@ cdg-toggle-switch[checked] thumb {
   height: 1.5rem;
   object-fit: cover;
   border: none;
+  cursor: pointer;
 }
 .cdg.battle-adversaries .adversary-chip button {
   width: 1.4rem;
