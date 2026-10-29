@@ -7,6 +7,7 @@ import { signed } from "../helpers/format.mjs"
 import Utils from "../helpers/utils.mjs"
 import { adversaryEntry, battleWinner, canMove, fightConsequence, generalsResult, keptAdversaryDie, lossesWound, shiftWound } from "./battle-rules.mjs"
 import { resolveOpposedOutcome } from "./opposition.mjs"
+import { soakSeed } from "./test-presets.mjs"
 
 const { ForcedReplacement } = foundry.data.operators
 
@@ -401,18 +402,7 @@ export default class CdgBattle {
     const state = this.getState(company)
     const actor = game.actors.get(actorId)
     if (!state || !actor) return
-    return this.#openRoll(
-      actor,
-      {
-        abilityId: "corps",
-        rank: actor.armor?.system.protection.rank ?? 0,
-        label: "CDG.battle.protectionTest",
-        lockedPair: true,
-        qualityDomain: "soak",
-        toggles: { wound: false },
-      },
-      this.#tag(company, state, "protection", actorId),
-    )
+    return this.#openRoll(actor, soakSeed(actor, { label: "CDG.battle.protectionTest" }), this.#tag(company, state, "protection", actorId))
   }
 
   /**

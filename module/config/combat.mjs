@@ -4,6 +4,16 @@
  */
 export const DODGE_MALUS = [0, -2, -4, -6, -8]
 
+/**
+ * Les deux défenses d'une confrontation (p. 44) et le test que chacune ouvre. L'esquive se paie de
+ * plus en plus cher dans le round (`DODGE_MALUS`) ; la parade ne sert qu'une fois par round, et seul
+ * son test profite d'un objet de qualité exceptionnelle (`qualityDomain`).
+ */
+export const DEFENSES = {
+  dodge: { id: "dodge", ability: "vivacite", skill: "esquive", qualityDomain: null },
+  parry: { id: "parry", ability: "corps", skill: "blocage", qualityDomain: "parry" },
+}
+
 /** Chaque action entreprise pendant un round retire ce nombre de points d'initiative. */
 export const INITIATIVE_ACTION_COST = 10
 

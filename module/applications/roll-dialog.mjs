@@ -360,8 +360,8 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
 
     for (const modifier of this.#extraModifiers) add(`extra.${modifier.id}`, modifier.label, modifier.value, modifier.hint ?? "", true)
 
-    if (draft.skillId === "esquive") add("dodge", game.i18n.localize("CDG.roll.dodge"), system.combat.dodgeMalus, game.i18n.localize("CDG.roll.hint.dodge"), true)
-    if (draft.skillId === "blocage") add("block", game.i18n.localize("CDG.roll.block"), system.combat.blockBonus, game.i18n.localize("CDG.roll.hint.block"), true)
+    if (draft.skillId === SYSTEM.DEFENSES.dodge.skill) add("dodge", game.i18n.localize("CDG.roll.dodge"), system.combat.dodgeMalus, game.i18n.localize("CDG.roll.hint.dodge"), true)
+    if (draft.skillId === SYSTEM.DEFENSES.parry.skill) add("block", game.i18n.localize("CDG.roll.block"), system.combat.blockBonus, game.i18n.localize("CDG.roll.hint.block"), true)
 
     // Bonus circonstanciels déposés par les effets actifs : pré-cochés quand la compétence lancée
     // est l'une de celles par lesquelles la situation passe d'ordinaire.

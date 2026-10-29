@@ -4,6 +4,7 @@ import CdgRoll from "../dice/cdg-roll.mjs"
 import Utils from "../helpers/utils.mjs"
 import { keptOutcome, OUTCOMES } from "../dice/roll-outcome.mjs"
 import { resolveOpposedOutcome, resolveWound } from "./opposition.mjs"
+import { damageSeed, defenseSeed, soakSeed } from "./test-presets.mjs"
 
 /**
  * La confrontation de combat (p. 44-45) : attaque, défense, dégâts, encaissement, dans un seul
@@ -342,7 +343,7 @@ export default class CdgConfrontation {
         // Dégâts et encaissement ne se lancent qu'une fois le coup porté.
         if (["damage", "soak"].includes(step.phase) && !state.opposition?.hit) return this.#reject(step, user, "le coup n'a pas porté")
         state[key] = step.data
-        if (step.phase === "defense") state.defenseMethod = ["dodge", "parry"].includes(step.defenseMethod) ? step.defenseMethod : null
+        if (step.phase === "defense") state.defenseMethod = Object.hasOwn(SYSTEM.DEFENSES, step.defenseMethod) ? step.defenseMethod : null
         break
       case "push":
         if (!current) return this.#reject(step, user, "aucun sous-jet à dépasser")
@@ -630,27 +631,21 @@ export default class CdgConfrontation {
    */
   static async #onChooseDefense(event, message) {
     const defense = event.currentTarget.dataset.defense
-    if (!["dodge", "parry"].includes(defense)) return
+    if (!Object.hasOwn(SYSTEM.DEFENSES, defense)) return
 
     const state = this.getState(message)
     if (!state || !this.#canAct("defense", state)) return
     const target = await fromUuid(state.targetUuid)
     if (!target) return
 
-    if (defense === "parry" && target.system.combat.parryUsed) {
-      ui.notifications.warn(game.i18n.localize("CDG.combat.defense.parryAlreadyUsed"))
-    }
-    const dodgeCount = target.system.combat.dodgesUsed
+    if (defense === SYSTEM.DEFENSES.parry.id && target.system.combat.parryUsed) ui.notifications.warn("CDG.combat.defense.parryAlreadyUsed", { localize: true })
 
     return CdgRollDialog.open(target, {
-      abilityId: defense === "dodge" ? "vivacite" : "corps",
-      skillId: defense === "dodge" ? "esquive" : "blocage",
-      lockedPair: true,
-      qualityDomain: defense === "parry" ? "parry" : null,
+      ...defenseSeed(defense),
       postHandler: async (test) => {
         // La défense n'est décomptée que si le Meneur a bien retenu le jet.
         if (!(await this.#mergeSubTest(message, "defense", test, { defenseMethod: defense }))) return
-        return defense === "dodge" ? target.update({ "system.combat.dodgesUsed": dodgeCount + 1 }) : target.update({ "system.combat.parryUsed": true })
+        return target.consumeDefense(defense)
       },
     })
   }
@@ -667,11 +662,7 @@ export default class CdgConfrontation {
     if (!attacker || !weapon) return
 
     return CdgRollDialog.open(attacker, {
-      abilityId: "corps",
-      rank: weapon.system.damage.rank,
-      label: "CDG.combat.damageTest",
-      lockedPair: true,
-      qualityDomain: "damage",
+      ...damageSeed(weapon),
       postHandler: (test) => this.#mergeSubTest(message, "damage", test),
     })
   }
@@ -688,12 +679,7 @@ export default class CdgConfrontation {
     if (!target) return
 
     return CdgRollDialog.open(target, {
-      abilityId: "corps",
-      rank: state.opposition?.ignoreArmor ? 0 : (target.armor?.system.protection.rank ?? 0),
-      label: "CDG.combat.soakTest",
-      lockedPair: true,
-      qualityDomain: "soak",
-      toggles: { wound: false },
+      ...soakSeed(target, { ignoreArmor: !!state.opposition?.ignoreArmor }),
       postHandler: (test) => this.#mergeSubTest(message, "soak", test),
     })
   }

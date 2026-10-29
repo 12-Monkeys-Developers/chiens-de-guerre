@@ -4,6 +4,7 @@ import CdgRoll from "../dice/cdg-roll.mjs"
 import { keptOutcome } from "../dice/roll-outcome.mjs"
 import { createChatMessage } from "../helpers/chat.mjs"
 import Utils from "../helpers/utils.mjs"
+import { survivalSeed } from "./test-presets.mjs"
 
 /**
  * Rappel de fin de round pour un personnage joueur mourant (toutes les cases de blessure mortelle
@@ -86,12 +87,7 @@ export default class CdgDyingPrompt {
     if (!actor) return
 
     return CdgRollDialog.open(actor, {
-      abilityId: "corps",
-      skillId: "vigueur",
-      lockedPair: true,
-      label: "CDG.combat.survivalTest",
-      restricted: true,
-      toggles: { wound: false },
+      ...survivalSeed(),
       postHandler: (test) => this.#postSurvivalRoll(test, actor),
     })
   }

@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgConfrontation from "../combat/confrontation.mjs"
+import { damageSeed, defenseSeed, soakSeed } from "../combat/test-presets.mjs"
 import CdgInitiativeDialog from "../applications/initiative-dialog.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 
@@ -62,7 +63,7 @@ export default class CdgMacros {
         }
       }
       case "defense":
-        if (!["dodge", "parry"].includes(dropData.defense)) return null
+        if (!Object.hasOwn(SYSTEM.DEFENSES, dropData.defense)) return null
         return {
           ...common,
           name: game.i18n.localize(`CDG.combat.defense.${dropData.defense}`),
@@ -162,13 +163,7 @@ export default class CdgMacros {
   static async rollDamage(itemUuid, itemName) {
     const weapon = await this.#resolveWeapon(itemUuid, itemName)
     if (!weapon) return null
-    return CdgRollDialog.open(weapon.parent, {
-      abilityId: "corps",
-      rank: weapon.system.damage.rank,
-      label: "CDG.combat.damageTest",
-      lockedPair: true,
-      qualityDomain: "damage",
-    })
+    return CdgRollDialog.open(weapon.parent, damageSeed(weapon))
   }
 
   /**
@@ -177,18 +172,11 @@ export default class CdgMacros {
    * @param {Actor|null} actor
    */
   static async rollDefense(defense, actor = null) {
-    if (!["dodge", "parry"].includes(defense)) return null
+    if (!Object.hasOwn(SYSTEM.DEFENSES, defense)) return null
     actor ??= this.selectedActor()
     if (!actor) return null
-    if (defense === "parry" && actor.system.combat.parryUsed) ui.notifications.warn("CDG.combat.defense.parryAlreadyUsed", { localize: true })
-    const dodgeCount = actor.system.combat.dodgesUsed
-    return CdgRollDialog.open(actor, {
-      abilityId: defense === "dodge" ? "vivacite" : "corps",
-      skillId: defense === "dodge" ? "esquive" : "blocage",
-      lockedPair: true,
-      qualityDomain: defense === "parry" ? "parry" : null,
-      afterRoll: () => (defense === "dodge" ? actor.update({ "system.combat.dodgesUsed": dodgeCount + 1 }) : actor.update({ "system.combat.parryUsed": true })),
-    })
+    if (defense === SYSTEM.DEFENSES.parry.id && actor.system.combat.parryUsed) ui.notifications.warn("CDG.combat.defense.parryAlreadyUsed", { localize: true })
+    return CdgRollDialog.open(actor, { ...defenseSeed(defense), afterRoll: () => actor.consumeDefense(defense) })
   }
 
   /**
@@ -220,13 +208,6 @@ export default class CdgMacros {
   static async rollSoak(actor = null) {
     actor ??= this.selectedActor()
     if (!actor) return null
-    return CdgRollDialog.open(actor, {
-      abilityId: "corps",
-      rank: actor.armor?.system.protection.rank ?? 0,
-      label: "CDG.combat.soakTest",
-      lockedPair: true,
-      qualityDomain: "soak",
-      toggles: { wound: false },
-    })
+    return CdgRollDialog.open(actor, soakSeed(actor))
   }
 }

@@ -529,6 +529,22 @@ export default class CdgActor extends Actor {
   }
 
   /**
+   * Décompte une défense du round, une fois son jet lancé : une esquive de plus, ou la parade, qui
+   * ne sert qu'une fois.
+   *
+   * Le compteur d'esquives est relu au moment d'écrire, et non à l'ouverture de la fenêtre de jet :
+   * une autre esquive a pu être décomptée entre-temps.
+   * @param {"dodge"|"parry"} method
+   * @returns {Promise<CdgActor|undefined>}
+   */
+  async consumeDefense(method) {
+    const combat = this.system.combat
+    if (!combat) return
+    if (method === SYSTEM.DEFENSES.dodge.id) return this.update({ "system.combat.dodgesUsed": combat.dodgesUsed + 1 })
+    if (method === SYSTEM.DEFENSES.parry.id) return this.update({ "system.combat.parryUsed": true })
+  }
+
+  /**
    * Applique le repos de fin de journée : chaque réserve regagne le nombre de points correspondant
    * au confort du repos, sans dépasser son maximum.
    *
