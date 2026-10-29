@@ -977,23 +977,11 @@
           "vraiNom": {
             "label": "Vrai nom"
           },
-          "peuple": {
-            "label": "Peuple"
-          },
           "religion": {
             "label": "Religion"
           },
-          "carriere": {
-            "label": "Carrière"
-          },
           "grade": {
             "label": "Grade"
-          },
-          "ascendance": {
-            "label": "Ascendance"
-          },
-          "compulsion": {
-            "label": "Compulsion"
           }
         },
         "passion": {
@@ -1099,9 +1087,6 @@
         },
         "rank": {
           "label": "Rang"
-        },
-        "effect": {
-          "label": "Effet"
         },
         "linkedSkill": {
           "label": "Compétence bonifiée"

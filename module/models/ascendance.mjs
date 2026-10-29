@@ -1,4 +1,3 @@
-import { SYSTEM } from "../config/system.mjs"
 import CdgItemData from "./item.mjs"
 
 export default class CdgAscendanceData extends CdgItemData {

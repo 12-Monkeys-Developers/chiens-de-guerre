@@ -626,8 +626,6 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData))
   }
 
-  _onDragOver(event) {}
-
   /**
    * Dépose un objet sur la fiche.
    * @param {DragEvent} event

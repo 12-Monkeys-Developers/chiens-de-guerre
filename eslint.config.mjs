@@ -15,7 +15,7 @@ export default [
       "tools/scripts/macro-compendiums.js",
       "tools/scripts/macro-pnjs.js",
       "tools/scripts/macro-pnjs-acteurs.js",
-      "tools/scripts/macro-pretires.js",
+      "tools/scripts/internal/macro-pretires.js",
     ],
   },
   {
@@ -110,6 +110,10 @@ export default [
       "no-unsafe-negation": ["warn", { enforceForOrderingRelations: true }],
       "no-unsafe-optional-chaining": ["warn", { disallowArithmeticOperators: true }],
       "no-unused-expressions": "warn",
+      // Les paramètres restent libres : un gestionnaire d'action reçoit toujours `(event, target)`,
+      // et les nommer documente sa signature même quand il n'en lit qu'un. Une variable posée à côté
+      // d'un reste (`const { _key, ...rest } = doc`) sert à écarter cette clé : elle n'est pas morte.
+      "no-unused-vars": ["error", { args: "none", caughtErrors: "none", ignoreRestSiblings: true }],
       "no-useless-backreference": "warn",
       "no-useless-call": "warn",
       "no-useless-catch": "warn",

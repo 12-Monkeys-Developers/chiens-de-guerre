@@ -123,17 +123,6 @@
         color: var(--cdg-label);
       }
 
-      .ability-score {
-        font-family: var(--cdg-font-title);
-        font-size: 1.1rem;
-        line-height: 1;
-
-        .max {
-          font-size: 0.75rem;
-          color: var(--cdg-muted);
-        }
-      }
-
       &:hover {
         border-color: var(--cdg-blood-light);
         box-shadow: none;
@@ -144,22 +133,11 @@
         background: var(--cdg-blood);
         border-color: var(--cdg-blood-dark);
 
-        .ability-name,
-        .ability-score {
+        .ability-name {
           color: var(--cdg-parchment);
-        }
-
-        .max {
-          color: var(--cdg-parchment-dark);
         }
       }
     }
-  }
-
-  .skill-line .handful {
-    flex: 0 0 auto;
-    margin: 0;
-    white-space: nowrap;
   }
 
   // --- Modificateurs ---
@@ -337,13 +315,6 @@
       .base .part-value {
         color: var(--cdg-blood);
       }
-    }
-
-    .handful-hint {
-      margin: 0.35rem 0 0 0;
-      font-size: 0.78rem;
-      font-style: italic;
-      color: var(--cdg-muted);
     }
   }
 
@@ -647,13 +618,6 @@
   &.failure .card-verdict,
   &.criticalFailure .card-verdict {
     color: var(--cdg-blood);
-  }
-
-  .card-note {
-    margin: 0.2rem 0 0 0;
-    font-size: 0.75rem;
-    font-style: italic;
-    color: var(--cdg-muted);
   }
 
   .card-detail {

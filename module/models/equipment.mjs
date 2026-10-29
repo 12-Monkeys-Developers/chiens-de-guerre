@@ -78,9 +78,4 @@ export default class CdgEquipmentData extends CdgItemData {
   get isShield() {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id
   }
-
-  /** Prix total exprimé en deniers, pour comparer deux objets sans convertir à la main. */
-  get priceInDeniers() {
-    return Object.values(SYSTEM.CURRENCIES).reduce((total, currency) => total + this.price[currency.id] * currency.inBaseUnit, 0)
-  }
 }

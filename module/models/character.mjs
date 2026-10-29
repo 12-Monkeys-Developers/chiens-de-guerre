@@ -7,8 +7,6 @@ export default class CdgCharacterData extends CdgActorData {
   /** @override */
   static LOCALIZATION_PREFIXES = ["CDG.Character"]
 
-  static SKILLS = SYSTEM.SKILLS
-
   /** @override */
   static get PROTOTYPE_TOKEN() {
     return { actorLink: true, disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY, sight: { enabled: true, visionMode: "basic" } }
@@ -87,7 +85,6 @@ export default class CdgCharacterData extends CdgActorData {
     super.prepareDerivedData()
     this.#preparePay()
     this.#prepareCombat()
-    this.#prepareWealth()
     this.#prepareXp()
   }
 
@@ -110,11 +107,6 @@ export default class CdgCharacterData extends CdgActorData {
     const armor = this.parent.armor
     const required = armor ? (SYSTEM.ARMOR_CATEGORIES[armor.system.category]?.requiredRank ?? 0) : 0
     this._prepareCombat(!!armor && this.skills.portArmures.rank < required)
-  }
-
-  /** Fortune totale exprimée en deniers, pour comparer deux bourses sans se tromper de monnaie. */
-  #prepareWealth() {
-    this.wealth.totalInDeniers = Object.values(SYSTEM.CURRENCIES).reduce((total, currency) => total + this.wealth[currency.id] * currency.inBaseUnit, 0)
   }
 
   /** Expérience restante. */

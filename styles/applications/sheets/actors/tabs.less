@@ -224,10 +224,6 @@
         }
       }
     }
-    .dodge-malus {
-      align-items: center;
-      text-align: center;
-    }
 
     .parry {
       display: flex;
@@ -474,8 +470,7 @@
       flex: 0 0 auto;
     }
 
-    .arcanum-bonus,
-    .arcanum-cost {
+    .arcanum-bonus {
       font-size: 0.8rem;
       font-weight: 700;
       color: var(--cdg-blood);
@@ -578,36 +573,8 @@
 
 // Bloc de statistiques compact des PNJ et créatures : lecture verticale proche du bestiaire.
 .cdg.actor.adversaire {
-  .tab-combat > section,
-  .npc-combat-tracking {
+  .tab-combat > section {
     margin-bottom: 0.9rem;
-  }
-
-  .npc-skills-initiative {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.7fr);
-    gap: 0.8rem;
-    margin-bottom: 0.9rem;
-
-    &.editing {
-      grid-template-columns: minmax(0, 1fr);
-
-      .skill-columns {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        justify-content: stretch;
-        gap: 0 0.8rem;
-      }
-    }
-  }
-
-  .npc-initiative .init-bonus .value {
-    width: 3.5rem;
-    padding: 0 0.2rem;
-    text-align: center;
-  }
-
-  .npc-combat-tracking {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .npc-equipment .init-bonus {

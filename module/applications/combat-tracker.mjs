@@ -10,7 +10,6 @@ export default class CdgCombatTracker extends CoreCombatTracker {
     classes: [...(super.DEFAULT_OPTIONS.classes ?? []), "cdg", "cdg-combat-tracker"],
     actions: {
       ...super.DEFAULT_OPTIONS.actions,
-      rollInitiative: CdgCombatTracker.#onRollInitiative,
       setCombatMode: CdgCombatTracker.#onSetCombatMode,
       completeCdgAction: CdgCombatTracker.#onCompleteAction,
       adjustDuelTouch: CdgCombatTracker.#onAdjustDuelTouch,
@@ -89,14 +88,6 @@ export default class CdgCombatTracker extends CoreCombatTracker {
     return turn
   }
 
-  /**
-   * Un jet individuel ouvre les choix d'Effort et de Passion.
-   * @param {Combatant} combatant
-   */
-  _onRollInitiative(combatant) {
-    return this.viewed.rollInitiative(combatant.id)
-  }
-
   async #onCdgSettingChange(event) {
     const target = event.target.closest("[data-cdg-setting]")
     if (!target || !game.user.isGM || !this.viewed || this.viewed.started) return
@@ -104,8 +95,12 @@ export default class CdgCombatTracker extends CoreCombatTracker {
   }
 
   /**
-   * Intercepte le bouton avant le routeur générique de Foundry. Celui-ci reconvertit sinon le jet
-   * individuel en tableau d'identifiants, ce qui le fait passer par le chemin des jets collectifs.
+   * Un jet individuel ouvre les choix d'Effort et de Passion : le bouton est intercepté en capture,
+   * avant le routeur d'actions de Foundry, qui passerait un tableau d'identifiants à
+   * `Combat#rollInitiative` et ferait prendre le chemin des jets collectifs, sans fenêtre.
+   *
+   * Seul chemin du jet individuel : l'action `rollInitiative` du cœur n'est plus atteinte que par
+   * un clic sur un combattant qu'on ne possède pas, qui ne lance alors rien.
    * @param {MouseEvent} event
    */
   async #onIndividualInitiativeClick(event) {
@@ -124,17 +119,6 @@ export default class CdgCombatTracker extends CoreCombatTracker {
   static async #onSetCombatMode(event, target) {
     if (!game.user.isGM || this.viewed?.started) return
     return this.viewed?.setCdgMode(target.dataset.mode)
-  }
-
-  /**
-   * Force le chemin individuel, distinct des commandes collectives de Foundry.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target
-   */
-  static async #onRollInitiative(event, target) {
-    const combatantId = target.closest("[data-combatant-id]")?.dataset.combatantId
-    if (!combatantId) return
-    return this.viewed?.rollInitiative(combatantId)
   }
 
   static async #onCompleteAction() {

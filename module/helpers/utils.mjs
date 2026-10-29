@@ -40,33 +40,4 @@ export default class Utils {
       .replace(/&nbsp;/g, " ")
       .trim()
   }
-
-  /**
-   * État déplié d'une section, mémorisé d'une ouverture de fiche à l'autre.
-   * @param {string} key
-   * @param {boolean} [defaultValue]
-   * @returns {boolean}
-   */
-  static getExpandedState(key, defaultValue = true) {
-    try {
-      const stored = localStorage.getItem(key)
-      if (stored !== null) return JSON.parse(stored).expanded === true
-    } catch {
-      // LocalStorage indisponible ou contenu illisible : on retombe sur la valeur par défaut.
-    }
-    return defaultValue
-  }
-
-  /**
-   * Mémorise l'état déplié d'une section.
-   * @param {string} key
-   * @param {boolean} expanded
-   */
-  static setExpandedState(key, expanded) {
-    try {
-      localStorage.setItem(key, JSON.stringify({ expanded }))
-    } catch {
-      // Sans localStorage, l'état n'est pas mémorisé — sans conséquence sur l'affichage courant.
-    }
-  }
 }

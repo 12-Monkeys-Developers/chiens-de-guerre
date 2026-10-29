@@ -6,15 +6,10 @@ const DEFAULT_WOUND_SLOTS = { legere: 2, grave: 1, mortelle: 1 }
 /**
  * Adversaire : caractéristiques, compétences et blessures, sans la comptabilité du personnage
  * joueur (traits de personnalité, karma, passion, expérience, bourse).
- *
- * Volontairement pauvre à ce stade — il partage la fiche du personnage, dans une version allégée.
  */
 export default class CdgAdversaireData extends CdgActorData {
   /** @override */
   static LOCALIZATION_PREFIXES = ["CDG.Adversaire"]
-
-  /** @override */
-  static SKILLS = SYSTEM.SKILLS
 
   /** @override */
   static get PROTOTYPE_TOKEN() {

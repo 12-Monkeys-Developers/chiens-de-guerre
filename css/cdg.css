@@ -993,11 +993,6 @@ cdg-toggle-switch[checked] thumb {
   min-width: 2rem;
   margin-top: -15px;
 }
-.cdg.actor .passion-block .clear-invoked {
-  font-size: 0.78rem;
-  text-decoration: underline;
-  color: var(--cdg-ink-soft);
-}
 .cdg.actor .malus-line {
   margin: 10px 0px 0px 10px;
 }
@@ -1290,10 +1285,6 @@ cdg-toggle-switch[checked] thumb {
   border-color: var(--cdg-blood);
   text-shadow: none;
 }
-.cdg.actor .actionscombat-block .dodge-malus {
-  align-items: center;
-  text-align: center;
-}
 .cdg.actor .actionscombat-block .parry {
   display: flex;
   align-items: center;
@@ -1488,8 +1479,7 @@ cdg-toggle-switch[checked] thumb {
 .cdg.actor .arcanum-list .rank-shields {
   flex: 0 0 auto;
 }
-.cdg.actor .arcanum-list .arcanum-bonus,
-.cdg.actor .arcanum-list .arcanum-cost {
+.cdg.actor .arcanum-list .arcanum-bonus {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--cdg-blood);
@@ -1573,31 +1563,8 @@ cdg-toggle-switch[checked] thumb {
   min-height: 0;
   overflow-y: auto;
 }
-.cdg.actor.adversaire .tab-combat > section,
-.cdg.actor.adversaire .npc-combat-tracking {
+.cdg.actor.adversaire .tab-combat > section {
   margin-bottom: 0.9rem;
-}
-.cdg.actor.adversaire .npc-skills-initiative {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.7fr);
-  gap: 0.8rem;
-  margin-bottom: 0.9rem;
-}
-.cdg.actor.adversaire .npc-skills-initiative.editing {
-  grid-template-columns: minmax(0, 1fr);
-}
-.cdg.actor.adversaire .npc-skills-initiative.editing .skill-columns {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  justify-content: stretch;
-  gap: 0 0.8rem;
-}
-.cdg.actor.adversaire .npc-initiative .init-bonus .value {
-  width: 3.5rem;
-  padding: 0 0.2rem;
-  text-align: center;
-}
-.cdg.actor.adversaire .npc-combat-tracking {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .cdg.actor.adversaire .npc-equipment .init-bonus {
   display: flex;
@@ -1807,16 +1774,6 @@ cdg-toggle-switch[checked] thumb {
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
-}
-.cdg.actor.compagnie .compagnie-top {
-  display: flex;
-  flex-direction: row;
-  gap: 0.8rem;
-  align-items: start;
-}
-.cdg.actor.compagnie .compagnie-top > section {
-  flex: 1 1 0;
-  min-width: 0;
 }
 .cdg.actor.compagnie .notes-section {
   display: flex;
@@ -2226,15 +2183,6 @@ cdg-toggle-switch[checked] thumb {
   letter-spacing: 0.03em;
   color: var(--cdg-label);
 }
-.cdg.roll .ability-choice .ability .ability-score {
-  font-family: var(--cdg-font-title);
-  font-size: 1.1rem;
-  line-height: 1;
-}
-.cdg.roll .ability-choice .ability .ability-score .max {
-  font-size: 0.75rem;
-  color: var(--cdg-muted);
-}
 .cdg.roll .ability-choice .ability:hover {
   border-color: var(--cdg-blood-light);
   box-shadow: none;
@@ -2243,17 +2191,8 @@ cdg-toggle-switch[checked] thumb {
   background: var(--cdg-blood);
   border-color: var(--cdg-blood-dark);
 }
-.cdg.roll .ability-choice .ability.selected .ability-name,
-.cdg.roll .ability-choice .ability.selected .ability-score {
+.cdg.roll .ability-choice .ability.selected .ability-name {
   color: var(--cdg-parchment);
-}
-.cdg.roll .ability-choice .ability.selected .max {
-  color: var(--cdg-parchment-dark);
-}
-.cdg.roll .skill-line .handful {
-  flex: 0 0 auto;
-  margin: 0;
-  white-space: nowrap;
 }
 .cdg.roll .field-line > label.inline {
   min-width: 0;
@@ -2400,12 +2339,6 @@ cdg-toggle-switch[checked] thumb {
 }
 .cdg.roll .roll-summary .breakdown .base .part-value {
   color: var(--cdg-blood);
-}
-.cdg.roll .roll-summary .handful-hint {
-  margin: 0.35rem 0 0 0;
-  font-size: 0.78rem;
-  font-style: italic;
-  color: var(--cdg-muted);
 }
 .cdg.roll .roll-footer {
   display: flex;
@@ -2656,12 +2589,6 @@ cdg-toggle-switch[checked] thumb {
 .cdg-roll-card.criticalFailure .card-verdict {
   color: var(--cdg-blood);
 }
-.cdg-roll-card .card-note {
-  margin: 0.2rem 0 0 0;
-  font-size: 0.75rem;
-  font-style: italic;
-  color: var(--cdg-muted);
-}
 .cdg-roll-card .card-detail {
   margin-top: 0.45rem;
   font-size: 0.78rem;
@@ -2832,9 +2759,7 @@ cdg-toggle-switch[checked] thumb {
   font-size: 1rem;
 }
 .cdg-confrontation-card .confrontation-verdict .ignore-armor,
-.cdg-confrontation-card .confrontation-wound .ignore-armor,
-.cdg-confrontation-card .confrontation-verdict .wound-overflow,
-.cdg-confrontation-card .confrontation-wound .wound-overflow {
+.cdg-confrontation-card .confrontation-wound .ignore-armor {
   font-family: var(--cdg-font-label);
   font-size: 0.75rem;
   font-style: italic;
@@ -2976,11 +2901,6 @@ cdg-toggle-switch[checked] thumb {
 .cdg .suspicion.suspicion-hostile {
   background: var(--cdg-blood-dark);
   color: var(--cdg-parchment);
-}
-.cdg .overridden {
-  color: var(--cdg-blood);
-  font-style: italic;
-  cursor: help;
 }
 .active-effect-config .cdg-situational-change {
   display: flex;

@@ -1,4 +1,5 @@
 import { SYSTEM } from "../../config/system.mjs"
+import Utils from "../../helpers/utils.mjs"
 import CdgBaseActorSheet from "./base-actor-sheet.mjs"
 
 /** Partiel des rangées d'écussons, partagé par les onglets Compétences et Combat. */
@@ -49,7 +50,8 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
     context.enrichedDescription = await enrichHTML(this.document.system.details.description)
     context.enrichedSpecial = await enrichHTML(this.document.system.details.special)
     context.enrichedNotes = await enrichHTML(this.document.system.details.notes)
-    context.hasSpecial = !!this.document.system.details.special?.trim()
+    // Comme les traits spéciaux du personnage : un éditeur vidé laisse un `<p></p>`, qui ne dit rien.
+    context.hasSpecial = Utils.hasText(this.document.system.details.special)
     context.adversaireAbilities = [SYSTEM.ABILITIES.corps, SYSTEM.ABILITIES.esprit, SYSTEM.ABILITIES.vivacite]
 
     // Les compétences de combat d'abord, puis toutes les autres : toutes en édition, seules celles
