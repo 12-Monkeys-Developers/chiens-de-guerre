@@ -148,3 +148,32 @@ export function canMove(fromId, toId) {
   const from = SYSTEM.BATTLE_POSITIONS[fromId]
   return !from || Math.abs(from.step - to.step) <= 1
 }
+
+/**
+ * L'état d'un PJ pour un nouveau tour : il garde sa position, dont on part pour le déplacement.
+ * @param {string|null} position
+ * @returns {Object}
+ */
+export function newMember(position) {
+  return { position, previousPosition: position, fight: null, protection: null, adversary: null, tactique: null, exploitGranted: false, cardId: null }
+}
+
+/**
+ * Phase précédente, pour revenir sur une erreur : rien de ce qui a été joué n'est défait.
+ * @param {Object} state Modifié sur place.
+ */
+export function previousPhase(state) {
+  const phases = SYSTEM.BATTLE_PHASES_ORDERED
+  const index = phases.findIndex((phase) => phase.id === state.phase)
+  if (index > 0) state.phase = phases[index - 1].id
+}
+
+/**
+ * L'action d'éclat est-elle ouverte à ce PJ : acquise d'emblée, ou gagnée par un test d'Esprit /
+ * Tactique réussi.
+ * @param {Object} member
+ * @returns {boolean}
+ */
+export function exploitAvailable(member) {
+  return member?.fight?.exploit === "granted" || (member?.fight?.exploit === "test" && !!member.tactique?.outcome.success)
+}

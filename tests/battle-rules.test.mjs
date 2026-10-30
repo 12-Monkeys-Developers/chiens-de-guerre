@@ -1,6 +1,18 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { battleWinner, canMove, fightConsequence, generalsResult, keptAdversaryDie, lossesWound, shiftWound } from "../module/combat/battle-rules.mjs"
+import { SYSTEM } from "../module/config/system.mjs"
+import {
+  battleWinner,
+  canMove,
+  exploitAvailable,
+  fightConsequence,
+  generalsResult,
+  keptAdversaryDie,
+  lossesWound,
+  newMember,
+  previousPhase,
+  shiftWound,
+} from "../module/combat/battle-rules.mjs"
 
 test("déroulement des combats (p. 52) : position en colonne, issue en ligne", () => {
   assert.deepEqual(fightConsequence("soutien", "success"), { wound: null, combat: false, exploit: null })
@@ -50,4 +62,30 @@ test("localisation : un cran par tour, libre au premier tour", () => {
   assert.equal(canMove(null, "front"), true)
   assert.equal(canMove("front", "engage"), true)
   assert.equal(canMove("front", "soutien"), false)
+})
+
+test("nouveau tour : le PJ garde sa position, d'où part son déplacement, et rien d'autre", () => {
+  const member = newMember("front")
+  assert.equal(member.position, "front")
+  assert.equal(member.previousPosition, "front")
+  assert.deepEqual([member.fight, member.protection, member.adversary, member.tactique, member.cardId], [null, null, null, null, null])
+  assert.equal(member.exploitGranted, false)
+})
+
+test("phase précédente : recule d'un cran, jamais avant la première", () => {
+  const [first, second] = SYSTEM.BATTLE_PHASES_ORDERED
+  const state = { phase: second.id }
+  previousPhase(state)
+  assert.equal(state.phase, first.id)
+  previousPhase(state)
+  assert.equal(state.phase, first.id)
+})
+
+test("action d'éclat : acquise d'emblée, ou gagnée par un test de Tactique réussi", () => {
+  assert.equal(exploitAvailable({ fight: { exploit: "granted" } }), true)
+  assert.equal(exploitAvailable({ fight: { exploit: "test" }, tactique: null }), false)
+  assert.equal(exploitAvailable({ fight: { exploit: "test" }, tactique: { outcome: { success: false } } }), false)
+  assert.equal(exploitAvailable({ fight: { exploit: "test" }, tactique: { outcome: { success: true } } }), true)
+  assert.equal(exploitAvailable({ fight: { exploit: null } }), false)
+  assert.equal(exploitAvailable(null), false)
 })
