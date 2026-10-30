@@ -423,7 +423,7 @@
         "attacker": "Attaquant",
         "defender": "Défenseur",
         "chooseAttacker": "Désigner attaquant",
-        "endExchange": "Fin attaque",
+        "endExchange": "Fin action",
         "endExchangeHint": "Passe d'armes terminée",
         "tie": "Égalité : relancez ou désignez l'attaquant.",
         "noAttacker": "La passe d'armes ne peut pas se terminer tant que l'attaquant n'est pas déterminé.",
@@ -456,7 +456,7 @@
       "miss": "Raté",
       "ignoreArmor": "Armure ignorée",
       "noWound": "Aucune blessure",
-      "resolved": "Attaque résolue",
+      "resolved": "Action résolue",
       "woundOverflow": {
         "grave": "{wound} devenue grave",
         "mortelle": "{wound} devenue mortelle"

@@ -81,6 +81,9 @@ export default class CdgCombatTracker extends CoreCombatTracker {
     const out = combat.constructor.isOut(combatant)
     if (out && !turn.isDefeated) turn.css = [turn.css, "defeated"].filterJoin(" ")
     turn.actionsRemaining = !out && Number.isFinite(combatant.initiative) && combatant.initiative > 0 ? Math.ceil(combatant.initiative / SYSTEM.INITIATIVE_ACTION_COST) : 0
+    // En escarmouche, une initiative tombée à zéro ou moins n'est plus affichée : le combattant a
+    // joué toutes ses actions du round. En duel, elle ne sert qu'à désigner l'attaquant.
+    turn.initiativeSpent = combat.cdgMode !== SYSTEM.COMBAT_MODES.duel.id && Number.isFinite(combatant.initiative) && combatant.initiative <= 0
     turn.touches = combat.touchesFor(combatant)
     turn.isAttacker = combat.cdgMode === SYSTEM.COMBAT_MODES.duel.id && attackerId === combatant.id
     turn.isDefender = combat.cdgMode === SYSTEM.COMBAT_MODES.duel.id && !!attackerId && attackerId !== combatant.id && combat.duelists.some((entry) => entry.id === combatant.id)

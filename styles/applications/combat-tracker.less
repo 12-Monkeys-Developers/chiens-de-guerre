@@ -47,8 +47,11 @@
         color: var(--color-text-secondary);
       }
 
+      // La liste dépliée garde le fond clair du navigateur, quel que soit le thème : sans couleurs
+      // explicites, le texte clair du thème sombre s'y affichait blanc sur blanc.
       option {
-        color: initial;
+        color: #191813;
+        background: #f3efe6;
       }
     }
 

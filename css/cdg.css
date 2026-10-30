@@ -2964,7 +2964,8 @@ cdg-toggle-switch[checked] thumb {
   color: var(--color-text-secondary);
 }
 .cdg-combat-tracker .duel-settings select option {
-  color: initial;
+  color: #191813;
+  background: #f3efe6;
 }
 .cdg-combat-tracker .duel-settings label {
   display: flex;

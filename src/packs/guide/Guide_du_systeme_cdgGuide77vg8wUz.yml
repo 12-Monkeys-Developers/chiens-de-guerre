@@ -1040,12 +1040,12 @@ pages:
               <h3>Escarmouche</h3>
               <ul>
                 <li>
-                  L'initiative se lance avec <strong>Vivacité + Sens du combat</strong>, depuis le suivi une fois le combat commencé, ou dès avant depuis la fiche :
+                  L'initiative se lance avec <strong>Vivacité + Sens du combat</strong>, depuis le suivi une fois le combat commencé (le dé n'y apparaît qu'à ce moment), ou dès avant depuis la fiche :
                   le total est conservé au début du combat.
                 </li>
                 <li>
                   Le combattant qui a la plus haute initiative agit. <strong>Fin action</strong> lui retire <strong>10 points</strong> d'initiative et passe la main à la plus
-                  haute initiative restante. La ligne de chaque combattant indique combien d'actions il lui reste.
+                  haute initiative restante. La ligne de chaque combattant indique combien d'actions il lui reste ; une initiative tombée à zéro ou moins n'est plus affichée : le combattant a joué toutes ses actions du round.
                 </li>
                 <li>Quand plus personne n'a d'initiative positive, le round s'achève et chacun relance son initiative.</li>
                 <li>
@@ -1071,7 +1071,7 @@ pages:
                 </li>
                 <li>
                   La plus haute initiative désigne l'<strong>attaquant</strong>, l'autre défend. En cas d'égalité, relancez ou utilisez <strong>Désigner attaquant</strong>.
-                  <strong>Fin attaque</strong> clôt la passe d'armes et ouvre la suivante.
+                  <strong>Fin action</strong> clôt la passe d'armes et ouvre la suivante.
                 </li>
               </ul>
             </div>
@@ -1146,7 +1146,7 @@ pages:
               </p>
               <p>
                 Une confrontation <strong>résolue</strong> (blessure appliquée, ou coup raté) replie toutes ses étapes, qui restent dépliables : seuls le verdict et la
-                blessure restent à lire. Le message prend un liseré vert-de-gris et porte la mention « Attaque résolue ».
+                blessure restent à lire. Le message prend un liseré vert-de-gris et porte la mention « Action résolue ».
               </p>
               <p>
                 Le meneur voit tous les boutons de la carte, pour pouvoir débloquer une situation, mais ceux qui reviennent à un joueur sont grisés : les boutons des PNJ,
