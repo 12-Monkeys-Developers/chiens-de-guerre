@@ -295,7 +295,7 @@ export default class CdgCombat extends Combat {
       const actor = combatant.actor
       if (!actor) continue
       const weapon = actor.heldWeapons?.[0]
-      const invalidWeapon = actor.heldWeapons?.length !== 1 || weapon?.system.isRangedWeapon || weapon?.system.category === "lourde"
+      const invalidWeapon = actor.heldWeapons?.length !== 1 || !SYSTEM.WEAPON_CATEGORIES[weapon?.system.category]?.formalDuel
       if (actor.armor || actor.shield || invalidWeapon) {
         ui.notifications.warn(game.i18n.format("CDG.combat.duel.warnings.equipment", { name: combatant.name }))
       }

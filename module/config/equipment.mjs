@@ -33,12 +33,57 @@ export const SHIELD_CATEGORIES = {
   lourde: { id: "lourde", label: "CDG.equipment.shieldCategories.lourde", blockBonus: 4, initMalus: -2, price: 10 },
 }
 
-/** Catégories descriptives des armes. */
+/**
+ * Catégories descriptives des armes.
+ *
+ * `dualWield` : l'arme compte pour le bonus d'initiative des deux armes tenues (mêlée légère ou
+ * moyenne). `formalDuel` : l'arme est admise en duel formel (une seule arme de mêlée, pas lourde).
+ */
 export const WEAPON_CATEGORIES = {
-  naturelle: { id: "naturelle", label: "CDG.equipment.weaponCategories.naturelle", ranged: false, damage: 0, ability: "vivacite", skill: "melee", price: 0 },
-  legere: { id: "legere", label: "CDG.equipment.weaponCategories.legere", ranged: false, damage: 1, ability: "vivacite", skill: "melee", price: 1 },
-  moyenne: { id: "moyenne", label: "CDG.equipment.weaponCategories.moyenne", ranged: false, damage: 2, ability: "vivacite", skill: "melee", price: 10 },
-  lourde: { id: "lourde", label: "CDG.equipment.weaponCategories.lourde", ranged: false, damage: 3, ability: "corps", skill: "melee", price: 20 },
+  naturelle: {
+    id: "naturelle",
+    label: "CDG.equipment.weaponCategories.naturelle",
+    ranged: false,
+    damage: 0,
+    ability: "vivacite",
+    skill: "melee",
+    dualWield: false,
+    formalDuel: true,
+    price: 0,
+  },
+  legere: {
+    id: "legere",
+    label: "CDG.equipment.weaponCategories.legere",
+    ranged: false,
+    damage: 1,
+    ability: "vivacite",
+    skill: "melee",
+    dualWield: true,
+    formalDuel: true,
+    price: 1,
+  },
+  moyenne: {
+    id: "moyenne",
+    label: "CDG.equipment.weaponCategories.moyenne",
+    ranged: false,
+    damage: 2,
+    ability: "vivacite",
+    skill: "melee",
+    dualWield: true,
+    formalDuel: true,
+    price: 10,
+  },
+  lourde: {
+    id: "lourde",
+    label: "CDG.equipment.weaponCategories.lourde",
+    ranged: false,
+    damage: 3,
+    ability: "corps",
+    skill: "melee",
+    dualWield: false,
+    formalDuel: false,
+    price: 20,
+  },
   projectileImprovise: {
     id: "projectileImprovise",
     label: "CDG.equipment.weaponCategories.projectileImprovise",
@@ -46,11 +91,43 @@ export const WEAPON_CATEGORIES = {
     damage: 0,
     ability: "vivacite",
     skill: "tir",
+    dualWield: false,
+    formalDuel: false,
     price: 0,
   },
-  tirLegere: { id: "tirLegere", label: "CDG.equipment.weaponCategories.tirLegere", ranged: true, damage: 1, ability: "vivacite", skill: "tir", price: 1 },
-  tirMoyenne: { id: "tirMoyenne", label: "CDG.equipment.weaponCategories.tirMoyenne", ranged: true, damage: 2, ability: "vivacite", skill: "tir", price: 10 },
-  tirLourde: { id: "tirLourde", label: "CDG.equipment.weaponCategories.tirLourde", ranged: true, damage: 3, ability: "vivacite", skill: "tir", price: 25 },
+  tirLegere: {
+    id: "tirLegere",
+    label: "CDG.equipment.weaponCategories.tirLegere",
+    ranged: true,
+    damage: 1,
+    ability: "vivacite",
+    skill: "tir",
+    dualWield: false,
+    formalDuel: false,
+    price: 1,
+  },
+  tirMoyenne: {
+    id: "tirMoyenne",
+    label: "CDG.equipment.weaponCategories.tirMoyenne",
+    ranged: true,
+    damage: 2,
+    ability: "vivacite",
+    skill: "tir",
+    dualWield: false,
+    formalDuel: false,
+    price: 10,
+  },
+  tirLourde: {
+    id: "tirLourde",
+    label: "CDG.equipment.weaponCategories.tirLourde",
+    ranged: true,
+    damage: 3,
+    ability: "vivacite",
+    skill: "tir",
+    dualWield: false,
+    formalDuel: false,
+    price: 25,
+  },
 }
 
 /** Catégories proposées selon le sous-type d'équipement. */

@@ -42,3 +42,22 @@ test("listes ordonnées de la configuration : rangées par `order`, complètes e
     ["legere", "grave", "mortelle"],
   )
 })
+
+test("catégories d'arme : seules les armes de mêlée légères et moyennes comptent pour deux armes tenues", () => {
+  const dualWield = Object.values(SYSTEM.WEAPON_CATEGORIES).filter((category) => category.dualWield)
+  assert.deepEqual(dualWield.map((category) => category.id).sort(), ["legere", "moyenne"])
+  assert.ok(dualWield.every((category) => !category.ranged))
+})
+
+test("catégories d'arme : le duel formel n'admet ni arme de tir ni arme lourde", () => {
+  for (const category of Object.values(SYSTEM.WEAPON_CATEGORIES)) {
+    assert.equal(typeof category.formalDuel, "boolean", category.id)
+    if (category.ranged || category.id === "lourde") assert.equal(category.formalDuel, false, category.id)
+  }
+  assert.equal(SYSTEM.WEAPON_CATEGORIES.moyenne.formalDuel, true)
+})
+
+test("ordre des caractéristiques de l'adversaire : les trois caractéristiques, chacune une fois", () => {
+  assert.deepEqual([...SYSTEM.ADVERSARY_ABILITY_ORDER].sort(), Object.keys(SYSTEM.ABILITIES).sort())
+  assert.ok(Object.isFrozen(SYSTEM.ADVERSARY_ABILITY_ORDER))
+})

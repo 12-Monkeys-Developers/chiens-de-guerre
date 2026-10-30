@@ -20,9 +20,7 @@ export default class CdgActor extends Actor {
 
   /** Deux armes compatibles avec le bonus d'initiative de l'escarmouche sont effectivement tenues. */
   get canDualWield() {
-    return (
-      this.heldWeapons.length === 2 && !this.shield && this.heldWeapons.every((weapon) => !weapon.system.isRangedWeapon && ["legere", "moyenne"].includes(weapon.system.category))
-    )
+    return this.heldWeapons.length === 2 && !this.shield && this.heldWeapons.every((weapon) => SYSTEM.WEAPON_CATEGORIES[weapon.system.category]?.dualWield)
   }
 
   /** Bonus potentiel du combat à deux armes, déterminé par le rang de Sens du duel. */
@@ -87,6 +85,12 @@ export default class CdgActor extends Actor {
    * @type {string}
    */
   static ASCENDANCE_BONUS_FLAG = "ascendanceBonus"
+
+  /**
+   * Drapeau posé sur un arcanum que le bonus d'ascendance a créé, et non seulement monté d'un rang :
+   * au retrait du bonus, il faut alors le supprimer plutôt que le redescendre.
+   */
+  static ASCENDANCE_GRANTED_FLAG = "ascendanceGranted"
 
   /**
    * Les objets que cette origine a accordés à ce personnage.
@@ -295,7 +299,7 @@ export default class CdgActor extends Actor {
     const name = foundry.utils.escapeHTML(item.name)
     const arcanum = bumped ? foundry.utils.escapeHTML(bumped.name) : ""
     const content = bumped
-      ? bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")
+      ? bumped.getFlag(SYSTEM.PACKAGE_ID, CdgActor.ASCENDANCE_GRANTED_FLAG)
         ? game.i18n.format("CDG.origin.removeAscendanceGranted", { name, arcanum })
         : game.i18n.format("CDG.origin.removeAscendanceBumped", { name, arcanum })
       : game.i18n.format("CDG.origin.removeContentAlone", { name })
@@ -339,7 +343,7 @@ export default class CdgActor extends Actor {
    *
    * L'arcanum visé est soit déjà possédé (son rang est alors simplement augmenté), soit absent
    * (il est embarqué au rang minimum) — dans les deux cas un drapeau `ASCENDANCE_BONUS_FLAG` le
-   * relie à l'ascendance, complété par `ascendanceGranted` pour savoir, au retrait, s'il faut le
+   * relie à l'ascendance, complété par `ASCENDANCE_GRANTED_FLAG` pour savoir, au retrait, s'il faut le
    * supprimer entièrement ou seulement lui rendre son rang d'avant.
    * @param {CdgItem} ascendance L'ascendance embarquée sur ce personnage.
    * @param {string} previousUuid Ancien `system.arcanumBonus`, ou "" s'il n'y en avait pas.
@@ -373,7 +377,7 @@ export default class CdgActor extends Actor {
     const data = source.toObject()
     data.system.rank = SYSTEM.ARCANUM_MIN_RANK
     foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.${CdgActor.ASCENDANCE_BONUS_FLAG}`, ascendance.id)
-    foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.ascendanceGranted`, true)
+    foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.${CdgActor.ASCENDANCE_GRANTED_FLAG}`, true)
     return this.createEmbeddedDocuments("Item", [data])
   }
 
@@ -385,7 +389,7 @@ export default class CdgActor extends Actor {
   async #revertArcanumBonus(ascendance) {
     const bumped = this.#ascendanceBonusItem(ascendance)
     if (!bumped) return
-    const granted = bumped.getFlag(SYSTEM.PACKAGE_ID, "ascendanceGranted")
+    const granted = bumped.getFlag(SYSTEM.PACKAGE_ID, CdgActor.ASCENDANCE_GRANTED_FLAG)
     Utils.debug(
       "origins",
       `Ascendance ${ascendance.name} : bonus d'arcanum défait, ${bumped.name} ${granted ? "supprimé" : `ramené au rang ${Math.max(SYSTEM.ARCANUM_MIN_RANK, bumped.system.rank - 1)}`}`,

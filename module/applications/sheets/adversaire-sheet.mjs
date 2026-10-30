@@ -50,7 +50,7 @@ export default class CdgAdversaireSheet extends CdgBaseActorSheet {
     context.enrichedNotes = await enrichHTML(this.document.system.details.notes)
     // Comme les traits spéciaux du personnage : un éditeur vidé laisse un `<p></p>`, qui ne dit rien.
     context.hasSpecial = Utils.hasText(this.document.system.details.special)
-    context.adversaireAbilities = [SYSTEM.ABILITIES.corps, SYSTEM.ABILITIES.esprit, SYSTEM.ABILITIES.vivacite]
+    context.adversaireAbilities = SYSTEM.ADVERSARY_ABILITY_ORDER.map((id) => SYSTEM.ABILITIES[id])
 
     // Les compétences de combat d'abord, puis toutes les autres : toutes en édition, seules celles
     // qui ont un rang en lecture. Chaque groupe se lit en deux colonnes, de haut en bas.

@@ -58,6 +58,9 @@ export const SKILLS = {
   vigueur: { id: "vigueur", label: "CDG.skills.vigueur", column: 2 },
   volonte: { id: "volonte", label: "CDG.skills.volonte", column: 2 },
 }
+/** L'ordre des caractéristiques sur la fiche de PNJ, celui des encadrés du bestiaire. */
+export const ADVERSARY_ABILITY_ORDER = Object.freeze(["corps", "esprit", "vivacite"])
+
 /**
  * Les compétences de combat, affichées en tête de la fiche de PNJ avant toutes les autres.
  */

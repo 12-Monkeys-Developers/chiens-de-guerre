@@ -37,6 +37,9 @@ export default class CdgBattle {
   /** Clé du drapeau des acteurs adverses importés pour une escarmouche, supprimés avec elle. */
   static TEMPORARY_FLAG = "battleTemporary"
 
+  /** Drapeau du journal « Batailles » d'une compagnie : l'uuid de la compagnie dont il archive les batailles. */
+  static ARCHIVE_FLAG = "battleArchive"
+
   /** Compendium des adversaires de la table p. 52. */
   static PACK = `${SYSTEM.PACKAGE_ID}.pnjs`
 
@@ -940,11 +943,11 @@ export default class CdgBattle {
    * @param {string} content
    */
   static async #archive(company, state, content) {
-    let journal = game.journal.find((entry) => entry.getFlag(SYSTEM.PACKAGE_ID, "battleArchive") === company.uuid)
+    let journal = game.journal.find((entry) => entry.getFlag(SYSTEM.PACKAGE_ID, this.ARCHIVE_FLAG) === company.uuid)
     journal ??= await JournalEntry.implementation.create({
       name: game.i18n.format("CDG.battle.journal.name", { company: company.name }),
       ownership: { default: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER },
-      flags: { [SYSTEM.PACKAGE_ID]: { battleArchive: company.uuid } },
+      flags: { [SYSTEM.PACKAGE_ID]: { [this.ARCHIVE_FLAG]: company.uuid } },
     })
     const name = state.stake || game.i18n.format("CDG.battle.journal.page", { number: journal.pages.size + 1 })
     return journal.createEmbeddedDocuments("JournalEntryPage", [{ name, type: "text", text: { content } }])

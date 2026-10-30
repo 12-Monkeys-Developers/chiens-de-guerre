@@ -1,4 +1,5 @@
 import { SYSTEM } from "../../config/system.mjs"
+import CdgBattle from "../../combat/battle.mjs"
 import CdgMacros from "../../helpers/macros.mjs"
 import CdgBattleApp from "../battle-app.mjs"
 import CdgBaseActorSheet from "./base-actor-sheet.mjs"
@@ -80,7 +81,7 @@ export default class CdgCompagnieSheet extends CdgBaseActorSheet {
     context.rosterPNJ = this.#prepareRoster(this.document.system.rosterPNJ, { sortByGrade: !this.isEditMode })
     context.chronicles = this.document.system.chronicles.map((chronicle, index) => ({ ...chronicle, index }))
     context.dissolved = this.document.system.dissolved
-    context.battleActive = !!this.document.getFlag(SYSTEM.PACKAGE_ID, "battle")
+    context.battleActive = !!CdgBattle.getState(this.document)
     context.hasWounds = Object.values(SYSTEM.WOUND_LEVELS).some((level) => this.document.system.wounds[level.id].value > 0)
     context.choiceRestConditions = Object.values(SYSTEM.REST_CONDITIONS)
     context.choiceGrades = SYSTEM.COMPANY_GRADES
