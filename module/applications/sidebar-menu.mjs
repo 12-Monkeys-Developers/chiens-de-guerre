@@ -1,4 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
+import CdgBattle from "../combat/battle.mjs"
 import CdgCharacterCreation from "./character-creation.mjs"
 import CdgCompanyCreation from "./company-creation.mjs"
 import CdgBattleApp from "./battle-app.mjs"
@@ -62,7 +63,7 @@ export default class CdgSidebarMenu extends HandlebarsApplicationMixin(AbstractS
   static async #openBattle() {
     const companies = game.actors.filter((actor) => actor.type === "compagnie" && actor.visible)
     if (!companies.length) return ui.notifications.warn("CDG.battle.noCompany", { localize: true })
-    const engaged = companies.filter((actor) => actor.getFlag(SYSTEM.PACKAGE_ID, "battle"))
+    const engaged = companies.filter((actor) => CdgBattle.getState(actor))
     const candidates = engaged.length === 1 ? engaged : companies
     if (candidates.length === 1) return CdgBattleApp.open(candidates[0])
 
