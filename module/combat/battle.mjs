@@ -4,6 +4,7 @@ import CdgRoll from "../dice/cdg-roll.mjs"
 import { keptOutcome } from "../dice/roll-outcome.mjs"
 import { createChatMessage } from "../helpers/chat.mjs"
 import { signed } from "../helpers/format.mjs"
+import { askActiveGM, serialize } from "../helpers/gm-writer.mjs"
 import Utils from "../helpers/utils.mjs"
 import { adversaryEntry, battleWinner, canMove, fightConsequence, generalsResult, keptAdversaryDie, lossesWound, shiftWound } from "./battle-rules.mjs"
 import { resolveOpposedOutcome } from "./opposition.mjs"
@@ -48,9 +49,6 @@ export default class CdgBattle {
     start: `${SYSTEM.PATH}/templates/chat/battle-start.hbs`,
     consequences: `${SYSTEM.PATH}/templates/battle/consequences.hbs`,
   }
-
-  /** File d'écriture par compagnie : deux jets qui arrivent ensemble ne s'écrasent pas. */
-  static #queues = new Map()
 
   // #region État
 
@@ -137,16 +135,9 @@ export default class CdgBattle {
    * @param {Object} step
    * @returns {Promise<boolean>}
    */
-  static async request(company, step) {
+  static request(company, step) {
     const payload = { ...step, companyUuid: company.uuid }
-    if (game.user.isGM) return this.applyStep(payload, game.user)
-    if (!game.users.activeGM) {
-      ui.notifications.error("CDG.confrontation.notif.noGM", { localize: true })
-      return false
-    }
-    const applied = await game.users.activeGM.query("cdg.battleStep", payload)
-    if (!applied) Utils.debug("battle", `Étape refusée par le Meneur (${game.users.activeGM.name}) : ${step.type} — la raison est tracée dans sa console`, payload)
-    return applied
+    return askActiveGM("cdg.battleStep", payload, { apply: () => this.applyStep(payload, game.user), category: "battle", label: `Étape ${step.type}` })
   }
 
   /**
@@ -161,13 +152,13 @@ export default class CdgBattle {
   }
 
   /**
-   * Met l'étape dans la file de sa compagnie.
+   * Met l'étape dans la file de sa compagnie : deux jets qui arrivent ensemble ne s'écrasent pas.
    * @param {Object} step
    * @param {User} user
    * @returns {Promise<boolean>}
    */
   static applyStep(step, user) {
-    return this.#enqueue(step?.companyUuid, async () => {
+    return serialize(`battle.${step?.companyUuid}`, async () => {
       const company = fromUuidSync(step?.companyUuid)
       const before = company ? this.getState(company) : null
       const applied = await this.#applyStep(step, user)
@@ -180,16 +171,6 @@ export default class CdgBattle {
       })
       return applied
     })
-  }
-
-  static #enqueue(key, task) {
-    const previous = this.#queues.get(key) ?? Promise.resolve()
-    const next = previous.catch(() => {}).then(task)
-    this.#queues.set(key, next)
-    next.finally(() => {
-      if (this.#queues.get(key) === next) this.#queues.delete(key)
-    })
-    return next
   }
 
   /**

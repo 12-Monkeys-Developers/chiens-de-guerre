@@ -2,6 +2,7 @@ import CdgInitiativeDialog from "../applications/initiative-dialog.mjs"
 import { SYSTEM } from "../config/system.mjs"
 import CdgBattle from "../combat/battle.mjs"
 import CdgDyingPrompt from "../combat/dying-prompt.mjs"
+import { askActiveGM } from "../helpers/gm-writer.mjs"
 import Utils from "../helpers/utils.mjs"
 
 /** Combat Foundry adapté aux cadences d'escarmouche et de duel. */
@@ -220,16 +221,14 @@ export default class CdgCombat extends Combat {
    * @override
    */
   async nextRound() {
-    if (!game.user.isGM) {
-      if (!game.users.activeGM) {
-        ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
-        return this
-      }
-      const accepted = await game.users.activeGM.query("cdg.nextRound", { combatId: this.id })
-      Utils.debug("combat", `Nouveau round demandé au Meneur (${game.users.activeGM.name}) : ${accepted ? "accepté" : "refusé"}`)
-      return this
-    }
+    await askActiveGM("cdg.nextRound", { combatId: this.id }, { apply: () => this.#advanceRound(), category: "combat", label: "Demande de nouveau round" })
+    return this
+  }
 
+  /**
+   * L'écriture du round suivant, par le Meneur (voir `nextRound`).
+   */
+  async #advanceRound() {
     // Escarmouche ouverte par une bataille : un seul round, puis la mêlée sépare les combattants (p. 52).
     if (this.started && this.round >= 1 && this.getFlag(SYSTEM.PACKAGE_ID, CdgBattle.SKIRMISH_FLAG)) return CdgBattle.endSkirmish(this)
 
@@ -248,7 +247,6 @@ export default class CdgCombat extends Combat {
     const updateOptions = { direction: 1, worldTime: { delta: advanceTime }, diff: false }
     Hooks.callAll("combatRound", this, updateData, updateOptions)
     await this.update(updateData, updateOptions)
-    return this
   }
 
   /**

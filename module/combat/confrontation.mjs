@@ -1,6 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
+import { askActiveGM, serialize } from "../helpers/gm-writer.mjs"
 import Utils from "../helpers/utils.mjs"
 import { keptOutcome, OUTCOMES } from "../dice/roll-outcome.mjs"
 import { resolveOpposedOutcome, resolveWound } from "./opposition.mjs"
@@ -252,13 +253,6 @@ export default class CdgConfrontation {
   static PHASES = ["attack", "defense", "damage", "soak"]
 
   /**
-   * La file d'attente de chaque message : les étapes d'une même confrontation s'appliquent l'une
-   * après l'autre, chacune sur l'état laissé par la précédente.
-   * @type {Map<string, Promise>}
-   */
-  static #queues = new Map()
-
-  /**
    * Fait écrire une étape de la confrontation par le Meneur actif.
    *
    * Le Meneur est le seul écrivain de la carte. Les dégâts de l'attaquant et l'encaissement de la
@@ -269,16 +263,12 @@ export default class CdgConfrontation {
    * @param {Object} step Voir `applyStep`.
    * @returns {Promise<boolean>}
    */
-  static async #submitStep(step) {
-    if (game.user.isGM) return this.applyStep(step, game.user)
-    if (!game.users.activeGM) {
-      ui.notifications.error(game.i18n.localize("CDG.confrontation.notif.noGM"))
-      return false
-    }
-    const applied = await game.users.activeGM.query("cdg.confrontationStep", step)
-    if (!applied)
-      Utils.debug("confrontation", `Étape refusée par le Meneur (${game.users.activeGM.name}) : ${step.type} ${step.phase} — la raison est tracée dans sa console`, step)
-    return applied
+  static #submitStep(step) {
+    return askActiveGM("cdg.confrontationStep", step, {
+      apply: () => this.applyStep(step, game.user),
+      category: "confrontation",
+      label: `Étape ${step.type} ${step.phase}`,
+    })
   }
 
   /**
@@ -293,7 +283,8 @@ export default class CdgConfrontation {
   }
 
   /**
-   * Met l'étape dans la file de son message.
+   * Met l'étape dans la file de son message : les étapes d'une même confrontation s'appliquent
+   * l'une après l'autre, chacune sur l'état laissé par la précédente.
    * @param {Object} step
    * @param {string} step.messageId Le message de la confrontation.
    * @param {"merge"|"push"|"keepDie"} step.type Nouveau sous-jet, dépassement, ou dé conservé changé.
@@ -306,14 +297,7 @@ export default class CdgConfrontation {
    * @returns {Promise<boolean>}
    */
   static applyStep(step, user) {
-    const messageId = step?.messageId
-    const previous = this.#queues.get(messageId) ?? Promise.resolve()
-    const next = previous.catch(() => {}).then(() => this.#applyStep(step, user))
-    this.#queues.set(messageId, next)
-    next.finally(() => {
-      if (this.#queues.get(messageId) === next) this.#queues.delete(messageId)
-    })
-    return next
+    return serialize(`confrontation.${step?.messageId}`, () => this.#applyStep(step, user))
   }
 
   /**
