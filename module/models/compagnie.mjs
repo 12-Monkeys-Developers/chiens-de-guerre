@@ -79,6 +79,23 @@ export default class CdgCompagnieData extends CdgActorData {
   }
 
   /**
+   * Les blessures mortelles d'une compagnie réduisent ses Effectifs et peuvent la dissoudre (voir
+   * `_preUpdate`) ; elles ne rendent pas une entité collective inconsciente ou mourante.
+   * @override
+   */
+  async _onMortalWoundsChange(changes) {}
+
+  /**
+   * Une compagnie qui devrait subir une blessure au-delà de sa dernière case mortelle est dissoute.
+   * Sa fiche est conservée plutôt que supprimée, afin que cet état reste réversible en cas d'erreur
+   * de saisie ou de décision du Meneur.
+   * @override
+   */
+  _woundOverflowUpdates() {
+    return { "system.state.dissolved": true }
+  }
+
+  /**
    * Chaque case de blessés mortels nouvellement cochée fait perdre 1 point d'Effectifs, en
    * permanence (p. 125) — à la différence d'un personnage, où la blessure mortelle bascule un
    * statut réversible (`isDying`) sans jamais toucher aux caractéristiques.

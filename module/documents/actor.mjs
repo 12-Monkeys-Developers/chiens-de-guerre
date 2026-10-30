@@ -506,13 +506,12 @@ export default class CdgActor extends Actor {
     const updates = {}
     if (previousLevelId) updates[`system.wounds.${previousLevelId}.value`] = wounds[previousLevelId].value
     if (appliedLevelId) updates[`system.wounds.${appliedLevelId}.value`] = wounds[appliedLevelId].value
-    // Une compagnie qui devrait subir une blessure au-delà de sa dernière case mortelle est
-    // dissoute. On conserve sa fiche au lieu de la supprimer, afin que cet état reste réversible
-    // en cas d'erreur de saisie ou de décision du Meneur.
-    if (!appliedLevelId && newLevelId && start >= 0 && this.type === "compagnie") updates["system.state.dissolved"] = true
+    // Plus aucune case libre, même mortelle : le modèle dit ce que cela écrit (une compagnie est dissoute).
+    const overflow = !appliedLevelId && newLevelId && start >= 0 ? this.system._woundOverflowUpdates() : {}
+    Object.assign(updates, overflow)
     Utils.debug(
       "wounds",
-      `${this.name} : blessure ${newLevelId ?? "aucune"} demandée${appliedLevelId && appliedLevelId !== newLevelId ? `, débordement jusqu'à ${appliedLevelId}` : ""}${newLevelId && !appliedLevelId ? ", aucune case libre" : ""}${previousLevelId ? `, ${previousLevelId} libérée` : ""}${updates["system.state.dissolved"] ? ", compagnie dissoute" : ""}`,
+      `${this.name} : blessure ${newLevelId ?? "aucune"} demandée${appliedLevelId && appliedLevelId !== newLevelId ? `, débordement jusqu'à ${appliedLevelId}` : ""}${newLevelId && !appliedLevelId ? ", aucune case libre" : ""}${previousLevelId ? `, ${previousLevelId} libérée` : ""}${foundry.utils.isEmpty(overflow) ? "" : `, ${Object.keys(overflow).join(", ")}`}`,
       updates,
     )
     if (!foundry.utils.isEmpty(updates)) await this.update(updates)

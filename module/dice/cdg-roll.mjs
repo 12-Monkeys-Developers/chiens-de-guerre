@@ -1,6 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { createChatMessage, currentMessageMode } from "../helpers/chat.mjs"
-import { simulateCompanyHealing } from "../helpers/rules.mjs"
+import { companyHealingPlans } from "../helpers/rules.mjs"
 import Utils from "../helpers/utils.mjs"
 import { bestDieIndex, keptOutcome, OUTCOMES, outcomeLabel, resolveOutcome, worstDieIndex } from "./roll-outcome.mjs"
 
@@ -285,7 +285,7 @@ export default class CdgRoll extends Roll {
     if (outcome.outcome === OUTCOMES.criticalFailure.id) {
       await actor.applyWoundOverflow(null, "legere")
     } else if (outcome.success) {
-      const plans = this.#companyHealingPlans(actor, outcome.critical)
+      const plans = companyHealingPlans(actor.system.wounds, outcome.critical).map((plan) => ({ ...plan, label: this.#healingPlanLabel(plan) }))
       if (plans.length === 0) return ui.notifications.warn("CDG.company.healing.noEligibleWound", { localize: true })
 
       const options = plans.map((plan, index) => `<option value="${index}">${foundry.utils.escapeHTML(plan.label)}</option>`).join("")
@@ -320,50 +320,15 @@ export default class CdgRoll extends Roll {
   }
 
   /**
-   * Construit les choix encore applicables à l'état courant des blessures.
-   * @param {CdgActor} actor
-   * @param {boolean} critical
-   * @returns {{label: string, operations: {level: string, steps: number}[]}[]}
+   * Le libellé d'un plan de guérison, pour la liste où le joueur le choisit.
+   * @param {{kind: string, levels: string[]}} plan Un plan de `companyHealingPlans`.
+   * @returns {string}
    */
-  static #companyHealingPlans(actor, critical) {
-    const levels = SYSTEM.WOUND_LEVELS_ORDERED
-    const name = (id) => game.i18n.localize(SYSTEM.WOUND_LEVELS[id].label)
-    // Même simulation que `CdgActor#applyCompanyHealing` : un plan proposé ici s'appliquera.
-    const valid = (operations) => simulateCompanyHealing(actor.system.wounds, operations) !== null
-
-    if (!critical) {
-      return levels
-        .map((level) => ({
-          label: game.i18n.format("CDG.company.healing.oneStep", { wound: name(level.id) }),
-          operations: [{ level: level.id, steps: 1 }],
-        }))
-        .filter((plan) => valid(plan.operations))
-    }
-
-    const plans = levels
-      .filter((level) => level.order >= 2)
-      .map((level) => ({
-        label: game.i18n.format("CDG.company.healing.twoSteps", { wound: name(level.id) }),
-        operations: [{ level: level.id, steps: 2 }],
-      }))
-
-    for (let first = 0; first < levels.length; first++) {
-      for (let second = first; second < levels.length; second++) {
-        const a = levels[first].id
-        const b = levels[second].id
-        plans.push({
-          label: game.i18n.format(a === b ? "CDG.company.healing.twoSame" : "CDG.company.healing.twoDifferent", {
-            first: name(a),
-            second: name(b),
-          }),
-          operations: [
-            { level: a, steps: 1 },
-            { level: b, steps: 1 },
-          ],
-        })
-      }
-    }
-    return plans.filter((plan) => valid(plan.operations))
+  static #healingPlanLabel(plan) {
+    const [first, second] = plan.levels.map((id) => game.i18n.localize(SYSTEM.WOUND_LEVELS[id].label))
+    if (plan.kind === "oneStep") return game.i18n.format("CDG.company.healing.oneStep", { wound: first })
+    if (plan.kind === "twoSteps") return game.i18n.format("CDG.company.healing.twoSteps", { wound: first })
+    return game.i18n.format(`CDG.company.healing.${plan.kind}`, { first, second })
   }
 
   // #endregion

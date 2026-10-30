@@ -61,6 +61,41 @@ export function simulateCompanyHealing(wounds, operations) {
 }
 
 /**
+ * Les plans de guérison qu'un test de récupération ou de soins de compagnie réussi permet encore
+ * (p. 126), sur les blessures actuelles. Seuls les plans que `simulateCompanyHealing` accepte sont
+ * proposés : un plan choisi s'appliquera.
+ *
+ * Une réussite améliore une blessure d'un cran. Une réussite critique améliore une blessure grave
+ * ou mortelle de deux crans, ou deux blessures d'un cran chacune (éventuellement du même niveau).
+ * @param {Object<string, {value: number, max: number}>} wounds Les blessures, par gravité.
+ * @param {boolean} critical
+ * @returns {{kind: "oneStep"|"twoSteps"|"twoSame"|"twoDifferent", levels: string[], operations: {level: string, steps: number}[]}[]}
+ */
+export function companyHealingPlans(wounds, critical) {
+  const levels = SYSTEM.WOUND_LEVELS_ORDERED
+  const valid = (plan) => simulateCompanyHealing(wounds, plan.operations) !== null
+
+  if (!critical) return levels.map((level) => ({ kind: "oneStep", levels: [level.id], operations: [{ level: level.id, steps: 1 }] })).filter(valid)
+
+  const plans = levels.filter((level) => level.order >= 2).map((level) => ({ kind: "twoSteps", levels: [level.id], operations: [{ level: level.id, steps: 2 }] }))
+  for (let first = 0; first < levels.length; first++) {
+    for (let second = first; second < levels.length; second++) {
+      const a = levels[first].id
+      const b = levels[second].id
+      plans.push({
+        kind: a === b ? "twoSame" : "twoDifferent",
+        levels: [a, b],
+        operations: [
+          { level: a, steps: 1 },
+          { level: b, steps: 1 },
+        ],
+      })
+    }
+  }
+  return plans.filter(valid)
+}
+
+/**
  * Qui peut faire un effort : un personnage, une compagnie franche, ou un adversaire majeur.
  * @param {{type: string, system: {major?: boolean}}} actor
  * @returns {boolean}

@@ -2,7 +2,7 @@ import { test } from "node:test"
 import assert from "node:assert/strict"
 import { SYSTEM } from "../module/config/system.mjs"
 import { customizationBudget, skillBudget, skillCost, traitQuotas } from "../module/helpers/creation-calculations.mjs"
-import { canSpendEffort, computeKarma, effortChoices, simulateCompanyHealing } from "../module/helpers/rules.mjs"
+import { canSpendEffort, companyHealingPlans, computeKarma, effortChoices, simulateCompanyHealing } from "../module/helpers/rules.mjs"
 
 const traits = (entries) => Object.fromEntries(Object.keys(SYSTEM.TRAIT_PAIRS).map((id, index) => [id, entries[index] ?? { dominant: null, value: 0 }]))
 
@@ -110,4 +110,42 @@ test("effort : plafonné à la réserve moins un point, et au maximum des règle
     low.steps.filter((step) => step.selected).map((step) => step.value),
     [2],
   )
+})
+
+test("guérison de compagnie : une réussite améliore d'un cran une blessure existante", () => {
+  const wounds = { legere: { value: 1, max: 2 }, grave: { value: 1, max: 1 }, mortelle: { value: 0, max: 1 } }
+  const plans = companyHealingPlans(wounds, false)
+  // La grave descend en légère, où il reste une case ; sans blessure mortelle, rien à en retirer.
+  assert.deepEqual(
+    plans.map((plan) => [plan.kind, plan.levels]),
+    [
+      ["oneStep", ["legere"]],
+      ["oneStep", ["grave"]],
+    ],
+  )
+})
+
+test("guérison de compagnie : une destination pleine écarte le plan", () => {
+  const wounds = { legere: { value: 2, max: 2 }, grave: { value: 1, max: 1 }, mortelle: { value: 0, max: 1 } }
+  assert.deepEqual(
+    companyHealingPlans(wounds, false).map((plan) => plan.levels),
+    [["legere"]],
+  )
+})
+
+test("guérison de compagnie : une réussite critique propose deux crans ou deux blessures", () => {
+  const wounds = { legere: { value: 1, max: 2 }, grave: { value: 1, max: 1 }, mortelle: { value: 1, max: 1 } }
+  const plans = companyHealingPlans(wounds, true)
+  const kinds = plans.map((plan) => `${plan.kind}:${plan.levels.join("+")}`)
+  assert.ok(kinds.includes("twoSteps:grave"))
+  assert.ok(kinds.includes("twoSteps:mortelle"))
+  assert.ok(kinds.includes("twoDifferent:legere+grave"))
+  assert.ok(!kinds.includes("twoSame:grave+grave"), "une seule blessure grave : pas deux crans sur deux graves")
+  assert.ok(plans.every((plan) => simulateCompanyHealing(wounds, plan.operations) !== null))
+})
+
+test("guérison de compagnie : sans blessure, aucun plan", () => {
+  const wounds = { legere: { value: 0, max: 2 }, grave: { value: 0, max: 1 }, mortelle: { value: 0, max: 1 } }
+  assert.deepEqual(companyHealingPlans(wounds, false), [])
+  assert.deepEqual(companyHealingPlans(wounds, true), [])
 })

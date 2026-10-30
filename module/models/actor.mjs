@@ -230,10 +230,16 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
     const allowed = await super._preUpdate(changes, options, user)
     if (allowed === false) return false
     if (!foundry.utils.hasProperty(changes, "system.wounds.mortelle.value")) return
-    // Les blessures mortelles d'une compagnie réduisent ses Effectifs et peuvent la dissoudre ;
-    // elles ne rendent pas une entité collective inconsciente ou mourante.
-    if (this.parent.type === "compagnie") return
+    return this._onMortalWoundsChange(changes)
+  }
 
+  /**
+   * Les cases de blessure mortelle changent : l'acteur devient mourant, ou cesse de l'être.
+   * @param {Object} changes Les changements en cours, complétés sur place.
+   * @returns {Promise<void>}
+   * @protected
+   */
+  async _onMortalWoundsChange(changes) {
     const { max } = this.wounds.mortelle
     const wasMortal = this.isDying
     const isMortal = max > 0 && foundry.utils.getProperty(changes, "system.wounds.mortelle.value") >= max
@@ -243,5 +249,14 @@ export default class CdgActorData extends foundry.abstract.TypeDataModel {
     // confrontation, fiche) trouve l'acteur inconscient en même temps que sa dernière case cochée.
     await this.parent.toggleStatusEffect("unconscious", { active: isMortal })
     foundry.utils.setProperty(changes, "system.wounds.dying", isMortal)
+  }
+
+  /**
+   * Ce qu'écrit une blessure qui ne trouve plus de case libre, même mortelle : rien pour un
+   * personnage ou un adversaire, dont la dernière case suffit à le rendre mourant.
+   * @returns {Object} Des mises à jour de l'acteur, éventuellement vides.
+   */
+  _woundOverflowUpdates() {
+    return {}
   }
 }
