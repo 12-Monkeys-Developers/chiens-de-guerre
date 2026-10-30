@@ -3,8 +3,8 @@ import { customizationBudget, skillBudget, traitQuotas } from "../helpers/creati
 import { fromDeniers, toDeniers } from "../helpers/money.mjs"
 import { computeKarma } from "../helpers/rules.mjs"
 import Utils from "../helpers/utils.mjs"
+import CdgCreationWizard from "./creation-wizard.mjs"
 
-const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const { DragDrop, TextEditor } = foundry.applications.ux
 
 /** Racine des gabarits de l'assistant. */
@@ -13,42 +13,30 @@ const TEMPLATES = `${SYSTEM.PATH}/templates/creation`
 /**
  * Assistant de création de personnage : les neuf étapes du guide, dans une seule fenêtre.
  *
- * Rien n'est écrit dans le monde avant le dernier bouton : tout vit dans `#draft` jusqu'à
+ * Rien n'est écrit dans le monde avant le dernier bouton : tout vit dans `_draft` jusqu'à
  * `Forger le Marqué`. On peut donc revenir en arrière, tout reprendre, ou fermer la fenêtre sans
  * laisser d'acteur à moitié rempli derrière soi.
  *
- * Les choix du joueur et ce qu'accordent le peuple et la carrière sont tenus séparés : `#draft`
+ * Les choix du joueur et ce qu'accordent le peuple et la carrière sont tenus séparés : `_draft`
  * ne contient que la saisie, `#derived` recalcule à chaque rendu les valeurs finales. Changer de
  * carrière en cours de route ne laisse donc aucun résidu de la précédente.
  */
-export default class CdgCharacterCreation extends HandlebarsApplicationMixin(ApplicationV2) {
+export default class CdgCharacterCreation extends CdgCreationWizard {
   /** @override */
   static DEFAULT_OPTIONS = {
     id: "cdg-character-creation",
-    tag: "form",
     // "themed"/"theme-light" : le visuel de l'assistant (parchemin, bandeaux calligraphiés) est
     // pensé pour un thème clair — il doit y rester même si Foundry est réglé en thème sombre pour
     // les applications, sans quoi le cœur de Foundry ré-assombrit les contrôles natifs par-dessus.
     classes: ["cdg", "creation", "themed", "theme-light"],
-    position: {
-      width: 900,
-      height: 800,
-    },
     window: {
       title: "CDG.creation.title",
       icon: "fa-solid fa-user-plus",
-      resizable: true,
-      contentClasses: ["creation-content"],
     },
     form: {
       handler: CdgCharacterCreation.#onChangeForm,
-      submitOnChange: true,
-      closeOnSubmit: false,
     },
     actions: {
-      goToStep: CdgCharacterCreation.#onGoToStep,
-      previousStep: CdgCharacterCreation.#onPreviousStep,
-      nextStep: CdgCharacterCreation.#onNextStep,
       adjustAbility: CdgCharacterCreation.#onAdjustAbility,
       toggleImprovement: CdgCharacterCreation.#onToggleImprovement,
       addArcanum: CdgCharacterCreation.#onAddArcanum,
@@ -58,46 +46,29 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       setSkillRank: CdgCharacterCreation.#onSetSkillRank,
       setTrait: CdgCharacterCreation.#onSetTrait,
       toggleLanguage: CdgCharacterCreation.#onToggleLanguage,
-      pickImage: CdgCharacterCreation.#onPickImage,
       editItem: CdgCharacterCreation.#onEditItem,
       removeItem: CdgCharacterCreation.#onRemoveItem,
       removeCarriereEquipment: CdgCharacterCreation.#onRemoveCarriereEquipment,
       clearPeuple: CdgCharacterCreation.#onClearPeuple,
       clearCarriere: CdgCharacterCreation.#onClearCarriere,
       clearAscendance: CdgCharacterCreation.#onClearAscendance,
-      create: CdgCharacterCreation.#onCreate,
-      reset: CdgCharacterCreation.#onReset,
     },
   }
 
   /** @override */
-  static PARTS = {
-    steps: { template: `${TEMPLATES}/steps.hbs` },
-    body: { template: `${TEMPLATES}/step-abilities.hbs`, scrollable: [""] },
-    footer: { template: `${TEMPLATES}/footer.hbs` },
-  }
+  static STEPS = SYSTEM.CREATION_STEPS
+
+  /** @override */
+  static STEP_TEMPLATES = TEMPLATES
+
+  /** @override */
+  static I18N = "CDG.creation"
+
+  /** @override */
+  static ACTOR_TYPE = "character"
 
   /**
-   * Index de l'étape affichée, à partir de 0.
-   * @type {number}
-   */
-  #step = 0
-
-  /**
-   * Index de l'étape la plus avancée atteinte. Les pastilles du bandeau au-delà restent inertes :
-   * on ne saute pas la moitié du guide d'un clic.
-   * @type {number}
-   */
-  #maxStep = 0
-
-  /**
-   * La saisie du joueur, et elle seule.
-   * @type {Object}
-   */
-  #draft = CdgCharacterCreation.#blankDraft()
-
-  /**
-   * Valeurs recalculées à chaque rendu à partir de `#draft`, du peuple et de la carrière.
+   * Valeurs recalculées à chaque rendu à partir de `_draft`, du peuple et de la carrière.
    * @type {Object}
    */
   #derived = {}
@@ -119,7 +90,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
   /**
    * L'équipement de départ accordé par la carrière, résolu pour l'aperçu de l'étape 8 — recalculé
-   * à chaque rendu depuis la carrière courante, jamais copié dans `#draft.items` : changer de
+   * à chaque rendu depuis la carrière courante, jamais copié dans `_draft.items` : changer de
    * carrière fait donc disparaître l'équipement de l'ancienne et apparaître celui de la nouvelle
    * sans rien à retirer ou rajouter à la main.
    * @type {Item[]}
@@ -148,18 +119,15 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   /** Listes de choix indexées par type et signature des collections. @type {Map<string, Object>} */
   #choiceCache = new Map()
 
-  /** Empêche deux clics de créer deux acteurs. */
-  #creating = false
-
   /* -------------------------------------------- */
   /*  Brouillon                                   */
   /* -------------------------------------------- */
 
   /**
    * Un brouillon vierge : les caractéristiques au plancher conseillé, tout le reste à zéro.
-   * @returns {Object}
+   * @override
    */
-  static #blankDraft() {
+  static _blankDraft() {
     return {
       name: "",
       vraiNom: "",
@@ -216,69 +184,17 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   /*  Rendu                                       */
   /* -------------------------------------------- */
 
-  /** L'étape courante, telle que décrite dans la configuration. */
-  get currentStep() {
-    return SYSTEM.CREATION_STEPS[this.#step]
-  }
-
   /** @override */
-  _configureRenderParts(options) {
-    const parts = super._configureRenderParts(options)
-    // Une seule zone de contenu, dont le gabarit suit l'étape courante : les neuf étapes partagent
-    // le même emplacement, entre le bandeau de progression et le pied de navigation.
-    parts.body.template = `${TEMPLATES}/step-${this.currentStep.id}.hbs`
-    return parts
+  async _prepareDraft() {
+    await this.#resolveDocuments()
+    this.#computeDerived()
   }
 
   /** @override */
   async _prepareContext(options) {
-    await this.#resolveDocuments()
-    this.#computeDerived()
-
-    const statuses = SYSTEM.CREATION_STEPS.map((step, index) => this.#stepStatus(index))
-
-    // Une étape n'est achevée que si elle a été atteinte : les étapes 7 et 8 n'exigent aucune
-    // saisie et sont valides d'entrée de jeu, mais les compter avant de les avoir vues gonflerait
-    // la progression dès l'ouverture de l'assistant.
-    const reached = SYSTEM.CREATION_STEPS.map((step, index) => index <= this.#maxStep)
-    const achieved = statuses.map((status, index) => status.complete && reached[index])
-    const completed = achieved.filter(Boolean).length
-
-    const context = {
-      SYSTEM,
-      draft: this.#draft,
-      derived: this.#derived,
-      step: this.currentStep,
-      stepIndex: this.#step,
-      stepNumber: this.#step + 1,
-      stepCount: SYSTEM.CREATION_STEPS.length,
-      isFirstStep: this.#step === 0,
-      isLastStep: this.#step === SYSTEM.CREATION_STEPS.length - 1,
-      status: statuses[this.#step],
-      steps: SYSTEM.CREATION_STEPS.map((step, index) => ({
-        ...step,
-        index,
-        number: index + 1,
-        active: index === this.#step,
-        reachable: reached[index],
-        complete: achieved[index],
-      })),
-      completedCount: completed,
-      progress: Math.round((completed / SYSTEM.CREATION_STEPS.length) * 100),
-      incompleteSteps: SYSTEM.CREATION_STEPS.filter((step, index) => !statuses[index].complete),
-      originWarnings: this.#derived.originWarnings,
-      creating: this.#creating,
-      creationLabels: {
-        progress: "CDG.creation.progress",
-        stepComplete: "CDG.creation.stepComplete",
-        previous: "CDG.creation.previous",
-        next: "CDG.creation.next",
-        create: "CDG.creation.create",
-        reset: "CDG.creation.reset",
-        resetTooltip: "CDG.creation.resetTooltip",
-      },
-    }
-
+    const context = await super._prepareContext(options)
+    context.derived = this.#derived
+    context.originWarnings = this.#derived.originWarnings
     Utils.debug("sheets", `${this.constructor.name} - contexte`, context)
     return context
   }
@@ -322,7 +238,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         context.grades = Object.values(SYSTEM.GRADES).map((grade) => ({
           ...grade,
           creationCost: this.#gradeCost(grade.id),
-          selected: this.#draft.grade === grade.id,
+          selected: this._draft.grade === grade.id,
           // Un grade sans prix de création n'est pas accessible, sauf déblocage par la carrière
           // (Officier / Lieutenant) ; un grade payant exige les points.
           unavailable: grade.creationCost === null && !this.#isGradeUnlocked(grade.id),
@@ -367,8 +283,8 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         context.abilities = Object.values(SYSTEM.ABILITIES).map((ability) => ({
           ...ability,
           score: this.#derived.abilities[ability.id],
-          bought: this.#draft.improvements[ability.id] > 0,
-          disabled: this.#draft.improvements[ability.id] === 0 && SYSTEM.CUSTOMIZATION_COSTS.abilityImprovement > this.#derived.customizationRemaining,
+          bought: this._draft.improvements[ability.id] > 0,
+          disabled: this._draft.improvements[ability.id] === 0 && SYSTEM.CUSTOMIZATION_COSTS.abilityImprovement > this.#derived.customizationRemaining,
         }))
         context.skillColumns = [1, 2, 3].map((column) =>
           Object.values(SYSTEM.SKILLS)
@@ -383,10 +299,10 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
           ...this.#droppedItems.filter((item) => item.type === SYSTEM.ITEM_TYPE.arcanum).map((item) => this.#arcanumContext(item, 0)),
         ]
         context.arcanumChoices = (await this.#itemChoices(SYSTEM.ITEM_TYPE.arcanum)).filter(
-          (choice) => !this.#draft.items.includes(choice.uuid) && !this.#carriereItem?.system.arcanums.includes(choice.uuid),
+          (choice) => !this._draft.items.includes(choice.uuid) && !this.#carriereItem?.system.arcanums.includes(choice.uuid),
         )
         context.ascendanceArcanumOptions = this.#ascendanceArcanumOptions()
-        context.gradeLabel = SYSTEM.GRADES[this.#draft.grade] ? game.i18n.localize(SYSTEM.GRADES[this.#draft.grade].label) : ""
+        context.gradeLabel = SYSTEM.GRADES[this._draft.grade] ? game.i18n.localize(SYSTEM.GRADES[this._draft.grade].label) : ""
         context.spendings = [
           { id: "abilities", label: "CDG.creation.personnalisation.lineAbilities", cost: this.#derived.customization.abilities },
           { id: "skills", label: "CDG.creation.personnalisation.lineSkills", cost: this.#derived.customization.skills },
@@ -405,7 +321,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         context.religionRequired = !!this.#carriereItem?.system.requiresReligion
         // Un choix "OU" de la carrière accorde les deux équipements : celui que le joueur ne veut
         // pas se retire d'ici, comme un doublon, plutôt que de choisir pour lui.
-        context.carriereEquipments = this.#carriereEquipments.filter((item) => !this.#draft.excludedCarriereEquipment.includes(item.uuid))
+        context.carriereEquipments = this.#carriereEquipments.filter((item) => !this._draft.excludedCarriereEquipment.includes(item.uuid))
         // « Au choix » (p. 123) : le texte que la fiche de carrière ne sait pas modéliser autrement
         // qu'en description — rappelé ici, pas cliquable, la décision se fait par un vrai dépôt
         // d'équipement.
@@ -448,17 +364,17 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    * disparaît simplement de l'assistant, sans le casser.
    */
   async #resolveDocuments() {
-    this.#peupleItem = this.#draft.peuple.uuid ? await this.#resolveDocument(this.#draft.peuple.uuid) : null
-    this.#carriereItem = this.#draft.carriere.uuid ? await this.#resolveDocument(this.#draft.carriere.uuid) : null
-    this.#ascendanceItem = this.#draft.ascendance.uuid ? await this.#resolveDocument(this.#draft.ascendance.uuid) : null
+    this.#peupleItem = this._draft.peuple.uuid ? await this.#resolveDocument(this._draft.peuple.uuid) : null
+    this.#carriereItem = this._draft.carriere.uuid ? await this.#resolveDocument(this._draft.carriere.uuid) : null
+    this.#ascendanceItem = this._draft.ascendance.uuid ? await this.#resolveDocument(this._draft.ascendance.uuid) : null
 
     // Un grade honorifique de carrière (Chroniqueur, Émissaire...) relève le plancher : jamais
     // rabaissé une fois atteint, comme un rang de compétence accordé.
-    if (this.#isBelowGradeFloor(this.#draft.grade)) this.#draft.grade = this.#gradeFloor()
+    if (this.#isBelowGradeFloor(this._draft.grade)) this._draft.grade = this.#gradeFloor()
 
     // Un aumônier ne peut pas rester sans allégeance : si la carrière l'exige, "aucune" ne reste
     // pas un choix valide — on l'efface plutôt que de le remplacer par une religion au hasard.
-    if (this.#carriereItem?.system.requiresReligion && this.#draft.religion === "aucune") this.#draft.religion = ""
+    if (this.#carriereItem?.system.requiresReligion && this._draft.religion === "aucune") this._draft.religion = ""
 
     const features = await Promise.all((this.#peupleItem?.system.features ?? []).map((uuid) => this.#resolveDocument(uuid)))
     this.#originFeatures = features.filter((item) => item?.type === SYSTEM.ITEM_TYPE.feature)
@@ -468,7 +384,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     // Un choix "OU" de la carrière (arme légère OU moyenne...) accorde les deux : le rappel qui
     // pointait vers une carrière abandonnée depuis n'a plus lieu d'être écarté.
     const carriereEquipmentUuids = new Set(this.#carriereEquipments.map((item) => item.uuid))
-    this.#draft.excludedCarriereEquipment = this.#draft.excludedCarriereEquipment.filter((uuid) => carriereEquipmentUuids.has(uuid))
+    this._draft.excludedCarriereEquipment = this._draft.excludedCarriereEquipment.filter((uuid) => carriereEquipmentUuids.has(uuid))
 
     const carriereArcanums = await Promise.all((this.#carriereItem?.system.arcanums ?? []).map((uuid) => this.#resolveDocument(uuid)))
     this.#carriereArcanums = carriereArcanums.filter((item) => item?.type === SYSTEM.ITEM_TYPE.arcanum)
@@ -478,13 +394,13 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     // Un choix devenu invalide (ascendance changée, candidat retiré du monde) ne doit pas rester
     // silencieusement actif : la fiche finale n'appliquerait alors aucun bonus, sans que rien ne
     // le signale ici.
-    if (this.#draft.ascendanceArcanumBonus && !this.#ascendanceArcanumChoices.some((item) => item.uuid === this.#draft.ascendanceArcanumBonus)) {
-      this.#draft.ascendanceArcanumBonus = ""
+    if (this._draft.ascendanceArcanumBonus && !this.#ascendanceArcanumChoices.some((item) => item.uuid === this._draft.ascendanceArcanumBonus)) {
+      this._draft.ascendanceArcanumBonus = ""
     }
 
-    const resolved = await Promise.all(this.#draft.items.map((uuid) => this.#resolveDocument(uuid)))
+    const resolved = await Promise.all(this._draft.items.map((uuid) => this.#resolveDocument(uuid)))
     this.#droppedItems = resolved.filter((item) => item !== null)
-    this.#draft.items = this.#droppedItems.map((item) => item.uuid)
+    this._draft.items = this.#droppedItems.map((item) => item.uuid)
   }
 
   /**
@@ -562,17 +478,17 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       derived.abilityBonuses[ability.id] = bonus
       // L'augmentation achetée en points de personnalisation vaut +1, comme une augmentation
       // d'expérience : elle dépasse légitimement le plafond de saisie de la création.
-      derived.abilityImprovements[ability.id] = this.#draft.improvements[ability.id]
-      derived.abilities[ability.id] = this.#draft.abilities[ability.id] + bonus + derived.abilityImprovements[ability.id]
+      derived.abilityImprovements[ability.id] = this._draft.improvements[ability.id]
+      derived.abilities[ability.id] = this._draft.abilities[ability.id] + bonus + derived.abilityImprovements[ability.id]
     }
     derived.abilityTotal = Object.values(derived.abilities).reduce((total, value) => total + value, 0)
 
     // Le budget de création ne porte que sur la saisie du joueur : les bonus du peuple et de la
     // carrière viennent par-dessus et ne se prennent pas sur ces points.
-    derived.pointsSpent = Object.values(this.#draft.abilities).reduce((total, value) => total + value, 0)
+    derived.pointsSpent = Object.values(this._draft.abilities).reduce((total, value) => total + value, 0)
     derived.pointsRemaining = SYSTEM.ABILITY_POINTS_TOTAL - derived.pointsSpent
     derived.pointsOver = Math.max(0, -derived.pointsRemaining)
-    derived.pointsWithinBounds = Object.values(this.#draft.abilities).every((value) => value >= SYSTEM.ABILITY_MIN && value <= SYSTEM.ABILITY_MAX)
+    derived.pointsWithinBounds = Object.values(this._draft.abilities).every((value) => value >= SYSTEM.ABILITY_MIN && value <= SYSTEM.ABILITY_MAX)
 
     // Compétences : la carrière garantit un rang plancher, le joueur peut monter au-dessus.
     derived.grantedSkills = {}
@@ -581,7 +497,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     }
     derived.skills = {}
     for (const skill of Object.values(SYSTEM.SKILLS)) {
-      derived.skills[skill.id] = Math.max(this.#draft.skills[skill.id], derived.grantedSkills[skill.id] ?? 0)
+      derived.skills[skill.id] = Math.max(this._draft.skills[skill.id], derived.grantedSkills[skill.id] ?? 0)
     }
     derived.trainedCount = Object.values(derived.skills).filter((rank) => rank > 0).length
 
@@ -607,14 +523,14 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
     // Langues : celles cochées, plus celles que le peuple donne d'office.
     derived.grantedLanguages = this.#peupleItem?.system.languages ?? []
-    derived.languages = [...new Set([...this.#draft.languages, ...derived.grantedLanguages])]
+    derived.languages = [...new Set([...this._draft.languages, ...derived.grantedLanguages])]
 
     // Karma et allégeance, mêmes règles que sur la fiche.
-    derived.karma = computeKarma(this.#draft.traits)
+    derived.karma = computeKarma(this._draft.traits)
 
     // Quotas de la procédure : un dominant par couple, puis 5 à 10 traits au rang 2 ou plus, dont
     // 0 à 2 au rang 3. Un trait au rang 3 est passé par le rang 2 : il compte dans les deux.
-    const quotas = traitQuotas(Object.values(this.#draft.traits), Object.keys(SYSTEM.TRAIT_PAIRS).length)
+    const quotas = traitQuotas(Object.values(this._draft.traits), Object.keys(SYSTEM.TRAIT_PAIRS).length)
     derived.traitCount = quotas.count
     derived.traitsTotal = quotas.total
     derived.traitsMissing = quotas.total - quotas.count
@@ -630,8 +546,8 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     // Identité, telle qu'elle sera écrite sur la fiche. « Aucune » est un choix à part entière —
     // il achève l'étape comme les trois cultes — mais laisse le champ (texte libre) vide sur la
     // fiche, exactement comme un Marqué qui n'a encore rien choisi.
-    derived.religionLabel = this.#draft.religion && SYSTEM.RELIGIONS[this.#draft.religion] ? game.i18n.localize(SYSTEM.RELIGIONS[this.#draft.religion].label) : ""
-    derived.pay = SYSTEM.GRADES[this.#draft.grade]?.pay ?? 0
+    derived.religionLabel = this._draft.religion && SYSTEM.RELIGIONS[this._draft.religion] ? game.i18n.localize(SYSTEM.RELIGIONS[this._draft.religion].label) : ""
+    derived.pay = SYSTEM.GRADES[this._draft.grade]?.pay ?? 0
 
     this.#computeCustomization(derived)
 
@@ -812,7 +728,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         img: item.img,
         owned: ownedRank !== null,
         capped: ownedRank !== null && ownedRank >= SYSTEM.CREATION_MAX_ARCANUM_RANK,
-        selected: this.#draft.ascendanceArcanumBonus === item.uuid,
+        selected: this._draft.ascendanceArcanumBonus === item.uuid,
       }
     })
   }
@@ -828,7 +744,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     const costs = SYSTEM.CUSTOMIZATION_COSTS
 
     // Langues achetées : celles cochées à la main, déduction faite de celles offertes par le peuple.
-    derived.boughtLanguages = this.#draft.languages.filter((id) => !derived.grantedLanguages.includes(id))
+    derived.boughtLanguages = this._draft.languages.filter((id) => !derived.grantedLanguages.includes(id))
 
     // Arcanums acquis : ceux de la carrière sont déjà là jusqu'à leur rang (plancher gratuit), et
     // le joueur peut investir des points pour les monter plus haut, en plus de ceux qu'il ajoute
@@ -842,14 +758,14 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     for (const uuid of arcanumUuids) {
       const floor = this.#carriereArcanumFloor(uuid)
       const maxRank = Math.max(SYSTEM.CREATION_MAX_ARCANUM_RANK, floor)
-      const rank = Math.clamp(this.#draft.arcanumRanks[uuid] ?? floor, floor, maxRank)
+      const rank = Math.clamp(this._draft.arcanumRanks[uuid] ?? floor, floor, maxRank)
       derived.arcanumRanks[uuid] = rank
       arcanumCost += (rank - floor) * costs.arcanumRank
     }
     derived.arcanumCost = arcanumCost
 
-    derived.improvementCount = Object.values(this.#draft.improvements).reduce((total, count) => total + count, 0)
-    derived.gradeCost = this.#gradeCost(this.#draft.grade) ?? 0
+    derived.improvementCount = Object.values(this._draft.improvements).reduce((total, count) => total + count, 0)
+    derived.gradeCost = this.#gradeCost(this._draft.grade) ?? 0
 
     derived.customization = {
       abilities: derived.improvementCount * costs.abilityImprovement,
@@ -857,7 +773,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       arcanums: derived.arcanumCost,
       languages: derived.boughtLanguages.length * costs.language,
       grade: derived.gradeCost,
-      money: this.#draft.moneyPoints,
+      money: this._draft.moneyPoints,
     }
 
     const budget = customizationBudget(SYSTEM.CUSTOMIZATION_POINTS_TOTAL, derived.creationGrants.customizationPoints, derived.customization)
@@ -867,10 +783,10 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     derived.customizationOver = budget.over
 
     // Pécule : ce qui a été saisi à la main, plus ce que les points achètent.
-    derived.boughtDucats = this.#draft.moneyPoints * costs.ducatsPerPoint
+    derived.boughtDucats = this._draft.moneyPoints * costs.ducatsPerPoint
     derived.wealth = {
-      ducat: this.#draft.wealth.ducat + derived.boughtDucats,
-      denier: this.#draft.wealth.denier,
+      ducat: this._draft.wealth.ducat + derived.boughtDucats,
+      denier: this._draft.wealth.denier,
     }
 
     // La bourse de départ, c'est le pécule ET l'argent versé par la carrière — les deux sont à la
@@ -879,7 +795,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
     // Ce que l'équipement supplémentaire de l'étape 8 a coûté sur cette bourse — jamais celui de
     // la carrière, offert. Le solde qui en ressort est celui que le personnage aura vraiment à sa
-    // création (`#actorSystemData`), pas seulement un affichage.
+    // création (`_actorSystemData`), pas seulement un affichage.
     derived.equipmentCost = this.#droppedItems.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment).reduce((total, item) => total + toDeniers(item.system.price), 0)
     derived.wealthRemaining = fromDeniers(toDeniers(derived.wealth) + derived.carriereStartingMoney * SYSTEM.DENIERS_PER_DUCAT - derived.equipmentCost)
   }
@@ -893,7 +809,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    * @returns {Object}
    */
   #traitContext(pair) {
-    const trait = this.#draft.traits[pair.id]
+    const trait = this._draft.traits[pair.id]
     const boxes = (side) =>
       Array.fromRange(3, 1).map((value) => {
         const isCurrentCell = trait.dominant === side && trait.value === value
@@ -1009,8 +925,9 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    * L'état d'une étape : complète ou non, et ce qui manque le cas échéant.
    * @param {number} index
    * @returns {{complete: boolean, message: string}}
+   * @override
    */
-  #stepStatus(index) {
+  _stepStatus(index) {
     // `format` plutôt que `localize` : le message des caractéristiques rappelle les bornes, et un
     // message sans variable traverse `format` sans dommage.
     const missing = (key, data = {}) => ({
@@ -1029,17 +946,17 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         return done
 
       case "origine":
-        if (!this.#draft.peuple.name) return missing("peuple")
+        if (!this._draft.peuple.name) return missing("peuple")
         if (this.#derived.languages.length === 0) return missing("languages")
         return done
 
       case "carriere":
-        if (!this.#draft.carriere.name) return missing("carriere")
-        if (this.#gradeCost(this.#draft.grade) === null) return missing("gradeUnavailable")
+        if (!this._draft.carriere.name) return missing("carriere")
+        if (this.#gradeCost(this._draft.grade) === null) return missing("gradeUnavailable")
         return done
 
       case "ascendance":
-        if (!this.#draft.ascendance.name) return missing("ascendance")
+        if (!this._draft.ascendance.name) return missing("ascendance")
         return done
 
       case "competences":
@@ -1061,11 +978,11 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         return done
 
       case "combat":
-        if (!this.#draft.religion) return missing("religion")
+        if (!this._draft.religion) return missing("religion")
         return done
 
       case "identite":
-        return this.#draft.name.trim() ? done : missing("name")
+        return this._draft.name.trim() ? done : missing("name")
     }
 
     return done
@@ -1077,25 +994,25 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    */
   #recap() {
     const lines = [
-      { label: "CDG.label.long.peuple", value: this.#draft.peuple.name },
+      { label: "CDG.label.long.peuple", value: this._draft.peuple.name },
       { label: "CDG.label.long.religion", value: this.#derived.religionLabel },
-      { label: "CDG.label.long.carriere", value: this.#draft.carriere.name },
+      { label: "CDG.label.long.carriere", value: this._draft.carriere.name },
       {
         label: "CDG.label.long.grade",
-        value: this.#draft.grade
+        value: this._draft.grade
           ? game.i18n.format("CDG.creation.recap.gradeValue", {
-              grade: game.i18n.localize(SYSTEM.GRADES[this.#draft.grade].label),
-              pay: SYSTEM.GRADES[this.#draft.grade].pay,
+              grade: game.i18n.localize(SYSTEM.GRADES[this._draft.grade].label),
+              pay: SYSTEM.GRADES[this._draft.grade].pay,
               ducat: game.i18n.localize("CDG.currency.ducatShort"),
               month: game.i18n.localize("CDG.label.short.month"),
             })
           : "",
       },
-      { label: "CDG.label.long.ascendance", value: this.#draft.ascendance.name },
+      { label: "CDG.label.long.ascendance", value: this._draft.ascendance.name },
       { label: "CDG.label.long.compulsion", value: this.#ascendanceItem?.system.compulsion ?? "" },
       {
         label: "CDG.creation.personnalisation.ascendanceArcanumTitle",
-        value: this.#ascendanceArcanumChoices.find((item) => item.uuid === this.#draft.ascendanceArcanumBonus)?.name ?? "",
+        value: this.#ascendanceArcanumChoices.find((item) => item.uuid === this._draft.ascendanceArcanumBonus)?.name ?? "",
       },
       {
         label: "CDG.label.long.abilities",
@@ -1155,15 +1072,15 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   static async #onChangeForm(event, form, formData) {
     const data = foundry.utils.expandObject(formData.object)
 
-    if (data.peuple?.uuid !== undefined && data.peuple.uuid !== this.#draft.peuple.uuid) {
+    if (data.peuple?.uuid !== undefined && data.peuple.uuid !== this._draft.peuple.uuid) {
       const item = data.peuple.uuid ? await this.#resolveDocument(data.peuple.uuid) : null
       if (item) data.peuple.name = item.name
     }
-    if (data.carriere?.uuid !== undefined && data.carriere.uuid !== this.#draft.carriere.uuid) {
+    if (data.carriere?.uuid !== undefined && data.carriere.uuid !== this._draft.carriere.uuid) {
       const item = data.carriere.uuid ? await this.#resolveDocument(data.carriere.uuid) : null
       if (item) data.carriere.name = item.name
     }
-    if (data.ascendance?.uuid !== undefined && data.ascendance.uuid !== this.#draft.ascendance.uuid) {
+    if (data.ascendance?.uuid !== undefined && data.ascendance.uuid !== this._draft.ascendance.uuid) {
       const item = data.ascendance.uuid ? await this.#resolveDocument(data.ascendance.uuid) : null
       if (item) data.ascendance.name = item.name
     }
@@ -1171,7 +1088,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     // Le grade est le seul champ de formulaire à coûter des points : un grade hors d'atteinte,
     // trop cher, ou en dessous du plancher honorifique de la carrière est refusé ici, et pas
     // seulement grisé dans le gabarit.
-    if (data.grade !== undefined && data.grade !== this.#draft.grade) {
+    if (data.grade !== undefined && data.grade !== this._draft.grade) {
       const cost = this.#gradeCost(data.grade)
       const budget = this.#derived.customizationRemaining + this.#derived.gradeCost
       if (cost === null || cost === undefined || cost > budget || this.#isBelowGradeFloor(data.grade)) delete data.grade
@@ -1181,12 +1098,12 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     // le gabarit, au cas où la carrière change après coup sans repasser par l'étape 2.
     if (data.religion === "aucune" && this.#carriereItem?.system.requiresReligion) delete data.religion
 
-    foundry.utils.mergeObject(this.#draft, data)
+    foundry.utils.mergeObject(this._draft, data)
 
     // Un groupe de boutons radio dont aucun n'est coché arrive à `null` : le brouillon ne connaît
     // que la chaîne vide, et tout le reste du code compte dessus.
-    this.#draft.religion ??= ""
-    this.#draft.grade ||= "duplicator"
+    this._draft.religion ??= ""
+    this._draft.grade ||= "duplicator"
 
     this.render()
   }
@@ -1194,42 +1111,6 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   /* -------------------------------------------- */
   /*  Actions                                     */
   /* -------------------------------------------- */
-
-  /**
-   * Va directement à une étape déjà atteinte, depuis le bandeau.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target Porte `data-step`.
-   */
-  static #onGoToStep(event, target) {
-    const index = parseInt(target.dataset.step)
-    if (isNaN(index) || index > this.#maxStep) return
-    this.#step = index
-    this.render()
-  }
-
-  /**
-   * Revient à l'étape précédente.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target
-   */
-  static #onPreviousStep(event, target) {
-    if (this.#step === 0) return
-    this.#step -= 1
-    this.render()
-  }
-
-  /**
-   * Passe à l'étape suivante. Une étape incomplète ne bloque pas : elle reste signalée dans le
-   * bandeau, et le récapitulatif final la rappellera.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target
-   */
-  static #onNextStep(event, target) {
-    if (this.#step >= SYSTEM.CREATION_STEPS.length - 1) return
-    this.#step += 1
-    this.#maxStep = Math.max(this.#maxStep, this.#step)
-    this.render()
-  }
 
   /**
    * Achète ou rend l'augmentation d'une caractéristique, au prix fort des points de
@@ -1241,10 +1122,10 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     const ability = target.dataset.ability
     if (!ability) return
 
-    const bought = this.#draft.improvements[ability] > 0
+    const bought = this._draft.improvements[ability] > 0
     if (!bought && SYSTEM.CUSTOMIZATION_COSTS.abilityImprovement > this.#derived.customizationRemaining) return
 
-    this.#draft.improvements[ability] = bought ? 0 : SYSTEM.CREATION_MAX_ABILITY_IMPROVEMENTS
+    this._draft.improvements[ability] = bought ? 0 : SYSTEM.CREATION_MAX_ABILITY_IMPROVEMENTS
     this.render()
   }
 
@@ -1256,14 +1137,14 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   static async #onAddArcanum(event, target) {
     const select = this.element.querySelector("select[name='arcanumPicker']")
     const uuid = select?.value
-    if (!uuid || this.#draft.items.includes(uuid)) return
+    if (!uuid || this._draft.items.includes(uuid)) return
 
     const item = await this.#resolveDocument(uuid)
     if (!item || item.type !== SYSTEM.ITEM_TYPE.arcanum) return
 
-    this.#draft.items.push(uuid)
-    this.#draft.arcanumRanks[uuid] = SYSTEM.ARCANUM_MIN_RANK
-    this.#draft.arcanumPicker = ""
+    this._draft.items.push(uuid)
+    this._draft.arcanumRanks[uuid] = SYSTEM.ARCANUM_MIN_RANK
+    this._draft.arcanumPicker = ""
     this.render()
   }
 
@@ -1289,7 +1170,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     const delta = (clicked - current) * SYSTEM.CUSTOMIZATION_COSTS.arcanumRank
     if (delta > this.#derived.customizationRemaining) return
 
-    this.#draft.arcanumRanks[uuid] = clicked
+    this._draft.arcanumRanks[uuid] = clicked
     this.render()
   }
 
@@ -1303,9 +1184,9 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   static #onSetAscendanceArcanumBonus(event, target) {
     const uuid = target.dataset.uuid
     if (!uuid) return
-    const activating = this.#draft.ascendanceArcanumBonus !== uuid
+    const activating = this._draft.ascendanceArcanumBonus !== uuid
     if (activating && this.#ascendanceArcanumOptions().find((option) => option.uuid === uuid)?.capped) return
-    this.#draft.ascendanceArcanumBonus = activating ? uuid : ""
+    this._draft.ascendanceArcanumBonus = activating ? uuid : ""
     this.render()
   }
 
@@ -1319,7 +1200,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     if (isNaN(delta)) return
     if (delta > this.#derived.customizationRemaining) return
 
-    this.#draft.moneyPoints = Math.max(0, this.#draft.moneyPoints + delta)
+    this._draft.moneyPoints = Math.max(0, this._draft.moneyPoints + delta)
     this.render()
   }
 
@@ -1337,11 +1218,11 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     const delta = parseInt(target.dataset.delta)
     if (!ability || isNaN(delta)) return
 
-    const value = this.#draft.abilities[ability] + delta
+    const value = this._draft.abilities[ability] + delta
     if (value < SYSTEM.ABILITY_MIN || value > SYSTEM.ABILITY_MAX) return
     if (delta > 0 && this.#derived.pointsRemaining < delta) return
 
-    this.#draft.abilities[ability] = value
+    this._draft.abilities[ability] = value
     this.render()
   }
 
@@ -1386,7 +1267,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       return
     }
 
-    this.#draft.skills[skill] = target_
+    this._draft.skills[skill] = target_
     this.render()
   }
 
@@ -1401,7 +1282,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     const value = parseInt(target.dataset.value)
     if (!pairId || !side || isNaN(value)) return
 
-    const trait = this.#draft.traits[pairId]
+    const trait = this._draft.traits[pairId]
     const isSameCell = trait.dominant === side && trait.value === value
 
     // Libérer un couple ne bute sur aucun plafond ; le renseigner, si.
@@ -1411,7 +1292,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       if (promoted > SYSTEM.TRAIT_RANK2_MAX || mastered > SYSTEM.TRAIT_RANK3_MAX) return
     }
 
-    this.#draft.traits[pairId] = isSameCell ? { dominant: null, value: 0 } : { dominant: side, value }
+    this._draft.traits[pairId] = isSameCell ? { dominant: null, value: 0 } : { dominant: side, value }
     this.render()
   }
 
@@ -1424,7 +1305,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     const language = target.dataset.language
     if (!language || this.#derived.grantedLanguages.includes(language)) return
 
-    const known = new Set(this.#draft.languages)
+    const known = new Set(this._draft.languages)
     if (known.has(language)) known.delete(language)
     else {
       // Une langue apprise se paie sur les points de personnalisation ; celles du peuple, non.
@@ -1432,27 +1313,8 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       known.add(language)
     }
 
-    this.#draft.languages = [...known]
+    this._draft.languages = [...known]
     this.render()
-  }
-
-  /**
-   * Choisit le portrait du personnage.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target
-   */
-  static async #onPickImage(event, target) {
-    const fp = new foundry.applications.apps.FilePicker.implementation({
-      current: this.#draft.img,
-      type: "image",
-      callback: (path) => {
-        this.#draft.img = path
-        this.render()
-      },
-      top: this.position.top + 40,
-      left: this.position.left + 10,
-    })
-    return fp.browse()
   }
 
   /**
@@ -1474,8 +1336,8 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    */
   static #onRemoveItem(event, target) {
     const uuid = target.dataset.uuid
-    this.#draft.items = this.#draft.items.filter((entry) => entry !== uuid)
-    delete this.#draft.arcanumRanks[uuid]
+    this._draft.items = this._draft.items.filter((entry) => entry !== uuid)
+    delete this._draft.arcanumRanks[uuid]
     this.render()
   }
 
@@ -1487,8 +1349,8 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    */
   static #onRemoveCarriereEquipment(event, target) {
     const uuid = target.dataset.uuid
-    if (!uuid || this.#draft.excludedCarriereEquipment.includes(uuid)) return
-    this.#draft.excludedCarriereEquipment.push(uuid)
+    if (!uuid || this._draft.excludedCarriereEquipment.includes(uuid)) return
+    this._draft.excludedCarriereEquipment.push(uuid)
     this.render()
   }
 
@@ -1498,7 +1360,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    * @param {HTMLElement} target
    */
   static #onClearPeuple(event, target) {
-    this.#draft.peuple.uuid = ""
+    this._draft.peuple.uuid = ""
     this.render()
   }
 
@@ -1508,7 +1370,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    * @param {HTMLElement} target
    */
   static #onClearCarriere(event, target) {
-    this.#draft.carriere.uuid = ""
+    this._draft.carriere.uuid = ""
     this.render()
   }
 
@@ -1518,25 +1380,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    * @param {HTMLElement} target
    */
   static #onClearAscendance(event, target) {
-    this.#draft.ascendance.uuid = ""
-    this.render()
-  }
-
-  /**
-   * Repart d'un brouillon vierge, après confirmation.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target
-   */
-  static async #onReset(event, target) {
-    const confirmed = await foundry.applications.api.DialogV2.confirm({
-      window: { title: game.i18n.localize("CDG.creation.resetTitle") },
-      content: `<p>${game.i18n.localize("CDG.creation.resetContent")}</p>`,
-    })
-    if (!confirmed) return
-
-    this.#draft = CdgCharacterCreation.#blankDraft()
-    this.#step = 0
-    this.#maxStep = 0
+    this._draft.ascendance.uuid = ""
     this.render()
   }
 
@@ -1558,27 +1402,27 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
 
     switch (item.type) {
       case SYSTEM.ITEM_TYPE.peuple:
-        this.#draft.peuple = { name: item.name, uuid: item.uuid }
+        this._draft.peuple = { name: item.name, uuid: item.uuid }
         break
       case SYSTEM.ITEM_TYPE.carriere:
-        this.#draft.carriere = { name: item.name, uuid: item.uuid }
+        this._draft.carriere = { name: item.name, uuid: item.uuid }
         break
       case SYSTEM.ITEM_TYPE.ascendance:
-        this.#draft.ascendance = { name: item.name, uuid: item.uuid }
+        this._draft.ascendance = { name: item.name, uuid: item.uuid }
         break
       case SYSTEM.ITEM_TYPE.equipment: {
-        if (this.#draft.items.includes(item.uuid)) return
+        if (this._draft.items.includes(item.uuid)) return
         const cost = toDeniers(item.system.price)
         if (cost > toDeniers(this.#derived.wealthRemaining)) {
           ui.notifications.warn(game.i18n.localize("CDG.creation.combat.tooExpensive"))
           return
         }
-        this.#draft.items.push(item.uuid)
+        this._draft.items.push(item.uuid)
         break
       }
       default:
-        if (this.#draft.items.includes(item.uuid)) return
-        this.#draft.items.push(item.uuid)
+        if (this._draft.items.includes(item.uuid)) return
+        this._draft.items.push(item.uuid)
     }
 
     this.render()
@@ -1589,146 +1433,92 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
   /* -------------------------------------------- */
 
   /**
-   * Crée l'acteur. C'est la seule écriture de tout l'assistant.
-   * @param {PointerEvent} event
-   * @param {HTMLElement} target
+   * Ce que la création embarque sur l'acteur : origines, ajustements de la carrière, argent,
+   * objets de départ, ascendance, puis réserves remplies au maximum.
+   * @param {CdgActor} actor
+   * @override
    */
-  static async #onCreate(event, target) {
-    if (this.#creating) return
-    if (!this.#draft.name.trim()) {
-      ui.notifications.warn(game.i18n.localize("CDG.creation.missing.name"))
-      this.#step = SYSTEM.CREATION_STEPS.length - 1
-      return this.render()
+  async _afterCreate(actor) {
+    // Les origines doivent passer par l'API de l'acteur : elle marque la provenance des objets
+    // accordés et permet de les retirer proprement plus tard.
+    if (this.#peupleItem) await actor.grantOrigin(this.#peupleItem, { notifySuccess: false })
+    if (this.#carriereItem) {
+      await actor.grantOrigin(this.#carriereItem, { notifySuccess: false })
+      // Un arcanum de la carrière que le joueur a monté avec ses points de personnalisation :
+      // la copie embarquée par `grantOrigin` part au rang de la carrière, à corriger ici plutôt
+      // que d'embarquer un doublon.
+      const grantedArcanums = actor.grantedBy(actor.carriere).filter((item) => item.type === SYSTEM.ITEM_TYPE.arcanum)
+      for (const source of this.#carriereArcanums) {
+        const target = this._draft.arcanumRanks[source.uuid]
+        if (!target || target <= source.system.rank) continue
+        const embedded = grantedArcanums.find((item) => item.name === source.name)
+        if (embedded) await embedded.update({ "system.rank": target })
+      }
+
+      // Les doublons d'un choix "OU" (les deux options sont accordées par `grantOrigin`) que le
+      // joueur a écartés dans l'assistant ne doivent pas rester sur le personnage.
+      if (this._draft.excludedCarriereEquipment.length) {
+        const excludedNames = new Set(this.#carriereEquipments.filter((item) => this._draft.excludedCarriereEquipment.includes(item.uuid)).map((item) => item.name))
+        const toRemove = actor.grantedBy(actor.carriere).filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment && excludedNames.has(item.name))
+        if (toRemove.length)
+          await actor.deleteEmbeddedDocuments(
+            "Item",
+            toRemove.map((item) => item.id),
+          )
+      }
     }
 
-    // Une étape laissée en plan n'interdit pas de forger le personnage : on prévient, et le joueur
-    // tranche. Un Marqué incomplet se finit à la main sur sa fiche.
-    const incomplete = SYSTEM.CREATION_STEPS.filter((step, index) => !this.#stepStatus(index).complete)
-    if (incomplete.length > 0) {
-      const list = incomplete.map((step) => `<li>${game.i18n.localize(step.label)}</li>`).join("")
-      const confirmed = await foundry.applications.api.DialogV2.confirm({
-        window: { title: game.i18n.localize("CDG.creation.incompleteTitle") },
-        content: `<p>${game.i18n.localize("CDG.creation.incompleteContent")}</p><ul>${list}</ul>`,
-      })
-      if (!confirmed) return
+    // Le coût de l'équipement supplémentaire de l'étape 8 se déduit maintenant que l'argent de
+    // la carrière est bien sur la fiche : jamais avant, sous peine d'un solde négatif écrêté à
+    // zéro par le schéma alors que l'assistant l'aurait couvert avec cet argent-là.
+    if (this.#derived.equipmentCost > 0) {
+      const wealth = fromDeniers(toDeniers(actor.system.wealth) - this.#derived.equipmentCost)
+      await actor.update({ "system.wealth.ducat": wealth.ducat, "system.wealth.denier": wealth.denier })
     }
 
-    this.#creating = true
-    target.disabled = true
-    let actor = null
-    let completed = false
-    try {
-      actor = await Actor.implementation.create({
-        name: this.#draft.name.trim(),
-        type: "character",
-        img: this.#draft.img,
-        system: this.#actorSystemData(),
-      })
-      if (!actor) throw new Error("Actor.implementation.create n'a retourné aucun document")
+    // Avant l'ascendance : son bonus retrouve un arcanum déjà possédé par son nom
+    // (`CdgActor#grantArcanumBonus`) — un arcanum acheté en personnalisation doit donc déjà être
+    // embarqué pour compter comme « déjà là », exactement comme l'aperçu de l'assistant le
+    // suppose (`#ascendanceArcanumOptions`).
+    const items = await this.#startingItems()
+    if (items.length > 0) await actor.createEmbeddedDocuments("Item", items)
 
-      // Les origines doivent passer par l'API de l'acteur : elle marque la provenance des objets
-      // accordés et permet de les retirer proprement plus tard.
-      if (this.#peupleItem) await actor.grantOrigin(this.#peupleItem, { notifySuccess: false })
-      if (this.#carriereItem) {
-        await actor.grantOrigin(this.#carriereItem, { notifySuccess: false })
-        // Un arcanum de la carrière que le joueur a monté avec ses points de personnalisation :
-        // la copie embarquée par `grantOrigin` part au rang de la carrière, à corriger ici plutôt
-        // que d'embarquer un doublon.
-        const grantedArcanums = actor.grantedBy(actor.carriere).filter((item) => item.type === SYSTEM.ITEM_TYPE.arcanum)
-        for (const source of this.#carriereArcanums) {
-          const target = this.#draft.arcanumRanks[source.uuid]
-          if (!target || target <= source.system.rank) continue
-          const embedded = grantedArcanums.find((item) => item.name === source.name)
-          if (embedded) await embedded.update({ "system.rank": target })
-        }
-
-        // Les doublons d'un choix "OU" (les deux options sont accordées par `grantOrigin`) que le
-        // joueur a écartés dans l'assistant ne doivent pas rester sur le personnage.
-        if (this.#draft.excludedCarriereEquipment.length) {
-          const excludedNames = new Set(this.#carriereEquipments.filter((item) => this.#draft.excludedCarriereEquipment.includes(item.uuid)).map((item) => item.name))
-          const toRemove = actor.grantedBy(actor.carriere).filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment && excludedNames.has(item.name))
-          if (toRemove.length)
-            await actor.deleteEmbeddedDocuments(
-              "Item",
-              toRemove.map((item) => item.id),
-            )
-        }
+    if (this.#ascendanceItem) {
+      await actor.grantAscendance(this.#ascendanceItem)
+      // `grantAscendance` a repris le bonus inscrit sur l'objet source (le plus souvent aucun) :
+      // s'il diffère du candidat choisi dans l'assistant, on défait l'un et pose l'autre, puis on
+      // consigne le choix sur la copie embarquée — sans quoi retirer l'ascendance plus tard sur
+      // la fiche lirait un bonus resté vide et ne rendrait rien.
+      const ascendance = actor.ascendance
+      if (ascendance && ascendance.system.arcanumBonus !== this._draft.ascendanceArcanumBonus) {
+        await actor.updateArcanumBonus(ascendance, ascendance.system.arcanumBonus, this._draft.ascendanceArcanumBonus)
+        await ascendance.update({ "system.arcanumBonus": this._draft.ascendanceArcanumBonus })
       }
-
-      // Le coût de l'équipement supplémentaire de l'étape 8 se déduit maintenant que l'argent de
-      // la carrière est bien sur la fiche : jamais avant, sous peine d'un solde négatif écrêté à
-      // zéro par le schéma alors que l'assistant l'aurait couvert avec cet argent-là.
-      if (this.#derived.equipmentCost > 0) {
-        const wealth = fromDeniers(toDeniers(actor.system.wealth) - this.#derived.equipmentCost)
-        await actor.update({ "system.wealth.ducat": wealth.ducat, "system.wealth.denier": wealth.denier })
-      }
-
-      // Avant l'ascendance : son bonus retrouve un arcanum déjà possédé par son nom
-      // (`CdgActor#grantArcanumBonus`) — un arcanum acheté en personnalisation doit donc déjà être
-      // embarqué pour compter comme « déjà là », exactement comme l'aperçu de l'assistant le
-      // suppose (`#ascendanceArcanumOptions`).
-      const items = await this.#startingItems()
-      if (items.length > 0) await actor.createEmbeddedDocuments("Item", items)
-
-      if (this.#ascendanceItem) {
-        await actor.grantAscendance(this.#ascendanceItem)
-        // `grantAscendance` a repris le bonus inscrit sur l'objet source (le plus souvent aucun) :
-        // s'il diffère du candidat choisi dans l'assistant, on défait l'un et pose l'autre, puis on
-        // consigne le choix sur la copie embarquée — sans quoi retirer l'ascendance plus tard sur
-        // la fiche lirait un bonus resté vide et ne rendrait rien.
-        const ascendance = actor.ascendance
-        if (ascendance && ascendance.system.arcanumBonus !== this.#draft.ascendanceArcanumBonus) {
-          await actor.updateArcanumBonus(ascendance, ascendance.system.arcanumBonus, this.#draft.ascendanceArcanumBonus)
-          await ascendance.update({ "system.arcanumBonus": this.#draft.ascendanceArcanumBonus })
-        }
-      }
-
-      // Les ajustements d'origine modifient le maximum par effet actif. La réserve de départ est
-      // remplie ensuite, afin de partir au vrai maximum sans stocker deux fois le bonus.
-      const abilityValues = Object.values(SYSTEM.ABILITIES).reduce((updates, ability) => {
-        updates[`system.abilities.${ability.id}.value`] = actor.system.abilities[ability.id].max
-        return updates
-      }, {})
-      await actor.update(abilityValues)
-
-      completed = true
-    } catch (error) {
-      console.error(Utils.log("Création du personnage impossible"), error)
-      let removed = !actor
-      if (actor) {
-        try {
-          await actor.delete()
-          removed = true
-        } catch (cleanupError) {
-          console.error(Utils.log("Suppression du personnage partiel impossible"), cleanupError)
-        }
-      }
-      if (removed) ui.notifications.error(game.i18n.localize("CDG.creation.createFailed"))
-      else ui.notifications.error(game.i18n.format("CDG.creation.createFailedPartial", { name: actor.name }))
-    } finally {
-      this.#creating = false
-      if (!completed) this.render()
     }
-    if (!completed) return
 
-    ui.notifications.info(game.i18n.format("CDG.creation.created", { name: actor.name }))
-    await this.close()
-    actor.sheet.render(true)
+    // Les ajustements d'origine modifient le maximum par effet actif. La réserve de départ est
+    // remplie ensuite, afin de partir au vrai maximum sans stocker deux fois le bonus.
+    const abilityValues = Object.values(SYSTEM.ABILITIES).reduce((updates, ability) => {
+      updates[`system.abilities.${ability.id}.value`] = actor.system.abilities[ability.id].max
+      return updates
+    }, {})
+    await actor.update(abilityValues)
   }
 
   /**
    * Les données système de l'acteur à créer, à partir du brouillon et des valeurs dérivées.
    * @returns {Object}
+   * @override
    */
-  #actorSystemData() {
+  _actorSystemData() {
     // Peuple, carrière et ascendance ne sont plus des champs texte de `identity` : ce sont de vrais
     // objets, déposés ensuite par `grantOrigin`/`grantAscendance` juste après la création de
-    // l'acteur (cf. `#onCreate`). `identity` ne porte plus que le vrai nom, la religion et le grade.
+    // l'acteur (cf. `_afterCreate`). `identity` ne porte plus que le vrai nom, la religion et le grade.
     const system = {
       identity: {
-        vraiNom: this.#draft.vraiNom,
+        vraiNom: this._draft.vraiNom,
         religion: this.#derived.religionLabel,
-        grade: this.#draft.grade,
+        grade: this._draft.grade,
       },
       abilities: {},
       skills: {},
@@ -1739,24 +1529,24 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
       // d'expérience du personnage part à zéro. Seule la case d'augmentation cochée en garde trace.
       xp: { total: 0, spent: 0 },
       // Le pécule seul : l'argent de la carrière arrive par `grantOrigin` juste après la création,
-      // et le coût de l'équipement supplémentaire s'en déduit ensuite (`#onCreate`) — dans cet
+      // et le coût de l'équipement supplémentaire s'en déduit ensuite (`_afterCreate`) — dans cet
       // ordre, jamais avant, sans quoi un équipement payé grâce à l'argent de la carrière
       // afficherait un solde correct dans l'assistant mais un solde négatif écrêté à la création.
       wealth: this.#derived.wealth,
-      specialTraits: CdgCharacterCreation.#toHtml(this.#draft.marque),
+      specialTraits: CdgCharacterCreation.#toHtml(this._draft.marque),
       details: {
-        biography: CdgCharacterCreation.#toHtml(this.#draft.histoire),
+        biography: CdgCharacterCreation.#toHtml(this._draft.histoire),
       },
     }
 
     // Les bonus d'origine ne sont pas persistés ici : ils seront appliqués par les effets actifs
     // transférés. La réserve sera remplie au maximum effectif une fois les origines embarquées.
     for (const ability of Object.values(SYSTEM.ABILITIES)) {
-      const base = this.#draft.abilities[ability.id] + this.#draft.improvements[ability.id]
+      const base = this._draft.abilities[ability.id] + this._draft.improvements[ability.id]
       system.abilities[ability.id] = {
         max: base,
         value: base,
-        improvements: this.#draft.improvements[ability.id],
+        improvements: this._draft.improvements[ability.id],
       }
     }
 
@@ -1765,7 +1555,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
     }
 
     for (const pair of Object.values(SYSTEM.TRAIT_PAIRS)) {
-      system.traits[pair.id] = { ...this.#draft.traits[pair.id] }
+      system.traits[pair.id] = { ...this._draft.traits[pair.id] }
     }
 
     return system
@@ -1792,7 +1582,7 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
    */
   async #startingItems() {
     const granted = new Set([...(this.#peupleItem?.system.features ?? []), ...(this.#carriereItem?.system.arcanums ?? []), ...(this.#carriereItem?.system.equipments ?? [])])
-    const uuids = new Set(this.#draft.items.filter((uuid) => !granted.has(uuid)))
+    const uuids = new Set(this._draft.items.filter((uuid) => !granted.has(uuid)))
 
     const documents = await Promise.all([...uuids].map((uuid) => this.#resolveDocument(uuid)))
     return documents
@@ -1804,22 +1594,5 @@ export default class CdgCharacterCreation extends HandlebarsApplicationMixin(App
         if (rank !== undefined) data.system.rank = rank
         return data
       })
-  }
-
-  /* -------------------------------------------- */
-  /*  API                                         */
-  /* -------------------------------------------- */
-
-  /**
-   * Ouvre l'assistant, ou ramène au premier plan celui déjà ouvert.
-   * @returns {Promise<CdgCharacterCreation>}
-   */
-  static async open() {
-    const existing = foundry.applications.instances.get("cdg-character-creation")
-    if (existing) {
-      existing.bringToFront()
-      return existing
-    }
-    return new CdgCharacterCreation().render({ force: true })
   }
 }
