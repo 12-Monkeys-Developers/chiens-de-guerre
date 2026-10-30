@@ -1,11 +1,12 @@
 import { SYSTEM } from "../config/system.mjs"
-import { signed } from "../helpers/format.mjs"
+import { createChatMessage } from "../helpers/chat.mjs"
 import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
 import { canSpendEffort, effortChoices } from "../helpers/rules.mjs"
 import Utils from "../helpers/utils.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 const TEMPLATES = `${SYSTEM.PATH}/templates/dialogs`
+const CHAT_TEMPLATE = `${SYSTEM.PATH}/templates/chat/initiative-card.hbs`
 
 /**
  * Fenêtre du jet spécial d'initiative, qui produit un total et jamais une réussite.
@@ -186,14 +187,20 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
       { parts: data.parts, effort, passion: data.passion.selected },
     )
 
-    const breakdown = data.parts.map((part) => `<li><span>${part.label}</span><strong>${signed(part.value)}</strong></li>`).join("")
-    const name = foundry.utils.escapeHTML(combatant?.name ?? actor.name)
-    const content = `<section class="cdg chat-card initiative-card"><header><h3>${game.i18n.localize("CDG.combat.initiative.chatTitle")}</h3><strong>${name}</strong></header><p>${data.initiativeSkillLabel} (${data.rankName}) : ${results.join(", ")} — ${game.i18n.localize("CDG.combat.initiative.kept")} <strong>${kept}</strong></p><ul>${breakdown}</ul><div class="initiative-total">${game.i18n.localize("CDG.label.long.initiative")} <strong>${total}</strong></div></section>`
+    const content = await foundry.applications.handlebars.renderTemplate(CHAT_TEMPLATE, {
+      name: combatant?.name ?? actor.name,
+      skillLabel: data.initiativeSkillLabel,
+      rankName: data.rankName,
+      results: results.join(", "),
+      kept,
+      parts: data.parts,
+      total,
+    })
     // L'initiative d'un PNJ reste une information réservée au Meneur, que son combattant soit
     // masqué ou visible dans le tracker. Un combattant masqué conserve la même confidentialité
-    // quel que soit son type d'acteur.
-    const whisper = actor.type === "adversaire" || combatant?.hidden ? ChatMessage.getWhisperRecipients("GM").map((user) => user.id) : []
-    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content, rolls: [roll], whisper, flags: { "core.initiativeRoll": !!combatant } })
+    // quel que soit son type d'acteur. Celle d'un personnage est publique, quel que soit le mode du tchat.
+    const messageMode = actor.type === "adversaire" || combatant?.hidden ? "gm" : "public"
+    await createChatMessage({ speaker: ChatMessage.implementation.getSpeaker({ actor }), content, rolls: [roll], flags: { "core.initiativeRoll": !!combatant } }, { messageMode })
     await combatant?.combat?.activateHighestInitiative()
     return total
   }

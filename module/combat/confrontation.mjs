@@ -1,6 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
+import { createChatMessage } from "../helpers/chat.mjs"
 import { askActiveGM, serialize } from "../helpers/gm-writer.mjs"
 import Utils from "../helpers/utils.mjs"
 import { keptOutcome, OUTCOMES } from "../dice/roll-outcome.mjs"
@@ -123,12 +124,15 @@ export default class CdgConfrontation {
     }
 
     // Toujours publique, quel que soit le mode du tchat : la cible doit voir la carte pour s'y défendre.
-    return ChatMessage.implementation.create({
-      speaker: ChatMessage.implementation.getSpeaker({ actor }),
-      content: await this.renderCard(state),
-      rolls: [roll],
-      flags: { [SYSTEM.PACKAGE_ID]: { [this.FLAG]: state } },
-    })
+    return createChatMessage(
+      {
+        speaker: ChatMessage.implementation.getSpeaker({ actor }),
+        content: await this.renderCard(state),
+        rolls: [roll],
+        flags: { [SYSTEM.PACKAGE_ID]: { [this.FLAG]: state } },
+      },
+      { messageMode: "public" },
+    )
   }
 
   // #endregion

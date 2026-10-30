@@ -1,0 +1,14 @@
+{{!-- Carte d'initiative : les dés lancés, celui qu'on garde, le détail des modificateurs et le total. --}}
+<section class="cdg chat-card initiative-card">
+  <header>
+    <h3>{{localize "CDG.combat.initiative.chatTitle"}}</h3>
+    <strong>{{name}}</strong>
+  </header>
+  <p>{{skillLabel}} ({{rankName}}) : {{results}} — {{localize "CDG.combat.initiative.kept"}} <strong>{{kept}}</strong></p>
+  <ul>
+    {{#each parts as |part|}}
+      <li><span>{{part.label}}</span><strong>{{signed part.value}}</strong></li>
+    {{/each}}
+  </ul>
+  <div class="initiative-total">{{localize "CDG.label.long.initiative"}} <strong>{{total}}</strong></div>
+</section>
