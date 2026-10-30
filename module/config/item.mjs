@@ -16,6 +16,9 @@ export const ITEM_TYPE = {
  */
 export const ORIGIN_TYPES = [ITEM_TYPE.peuple, ITEM_TYPE.carriere]
 
+/** Le nombre maximal d'arcanums candidats au bonus d'une ascendance. */
+export const ASCENDANCE_MAX_ARCANUM_CHOICES = 4
+
 /**
  * D'où vient un trait spécial. Sert à regrouper les traits sur la fiche : un joueur cherche
  * « ce que mon peuple me donne », pas une liste à plat.

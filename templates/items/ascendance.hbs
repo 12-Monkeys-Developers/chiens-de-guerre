@@ -20,15 +20,15 @@
     <ul class="item-list">
       {{#each arcanumChoices as |choice|}}
         <li class="item-row" data-uuid="{{choice.uuid}}">
-          <img class="item-img" src="{{choice.img}}" data-action="editArcanumChoice" data-uuid="{{choice.uuid}}" />
-          <span class="item-name" data-action="editArcanumChoice" data-uuid="{{choice.uuid}}">{{choice.name}}</span>
+          <img class="item-img" src="{{choice.img}}" data-action="editReference" data-uuid="{{choice.uuid}}" />
+          <span class="item-name" data-action="editReference" data-uuid="{{choice.uuid}}">{{choice.name}}</span>
           {{#if @root.isEditable}}
-            <a class="item-control" data-action="removeArcanumChoice" data-uuid="{{choice.uuid}}"
+            <a class="item-control" data-action="removeReference" data-field="arcanumChoices" data-uuid="{{choice.uuid}}"
               data-tooltip="{{localize 'CDG.ui.remove'}}"><i class="fas fa-xmark"></i></a>
           {{/if}}
         </li>
       {{else}}
-        <li class="empty">{{localize "CDG.ui.dropArcanumChoicesHere"}}</li>
+        <li class="empty">{{localize "CDG.ui.dropArcanumChoicesHere" max=@root.SYSTEM.ASCENDANCE_MAX_ARCANUM_CHOICES}}</li>
       {{/each}}
     </ul>
 

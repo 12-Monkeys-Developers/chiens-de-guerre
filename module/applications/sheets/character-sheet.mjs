@@ -1,9 +1,7 @@
 import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../helpers/utils.mjs"
 import CdgBaseActorSheet from "./base-actor-sheet.mjs"
-
-/** Partiel des rangées d'écussons, partagé par plusieurs onglets. */
-const RANK_SHIELDS = `${SYSTEM.PATH}/templates/shared/rank-shields.hbs`
+import { RANK_SHIELDS } from "./partials.mjs"
 
 export default class CdgCharacterSheet extends CdgBaseActorSheet {
   /** @override */

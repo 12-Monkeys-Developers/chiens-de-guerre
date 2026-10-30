@@ -1,11 +1,6 @@
 import { SYSTEM } from "../../config/system.mjs"
 import CdgBaseItemSheet from "./base-item-sheet.mjs"
-
-/** Partiels partagés par les fiches d'objet. */
-const SHARED_DESCRIPTION = `${SYSTEM.PATH}/templates/items/shared/description.hbs`
-
-/** Les écussons de rang, affichés dans le libellé de chaque onglet de rang. */
-const RANK_SHIELDS = `${SYSTEM.PATH}/templates/shared/rank-shields.hbs`
+import { RANK_SHIELDS, SHARED_DESCRIPTION } from "./partials.mjs"
 
 /** Les onglets qui décrivent un tour de magie, et qui ne valent donc que pour un mystique. */
 const RANK_TABS = ["rank1", "rank2", "rank3"]

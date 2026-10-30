@@ -12,6 +12,7 @@
 - **Fenêtre de jet** : elle accepte des modificateurs imposés par l'appelant (modificateur de bataille, malus du chef d'armée), cochés par défaut et décochables.
 - **Fiche d'adversaire** : la section « Spécial » n'apparaît plus vide quand son éditeur a été ouvert puis vidé.
 - **Esquive** : le compteur d'esquives du round est relu au moment de décompter la défense, et non plus à l'ouverture de la fenêtre de jet ; une esquive décomptée entre-temps n'est plus perdue.
+- **Fiches de peuple et d'ascendance** : un trait ou un arcanum référencé dont l'UUID ne se lit plus disparaît de la liste au lieu de bloquer l'affichage de la fiche, comme sur la fiche de carrière.
 
 ## 0.8.1
 

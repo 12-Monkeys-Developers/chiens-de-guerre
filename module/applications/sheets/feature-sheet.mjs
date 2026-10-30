@@ -1,8 +1,7 @@
 import { SYSTEM } from "../../config/system.mjs"
 import CdgBaseItemSheet from "./base-item-sheet.mjs"
+import { SHARED_DESCRIPTION } from "./partials.mjs"
 
-/** Partiels partagés par les fiches d'objet. */
-const SHARED_DESCRIPTION = `${SYSTEM.PATH}/templates/items/shared/description.hbs`
 const SHARED_EFFECTS = `${SYSTEM.PATH}/templates/items/shared/effects.hbs`
 
 export default class CdgFeatureSheet extends CdgBaseItemSheet {

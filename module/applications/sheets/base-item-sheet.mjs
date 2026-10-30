@@ -6,8 +6,9 @@ const { sheets } = foundry.applications
 const { HandlebarsApplicationMixin } = foundry.applications.api
 
 /**
- * Socle des fiches d'objet : en-tête commun (image, nom), description, et l'action de
- * réglage des rangs partagée avec les fiches d'acteur.
+ * Socle des fiches d'objet : en-tête commun (image, nom), description, l'action de
+ * réglage des rangs partagée avec les fiches d'acteur, et les listes d'objets référencés par UUID
+ * que tiennent les fiches d'origine (`REFERENCE_FIELDS`).
  */
 export default class CdgBaseItemSheet extends HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   /** @override */
@@ -30,8 +31,18 @@ export default class CdgBaseItemSheet extends HandlebarsApplicationMixin(sheets.
       editEffect: CdgBaseItemSheet.#onEditEffect,
       deleteEffect: CdgBaseItemSheet.#onDeleteEffect,
       toggleEffect: CdgBaseItemSheet.#onToggleEffect,
+      editReference: CdgBaseItemSheet.#onEditReference,
+      removeReference: CdgBaseItemSheet.#onRemoveReference,
     },
   }
+
+  /**
+   * Les listes d'UUID que la fiche alimente par dépôt, par champ de `system` : le type d'objet
+   * accepté, et au besoin un plafond avec le message qui le signale (formaté avec `{max}`).
+   * Une fiche qui n'en déclare aucune ne branche pas le dépôt.
+   * @type {Record<string, {type: string, max?: number, tooMany?: string}>}
+   */
+  static REFERENCE_FIELDS = {}
 
   /** @override */
   async _prepareContext() {
@@ -52,6 +63,102 @@ export default class CdgBaseItemSheet extends HandlebarsApplicationMixin(sheets.
     Utils.debug("sheets", `${this.constructor.name} - contexte`, context)
 
     return context
+  }
+
+  /**
+   * Le dépôt est branché une seule fois : la fenêtre survit à ses rendus, un branchement par rendu
+   * empilerait les écouteurs et traiterait chaque dépôt autant de fois.
+   * @inheritDoc
+   */
+  async _onFirstRender(context, options) {
+    await super._onFirstRender(context, options)
+    if (foundry.utils.isEmpty(this.constructor.REFERENCE_FIELDS)) return
+    this.element.addEventListener("drop", this.#onDrop.bind(this))
+    this.element.addEventListener("dragover", (event) => event.preventDefault())
+  }
+
+  /**
+   * Ajoute l'objet déposé à la liste qui accepte son type.
+   * @param {DragEvent} event
+   */
+  async #onDrop(event) {
+    if (!this.isEditable) return
+    event.preventDefault()
+
+    const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
+    if (data.type !== "Item") return
+
+    const item = await Item.implementation.fromDropData(data)
+    if (!item) return
+
+    const [field, config] = Object.entries(this.constructor.REFERENCE_FIELDS).find(([, entry]) => entry.type === item.type) ?? []
+    if (!field) return
+    const references = this.document.system[field]
+    if (references.includes(item.uuid)) return
+    if (config.max !== undefined && references.length >= config.max) return ui.notifications.warn(game.i18n.format(config.tooMany, { max: config.max }))
+
+    return this.document.update({ [`system.${field}`]: [...references, item.uuid] })
+  }
+
+  /**
+   * Résout une référence, sans jamais lever.
+   *
+   * Sur un objet embarqué, la référence vise un objet du personnage (`CdgActor#grantOrigin` les
+   * réécrit après les avoir embarqués) : `fromUuidSync` suffit et évite un rendu asynchrone de plus.
+   * Ailleurs elle vise un compendium, qu'il faut charger. Dans les deux cas un objet supprimé, ou
+   * un UUID devenu illisible, ne vaut pas une erreur — la ligne disparaît simplement de la fiche,
+   * et le clic n'ouvre rien.
+   * @param {string} uuid
+   * @returns {Promise<CdgItem|null>}
+   */
+  async _resolveReference(uuid) {
+    try {
+      return (this.document.parent?.documentName === "Actor" ? fromUuidSync(uuid) : await fromUuid(uuid)) ?? null
+    } catch {
+      return null
+    }
+  }
+
+  /**
+   * Les objets d'une liste de références, sans les entrées qui ne se résolvent plus.
+   * @param {string} field Le champ de `system`.
+   * @returns {Promise<CdgItem[]>}
+   */
+  async _resolveReferences(field) {
+    const items = await Promise.all(this.document.system[field].map((uuid) => this._resolveReference(uuid)))
+    return items.filter((item) => item)
+  }
+
+  /**
+   * Retire une référence de sa liste.
+   * @param {string} field Le champ de `system`.
+   * @param {string} uuid
+   */
+  async _removeReference(field, uuid) {
+    return this.document.update({ [`system.${field}`]: this.document.system[field].filter((entry) => entry !== uuid) })
+  }
+
+  /**
+   * Ouvre la fiche d'un objet référencé — celle de l'objet du personnage quand la fiche est
+   * embarquée. Si l'objet a été supprimé, il n'y a rien à ouvrir et rien à signaler.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte `data-uuid`.
+   */
+  static async #onEditReference(event, target) {
+    const item = await this._resolveReference(target.dataset.uuid)
+    return item?.sheet.render({ force: true })
+  }
+
+  /**
+   * Retire un objet référencé.
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target Porte `data-field` et `data-uuid`.
+   */
+  static async #onRemoveReference(event, target) {
+    if (!this.isEditable) return
+    const { field, uuid } = target.dataset
+    if (!Object.hasOwn(this.constructor.REFERENCE_FIELDS, field) || !uuid) return
+    return this._removeReference(field, uuid)
   }
 
   /**

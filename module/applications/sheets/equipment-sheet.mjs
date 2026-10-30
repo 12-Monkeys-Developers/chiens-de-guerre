@@ -1,9 +1,6 @@
 import { SYSTEM } from "../../config/system.mjs"
 import CdgBaseItemSheet from "./base-item-sheet.mjs"
-
-/** Partiels partagés par les fiches d'objet. */
-const SHARED_DESCRIPTION = `${SYSTEM.PATH}/templates/items/shared/description.hbs`
-const RANK_SHIELDS = `${SYSTEM.PATH}/templates/shared/rank-shields.hbs`
+import { RANK_SHIELDS, SHARED_DESCRIPTION } from "./partials.mjs"
 
 export default class CdgEquipmentSheet extends CdgBaseItemSheet {
   /** @override */

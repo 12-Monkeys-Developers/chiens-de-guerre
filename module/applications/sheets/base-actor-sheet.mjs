@@ -241,6 +241,15 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
     return `<strong>${game.i18n.localize("CDG.combat.initiative.breakdown")}</strong><br>${lines.join("<br>")}`
   }
 
+  /**
+   * L'objet de l'acteur que désigne un élément de la fiche.
+   * @param {HTMLElement} element Porte, ou est contenu dans, un `data-item-id`.
+   * @returns {CdgItem|undefined}
+   */
+  _getItem(element) {
+    return this.document.items.get(element.closest("[data-item-id]")?.dataset.itemId)
+  }
+
   // #region Actions
 
   /**
@@ -289,7 +298,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    * @param {HTMLElement} target Porte `data-item-id`.
    */
   static async #onEditItem(event, target) {
-    const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const item = this._getItem(target)
     return item?.sheet.render(true)
   }
 
@@ -300,7 +309,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    */
   static async #onDeleteItem(event, target) {
     if (!this.isEditable) return
-    const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const item = this._getItem(target)
     if (!item) return
 
     const confirmed = await foundry.applications.api.DialogV2.confirm({
@@ -318,7 +327,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    */
   static async #onToggleEquipped(event, target) {
     if (!this.isEditable) return
-    const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const item = this._getItem(target)
     if (!item || item.type !== SYSTEM.ITEM_TYPE.equipment) return
 
     const equipping = !item.system.equipped
@@ -470,7 +479,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    * @param {HTMLElement} target Porte, ou est contenu dans, un `data-item-id`.
    */
   static async #onRollWeapon(event, target) {
-    const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const weapon = this._getItem(target)
     if (!weapon?.system.isWeapon) return
     return CdgMacros.rollWeapon(weapon.uuid, weapon.name)
   }
@@ -495,7 +504,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    * @param {HTMLElement} target
    */
   static async #onRollDamage(event, target) {
-    const weapon = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const weapon = this._getItem(target)
     if (!weapon?.system.isWeapon) return
     return CdgMacros.rollDamage(weapon.uuid, weapon.name)
   }
@@ -514,7 +523,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    * @param {HTMLElement} target Porte `data-rank`, et est contenu dans un `data-item-id`.
    */
   static async #onActivateArcanum(event, target) {
-    const arcanum = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const arcanum = this._getItem(target)
     const rank = parseInt(target.dataset.rank)
     if (arcanum?.type !== SYSTEM.ITEM_TYPE.arcanum || arcanum.system.isPassive || !Number.isInteger(rank)) return
 
@@ -555,14 +564,14 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
    */
   static async #onRemoveOrigin(event, target) {
     if (!this.isEditable) return
-    const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const item = this._getItem(target)
     if (!item) return
     return this.document.revokeOrigin(item)
   }
 
   static async #onRemoveAscendance(event, target) {
     if (!this.isEditable) return
-    const item = this.document.items.get(target.closest("[data-item-id]")?.dataset.itemId)
+    const item = this._getItem(target)
     if (!item) return
     return this.document.revokeAscendance(item)
   }
@@ -616,8 +625,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
       return
     }
 
-    const itemId = event.currentTarget.closest("[data-item-id]")?.dataset.itemId
-    const item = this.document.items.get(itemId)
+    const item = this._getItem(event.currentTarget)
     if (!item) return
     const dragData = item.toDragData()
     // Le type Item reste intact afin qu'une arme puisse toujours être déposée sur une autre fiche.

@@ -2,9 +2,7 @@ import { SYSTEM } from "../../config/system.mjs"
 import CdgMacros from "../../helpers/macros.mjs"
 import CdgBattleApp from "../battle-app.mjs"
 import CdgBaseActorSheet from "./base-actor-sheet.mjs"
-
-/** Partiel des rangées d'écussons, partagé avec les fiches personnage et adversaire. */
-const RANK_SHIELDS = `${SYSTEM.PATH}/templates/shared/rank-shields.hbs`
+import { RANK_SHIELDS } from "./partials.mjs"
 
 /** Partiels propres à la fiche de compagnie, à précharger comme le fait déjà `RANK_SHIELDS`. */
 const ROSTER_ROW = `${SYSTEM.PATH}/templates/actors/partials/compagnie-roster-row.hbs`
