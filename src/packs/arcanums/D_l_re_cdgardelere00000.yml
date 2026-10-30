@@ -10,88 +10,104 @@ system:
     peut renverser le cours d’un siège.</p>
   arcanumType: mystique
   rank: 1
-  rankData:
-    name1: Vision de la faiblesse
-    cost1:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect1: >-
-      <p>Le Marqué se concentre pendant une minute sur une cible. Il ressent
-      alors son point faible, c’est-à-dire là où elle devrait naturellement se
-      briser avec le temps ou sous l’effet d’un choc. Ce tour répond donc à la
-      question : « Où frapper pour endommager, voire détruire le plus
-      efficacement possible une chose ? ». La réponse est parfois décevante, car
-      évidente. Par exemple, lancé sur une armure de plaques, il est probable
-      que la réponse soit « ses lanières de cuir ». Dans d’autres cas, elle met
-      en lumière une faiblesse difficilement décelable autrement. Ainsi, pour un
-      édifice, les informations glanées sont souvent cruciales.</p>
-    label1a: Lumière
-    effect1a: >-
-      <p>Ce tour ne peut cibler qu’un objet ou une structure, pas un être
-      vivant. Le lancer nécessite seulement de voir sa cible, quelle que soit la
-      distance. Le pratiquant doit alors dépenser 1 point d’Esprit.</p>
-    label1b: Balance / Obscurité
-    effect1b: >-
-      <p>Ce tour peut cibler aussi bien une chose qu’un être vivant. Le lancer
-      demande un contact tactile avec la cible et la dépense de 1 point
-      d’Esprit. Si les informations reçues sont pertinentes, le pratiquant
-      bénéficie d’un bonus de + 2 à tous les tests visant à endommager la
-      structure ou à blesser l’être vivant pendant 24 h, en plus des éventuels
-      bénéfices liés au fait de connaître le point faible.</p>
-    name2: Fragilisation
-    cost2:
-      obscurite: 2
-      balance: 1
-      lumiere: 1
-    effect2: >-
-      <p>Le pratiquant peut considérablement augmenter la fragilité d’un petit
-      objet ou d’une partie d’une structure pour quelque temps. Il doit pour
-      cela toucher ce qu’il veut affaiblir et se concentrer pendant une minute.
-      La zone affectée ne peut être plus grande que la taille d’un poing. Une
-      chose intacte aura, pour la durée du pouvoir, la résistance d’une chose
-      délabrée ; une chose délabrée deviendra cassante ; une chose cassante sera
-      sur le point de s’effondrer d’elle-même.</p>
-    label2a: Lumière / Balance
-    effect2a: >-
-      <p>Le Marqué lance ce tour pour 1 point d’Esprit ; la fragilisation durera
-      1 heure.</p>
-    label2b: Obscurité
-    effect2b: >-
-      <p>Pour lancer ce tour, le Marqué doit dépenser 2 points d’Esprit. La
-      fragilisation est définitive.</p>
-    name3: Déflagration
-    cost3:
-      obscurite: 2
-      balance: 2
-      lumiere: 2
-    effect3: >-
-      <p>Le Marqué peut accumuler de l’énergie brute dans ses mains. Cette
-      énergie est instable et finira par produire une explosion. Le pratiquant
-      doit se concentrer pendant une minute, au cours de laquelle il joint ses
-      mains. À l’issue de l’incantation, une boule d’énergie crépitante y
-      apparaît. Cette boule est immatérielle et inamovible : elle est
-      littéralement « accrochée » à l’air. Elle explosera après un laps de temps
-      variable et totalement incontrôlé, généralement entre 3 secondes et 3
-      minutes. Lancer ce tour nécessite la dépense de 2 points d’Esprit et la
-      réussite d’un test d’Esprit / Arcanum à - 5 (un échec critique indique une
-      explosion immédiate). Ce tour est généralement employé pour des travaux de
-      démolition et peut nécessiter un test complémentaire, par exemple avec la
-      compétence « Ingénierie », pour des tâches subtiles comme creuser une
-      galerie sans provoquer son effondrement.</p>
-    label3a: Lumière
-    effect3a: >-
-      <p>L’explosion est très localisée et précise ; elle produit une lumière
-      très vive et un son modéré, sourd. Son pouvoir destructeur immédiat est
-      très fort, mais elle n’a aucun effet à courte portée et au-delà (les
-      dégâts sont équivalents à un test de rang 3 sous Corps 25, uniquement au
-      point de contact de la boule).</p>
-    label3b: Balance / Obscurité
-    effect3b: >-
-      <p>La déflagration a la force d’un petit explosif artisanal et peut donc
-      endommager de grandes surfaces ou blesser des personnes alentour (les
-      dégâts sont équivalents à un test de rang 2 sous Corps 15, dans un rayon
-      d’environ 3 mètres). Elle produit une détonation assourdissante.</p>
+  ranks:
+    '1':
+      name: Vision de la faiblesse
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Le Marqué se concentre pendant une minute sur une cible. Il ressent
+        alors son point faible, c’est-à-dire là où elle devrait naturellement se
+        briser avec le temps ou sous l’effet d’un choc. Ce tour répond donc à la
+        question : « Où frapper pour endommager, voire détruire le plus
+        efficacement possible une chose ? ». La réponse est parfois décevante,
+        car évidente. Par exemple, lancé sur une armure de plaques, il est
+        probable que la réponse soit « ses lanières de cuir ». Dans d’autres
+        cas, elle met en lumière une faiblesse difficilement décelable
+        autrement. Ainsi, pour un édifice, les informations glanées sont souvent
+        cruciales.</p>
+      variants:
+        a:
+          label: Lumière
+          effect: >-
+            <p>Ce tour ne peut cibler qu’un objet ou une structure, pas un être
+            vivant. Le lancer nécessite seulement de voir sa cible, quelle que
+            soit la distance. Le pratiquant doit alors dépenser 1 point
+            d’Esprit.</p>
+        b:
+          label: Balance / Obscurité
+          effect: >-
+            <p>Ce tour peut cibler aussi bien une chose qu’un être vivant. Le
+            lancer demande un contact tactile avec la cible et la dépense de 1
+            point d’Esprit. Si les informations reçues sont pertinentes, le
+            pratiquant bénéficie d’un bonus de + 2 à tous les tests visant à
+            endommager la structure ou à blesser l’être vivant pendant 24 h, en
+            plus des éventuels bénéfices liés au fait de connaître le point
+            faible.</p>
+    '2':
+      name: Fragilisation
+      cost:
+        obscurite: 2
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Le pratiquant peut considérablement augmenter la fragilité d’un petit
+        objet ou d’une partie d’une structure pour quelque temps. Il doit pour
+        cela toucher ce qu’il veut affaiblir et se concentrer pendant une
+        minute. La zone affectée ne peut être plus grande que la taille d’un
+        poing. Une chose intacte aura, pour la durée du pouvoir, la résistance
+        d’une chose délabrée ; une chose délabrée deviendra cassante ; une chose
+        cassante sera sur le point de s’effondrer d’elle-même.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Le Marqué lance ce tour pour 1 point d’Esprit ; la fragilisation
+            durera 1 heure.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Pour lancer ce tour, le Marqué doit dépenser 2 points d’Esprit.
+            La fragilisation est définitive.</p>
+    '3':
+      name: Déflagration
+      cost:
+        obscurite: 2
+        balance: 2
+        lumiere: 2
+      effect: >-
+        <p>Le Marqué peut accumuler de l’énergie brute dans ses mains. Cette
+        énergie est instable et finira par produire une explosion. Le pratiquant
+        doit se concentrer pendant une minute, au cours de laquelle il joint ses
+        mains. À l’issue de l’incantation, une boule d’énergie crépitante y
+        apparaît. Cette boule est immatérielle et inamovible : elle est
+        littéralement « accrochée » à l’air. Elle explosera après un laps de
+        temps variable et totalement incontrôlé, généralement entre 3 secondes
+        et 3 minutes. Lancer ce tour nécessite la dépense de 2 points d’Esprit
+        et la réussite d’un test d’Esprit / Arcanum à - 5 (un échec critique
+        indique une explosion immédiate). Ce tour est généralement employé pour
+        des travaux de démolition et peut nécessiter un test complémentaire, par
+        exemple avec la compétence « Ingénierie », pour des tâches subtiles
+        comme creuser une galerie sans provoquer son effondrement.</p>
+      variants:
+        a:
+          label: Lumière
+          effect: >-
+            <p>L’explosion est très localisée et précise ; elle produit une
+            lumière très vive et un son modéré, sourd. Son pouvoir destructeur
+            immédiat est très fort, mais elle n’a aucun effet à courte portée et
+            au-delà (les dégâts sont équivalents à un test de rang 3 sous Corps
+            25, uniquement au point de contact de la boule).</p>
+        b:
+          label: Balance / Obscurité
+          effect: >-
+            <p>La déflagration a la force d’un petit explosif artisanal et peut
+            donc endommager de grandes surfaces ou blesser des personnes
+            alentour (les dégâts sont équivalents à un test de rang 2 sous Corps
+            15, dans un rayon d’environ 3 mètres). Elle produit une détonation
+            assourdissante.</p>
   linkedSkill: ''
 effects: []
 folder: null

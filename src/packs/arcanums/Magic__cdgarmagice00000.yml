@@ -10,99 +10,114 @@ system:
     puissante balise psychique aisément détectable.</p>
   arcanumType: mystique
   rank: 1
-  rankData:
-    name1: Vision de la magie
-    cost1:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect1: >-
-      <p>Le Marqué perçoit pendant quelques secondes les émanations magiques de
-      son environnement sous forme d’effluves éthériques. Ceci lui permet
-      d’identifier qu’un individu, un objet ou un lieu est sous l’influence d’un
-      sort (par exemple qu’une personne est sous l’emprise d’un Arcanum), qu’un
-      objet est enchanté, ou encore de repérer les traces résiduelles laissées
-      par un ancien sort, sous réserve que l’effet ait été puissant et qu’il ne
-      soit pas trop ancien. Les êtres invisibles comme les fantômes ou ceux
-      dissimulés par l’Arcanum Nebula sont révélés. Les Stigmates apparaissent
-      clairement, ce qui permet d’identifier immédiatement les Marqués ou les
-      Élus. Ce tour se base principalement sur la vue ; il peut donc se combiner
-      avec des capacités magiques augmentant la perception, comme certains tours
-      de l’Arcanum Inspex. Les effets magiques discrets ou lointains peuvent
-      nécessiter, en complément, un test d’Esprit / Arcanum pour être
-      détectés.</p>
-    label1a: Lumière / Obscurité
-    effect1a: >-
-      <p>Le Marqué lance le tour pour 1 point d’Esprit. Pour chaque effet
-      magique perçu, il peut déterminer s’il est plutôt bénéfique ou plutôt
-      néfaste (les effets purement neutres restant très rares). Aucune
-      information supplémentaire n’est obtenue sur les Stigmates.</p>
-    label1b: Balance
-    effect1b: >-
-      <p>Le Marqué lance le tour pour 1 point d’Esprit. Il peut déterminer
-      grossièrement la puissance de chaque effet magique perçu (faible, modérée
-      ou forte), sans obtenir d’autre détail.</p>
-    name2: Analyse de la magie
-    cost2:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect2: >-
-      <p>Ce pouvoir améliore « vision de la magie ». Lorsque le pratiquant
-      perçoit un effet magique ou un Stigmate via le tour de rang 1 ( ), il peut
-      tenter de l’analyser pour en apprendre les caractéristiques. Pour chaque
-      Stigmate ou effet magique ainsi analysé, 1 point d’Esprit doit être
-      dépensé en supplément du coût d’activation de la vision de la magie.</p>
-    label2a: Lumière / Obscurité
-    effect2a: >-
-      <p>L’analyse d’un Stigmate révèle automatiquement son origine divine
-      (Marqué ou Élu). L’analyse d’un effet magique nécessite un test d’Esprit /
-      Arcanum : un échec critique ne donne aucune information, un échec indique
-      grossièrement sa puissance (faible, modérée ou forte), une réussite permet
-      d’en connaître l’effet principal, une réussite critique dévoile
-      l’essentiel des caractéristiques (branche d’Arcanum, effets, durée,
-      conditions d’annulation, etc.). L’analyse d’un sort de Vraie-Magie impose
-      un malus de - 5 à ce test.</p>
-    label2b: Balance
-    effect2b: >-
-      <p>L’analyse d’une Marque nécessite un test d’Esprit / Arcanum ; un succès
-      révèle son origine divine (Marqué ou Élu). L’analyse d’un effet magique en
-      révèle automatiquement la quasi-totalité des caractéristiques (effet,
-      branche d’Arcanum, durée, conditions d’annulation, etc.). Toutefois,
-      l’analyse d’un sort de Vraie-Magie impose également un test d’Esprit /
-      Arcanum.</p>
-    name3: Contre- sort
-    cost3:
-      obscurite: 0
-      balance: 0
-      lumiere: 0
-    effect3: >-
-      <p>Le Marqué peut contrer un tour en cours d’incantation par autrui. Cette
-      capacité s’applique aux Arcanums mystiques mais pas aux Arcanums
-      physiques. Le lanceur doit pouvoir observer l’incantation pour tenter le
-      contre-sort ; ainsi, les effets d’Impello ne peuvent être contrés
-      puisqu’ils ne requièrent ni gestes ni paroles. La tentative de
-      contre-magie s’effectue après que le sort visé a été payé par son lanceur
-      et qu’un éventuel test d’activation a été réussi, mais avant que l’effet
-      ne se manifeste. Le pratiquant de Magicè doit alors remporter un test
-      d’opposition d’Esprit / Magicè contre Esprit / Arcanum du sort d’origine.
-      Ce test subit un malus de - 10 face à de la Vraie-Magie. Il est également
-      possible de supprimer un effet magique actif si ses traces ont été
-      préalablement détectées via le rang 1 de cet Arcanum et analysées via le
-      rang 2.</p>
-    label3a: Lumière / Balance
-    effect3a: >-
-      <p>Pour tenter le contre-sort, le Marqué doit dépenser autant de points
-      d’Esprit que le lanceur du sort originel, moins un. Une réussite critique
-      au test d’opposition permet, si la situation le justifie, de renvoyer le
-      sort contré vers son lanceur.</p>
-    label3b: Obscurité
-    effect3b: >-
-      <p>Pour tenter le contre-sort, le Marqué doit subir une blessure non
-      encaissable dont la gravité dépend du coût en Esprit du sort originel :
-      0-1 = blessure légère ; 2-3 = blessure grave ; 4 ou plus = blessure
-      mortelle. Une réussite critique au test d’opposition permet d’infliger une
-      blessure équivalente au lanceur du sort contré.</p>
+  ranks:
+    '1':
+      name: Vision de la magie
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Le Marqué perçoit pendant quelques secondes les émanations magiques
+        de son environnement sous forme d’effluves éthériques. Ceci lui permet
+        d’identifier qu’un individu, un objet ou un lieu est sous l’influence
+        d’un sort (par exemple qu’une personne est sous l’emprise d’un Arcanum),
+        qu’un objet est enchanté, ou encore de repérer les traces résiduelles
+        laissées par un ancien sort, sous réserve que l’effet ait été puissant
+        et qu’il ne soit pas trop ancien. Les êtres invisibles comme les
+        fantômes ou ceux dissimulés par l’Arcanum Nebula sont révélés. Les
+        Stigmates apparaissent clairement, ce qui permet d’identifier
+        immédiatement les Marqués ou les Élus. Ce tour se base principalement
+        sur la vue ; il peut donc se combiner avec des capacités magiques
+        augmentant la perception, comme certains tours de l’Arcanum Inspex. Les
+        effets magiques discrets ou lointains peuvent nécessiter, en complément,
+        un test d’Esprit / Arcanum pour être détectés.</p>
+      variants:
+        a:
+          label: Lumière / Obscurité
+          effect: >-
+            <p>Le Marqué lance le tour pour 1 point d’Esprit. Pour chaque effet
+            magique perçu, il peut déterminer s’il est plutôt bénéfique ou
+            plutôt néfaste (les effets purement neutres restant très rares).
+            Aucune information supplémentaire n’est obtenue sur les
+            Stigmates.</p>
+        b:
+          label: Balance
+          effect: >-
+            <p>Le Marqué lance le tour pour 1 point d’Esprit. Il peut déterminer
+            grossièrement la puissance de chaque effet magique perçu (faible,
+            modérée ou forte), sans obtenir d’autre détail.</p>
+    '2':
+      name: Analyse de la magie
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Ce pouvoir améliore « vision de la magie ». Lorsque le pratiquant
+        perçoit un effet magique ou un Stigmate via le tour de rang 1 ( ), il
+        peut tenter de l’analyser pour en apprendre les caractéristiques. Pour
+        chaque Stigmate ou effet magique ainsi analysé, 1 point d’Esprit doit
+        être dépensé en supplément du coût d’activation de la vision de la
+        magie.</p>
+      variants:
+        a:
+          label: Lumière / Obscurité
+          effect: >-
+            <p>L’analyse d’un Stigmate révèle automatiquement son origine divine
+            (Marqué ou Élu). L’analyse d’un effet magique nécessite un test
+            d’Esprit / Arcanum : un échec critique ne donne aucune information,
+            un échec indique grossièrement sa puissance (faible, modérée ou
+            forte), une réussite permet d’en connaître l’effet principal, une
+            réussite critique dévoile l’essentiel des caractéristiques (branche
+            d’Arcanum, effets, durée, conditions d’annulation, etc.). L’analyse
+            d’un sort de Vraie-Magie impose un malus de - 5 à ce test.</p>
+        b:
+          label: Balance
+          effect: >-
+            <p>L’analyse d’une Marque nécessite un test d’Esprit / Arcanum ; un
+            succès révèle son origine divine (Marqué ou Élu). L’analyse d’un
+            effet magique en révèle automatiquement la quasi-totalité des
+            caractéristiques (effet, branche d’Arcanum, durée, conditions
+            d’annulation, etc.). Toutefois, l’analyse d’un sort de Vraie-Magie
+            impose également un test d’Esprit / Arcanum.</p>
+    '3':
+      name: Contre- sort
+      cost:
+        obscurite: 0
+        balance: 0
+        lumiere: 0
+      effect: >-
+        <p>Le Marqué peut contrer un tour en cours d’incantation par autrui.
+        Cette capacité s’applique aux Arcanums mystiques mais pas aux Arcanums
+        physiques. Le lanceur doit pouvoir observer l’incantation pour tenter le
+        contre-sort ; ainsi, les effets d’Impello ne peuvent être contrés
+        puisqu’ils ne requièrent ni gestes ni paroles. La tentative de
+        contre-magie s’effectue après que le sort visé a été payé par son
+        lanceur et qu’un éventuel test d’activation a été réussi, mais avant que
+        l’effet ne se manifeste. Le pratiquant de Magicè doit alors remporter un
+        test d’opposition d’Esprit / Magicè contre Esprit / Arcanum du sort
+        d’origine. Ce test subit un malus de - 10 face à de la Vraie-Magie. Il
+        est également possible de supprimer un effet magique actif si ses traces
+        ont été préalablement détectées via le rang 1 de cet Arcanum et
+        analysées via le rang 2.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Pour tenter le contre-sort, le Marqué doit dépenser autant de
+            points d’Esprit que le lanceur du sort originel, moins un. Une
+            réussite critique au test d’opposition permet, si la situation le
+            justifie, de renvoyer le sort contré vers son lanceur.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Pour tenter le contre-sort, le Marqué doit subir une blessure non
+            encaissable dont la gravité dépend du coût en Esprit du sort
+            originel : 0-1 = blessure légère ; 2-3 = blessure grave ; 4 ou plus
+            = blessure mortelle. Une réussite critique au test d’opposition
+            permet d’infliger une blessure équivalente au lanceur du sort
+            contré.</p>
   linkedSkill: ''
 effects: []
 folder: null

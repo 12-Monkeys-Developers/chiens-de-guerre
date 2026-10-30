@@ -19,94 +19,111 @@ system:
     putrides.</p>
   arcanumType: mystique
   rank: 1
-  rankData:
-    name1: Stabilisation
-    cost1:
-      obscurite: 1
-      balance: 1
-      lumiere: 0
-    effect1: >-
-      <p>Ce premier tour permet de stopper instantanément les hémorragies et
-      autres afflictions menaçant la vie d’une victime à très court terme. Il
-      stabilise une personne mourante, comme si un premier soin avait été
-      appliqué avec succès (cf. p. XXX), à la différence près que le lanceur n’a
-      pas besoin de manipuler la cible : un simple contact visuel suffit.</p>
-    label1a: Lumière
-    effect1a: >-
-      <p>Le pratiquant doit réussir un test d’Esprit / Arcanum. En cas de
-      succès, la victime est stabilisée, mais le lanceur intériorise une partie
-      du mal et subit une blessure légère qu’il ne peut pas encaisser.</p>
-    label1b: Balance / Obscurité
-    effect1b: >-
-      <p>Le pratiquant dépense 1 point d’Esprit, puis doit réussir un test
-      d’Esprit / Arcanum pour stabiliser la victime.</p>
-    name2: Soin des blessures
-    cost2:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect2: >-
-      <p>Le pratiquant devient capable de refermer les blessures d’autrui (ou
-      les siennes), même les plus graves. Aucun contact physique n’est
-      nécessaire : un simple contact visuel suffit.</p><ul><li>la blessure du
-      bénéficiaire est alors réduite d’un cran ;</li><li>la victime subit une
-      blessure légère non encaissable. Ce pouvoir est particulièrement efficace
-      en combat, car il permet de soigner un allié tout en blessant un
-      adversaire. En revanche, hors combat, son utilisation devient moralement
-      et pratiquement problématique puisqu’elle exige une victime… Exemple Un
-      Marqué de l’Obscurité lance Soin des blessures en plein combat. Il cherche
-      à soigner un compagnon ayant subi une blessure grave, tout en transférant
-      la souffrance à un ennemi proche. Il dépense 1 point d’Esprit (sa réserve
-      passe à 8) et tente le sort. Il décide d’investir 2 points d’effort, ce
-      qui porte son seuil de réussite à 11 (8 - 3 + 6). Avec en Medicatus, il
-      lance deux d20 et garde le meilleur résultat, à savoir 10 : il vient
-      d’obtenir une réussite. L’ennemi teste son Esprit / Volonté et obtient 8 :
-      c’est insuffisant, le pouvoir prend effet : la blessure grave de l’allié
-      devient blessure légère, l’ennemi subit une blessure légère.</li></ul>
-    label2a: Lumière / Balance
-    effect2a: >-
-      <p>Le pratiquant dépense 1 point d’Esprit puis effectue un test d’Esprit /
-      Arcanum avec un malus dépendant de la gravité de la blessure : Blessure
-      légère : - 1 Blessure grave : - 3 Blessure mortelle : - 6 En cas de
-      réussite, la blessure diminue d’un cran : Mortelle > grave Grave > légère
-      Légère > disparaît</p>
-    label2b: Obscurité
-    effect2b: >-
-      <p>Le pratiquant désigne deux êtres vivants visibles : le bénéficiaire,
-      qui recevra le soin, et la victime, qui subira le contrecoup. Ni l’un ni
-      l’autre ne peuvent être le lanceur. Le Marqué dépense 1 point d’Esprit et
-      cible l’une des blessures du bénéficiaire. Il effectue ensuite un test
-      d’opposition : Esprit / Arcanum (avec malus de -1, -3 ou -6 selon la
-      gravité de la blessure) contre Esprit / Volonté de la victime. En cas de
-      réussite :</p>
-    name3: Soin des maladies et des poisons
-    cost3:
-      obscurite: 1
-      balance: 1
-      lumiere: 0
-    effect3: >-
-      <p>Le pratiquant est désormais capable de résorber directement les effets
-      d’une maladie ou d’un empoisonnement. Un simple contact visuel suffit, et
-      l’effet se manifeste immédiatement, de manière presque miraculeuse. Ce
-      pouvoir est d’autant plus difficile à manipuler que l’affliction à traiter
-      est grave. De plus, il ne peut pas guérir un mal que la médecine
-      traditionnelle serait incapable de traiter. Pour ce tour, les afflictions
-      sont classées en trois catégories : Légères : maladies et poisons bénins ;
-      Graves : afflictions préoccupantes ; Mortelles : maladies ou poisons
-      entraînant la mort à court terme.</p>
-    label3a: Lumière
-    effect3a: >-
-      <p>Le pratiquant effectue un test d’Esprit / Arcanum. En cas de réussite,
-      l’affliction disparait. Cependant, le mal se transfère dans le corps du
-      lanceur sous une autre forme : il subit immédiatement une blessure du même
-      niveau (légère, grave ou mortelle) qu’il ne peut pas encaisser. Ce tour ne
-      peut être tenté qu’une fois par jour et par personne.</p>
-    label3b: Obscurité / Balance
-    effect3b: >-
-      <p>Le pratiquant dépense : 1 point d’Esprit pour une affliction légère 2
-      points d’Esprit pour une affliction grave 3 points d’Esprit pour une
-      affliction mortelle Il doit ensuite réussir un test d’Esprit / Arcanum
-      pour supprimer l’affliction et guérir le patient.</p>
+  ranks:
+    '1':
+      name: Stabilisation
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 0
+      effect: >-
+        <p>Ce premier tour permet de stopper instantanément les hémorragies et
+        autres afflictions menaçant la vie d’une victime à très court terme. Il
+        stabilise une personne mourante, comme si un premier soin avait été
+        appliqué avec succès (cf. p. XXX), à la différence près que le lanceur
+        n’a pas besoin de manipuler la cible : un simple contact visuel
+        suffit.</p>
+      variants:
+        a:
+          label: Lumière
+          effect: >-
+            <p>Le pratiquant doit réussir un test d’Esprit / Arcanum. En cas de
+            succès, la victime est stabilisée, mais le lanceur intériorise une
+            partie du mal et subit une blessure légère qu’il ne peut pas
+            encaisser.</p>
+        b:
+          label: Balance / Obscurité
+          effect: >-
+            <p>Le pratiquant dépense 1 point d’Esprit, puis doit réussir un test
+            d’Esprit / Arcanum pour stabiliser la victime.</p>
+    '2':
+      name: Soin des blessures
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Le pratiquant devient capable de refermer les blessures d’autrui (ou
+        les siennes), même les plus graves. Aucun contact physique n’est
+        nécessaire : un simple contact visuel suffit.</p><ul><li>la blessure du
+        bénéficiaire est alors réduite d’un cran ;</li><li>la victime subit une
+        blessure légère non encaissable. Ce pouvoir est particulièrement
+        efficace en combat, car il permet de soigner un allié tout en blessant
+        un adversaire. En revanche, hors combat, son utilisation devient
+        moralement et pratiquement problématique puisqu’elle exige une victime…
+        Exemple Un Marqué de l’Obscurité lance Soin des blessures en plein
+        combat. Il cherche à soigner un compagnon ayant subi une blessure grave,
+        tout en transférant la souffrance à un ennemi proche. Il dépense 1 point
+        d’Esprit (sa réserve passe à 8) et tente le sort. Il décide d’investir 2
+        points d’effort, ce qui porte son seuil de réussite à 11 (8 - 3 + 6).
+        Avec en Medicatus, il lance deux d20 et garde le meilleur résultat, à
+        savoir 10 : il vient d’obtenir une réussite. L’ennemi teste son Esprit /
+        Volonté et obtient 8 : c’est insuffisant, le pouvoir prend effet : la
+        blessure grave de l’allié devient blessure légère, l’ennemi subit une
+        blessure légère.</li></ul>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Le pratiquant dépense 1 point d’Esprit puis effectue un test
+            d’Esprit / Arcanum avec un malus dépendant de la gravité de la
+            blessure : Blessure légère : - 1 Blessure grave : - 3 Blessure
+            mortelle : - 6 En cas de réussite, la blessure diminue d’un cran :
+            Mortelle > grave Grave > légère Légère > disparaît</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Le pratiquant désigne deux êtres vivants visibles : le
+            bénéficiaire, qui recevra le soin, et la victime, qui subira le
+            contrecoup. Ni l’un ni l’autre ne peuvent être le lanceur. Le Marqué
+            dépense 1 point d’Esprit et cible l’une des blessures du
+            bénéficiaire. Il effectue ensuite un test d’opposition : Esprit /
+            Arcanum (avec malus de -1, -3 ou -6 selon la gravité de la blessure)
+            contre Esprit / Volonté de la victime. En cas de réussite :</p>
+    '3':
+      name: Soin des maladies et des poisons
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 0
+      effect: >-
+        <p>Le pratiquant est désormais capable de résorber directement les
+        effets d’une maladie ou d’un empoisonnement. Un simple contact visuel
+        suffit, et l’effet se manifeste immédiatement, de manière presque
+        miraculeuse. Ce pouvoir est d’autant plus difficile à manipuler que
+        l’affliction à traiter est grave. De plus, il ne peut pas guérir un mal
+        que la médecine traditionnelle serait incapable de traiter. Pour ce
+        tour, les afflictions sont classées en trois catégories : Légères :
+        maladies et poisons bénins ; Graves : afflictions préoccupantes ;
+        Mortelles : maladies ou poisons entraînant la mort à court terme.</p>
+      variants:
+        a:
+          label: Lumière
+          effect: >-
+            <p>Le pratiquant effectue un test d’Esprit / Arcanum. En cas de
+            réussite, l’affliction disparait. Cependant, le mal se transfère
+            dans le corps du lanceur sous une autre forme : il subit
+            immédiatement une blessure du même niveau (légère, grave ou
+            mortelle) qu’il ne peut pas encaisser. Ce tour ne peut être tenté
+            qu’une fois par jour et par personne.</p>
+        b:
+          label: Obscurité / Balance
+          effect: >-
+            <p>Le pratiquant dépense : 1 point d’Esprit pour une affliction
+            légère 2 points d’Esprit pour une affliction grave 3 points d’Esprit
+            pour une affliction mortelle Il doit ensuite réussir un test
+            d’Esprit / Arcanum pour supprimer l’affliction et guérir le
+            patient.</p>
   linkedSkill: ''
 effects: []
 folder: null

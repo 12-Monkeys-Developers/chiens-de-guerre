@@ -529,7 +529,7 @@ export default class CdgBaseActorSheet extends HandlebarsApplicationMixin(sheets
 
     const cost = arcanum.system.activationCost(rank)
     const esprit = this.document.system.abilities.esprit
-    const name = arcanum.system.rankData[`name${rank}`]
+    const name = arcanum.system.ranks[rank]?.name
     if (cost > esprit.value) {
       return ui.notifications.warn(game.i18n.format("CDG.arcanum.notEnoughEsprit", { name, cost, value: esprit.value }))
     }

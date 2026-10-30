@@ -16,6 +16,33 @@ function costByAllegiance(fields) {
 }
 
 /**
+ * Une variante d'un tour : son intitulé, recopié du livre, et ce qui change pour cette voie.
+ * @param {Object} fields `foundry.data.fields`
+ * @returns {SchemaField}
+ */
+function variantSchema(fields) {
+  return new fields.SchemaField({
+    label: new fields.StringField({ required: true, blank: true, nullable: false, initial: "" }),
+    effect: new fields.HTMLField(),
+  })
+}
+
+/**
+ * Le tour d'un rang : nom, coût par allégeance, effet commun et deux variantes.
+ * @param {Object} fields `foundry.data.fields`
+ * @param {number} rank
+ * @returns {SchemaField}
+ */
+function rankSchema(fields, rank) {
+  return new fields.SchemaField({
+    name: new fields.StringField({ required: true, blank: false, nullable: false, initial: `Nom_rang${rank}` }),
+    cost: costByAllegiance(fields),
+    effect: new fields.HTMLField(),
+    variants: new fields.SchemaField({ a: variantSchema(fields), b: variantSchema(fields) }),
+  })
+}
+
+/**
  * Un pouvoir surnaturel, noté de 1 à 3.
  *
  * Physique, il est passif et donne +2 par rang sur une compétence ou un aspect du combat désigné
@@ -44,23 +71,16 @@ export default class CdgArcanumData extends CdgItemData {
     // ce que le tour fait, puis ses deux variantes.
     //
     // `effect` porte le texte commun au tour, celui que le livre imprime avant les puces
-    // d'allégeance ; `effectNa` et `effectNb` ne portent que ce qui change d'une voie à l'autre.
+    // d'allégeance ; les variantes `a` et `b` ne portent que ce qui change d'une voie à l'autre.
     //
     // Les variantes ne sont pas indexées par allégeance : le livre les regroupe librement, tantôt
     // « Lumière / Balance » contre « Obscurité », tantôt « Balance / Obscurité » contre « Lumière ».
     // Leur intitulé est donc du texte, recopié tel qu'il est imprimé.
-    schema.rankData = new fields.SchemaField(
-      [1, 2, 3].reduce((rankFields, rank) => {
-        rankFields[`name${rank}`] = new fields.StringField({ required: true, blank: false, nullable: false, initial: `Nom_rang${rank}` })
-        rankFields[`cost${rank}`] = costByAllegiance(fields)
-        rankFields[`effect${rank}`] = new fields.HTMLField()
-        rankFields[`label${rank}a`] = new fields.StringField({ required: true, blank: true, nullable: false, initial: "" })
-        rankFields[`effect${rank}a`] = new fields.HTMLField()
-        rankFields[`label${rank}b`] = new fields.StringField({ required: true, blank: true, nullable: false, initial: "" })
-        rankFields[`effect${rank}b`] = new fields.HTMLField()
-        return rankFields
-      }, {}),
-    )
+    //
+    // Les rangs sont des sous-schémas nommés `1` à `3`, pas un tableau : un `ArrayField` serait
+    // remplacé en entier à chaque mise à jour, et le formulaire, qui ne renvoie que les champs
+    // présents, effacerait ceux d'un éditeur fermé ou d'un onglet absent.
+    schema.ranks = new fields.SchemaField(Object.fromEntries(Array.from({ length: SYSTEM.ARCANUM_MAX_RANK }, (unused, index) => [index + 1, rankSchema(fields, index + 1)])))
 
     // Arcanum physique : la compétence bonifiée. Vide si l'arcanum agit sur un aspect du combat qui
     // n'est pas une compétence de la liste, auquel cas `effect` le décrit.
@@ -95,7 +115,7 @@ export default class CdgArcanumData extends CdgItemData {
    * @returns {number}
    */
   activationCost(rank) {
-    return this.rankData[`cost${rank}`]?.[this.allegiance] ?? 0
+    return this.ranks[rank]?.cost[this.allegiance] ?? 0
   }
 
   /**
@@ -110,7 +130,7 @@ export default class CdgArcanumData extends CdgItemData {
     if (this.isPassive) return []
     return Array.from({ length: this.rank }, (unused, index) => index + 1).map((rank) => ({
       rank,
-      name: this.rankData[`name${rank}`],
+      name: this.ranks[rank].name,
       cost: this.activationCost(rank),
     }))
   }

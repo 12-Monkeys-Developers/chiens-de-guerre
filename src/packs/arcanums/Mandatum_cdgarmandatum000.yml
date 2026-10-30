@@ -11,87 +11,102 @@ system:
     que pour assurer la confidentialité des missives délivrées.</p>
   arcanumType: mystique
   rank: 1
-  rankData:
-    name1: Langue intuitive
-    cost1:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect1: >-
-      <p>Ce tour permet de s’affranchir de la barrière de la langue afin que le
-      Marqué et son interlocuteur puissent se comprendre alors même qu’ils ne
-      maîtrisent aucun langage en commun.</p>
-    label1a: Lumière
-    effect1a: >-
-      <p>Ce tour vise un individu que le Marqué peut voir. La cible maîtrise
-      alors instantanément à l’oral (mais pas à l’écrit) la langue natale du
-      pratiquant pendant une scène. Elle n’a pas conscience de cet effet, qui
-      lui semble naturel, mais des proches puissent s’en étonner. Chaque usage
-      de ce pouvoir coûte 1 point d’Esprit.</p>
-    label1b: Balance / Obscurité
-    effect1b: >-
-      <p>Chaque usage de ce pouvoir coûte 1 point d’Esprit. Ce tour vise un
-      individu que le Marqué peut voir. Le pratiquant maîtrise alors
-      instantanément à l’oral (mais pas à l’écrit) la langue natale de la cible
-      pendant une scène.</p>
-    name2: Missive codée
-    cost2:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect2: >-
-      <p>Le pratiquant lance ce tour pendant qu’il rédige une missive. Il se met
-      alors instinctivement à écrire en utilisant une technique de cryptage
-      complexe, différente à chaque utilisation. Le cryptage, bien que robuste,
-      n’est pas incassable : un individu extrêmement doué pourrait parvenir à le
-      décoder en y consacrant énormément de temps (de l’ordre d’une semaine).
-      Lorsque le message est enfin rédigé, le Marqué projette mentalement
-      l’image d’une personne qu’il a déjà vue. Cette personne connaîtra
-      instinctivement la méthode de décodage appropriée lorsqu’elle touchera le
-      message, ce qui lui permettra de le lire avec fluidité, comme s’il était
-      écrit en clair.</p>
-    label2a: Lumière / Balance
-    effect2a: >-
-      <p>Chaque usage de ce tour de magie coûte 1 point d’Esprit. Lorsque le
-      destinataire légitime touche pour la première fois le message, il reçoit
-      une brève image mentale de l’expéditeur et ressent instinctivement si la
-      missive a été ou non altérée (sans pour autant savoir si quelqu’un d’autre
-      l’a lue).</p>
-    label2b: Obscurité
-    effect2b: >-
-      <p>Chaque usage de ce tour de magie coûte 1 point d’Esprit. Toute personne
-      autre que le destinataire légitime qui tenterait activement à décrypter le
-      message devra réussir un test d’Esprit / Volonté à la fin de chaque
-      journée de travail ; en cas d’échec, elle encaissera une blessure
-      légère.</p>
-    name3: Message mental
-    cost3:
-      obscurite: 2
-      balance: 2
-      lumiere: 2
-    effect3: >-
-      <p>Le pratiquant entre en communication télépathique avec une personne
-      qu’il peut voir. Le dialogue est à double sens et dure tant que le Marqué
-      le souhaite, sans excéder la durée d’une scène. Une fois la liaison
-      télépathique établie, il est possible d’utiliser en complément le tour «
-      langue intuitive », qui devra être payé séparément.</p>
-    label3a: Lumière / Balance
-    effect3a: >-
-      <p>Chaque utilisation de ce tour coûte 2 points d’Esprit. Si la cible
-      n’est pas prévenue, elle bloquera instinctivement la communication. Le
-      pratiquant devra alors réussir un test d’opposition Esprit / Arcanum
-      contre Esprit / Volonté, sans quoi le tour échouera.</p>
-    label3b: Obscurité
-    effect3b: >-
-      <p>Chaque utilisation de ce tour de magie coûte 2 points d’Esprit. Que la
-      cible soit prévenue ou non, elle ressentira le contact psychique comme une
-      agression et cherchera instinctivement à le bloquer. Le pratiquant doit
-      réussir un test d’opposition Esprit / Arcanum contre Esprit / Volonté,
-      sans quoi le tour échouera. Si le lien télépathique est établi, la cible
-      subira une blessure légère (non encaissable) lorsque la connexion sera
-      rompue, sous la forme d’un violent mal de tête. Certains Marqués utilisent
-      volontairement ce pouvoir non pour communiquer, mais pour agresser leurs
-      victimes en multipliant de brefs contacts psychiques répétés.</p>
+  ranks:
+    '1':
+      name: Langue intuitive
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Ce tour permet de s’affranchir de la barrière de la langue afin que
+        le Marqué et son interlocuteur puissent se comprendre alors même qu’ils
+        ne maîtrisent aucun langage en commun.</p>
+      variants:
+        a:
+          label: Lumière
+          effect: >-
+            <p>Ce tour vise un individu que le Marqué peut voir. La cible
+            maîtrise alors instantanément à l’oral (mais pas à l’écrit) la
+            langue natale du pratiquant pendant une scène. Elle n’a pas
+            conscience de cet effet, qui lui semble naturel, mais des proches
+            puissent s’en étonner. Chaque usage de ce pouvoir coûte 1 point
+            d’Esprit.</p>
+        b:
+          label: Balance / Obscurité
+          effect: >-
+            <p>Chaque usage de ce pouvoir coûte 1 point d’Esprit. Ce tour vise
+            un individu que le Marqué peut voir. Le pratiquant maîtrise alors
+            instantanément à l’oral (mais pas à l’écrit) la langue natale de la
+            cible pendant une scène.</p>
+    '2':
+      name: Missive codée
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Le pratiquant lance ce tour pendant qu’il rédige une missive. Il se
+        met alors instinctivement à écrire en utilisant une technique de
+        cryptage complexe, différente à chaque utilisation. Le cryptage, bien
+        que robuste, n’est pas incassable : un individu extrêmement doué
+        pourrait parvenir à le décoder en y consacrant énormément de temps (de
+        l’ordre d’une semaine). Lorsque le message est enfin rédigé, le Marqué
+        projette mentalement l’image d’une personne qu’il a déjà vue. Cette
+        personne connaîtra instinctivement la méthode de décodage appropriée
+        lorsqu’elle touchera le message, ce qui lui permettra de le lire avec
+        fluidité, comme s’il était écrit en clair.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Chaque usage de ce tour de magie coûte 1 point d’Esprit. Lorsque
+            le destinataire légitime touche pour la première fois le message, il
+            reçoit une brève image mentale de l’expéditeur et ressent
+            instinctivement si la missive a été ou non altérée (sans pour autant
+            savoir si quelqu’un d’autre l’a lue).</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Chaque usage de ce tour de magie coûte 1 point d’Esprit. Toute
+            personne autre que le destinataire légitime qui tenterait activement
+            à décrypter le message devra réussir un test d’Esprit / Volonté à la
+            fin de chaque journée de travail ; en cas d’échec, elle encaissera
+            une blessure légère.</p>
+    '3':
+      name: Message mental
+      cost:
+        obscurite: 2
+        balance: 2
+        lumiere: 2
+      effect: >-
+        <p>Le pratiquant entre en communication télépathique avec une personne
+        qu’il peut voir. Le dialogue est à double sens et dure tant que le
+        Marqué le souhaite, sans excéder la durée d’une scène. Une fois la
+        liaison télépathique établie, il est possible d’utiliser en complément
+        le tour « langue intuitive », qui devra être payé séparément.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Chaque utilisation de ce tour coûte 2 points d’Esprit. Si la
+            cible n’est pas prévenue, elle bloquera instinctivement la
+            communication. Le pratiquant devra alors réussir un test
+            d’opposition Esprit / Arcanum contre Esprit / Volonté, sans quoi le
+            tour échouera.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Chaque utilisation de ce tour de magie coûte 2 points d’Esprit.
+            Que la cible soit prévenue ou non, elle ressentira le contact
+            psychique comme une agression et cherchera instinctivement à le
+            bloquer. Le pratiquant doit réussir un test d’opposition Esprit /
+            Arcanum contre Esprit / Volonté, sans quoi le tour échouera. Si le
+            lien télépathique est établi, la cible subira une blessure légère
+            (non encaissable) lorsque la connexion sera rompue, sous la forme
+            d’un violent mal de tête. Certains Marqués utilisent volontairement
+            ce pouvoir non pour communiquer, mais pour agresser leurs victimes
+            en multipliant de brefs contacts psychiques répétés.</p>
   linkedSkill: ''
 effects: []
 folder: null

@@ -194,37 +194,49 @@ items:
         sur lui.</p>
       arcanumType: physique
       rank: 1
-      rankData:
-        name1: Rang 1
-        cost1:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect1: ''
-        label1a: Lumière / Balance
-        effect1a: ''
-        label1b: Obscurité
-        effect1b: ''
-        name2: Rang 2
-        cost2:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect2: ''
-        label2a: Lumière / Balance
-        effect2a: ''
-        label2b: Obscurité
-        effect2b: ''
-        name3: Rang 3
-        cost3:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect3: ''
-        label3a: Lumière / Balance
-        effect3a: ''
-        label3b: Obscurité
-        effect3b: ''
+      ranks:
+        '1':
+          name: Rang 1
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '2':
+          name: Rang 2
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '3':
+          name: Rang 3
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
       linkedSkill: esquive
     effects: []
     folder: null
@@ -252,37 +264,49 @@ items:
         crochetage de serrures ou le désamorçage de pièges.</p>
       arcanumType: physique
       rank: 1
-      rankData:
-        name1: Rang 1
-        cost1:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect1: ''
-        label1a: Lumière / Balance
-        effect1a: ''
-        label1b: Obscurité
-        effect1b: ''
-        name2: Rang 2
-        cost2:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect2: ''
-        label2a: Lumière / Balance
-        effect2a: ''
-        label2b: Obscurité
-        effect2b: ''
-        name3: Rang 3
-        cost3:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect3: ''
-        label3a: Lumière / Balance
-        effect3a: ''
-        label3b: Obscurité
-        effect3b: ''
+      ranks:
+        '1':
+          name: Rang 1
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '2':
+          name: Rang 2
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '3':
+          name: Rang 3
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
       linkedSkill: melee
     effects: []
     folder: null
@@ -307,37 +331,49 @@ items:
         surprise : ses réflexes sont extraordinaires.</p>
       arcanumType: physique
       rank: 3
-      rankData:
-        name1: Rang 1
-        cost1:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect1: ''
-        label1a: Lumière / Balance
-        effect1a: ''
-        label1b: Obscurité
-        effect1b: ''
-        name2: Rang 2
-        cost2:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect2: ''
-        label2a: Lumière / Balance
-        effect2a: ''
-        label2b: Obscurité
-        effect2b: ''
-        name3: Rang 3
-        cost3:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect3: ''
-        label3a: Lumière / Balance
-        effect3a: ''
-        label3b: Obscurité
-        effect3b: ''
+      ranks:
+        '1':
+          name: Rang 1
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '2':
+          name: Rang 2
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '3':
+          name: Rang 3
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
       linkedSkill: ''
     effects: []
     folder: null
@@ -361,131 +397,148 @@ items:
         rancœur et colère.</p>
       arcanumType: mystique
       rank: 2
-      rankData:
-        name1: Autorité
-        cost1:
-          obscurite: 1
-          balance: 1
-          lumiere: 1
-        effect1: >-
-          <p>Ce tour affecte un petit groupe d’individus qui reconnaissent
-          l’autorité du pratiquant. Le Marqué n’a pas besoin d’être apprécié,
-          mais il faut que les cibles le considèrent comme leur supérieur
-          hiérarchique. Le pouvoir a pour effet de fortifier son emprise sur ses
-          victimes, la plupart du temps ses propres hommes, pour la durée d’une
-          scène. On peut parfaitement combiner les effets de ce tour avec celui
-          du rang 3 ( ) d’Impello, « grandeur fantasmée ».</p>
-        label1a: Lumière
-        effect1a: >-
-          <p>Le pratiquant doit dépenser 1 point d’Esprit puis réussir un test
-          d’Esprit / Arcanum pour influencer ses hommes. Son autorité est alors
-          renforcée de telle façon qu’ils suivent bien plus aisément ses ordres
-          et deviennent peu sensibles aux effets de la peur. Le Marqué devient
-          un meneur d’hommes modèle : sous son commandement et tant qu’il reste
-          honorable, il est improbable que quiconque désobéisse ou prenne la
-          fuite.</p>
-        label1b: Balance / Obscurité
-        effect1b: >-
-          <p>Le pratiquant doit dépenser 1 point d’Esprit puis réussir un test
-          d’Esprit / Arcanum pour renforcer son emprise sur ses hommes. Ses
-          consignes sont alors suivies avec beaucoup plus de conviction et les
-          hésitations liées à la morale ou à l’honneur sont étouffées dans
-          l’œuf. Le Marqué devient un meneur d’hommes à poigne : sous son
-          commandement et tant qu’il ne montre aucune faiblesse, les
-          instructions sont suivies, peu importe l’éthique.</p>
-        name2: Commandement
-        cost2:
-          obscurite: 2
-          balance: 2
-          lumiere: 2
-        effect2: >-
-          <p>Le pratiquant devient capable d’imposer brutalement sa volonté à
-          autrui, au travers d’un ordre bref qu’il sera bien difficile
-          d’ignorer. Ce tour affecte une unique cible qui doit être attentive au
-          Marqué, dans une situation calme. Elle doit être capable de comprendre
-          ses directives sans la moindre ambiguïté, ce qui impose qu’elle puisse
-          l’entendre nettement dans une langue qu’elle maîtrise parfaitement.
-          Ces conditions font que ce tour est inutilisable dans le chaos d’une
-          mêlée. L’ordre donné doit être succinct (une demi-douzaine de mots
-          tout au plus) et ne souffrir d’aucune difficulté d’interprétation : la
-          cible doit pouvoir y répondre intuitivement dans la seconde, sans
-          avoir à s’interroger sur sa signification ou la façon de procéder. La
-          moindre hésitation qu’elle pourrait ressentir aura pour effet de
-          briser la suggestion. Si l’ordre implique de se prolonger dans le
-          temps, il ne le sera que quelques dizaines de secondes au maximum, une
-          durée plus longue entraînant la fin de l’enchantement. Ce tour sera
-          vécu ultérieurement comme un viol psychique, auquel les victimes
-          répondront variablement en fonction de leur psychologie, mais il est
-          vraisemblable qu’elles finissent par nourrir un vif ressentiment, ou
-          pire encore.</p>
-        label2a: Lumière / Balance
-        effect2a: >-
-          <p>L’ordre imposé ne peut en aucune façon mettre en danger la victime,
-          que ce soit directement (« saute de la falaise ») ou indirectement («
-          lâche ton arme »). Le pratiquant dépense alors 2 points d’Esprit et
-          doit réussir un test d’opposition d’Esprit / Arcanum contre Esprit /
-          Volonté de la cible. Cette dernière bénéficiera d’un bonus de + 0 à +
-          5 en fonction du caractère humiliant ou contre nature de l’ordre (+ 0
-          : « faismoi un sourire », + 5 : « retire ton pantalon »).</p>
-        label2b: Obscurité
-        effect2b: >-
-          <p>L’ordre imposé ne peut pas directement menacer la vie de la victime
-          ou la blesser (« tranche-toi la gorge ») mais il peut indirectement la
-          mettre en danger (« allonge-toi au sol »). Le pratiquant dépense alors
-          2 points d’Esprit et doit réussir un test d’opposition d’Esprit /
-          Arcanum contre Esprit / Volonté de la cible. Cette dernière
-          bénéficiera d’un bonus de + 5 à + 10 en fonction du caractère contre
-          nature ou dangereux de l’ordre (+ 5 : « fuis ! », + 10 : « rends-toi
-          »).</p>
-        name3: Asservissement
-        cost3:
-          obscurite: 3
-          balance: 3
-          lumiere: 3
-        effect3: >-
-          <p>À ce stade, le pratiquant est en mesure d’imposer sa volonté à un
-          individu pour le forcer à agir comme il le souhaite, à la façon d’un
-          automate. Le Marqué doit préalablement tenir une longue discussion
-          avec sa victime, avoir un contact visuel prolongé, puis exprimer à
-          haute et intelligible voix ses directives dans une langue parfaitement
-          maîtrisée par la cible. Celles-ci peuvent se révéler aussi complexes
-          et précises qu’il le désire — et il est plutôt dans son intérêt d’être
-          exhaustif. Les directives ne peuvent concerner que des actes : elles
-          ne peuvent pas altérer la mémoire, la personnalité ou les sentiments.
-          Une fois envoûtée, la cible exécute les instructions en faisant preuve
-          d’une capacité d’initiative et d’adaptation très limitée. D’une
-          certaine façon, les directives font office de programmation : des
-          contradictions ou une situation insoluble provoquent l’arrêt brutal de
-          l’enchantement. Pour tout observateur, il est évident que la victime
-          n’est pas dans son état normal et qu’elle ne semble pas pleinement
-          consciente de ses actes. L’emprise mentale se prolonge jusqu’à ce que
-          les directives soient remplies, que la victime soit brutalisée (une
-          claque suffit) ou qu’une heure se soit écoulée. La victime se souvient
-          alors parfaitement de ce qui s’est passé et réagira très négativement
-          à ce qu’elle percevra comme un viol psychique, nourrissant
-          immédiatement un très vif ressentiment à l’égard du Marqué.</p>
-        label3a: Lumière / Balance
-        effect3a: >-
-          <p>Les directives ne peuvent pas mettre en danger la vie de la victime
-          ou la blesser. Si ses actions l’amènent à commettre un acte allant à
-          l’encontre de ses convictions (le meurtre en fait souvent partie),
-          alors l’enchantement se rompt immédiatement. Les ordres peuvent
-          toutefois inclure un déclenchement différé (« quand tu entendras un
-          hennissement, tu ouvriras la porte d’entrée de ta maison »), du moment
-          que la limite d’une heure n’est pas dépassée. Le lancement de ce tour
-          nécessite la dépense de 3 points d’Esprit et la réussite d’un test
-          d’opposition d’Esprit / Arcanum contre Esprit / Volonté. La victime
-          bénéficie d’un bonus de + 5 pour résister.</p>
-        label3b: Obscurité
-        effect3b: >-
-          <p>Les directives peuvent parfaitement inclure des actes allant à
-          l’encontre des convictions profondes de la victime, la blesser ou même
-          la tuer. En revanche les directives doivent être exécutées dans
-          l’instant : le Marqué ne peut pas inclure de clause permettant de
-          différer leur exécution. Le lancement de ce tour nécessite la dépense
-          de 3 points d’Esprit et la réussite d’un test d’opposition Esprit /
-          Arcanum contre Esprit / Volonté. La victime bénéficie d’un bonus de +
-          10 pour résister.</p>
+      ranks:
+        '1':
+          name: Autorité
+          cost:
+            obscurite: 1
+            balance: 1
+            lumiere: 1
+          effect: >-
+            <p>Ce tour affecte un petit groupe d’individus qui reconnaissent
+            l’autorité du pratiquant. Le Marqué n’a pas besoin d’être apprécié,
+            mais il faut que les cibles le considèrent comme leur supérieur
+            hiérarchique. Le pouvoir a pour effet de fortifier son emprise sur
+            ses victimes, la plupart du temps ses propres hommes, pour la durée
+            d’une scène. On peut parfaitement combiner les effets de ce tour
+            avec celui du rang 3 ( ) d’Impello, « grandeur fantasmée ».</p>
+          variants:
+            a:
+              label: Lumière
+              effect: >-
+                <p>Le pratiquant doit dépenser 1 point d’Esprit puis réussir un
+                test d’Esprit / Arcanum pour influencer ses hommes. Son autorité
+                est alors renforcée de telle façon qu’ils suivent bien plus
+                aisément ses ordres et deviennent peu sensibles aux effets de la
+                peur. Le Marqué devient un meneur d’hommes modèle : sous son
+                commandement et tant qu’il reste honorable, il est improbable
+                que quiconque désobéisse ou prenne la fuite.</p>
+            b:
+              label: Balance / Obscurité
+              effect: >-
+                <p>Le pratiquant doit dépenser 1 point d’Esprit puis réussir un
+                test d’Esprit / Arcanum pour renforcer son emprise sur ses
+                hommes. Ses consignes sont alors suivies avec beaucoup plus de
+                conviction et les hésitations liées à la morale ou à l’honneur
+                sont étouffées dans l’œuf. Le Marqué devient un meneur d’hommes
+                à poigne : sous son commandement et tant qu’il ne montre aucune
+                faiblesse, les instructions sont suivies, peu importe
+                l’éthique.</p>
+        '2':
+          name: Commandement
+          cost:
+            obscurite: 2
+            balance: 2
+            lumiere: 2
+          effect: >-
+            <p>Le pratiquant devient capable d’imposer brutalement sa volonté à
+            autrui, au travers d’un ordre bref qu’il sera bien difficile
+            d’ignorer. Ce tour affecte une unique cible qui doit être attentive
+            au Marqué, dans une situation calme. Elle doit être capable de
+            comprendre ses directives sans la moindre ambiguïté, ce qui impose
+            qu’elle puisse l’entendre nettement dans une langue qu’elle maîtrise
+            parfaitement. Ces conditions font que ce tour est inutilisable dans
+            le chaos d’une mêlée. L’ordre donné doit être succinct (une
+            demi-douzaine de mots tout au plus) et ne souffrir d’aucune
+            difficulté d’interprétation : la cible doit pouvoir y répondre
+            intuitivement dans la seconde, sans avoir à s’interroger sur sa
+            signification ou la façon de procéder. La moindre hésitation qu’elle
+            pourrait ressentir aura pour effet de briser la suggestion. Si
+            l’ordre implique de se prolonger dans le temps, il ne le sera que
+            quelques dizaines de secondes au maximum, une durée plus longue
+            entraînant la fin de l’enchantement. Ce tour sera vécu
+            ultérieurement comme un viol psychique, auquel les victimes
+            répondront variablement en fonction de leur psychologie, mais il est
+            vraisemblable qu’elles finissent par nourrir un vif ressentiment, ou
+            pire encore.</p>
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: >-
+                <p>L’ordre imposé ne peut en aucune façon mettre en danger la
+                victime, que ce soit directement (« saute de la falaise ») ou
+                indirectement (« lâche ton arme »). Le pratiquant dépense alors
+                2 points d’Esprit et doit réussir un test d’opposition d’Esprit
+                / Arcanum contre Esprit / Volonté de la cible. Cette dernière
+                bénéficiera d’un bonus de + 0 à + 5 en fonction du caractère
+                humiliant ou contre nature de l’ordre (+ 0 : « faismoi un
+                sourire », + 5 : « retire ton pantalon »).</p>
+            b:
+              label: Obscurité
+              effect: >-
+                <p>L’ordre imposé ne peut pas directement menacer la vie de la
+                victime ou la blesser (« tranche-toi la gorge ») mais il peut
+                indirectement la mettre en danger (« allonge-toi au sol »). Le
+                pratiquant dépense alors 2 points d’Esprit et doit réussir un
+                test d’opposition d’Esprit / Arcanum contre Esprit / Volonté de
+                la cible. Cette dernière bénéficiera d’un bonus de + 5 à + 10 en
+                fonction du caractère contre nature ou dangereux de l’ordre (+ 5
+                : « fuis ! », + 10 : « rends-toi »).</p>
+        '3':
+          name: Asservissement
+          cost:
+            obscurite: 3
+            balance: 3
+            lumiere: 3
+          effect: >-
+            <p>À ce stade, le pratiquant est en mesure d’imposer sa volonté à un
+            individu pour le forcer à agir comme il le souhaite, à la façon d’un
+            automate. Le Marqué doit préalablement tenir une longue discussion
+            avec sa victime, avoir un contact visuel prolongé, puis exprimer à
+            haute et intelligible voix ses directives dans une langue
+            parfaitement maîtrisée par la cible. Celles-ci peuvent se révéler
+            aussi complexes et précises qu’il le désire — et il est plutôt dans
+            son intérêt d’être exhaustif. Les directives ne peuvent concerner
+            que des actes : elles ne peuvent pas altérer la mémoire, la
+            personnalité ou les sentiments. Une fois envoûtée, la cible exécute
+            les instructions en faisant preuve d’une capacité d’initiative et
+            d’adaptation très limitée. D’une certaine façon, les directives font
+            office de programmation : des contradictions ou une situation
+            insoluble provoquent l’arrêt brutal de l’enchantement. Pour tout
+            observateur, il est évident que la victime n’est pas dans son état
+            normal et qu’elle ne semble pas pleinement consciente de ses actes.
+            L’emprise mentale se prolonge jusqu’à ce que les directives soient
+            remplies, que la victime soit brutalisée (une claque suffit) ou
+            qu’une heure se soit écoulée. La victime se souvient alors
+            parfaitement de ce qui s’est passé et réagira très négativement à ce
+            qu’elle percevra comme un viol psychique, nourrissant immédiatement
+            un très vif ressentiment à l’égard du Marqué.</p>
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: >-
+                <p>Les directives ne peuvent pas mettre en danger la vie de la
+                victime ou la blesser. Si ses actions l’amènent à commettre un
+                acte allant à l’encontre de ses convictions (le meurtre en fait
+                souvent partie), alors l’enchantement se rompt immédiatement.
+                Les ordres peuvent toutefois inclure un déclenchement différé («
+                quand tu entendras un hennissement, tu ouvriras la porte
+                d’entrée de ta maison »), du moment que la limite d’une heure
+                n’est pas dépassée. Le lancement de ce tour nécessite la dépense
+                de 3 points d’Esprit et la réussite d’un test d’opposition
+                d’Esprit / Arcanum contre Esprit / Volonté. La victime bénéficie
+                d’un bonus de + 5 pour résister.</p>
+            b:
+              label: Obscurité
+              effect: >-
+                <p>Les directives peuvent parfaitement inclure des actes allant
+                à l’encontre des convictions profondes de la victime, la blesser
+                ou même la tuer. En revanche les directives doivent être
+                exécutées dans l’instant : le Marqué ne peut pas inclure de
+                clause permettant de différer leur exécution. Le lancement de ce
+                tour nécessite la dépense de 3 points d’Esprit et la réussite
+                d’un test d’opposition Esprit / Arcanum contre Esprit / Volonté.
+                La victime bénéficie d’un bonus de + 10 pour résister.</p>
       linkedSkill: ''
     effects: []
     folder: null
@@ -510,37 +563,49 @@ items:
         aux effets des maladies ou des poisons.</p>
       arcanumType: physique
       rank: 2
-      rankData:
-        name1: Rang 1
-        cost1:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect1: ''
-        label1a: Lumière / Balance
-        effect1a: ''
-        label1b: Obscurité
-        effect1b: ''
-        name2: Rang 2
-        cost2:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect2: ''
-        label2a: Lumière / Balance
-        effect2a: ''
-        label2b: Obscurité
-        effect2b: ''
-        name3: Rang 3
-        cost3:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect3: ''
-        label3a: Lumière / Balance
-        effect3a: ''
-        label3b: Obscurité
-        effect3b: ''
+      ranks:
+        '1':
+          name: Rang 1
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '2':
+          name: Rang 2
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '3':
+          name: Rang 3
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
       linkedSkill: ''
     effects: []
     folder: null
@@ -559,86 +624,100 @@ items:
         l’affronter.</p>
       arcanumType: mystique
       rank: 2
-      rankData:
-        name1: Passage sans traces
-        cost1:
-          obscurite: 1
-          balance: 1
-          lumiere: 1
-        effect1: >-
-          <p>Ce tour de magie permet au bénéficiaire, pendant une heure, de ne
-          laisser aucune piste lors de ses déplacements. Il ne laisse ni
-          d’empreintes au sol, ni traces de doigts, ni d’odeur. Employé par une
-          personne précautionneuse, il devient presque impossible à pister.</p>
-        label1a: Lumière
-        effect1a: >-
-          <p>Le Marqué dépense 1 point d’Esprit, puis doit réussir un test
-          d’Esprit / Arcanum pour activer ce pouvoir. Au moment où il l’active,
-          il peut décider de l’étendre à une ou plusieurs personnes proches
-          (maximum 10). Dans ce cas, son test subit un malus de - 1 par cible en
-          plus de lui-même.</p>
-        label1b: Balance / Obscurité
-        effect1b: >-
-          <p>Le Marqué dépense 1 point d’Esprit ; le tour prend alors effet
-          uniquement pour lui-même.</p>
-        name2: Refuge des ombres
-        cost2:
-          obscurite: 2
-          balance: 1
-          lumiere: 1
-        effect2: >-
-          <p>Pour lancer ce tour, le Marqué doit se glisser dans une zone
-          d’ombre et ne pas être observé par quiconque. Il devient alors
-          totalement invisible (techniquement, il reste visible, mais les gens
-          ignorent instinctivement sa présence). Il le demeure tant qu’il reste
-          parfaitement immobile et ne produit aucun bruit. Sa présence est
-          toutefois révélée en cas de fouille active ou de lumière soudaine. Ce
-          tour se révèle particulièrement utile pour semer des poursuivants ou
-          tendre une embuscade.</p>
-        label2a: Lumière / Balance
-        effect2a: >-
-          <p>Le Marqué doit dépenser 1 point d’Esprit pour activer ce tour.
-          Après une minute, il devra dépenser 1 point d’Esprit supplémentaire
-          pour prolonger l’effet d’une minute, et ainsi de suite tant qu’il le
-          souhaite et peut en payer le coût.</p>
-        label2b: Obscurité
-        effect2b: >-
-          <p>Le Marqué doit dépenser 2 points d’Esprit pour activer ce tour. Il
-          demeure alors indéfiniment invisible, tant qu’il respecte les
-          conditions.</p>
-        name3: Regards aveugles
-        cost3:
-          obscurite: 3
-          balance: 2
-          lumiere: 2
-        effect3: >-
-          <p>Les observateurs cessent de voir le Marqué, même si ce pouvoir est
-          activé en pleine lumière et devant témoins. Il ne devient pas
-          réellement invisible : il s’agit d’un effet psychique. Les gens
-          détournent le regard, s’écartent de son chemin et ignorent
-          involontairement sa présence. Cet effet n’affecte que la vue, et non
-          l’ouïe ni l’odorat. L’effet cesse immédiatement dès que le pratiquant
-          révèle sa présence à une tierce personne (s’il produit un bruit, ouvre
-          une porte, porte un coup, déplace un objet, etc.). Cela n’empêche pas
-          le bénéficiaire de se déplacer, mais il a intérêt à le faire
-          silencieusement et sans toucher à quoi que ce soit. S’il reste
-          immobile, une fouille active du lieu ne peut pas le révéler — à moins
-          d’utiliser un animal doté d’un excellent flair.</p><ul><li>+ 0 : une
-          seule personne aux alentours qui ne lui prête pas particulièrement
-          attention ;</li><li>- 5 : face à un individu qui le surveille
-          attentivement ;</li><li>- 10 : au milieu d’une foule. En cas d’échec,
-          le sort ne prend pas effet. Le tour dure une minute, prolongeable au
-          prix de 1 point d’Esprit par minute supplémentaire.</li></ul>
-        label3a: Lumière / Balance
-        effect3a: >-
-          <p>Le tour est lancé pour 2 points d’Esprit. Si le pratiquant est
-          observé au moment de l’activation, il doit réussir un test d’Esprit /
-          Arcanum assorti d’un modificateur de + 0 à - 10 :</p>
-        label3b: Obscurité
-        effect3b: >-
-          <p>Ce tour est lancé pour 3 points d’Esprit, que le pratiquant soit
-          observé ou non. Il demeure alors indéfiniment invisible, tant qu’il
-          respecte les conditions.</p>
+      ranks:
+        '1':
+          name: Passage sans traces
+          cost:
+            obscurite: 1
+            balance: 1
+            lumiere: 1
+          effect: >-
+            <p>Ce tour de magie permet au bénéficiaire, pendant une heure, de ne
+            laisser aucune piste lors de ses déplacements. Il ne laisse ni
+            d’empreintes au sol, ni traces de doigts, ni d’odeur. Employé par
+            une personne précautionneuse, il devient presque impossible à
+            pister.</p>
+          variants:
+            a:
+              label: Lumière
+              effect: >-
+                <p>Le Marqué dépense 1 point d’Esprit, puis doit réussir un test
+                d’Esprit / Arcanum pour activer ce pouvoir. Au moment où il
+                l’active, il peut décider de l’étendre à une ou plusieurs
+                personnes proches (maximum 10). Dans ce cas, son test subit un
+                malus de - 1 par cible en plus de lui-même.</p>
+            b:
+              label: Balance / Obscurité
+              effect: >-
+                <p>Le Marqué dépense 1 point d’Esprit ; le tour prend alors
+                effet uniquement pour lui-même.</p>
+        '2':
+          name: Refuge des ombres
+          cost:
+            obscurite: 2
+            balance: 1
+            lumiere: 1
+          effect: >-
+            <p>Pour lancer ce tour, le Marqué doit se glisser dans une zone
+            d’ombre et ne pas être observé par quiconque. Il devient alors
+            totalement invisible (techniquement, il reste visible, mais les gens
+            ignorent instinctivement sa présence). Il le demeure tant qu’il
+            reste parfaitement immobile et ne produit aucun bruit. Sa présence
+            est toutefois révélée en cas de fouille active ou de lumière
+            soudaine. Ce tour se révèle particulièrement utile pour semer des
+            poursuivants ou tendre une embuscade.</p>
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: >-
+                <p>Le Marqué doit dépenser 1 point d’Esprit pour activer ce
+                tour. Après une minute, il devra dépenser 1 point d’Esprit
+                supplémentaire pour prolonger l’effet d’une minute, et ainsi de
+                suite tant qu’il le souhaite et peut en payer le coût.</p>
+            b:
+              label: Obscurité
+              effect: >-
+                <p>Le Marqué doit dépenser 2 points d’Esprit pour activer ce
+                tour. Il demeure alors indéfiniment invisible, tant qu’il
+                respecte les conditions.</p>
+        '3':
+          name: Regards aveugles
+          cost:
+            obscurite: 3
+            balance: 2
+            lumiere: 2
+          effect: >-
+            <p>Les observateurs cessent de voir le Marqué, même si ce pouvoir
+            est activé en pleine lumière et devant témoins. Il ne devient pas
+            réellement invisible : il s’agit d’un effet psychique. Les gens
+            détournent le regard, s’écartent de son chemin et ignorent
+            involontairement sa présence. Cet effet n’affecte que la vue, et non
+            l’ouïe ni l’odorat. L’effet cesse immédiatement dès que le
+            pratiquant révèle sa présence à une tierce personne (s’il produit un
+            bruit, ouvre une porte, porte un coup, déplace un objet, etc.). Cela
+            n’empêche pas le bénéficiaire de se déplacer, mais il a intérêt à le
+            faire silencieusement et sans toucher à quoi que ce soit. S’il reste
+            immobile, une fouille active du lieu ne peut pas le révéler — à
+            moins d’utiliser un animal doté d’un excellent flair.</p><ul><li>+ 0
+            : une seule personne aux alentours qui ne lui prête pas
+            particulièrement attention ;</li><li>- 5 : face à un individu qui le
+            surveille attentivement ;</li><li>- 10 : au milieu d’une foule. En
+            cas d’échec, le sort ne prend pas effet. Le tour dure une minute,
+            prolongeable au prix de 1 point d’Esprit par minute
+            supplémentaire.</li></ul>
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: >-
+                <p>Le tour est lancé pour 2 points d’Esprit. Si le pratiquant
+                est observé au moment de l’activation, il doit réussir un test
+                d’Esprit / Arcanum assorti d’un modificateur de + 0 à - 10 :</p>
+            b:
+              label: Obscurité
+              effect: >-
+                <p>Ce tour est lancé pour 3 points d’Esprit, que le pratiquant
+                soit observé ou non. Il demeure alors indéfiniment invisible,
+                tant qu’il respecte les conditions.</p>
       linkedSkill: ''
     effects: []
     folder: null
@@ -674,37 +753,49 @@ items:
         d’un animal, voire d’un être humain devrait faire l’affaire…</p>
       arcanumType: physique
       rank: 3
-      rankData:
-        name1: Rang 1
-        cost1:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect1: ''
-        label1a: Lumière / Balance
-        effect1a: ''
-        label1b: Obscurité
-        effect1b: ''
-        name2: Rang 2
-        cost2:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect2: ''
-        label2a: Lumière / Balance
-        effect2a: ''
-        label2b: Obscurité
-        effect2b: ''
-        name3: Rang 3
-        cost3:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect3: ''
-        label3a: Lumière / Balance
-        effect3a: ''
-        label3b: Obscurité
-        effect3b: ''
+      ranks:
+        '1':
+          name: Rang 1
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '2':
+          name: Rang 2
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '3':
+          name: Rang 3
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
       linkedSkill: ''
     effects: []
     folder: null
@@ -733,37 +824,49 @@ items:
         exécuter des ordres à des subalternes réfractaires.</p>
       arcanumType: physique
       rank: 2
-      rankData:
-        name1: Rang 1
-        cost1:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect1: ''
-        label1a: Lumière / Balance
-        effect1a: ''
-        label1b: Obscurité
-        effect1b: ''
-        name2: Rang 2
-        cost2:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect2: ''
-        label2a: Lumière / Balance
-        effect2a: ''
-        label2b: Obscurité
-        effect2b: ''
-        name3: Rang 3
-        cost3:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect3: ''
-        label3a: Lumière / Balance
-        effect3a: ''
-        label3b: Obscurité
-        effect3b: ''
+      ranks:
+        '1':
+          name: Rang 1
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '2':
+          name: Rang 2
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
+        '3':
+          name: Rang 3
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: ''
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: ''
+            b:
+              label: Obscurité
+              effect: ''
       linkedSkill: ''
     effects: []
     folder: null
@@ -788,101 +891,119 @@ items:
         toutefois toujours la dépense d’une action.</p>
       arcanumType: mystique
       rank: 2
-      rankData:
-        name1: Moment de flottement
-        cost1:
-          obscurite: 0
-          balance: 0
-          lumiere: 0
-        effect1: >-
-          <p>Ce tour de magie agit sur un groupe. Il impose un très bref moment
-          de flottement, sans conséquence en soi, mais que le pratiquant peut
-          utiliser à son avantage. Utilisé lors d’un discours, il force le
-          locuteur à marquer une courte pause, suffisante pour que le Marqué
-          puisse l’interrompre et placer un argument choc ou tout simplement
-          reprendre la parole. Utilisé pendant un combat, il offre la
-          possibilité au pratiquant de lancer des pourparlers — mais il a alors
-          intérêt à se montrer extrêmement convainquant. « Moment de flottement
-          » n’impose rien d’autre que cette interruption, et en particulier
-          certainement pas que les interlocuteurs soient réceptifs aux
-          propositions : il ne fait que créer une opportunité. Ce tour ne permet
-          pas d’utiliser un quelconque effet de surprise à son avantage.</p>
-        label1a: Lumière
-        effect1a: >-
-          <p>Le pratiquant doit réussir un test d’Esprit / Arcanum pour lancer
-          ce tour. Que ce soit un succès ou un échec, le pouvoir ne pourra pas
-          être à nouveau utilisé pendant cette scène. En cas de succès, il
-          bénéficie en plus des effets normaux d’un bonus de + 2 à tous les
-          tests sociaux reposant sur l’autorité pendant la scène.</p>
-        label1b: Balance / Obscurité
-        effect1b: >-
-          <p>Le pratiquant doit réussir un test d’Esprit / Arcanum pour lancer
-          ce tour. Que ce soit un succès ou un échec, le pouvoir ne pourra pas
-          être à nouveau utilisé pendant cette scène. En cas de succès, il
-          bénéficie en plus des effets normaux d’un bonus de + 2 à tous les
-          tests sociaux reposant sur le mensonge pendant la scène.</p>
-        name2: Bipolarisation du groupe
-        cost2:
-          obscurite: 1
-          balance: 1
-          lumiere: 1
-        effect2: >-
-          <p>« Bipolarisation du groupe » ne peut prendre effet que sur un
-          groupe restreint (4 à 20 individus), pendant une discussion civilisée.
-          Il focalise l’attention de tous les participants sur deux personnes :
-          d’une part le pratiquant et d’autre part l’individu dont l’ascendant
-          social est le plus fort. Ce tour rend passifs les autres participants,
-          qui se contentent d’écouter docilement ce que les deux protagonistes
-          ont à dire. Celui des deux orateurs qui remporte la joute oratoire sur
-          l’autre aura la certitude de remporter également l’adhésion du groupe,
-          au moins pour cette scène. Ce tour cristallise donc tous les débats
-          sur deux champions, de telle façon que les individualités et
-          dissidences soient temporairement muselées. Une fois la scène
-          terminée, chacun rationalisera ce qui s’est passé en mettant cela sur
-          le compte de la dynamique de groupe.</p>
-        label2a: Lumière / Balance
-        effect2a: >-
-          <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un test
-          d’opposition d’Esprit / Arcanum contre Esprit / Volonté, l’adversaire
-          testé étant celui qui deviendrait l’orateur concurrent en cas de
-          réussite. Si le tour prend effet et que le pratiquant sort vainqueur
-          de la joute verbale qui s’ensuit, il se nimbe d’une plus grande
-          crédibilité auprès du groupe affecté pendant quelques jours.</p>
-        label2b: Obscurité
-        effect2b: >-
-          <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un test
-          d’opposition d’Esprit / Arcanum contre Esprit / Volonté, l’adversaire
-          testé étant celui qui deviendrait l’orateur concurrent en cas de
-          réussite. Si le tour prend effet et que le pratiquant sort vainqueur
-          de la joute verbale qui s’ensuit, l’orateur concurrent devient
-          socialement décrédibilisé pendant quelques jours.</p>
-        name3: Grandeur fantasmée
-        cost3:
-          obscurite: 1
-          balance: 1
-          lumiere: 1
-        effect3: >-
-          <p>La prestance du Marqué est temporairement renforcée le temps d’une
-          scène, de sorte qu’il apparaisse comme appartenant à une classe
-          sociale similaire à celle de la personne la plus influente de
-          l’assemblée. Ainsi, un simple soldat pourrait discuter sur un pied
-          d’égalité avec son officier ; il pourrait s’adresser à un membre de la
-          noblesse sans que cela paraisse incongru, voire parler à un roi comme
-          s’il était son pair. Les effets demeurent subtils : les interlocuteurs
-          attribuent naturellement cette aisance à un mot bien placé, à un port
-          assuré ou à un visage affable. Cet effet dure une scène.</p>
-        label3a: Lumière / Balance
-        effect3a: >-
-          <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un test
-          d’Esprit / Arcanum à - 2 pour lancer ce tour. En cas de succès, il
-          bénéficie en outre d’un bonus de + 4 à tous ses tests sociaux reposant
-          sur l’autorité pendant la scène.</p>
-        label3b: Obscurité
-        effect3b: >-
-          <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un test
-          d’Esprit / Arcanum à - 2 pour lancer ce tour. En cas de succès, il
-          bénéficie en outre d’un bonus de + 4 à tous ses tests sociaux reposant
-          sur le mensonge pendant la scène.</p>
+      ranks:
+        '1':
+          name: Moment de flottement
+          cost:
+            obscurite: 0
+            balance: 0
+            lumiere: 0
+          effect: >-
+            <p>Ce tour de magie agit sur un groupe. Il impose un très bref
+            moment de flottement, sans conséquence en soi, mais que le
+            pratiquant peut utiliser à son avantage. Utilisé lors d’un discours,
+            il force le locuteur à marquer une courte pause, suffisante pour que
+            le Marqué puisse l’interrompre et placer un argument choc ou tout
+            simplement reprendre la parole. Utilisé pendant un combat, il offre
+            la possibilité au pratiquant de lancer des pourparlers — mais il a
+            alors intérêt à se montrer extrêmement convainquant. « Moment de
+            flottement » n’impose rien d’autre que cette interruption, et en
+            particulier certainement pas que les interlocuteurs soient réceptifs
+            aux propositions : il ne fait que créer une opportunité. Ce tour ne
+            permet pas d’utiliser un quelconque effet de surprise à son
+            avantage.</p>
+          variants:
+            a:
+              label: Lumière
+              effect: >-
+                <p>Le pratiquant doit réussir un test d’Esprit / Arcanum pour
+                lancer ce tour. Que ce soit un succès ou un échec, le pouvoir ne
+                pourra pas être à nouveau utilisé pendant cette scène. En cas de
+                succès, il bénéficie en plus des effets normaux d’un bonus de +
+                2 à tous les tests sociaux reposant sur l’autorité pendant la
+                scène.</p>
+            b:
+              label: Balance / Obscurité
+              effect: >-
+                <p>Le pratiquant doit réussir un test d’Esprit / Arcanum pour
+                lancer ce tour. Que ce soit un succès ou un échec, le pouvoir ne
+                pourra pas être à nouveau utilisé pendant cette scène. En cas de
+                succès, il bénéficie en plus des effets normaux d’un bonus de +
+                2 à tous les tests sociaux reposant sur le mensonge pendant la
+                scène.</p>
+        '2':
+          name: Bipolarisation du groupe
+          cost:
+            obscurite: 1
+            balance: 1
+            lumiere: 1
+          effect: >-
+            <p>« Bipolarisation du groupe » ne peut prendre effet que sur un
+            groupe restreint (4 à 20 individus), pendant une discussion
+            civilisée. Il focalise l’attention de tous les participants sur deux
+            personnes : d’une part le pratiquant et d’autre part l’individu dont
+            l’ascendant social est le plus fort. Ce tour rend passifs les autres
+            participants, qui se contentent d’écouter docilement ce que les deux
+            protagonistes ont à dire. Celui des deux orateurs qui remporte la
+            joute oratoire sur l’autre aura la certitude de remporter également
+            l’adhésion du groupe, au moins pour cette scène. Ce tour cristallise
+            donc tous les débats sur deux champions, de telle façon que les
+            individualités et dissidences soient temporairement muselées. Une
+            fois la scène terminée, chacun rationalisera ce qui s’est passé en
+            mettant cela sur le compte de la dynamique de groupe.</p>
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: >-
+                <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un
+                test d’opposition d’Esprit / Arcanum contre Esprit / Volonté,
+                l’adversaire testé étant celui qui deviendrait l’orateur
+                concurrent en cas de réussite. Si le tour prend effet et que le
+                pratiquant sort vainqueur de la joute verbale qui s’ensuit, il
+                se nimbe d’une plus grande crédibilité auprès du groupe affecté
+                pendant quelques jours.</p>
+            b:
+              label: Obscurité
+              effect: >-
+                <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un
+                test d’opposition d’Esprit / Arcanum contre Esprit / Volonté,
+                l’adversaire testé étant celui qui deviendrait l’orateur
+                concurrent en cas de réussite. Si le tour prend effet et que le
+                pratiquant sort vainqueur de la joute verbale qui s’ensuit,
+                l’orateur concurrent devient socialement décrédibilisé pendant
+                quelques jours.</p>
+        '3':
+          name: Grandeur fantasmée
+          cost:
+            obscurite: 1
+            balance: 1
+            lumiere: 1
+          effect: >-
+            <p>La prestance du Marqué est temporairement renforcée le temps
+            d’une scène, de sorte qu’il apparaisse comme appartenant à une
+            classe sociale similaire à celle de la personne la plus influente de
+            l’assemblée. Ainsi, un simple soldat pourrait discuter sur un pied
+            d’égalité avec son officier ; il pourrait s’adresser à un membre de
+            la noblesse sans que cela paraisse incongru, voire parler à un roi
+            comme s’il était son pair. Les effets demeurent subtils : les
+            interlocuteurs attribuent naturellement cette aisance à un mot bien
+            placé, à un port assuré ou à un visage affable. Cet effet dure une
+            scène.</p>
+          variants:
+            a:
+              label: Lumière / Balance
+              effect: >-
+                <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un
+                test d’Esprit / Arcanum à - 2 pour lancer ce tour. En cas de
+                succès, il bénéficie en outre d’un bonus de + 4 à tous ses tests
+                sociaux reposant sur l’autorité pendant la scène.</p>
+            b:
+              label: Obscurité
+              effect: >-
+                <p>Le pratiquant dépense 1 point d’Esprit et doit réussir un
+                test d’Esprit / Arcanum à - 2 pour lancer ce tour. En cas de
+                succès, il bénéficie en outre d’un bonus de + 4 à tous ses tests
+                sociaux reposant sur le mensonge pendant la scène.</p>
       linkedSkill: ''
     effects: []
     folder: null

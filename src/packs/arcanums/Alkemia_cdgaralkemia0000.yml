@@ -22,118 +22,133 @@ system:
     des besoins.</p>
   arcanumType: mystique
   rank: 1
-  rankData:
-    name1: Concoctions
-    cost1:
-      obscurite: 0
-      balance: 0
-      lumiere: 0
-    effect1: >-
-      <p>Le Marqué peut élaborer des concoctions simples. Il sait réaliser
-      toutes les recettes suivantes :</p><ul><li>Concoction de coup de fouet :
-      récupération immédiate d’un point en Corps, Vivacité ou Esprit, sous
-      réserve que le buveur réussisse un test de Corps /
-      Vigueur.</li><li>Concoction de guérison : bonus de + 2 au prochain test de
-      rétablissement (à la fin de la journée) ; non
-      cumulable.</li><li>Concoction de santé : bonus de + 2 pendant 24 h à tous
-      les tests visant à guérir une maladie ou une affliction ; non
-      cumulable.</li><li>Concoction d’antidote : bonus de + 2 pendant 24 h à
-      tous les tests effectués pour combattre un empoisonnement ; non
-      cumulable.</li><li>Concoction de vigueur : bonus de + 2 au prochain test
-      sous 24 h pour encaisser une blessure ; non cumulable.</li><li>Concoction
-      d’endurance : bonus de + 2 pendant 24 h à tous les tests visant à résister
-      à la fatigue ou aux conditions climatiques ; non
-      cumulable.</li><li>Concoction empoisonnée : doit être ingérée ; la victime
-      effectue un test de Corps / Endurance à + 2 ; réussite critique : aucun
-      effet ; réussite : blessure légère ; échec : blessure grave ; échec
-      critique : blessure mortelle. Préparer une concoction demande une dose
-      d’ingrédients, 15 minutes et la réussite d’un test d’Esprit / Arcanum à +
-      2.</li></ul>
-    label1a: Lumière / Balance
-    effect1a: <p>Une fois préparée, une concoction se conserve 72 h.</p>
-    label1b: Obscurité
-    effect1b: >-
-      <p>S’il ne dispose pas des ingrédients, le pratiquant peut les remplacer
-      par son sang, ce qui lui inflige une blessure légère. Une fois préparée,
-      une concoction ne se conserve que 24 h.</p>
-    name2: Élixirs
-    cost2:
-      obscurite: 0
-      balance: 0
-      lumiere: 0
-    effect2: >-
-      <p>L’alchimiste sait préparer des élixirs, des préparations plus
-      puissantes mais plus délicates à élaborer :</p><ul><li>Élixir de feu : une
-      petite dose de mélange inflammable (poix, goudron, soufre,
-      etc.).</li><li>Élixir de récupération : regain supplémentaire d’un point
-      dans chaque caractéristique après un repos ; non cumulable.</li><li>Élixir
-      de guérison : bonus de + 4 au prochain test de rétablissement (à la fin de
-      la journée) ; non cumulable.</li><li>Élixir de santé : bonus de + 4
-      pendant 24 h à tous les tests visant à guérir une maladie ou une
-      affliction ; non cumulable.</li><li>Élixir d’antidote : bonus de + 4
-      pendant 24 h à tous les tests effectués pour combattre un empoisonnement ;
-      non cumulable.</li><li>Élixir de vigueur : bonus de + 4 au prochain test
-      sous 24 h pour encaisser une blessure ; non cumulable.</li><li>Élixir
-      d’endurance : bonus de + 4 pendant 24 h à tous les tests visant à résister
-      à la fatigue ou aux conditions climatiques ; non cumulable.</li><li>Élixir
-      empoisonné : doit être ingéré ou appliqué sur une lame ; dans le second
-      cas, le poison ne fait effet que si le premier coup porté avec l’arme
-      inflige au moins une blessure légère ; la victime effectue un test de
-      Corps / Endurance à - 2 ; réussite critique : aucun effet ; réussite :
-      blessure légère ; échec : blessure grave ; échec critique : blessure
-      mortelle. Préparer un élixir demande une dose d’ingrédients, 30 minutes et
-      la réussite d’un test d’Esprit / Arcanum à - 2.</li></ul>
-    label2a: Lumière / Balance
-    effect2a: <p>Une fois préparé, un élixir se conserve 72 h.</p>
-    label2b: Obscurité
-    effect2b: >-
-      <p>S’il ne dispose pas des ingrédients, le pratiquant peut les remplacer
-      avec son sang, ce qui lui inflige une blessure légère. Une fois préparé,
-      un élixir ne se conserve que 24 h.</p>
-    name3: Enchantements
-    cost3:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect3: >-
-      <p>Le pratiquant connaît les secrets complexes des enchantements, de sorte
-      qu’il puisse imbiber un objet de pouvoirs magiques via des inscriptions
-      profanes (runes, glyphes, sceaux, etc.). L’objet à préparer doit être au
-      minimum de bonne qualité (cf. Chiens de guerre - Chroniques du meneur, «
-      Qualité des objets », p. XXX). Le processus d’enchantement est long et
-      laborieux, de l’ordre d’une semaine de travail ininterrompu. Une fois
-      enchanté, un objet confère à son utilisateur un bonus de + 2 à un type
-      d’action correspondant à sa fonction première. Un même objet ne peut être
-      enchanté qu’une seule fois. Des outils de crochetage enchantés donneraient
-      un + 2 aux jets de serrurerie, une épée enchantée accorderait un bonus de
-      + 2 aux tests d’attaque ou de dégâts selon qu’elle soit plutôt légère ou
-      affûtée, une armure ferait bénéficier d’un bonus de + 2 aux tests
-      d’encaissement, etc. Ce bonus est cumulable avec celui procuré par un
-      éventuel objet de qualité exceptionnelle. En plus des autres coûts, un
-      enchantement nécessite l’engagement de 1 point d’Esprit. Tant que l’objet
-      reste actif, ce point ne peut plus être récupéré par quelque moyen que ce
-      soit. Un enchantement coûte donc virtuellement 1 point d’Esprit définitif.
-      L’enchantement est permanent, mais est dissipé par la mort de son créateur
-      ou si ce dernier effectue un contre-rituel (une journée de travaux
-      magiques). Dans ce dernier cas, le point d’Esprit investi est récupéré. Le
-      premier objet enchanté produit par un Marqué est appelé son « artefact » :
-      il a la particularité de ne pas coûter l’habituel point d’Esprit et n’a
-      d’effet qu’entre ses mains. Rien n’empêche un Marqué d’enchanter un objet
-      pour autrui, mais il doit payer le coût en Esprit — c’est donc une faveur
-      rarissime.</p>
-    label3a: Lumière / Balance
-    effect3a: >-
-      <p>Outre l’objet de bonne qualité au minimum, les composants nécessaires à
-      l’enchantement coûtent excessivement cher (20 D) et ne peuvent en aucun
-      cas rentrer dans les ingrédients quotidiens gratuits.</p>
-    label3b: Obscurité
-    effect3b: >-
-      <p>L’enchantement va puiser dans l’énergie vitale et la destinée du
-      Marqué, ce qui se traduit par des stigmates surnaturels. Les trois
-      prochaines fois qu’il obtiendra un échec critique en jeu, quelle que soit
-      la nature du test, il subira une blessure grave en plus des effets normaux
-      (du sang coule par ses oreilles, il est victime d’une crise cardiaque, il
-      subit une combustion spontanée, etc.).</p>
+  ranks:
+    '1':
+      name: Concoctions
+      cost:
+        obscurite: 0
+        balance: 0
+        lumiere: 0
+      effect: >-
+        <p>Le Marqué peut élaborer des concoctions simples. Il sait réaliser
+        toutes les recettes suivantes :</p><ul><li>Concoction de coup de fouet :
+        récupération immédiate d’un point en Corps, Vivacité ou Esprit, sous
+        réserve que le buveur réussisse un test de Corps /
+        Vigueur.</li><li>Concoction de guérison : bonus de + 2 au prochain test
+        de rétablissement (à la fin de la journée) ; non
+        cumulable.</li><li>Concoction de santé : bonus de + 2 pendant 24 h à
+        tous les tests visant à guérir une maladie ou une affliction ; non
+        cumulable.</li><li>Concoction d’antidote : bonus de + 2 pendant 24 h à
+        tous les tests effectués pour combattre un empoisonnement ; non
+        cumulable.</li><li>Concoction de vigueur : bonus de + 2 au prochain test
+        sous 24 h pour encaisser une blessure ; non
+        cumulable.</li><li>Concoction d’endurance : bonus de + 2 pendant 24 h à
+        tous les tests visant à résister à la fatigue ou aux conditions
+        climatiques ; non cumulable.</li><li>Concoction empoisonnée : doit être
+        ingérée ; la victime effectue un test de Corps / Endurance à + 2 ;
+        réussite critique : aucun effet ; réussite : blessure légère ; échec :
+        blessure grave ; échec critique : blessure mortelle. Préparer une
+        concoction demande une dose d’ingrédients, 15 minutes et la réussite
+        d’un test d’Esprit / Arcanum à + 2.</li></ul>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: <p>Une fois préparée, une concoction se conserve 72 h.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>S’il ne dispose pas des ingrédients, le pratiquant peut les
+            remplacer par son sang, ce qui lui inflige une blessure légère. Une
+            fois préparée, une concoction ne se conserve que 24 h.</p>
+    '2':
+      name: Élixirs
+      cost:
+        obscurite: 0
+        balance: 0
+        lumiere: 0
+      effect: >-
+        <p>L’alchimiste sait préparer des élixirs, des préparations plus
+        puissantes mais plus délicates à élaborer :</p><ul><li>Élixir de feu :
+        une petite dose de mélange inflammable (poix, goudron, soufre,
+        etc.).</li><li>Élixir de récupération : regain supplémentaire d’un point
+        dans chaque caractéristique après un repos ; non
+        cumulable.</li><li>Élixir de guérison : bonus de + 4 au prochain test de
+        rétablissement (à la fin de la journée) ; non cumulable.</li><li>Élixir
+        de santé : bonus de + 4 pendant 24 h à tous les tests visant à guérir
+        une maladie ou une affliction ; non cumulable.</li><li>Élixir d’antidote
+        : bonus de + 4 pendant 24 h à tous les tests effectués pour combattre un
+        empoisonnement ; non cumulable.</li><li>Élixir de vigueur : bonus de + 4
+        au prochain test sous 24 h pour encaisser une blessure ; non
+        cumulable.</li><li>Élixir d’endurance : bonus de + 4 pendant 24 h à tous
+        les tests visant à résister à la fatigue ou aux conditions climatiques ;
+        non cumulable.</li><li>Élixir empoisonné : doit être ingéré ou appliqué
+        sur une lame ; dans le second cas, le poison ne fait effet que si le
+        premier coup porté avec l’arme inflige au moins une blessure légère ; la
+        victime effectue un test de Corps / Endurance à - 2 ; réussite critique
+        : aucun effet ; réussite : blessure légère ; échec : blessure grave ;
+        échec critique : blessure mortelle. Préparer un élixir demande une dose
+        d’ingrédients, 30 minutes et la réussite d’un test d’Esprit / Arcanum à
+        - 2.</li></ul>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: <p>Une fois préparé, un élixir se conserve 72 h.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>S’il ne dispose pas des ingrédients, le pratiquant peut les
+            remplacer avec son sang, ce qui lui inflige une blessure légère. Une
+            fois préparé, un élixir ne se conserve que 24 h.</p>
+    '3':
+      name: Enchantements
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Le pratiquant connaît les secrets complexes des enchantements, de
+        sorte qu’il puisse imbiber un objet de pouvoirs magiques via des
+        inscriptions profanes (runes, glyphes, sceaux, etc.). L’objet à préparer
+        doit être au minimum de bonne qualité (cf. Chiens de guerre - Chroniques
+        du meneur, « Qualité des objets », p. XXX). Le processus d’enchantement
+        est long et laborieux, de l’ordre d’une semaine de travail ininterrompu.
+        Une fois enchanté, un objet confère à son utilisateur un bonus de + 2 à
+        un type d’action correspondant à sa fonction première. Un même objet ne
+        peut être enchanté qu’une seule fois. Des outils de crochetage enchantés
+        donneraient un + 2 aux jets de serrurerie, une épée enchantée
+        accorderait un bonus de + 2 aux tests d’attaque ou de dégâts selon
+        qu’elle soit plutôt légère ou affûtée, une armure ferait bénéficier d’un
+        bonus de + 2 aux tests d’encaissement, etc. Ce bonus est cumulable avec
+        celui procuré par un éventuel objet de qualité exceptionnelle. En plus
+        des autres coûts, un enchantement nécessite l’engagement de 1 point
+        d’Esprit. Tant que l’objet reste actif, ce point ne peut plus être
+        récupéré par quelque moyen que ce soit. Un enchantement coûte donc
+        virtuellement 1 point d’Esprit définitif. L’enchantement est permanent,
+        mais est dissipé par la mort de son créateur ou si ce dernier effectue
+        un contre-rituel (une journée de travaux magiques). Dans ce dernier cas,
+        le point d’Esprit investi est récupéré. Le premier objet enchanté
+        produit par un Marqué est appelé son « artefact » : il a la
+        particularité de ne pas coûter l’habituel point d’Esprit et n’a d’effet
+        qu’entre ses mains. Rien n’empêche un Marqué d’enchanter un objet pour
+        autrui, mais il doit payer le coût en Esprit — c’est donc une faveur
+        rarissime.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Outre l’objet de bonne qualité au minimum, les composants
+            nécessaires à l’enchantement coûtent excessivement cher (20 D) et ne
+            peuvent en aucun cas rentrer dans les ingrédients quotidiens
+            gratuits.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>L’enchantement va puiser dans l’énergie vitale et la destinée du
+            Marqué, ce qui se traduit par des stigmates surnaturels. Les trois
+            prochaines fois qu’il obtiendra un échec critique en jeu, quelle que
+            soit la nature du test, il subira une blessure grave en plus des
+            effets normaux (du sang coule par ses oreilles, il est victime d’une
+            crise cardiaque, il subit une combustion spontanée, etc.).</p>
   linkedSkill: ''
 effects: []
 folder: null

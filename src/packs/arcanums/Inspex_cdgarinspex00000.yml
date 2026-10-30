@@ -8,84 +8,99 @@ system:
     Marqué peut étendre ses sens et, par exemple, espionner ses ennemis.</p>
   arcanumType: mystique
   rank: 1
-  rankData:
-    name1: Sens lointain
-    cost1:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect1: >-
-      <p>Le pratiquant peut percevoir magiquement à distance. En lançant ce
-      tour, il projette un ou plusieurs de ses sens à une distance maximale de
-      10 mètres et perçoit alors exactement comme s’il se situait là-bas. Ce
-      point de référence ne peut pas bouger. Tant que ce pouvoir est actif, tous
-      les sens de son enveloppe charnelle sont temporairement inhibés, ce qui
-      l’empêchera, par exemple, de conserver l’équilibre. Si le sens projeté est
-      la vue, les sorts qui se reposent sur la vision (comme la détection de la
-      magie de l’Arcanum Magicè) profitent également du nouveau point de
-      référence. Lancer ce tour nécessite la dépense de 1 point d’Esprit et dure
-      aussi longtemps que le Marqué se concentre, jusqu’à un maximum de 10
-      minutes.</p>
-    label1a: Lumière / Balance
-    effect1a: >-
-      <p>Le sens projeté est la vue. Pour 1 point d’Esprit supplémentaire, le
-      pratiquant peut projeter en plus son ouïe.</p>
-    label1b: Obscurité
-    effect1b: >-
-      <p>Le sens projeté est l’ouïe. Pour 1 point d’Esprit supplémentaire, le
-      pratiquant peut projeter en plus sa vue.</p>
-    name2: Percer le voile
-    cost2:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect2: >-
-      <p>Le pratiquant se dote, le temps d’une scène, d’une vue capable de
-      percer toutes les illusions et tous les artifices magiques. Il détecte les
-      illusions pour ce qu’elles sont et perçoit l’invisible (comme une personne
-      cachée par l’Arcanum Nebula ou un fantôme). Il décèle par ailleurs la
-      forme véritable d’un métamorphe ou de quiconque serait touché par une
-      magie altérant sa véritable apparence.</p>
-    label2a: Lumière / Balance
-    effect2a: >-
-      <p>Lancer ce tour nécessite la dépense de 1 point d’Esprit. Le pratiquant
-      se dote également d’une parfaite vision dans l’obscurité, qui fonctionne
-      aussi bien dans la pénombre que dans le noir total. La vision
-      thermographique des nains devient capable de distinguer les couleurs.</p>
-    label2b: Obscurité
-    effect2b: >-
-      <p>Lancer ce tour nécessite la dépense de 1 point d’Esprit. Le pratiquant
-      se dote également d’une écholocalisation, à l’instar des chauves-souris :
-      il peut envoyer des ultrasons qui se propagent jusqu’à rencontrer un
-      obstacle physique, ce qui lui indique précisément son emplacement.</p>
-    name3: Espionnage magique
-    cost3:
-      obscurite: 2
-      balance: 2
-      lumiere: 2
-    effect3: >-
-      <p>Ce tour de magie est une puissante variante de « sens lointain ». Le
-      pratiquant projette un ou plusieurs de ses sens dans un lieu connu ou à
-      proximité d’un individu qui lui est familier, et ce, quelle que soit la
-      distance de la cible. Si la projection sensorielle vise une personne, le
-      point de référence se déplacera avec elle. Tant que ce pouvoir est actif,
-      tous les sens de l’enveloppe charnelle du Marqué sont temporairement
-      inhibés. On ne peut pas profiter de cette perception extra-sensorielle
-      pour lancer d’autres tours par son intermédiaire. Pour lancer ce sort, il
-      faut dépenser 2 points d’Esprit et réussir un test d’Esprit / Arcanum
-      assorti d’un malus d’autant plus important que le lieu, ou la personne,
-      est mal connu du lanceur (+ 0 : lieu ou personne intime ; 5 : lieu ou
-      personne familiers ; - 10 : lieu ou personne vu une seule fois). Il est
-      impossible de cibler un individu ou un endroit que le pratiquant n’a
-      jamais observé. Le tour dure au maximum 10 minutes.</p>
-    label3a: Lumière / Balance
-    effect3a: >-
-      <p>Le sens projeté est la vue. Pour 1 point d’Esprit supplémentaire, le
-      pratiquant peut projeter en plus son ouïe.</p>
-    label3b: Obscurité
-    effect3b: >-
-      <p>Le sens projeté est l’ouïe. Pour 1 point d’Esprit supplémentaire, le
-      pratiquant peut projeter en plus sa vue.</p>
+  ranks:
+    '1':
+      name: Sens lointain
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Le pratiquant peut percevoir magiquement à distance. En lançant ce
+        tour, il projette un ou plusieurs de ses sens à une distance maximale de
+        10 mètres et perçoit alors exactement comme s’il se situait là-bas. Ce
+        point de référence ne peut pas bouger. Tant que ce pouvoir est actif,
+        tous les sens de son enveloppe charnelle sont temporairement inhibés, ce
+        qui l’empêchera, par exemple, de conserver l’équilibre. Si le sens
+        projeté est la vue, les sorts qui se reposent sur la vision (comme la
+        détection de la magie de l’Arcanum Magicè) profitent également du
+        nouveau point de référence. Lancer ce tour nécessite la dépense de 1
+        point d’Esprit et dure aussi longtemps que le Marqué se concentre,
+        jusqu’à un maximum de 10 minutes.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Le sens projeté est la vue. Pour 1 point d’Esprit supplémentaire,
+            le pratiquant peut projeter en plus son ouïe.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Le sens projeté est l’ouïe. Pour 1 point d’Esprit supplémentaire,
+            le pratiquant peut projeter en plus sa vue.</p>
+    '2':
+      name: Percer le voile
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Le pratiquant se dote, le temps d’une scène, d’une vue capable de
+        percer toutes les illusions et tous les artifices magiques. Il détecte
+        les illusions pour ce qu’elles sont et perçoit l’invisible (comme une
+        personne cachée par l’Arcanum Nebula ou un fantôme). Il décèle par
+        ailleurs la forme véritable d’un métamorphe ou de quiconque serait
+        touché par une magie altérant sa véritable apparence.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Lancer ce tour nécessite la dépense de 1 point d’Esprit. Le
+            pratiquant se dote également d’une parfaite vision dans l’obscurité,
+            qui fonctionne aussi bien dans la pénombre que dans le noir total.
+            La vision thermographique des nains devient capable de distinguer
+            les couleurs.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Lancer ce tour nécessite la dépense de 1 point d’Esprit. Le
+            pratiquant se dote également d’une écholocalisation, à l’instar des
+            chauves-souris : il peut envoyer des ultrasons qui se propagent
+            jusqu’à rencontrer un obstacle physique, ce qui lui indique
+            précisément son emplacement.</p>
+    '3':
+      name: Espionnage magique
+      cost:
+        obscurite: 2
+        balance: 2
+        lumiere: 2
+      effect: >-
+        <p>Ce tour de magie est une puissante variante de « sens lointain ». Le
+        pratiquant projette un ou plusieurs de ses sens dans un lieu connu ou à
+        proximité d’un individu qui lui est familier, et ce, quelle que soit la
+        distance de la cible. Si la projection sensorielle vise une personne, le
+        point de référence se déplacera avec elle. Tant que ce pouvoir est
+        actif, tous les sens de l’enveloppe charnelle du Marqué sont
+        temporairement inhibés. On ne peut pas profiter de cette perception
+        extra-sensorielle pour lancer d’autres tours par son intermédiaire. Pour
+        lancer ce sort, il faut dépenser 2 points d’Esprit et réussir un test
+        d’Esprit / Arcanum assorti d’un malus d’autant plus important que le
+        lieu, ou la personne, est mal connu du lanceur (+ 0 : lieu ou personne
+        intime ; 5 : lieu ou personne familiers ; - 10 : lieu ou personne vu une
+        seule fois). Il est impossible de cibler un individu ou un endroit que
+        le pratiquant n’a jamais observé. Le tour dure au maximum 10
+        minutes.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Le sens projeté est la vue. Pour 1 point d’Esprit supplémentaire,
+            le pratiquant peut projeter en plus son ouïe.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Le sens projeté est l’ouïe. Pour 1 point d’Esprit supplémentaire,
+            le pratiquant peut projeter en plus sa vue.</p>
   linkedSkill: ''
 effects: []
 folder: null

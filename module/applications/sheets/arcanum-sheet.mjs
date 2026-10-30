@@ -5,6 +5,9 @@ import { RANK_SHIELDS, SHARED_DESCRIPTION } from "./partials.mjs"
 /** Les onglets qui décrivent un tour de magie, et qui ne valent donc que pour un mystique. */
 const RANK_TABS = ["rank1", "rank2", "rank3"]
 
+/** Le gabarit d'un onglet de rang, commun aux trois : le rang vient de `_preparePartContext`. */
+const RANK_TEMPLATE = `${SYSTEM.PATH}/templates/items/arcanumrank.hbs`
+
 export default class CdgArcanumSheet extends CdgBaseItemSheet {
   /** @override */
   static DEFAULT_OPTIONS = {
@@ -16,9 +19,7 @@ export default class CdgArcanumSheet extends CdgBaseItemSheet {
     header: { template: `${SYSTEM.PATH}/templates/items/shared/header.hbs` },
     tabs: { template: `${SYSTEM.PATH}/templates/items/arcanum-tabs.hbs`, templates: [RANK_SHIELDS] },
     main: { template: `${SYSTEM.PATH}/templates/items/arcanummain.hbs`, templates: [SHARED_DESCRIPTION], scrollable: [""] },
-    rank1: { template: `${SYSTEM.PATH}/templates/items/arcanumrank1.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
-    rank2: { template: `${SYSTEM.PATH}/templates/items/arcanumrank2.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
-    rank3: { template: `${SYSTEM.PATH}/templates/items/arcanumrank3.hbs`, templates: [RANK_SHIELDS], scrollable: [""] },
+    ...Object.fromEntries(RANK_TABS.map((id) => [id, { template: RANK_TEMPLATE, scrollable: [""] }])),
   }
 
   /** @override */
@@ -89,16 +90,43 @@ export default class CdgArcanumSheet extends CdgBaseItemSheet {
     context.choiceTypes = SYSTEM.ARCANUM_TYPES
     context.choiceSkills = SYSTEM.SKILLS
     context.allegiances = Object.values(SYSTEM.ALLEGIANCES)
-    // Le corps du tour et ses deux variantes, pour chacun des trois rangs : neuf textes à enrichir.
-    for (const rank of [1, 2, 3]) {
-      for (const variant of ["", "a", "b"]) {
-        const field = `effect${rank}${variant}`
-        context[`enriched${field.charAt(0).toUpperCase()}${field.slice(1)}`] = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
-          this.document.system.rankData[field] ?? "",
-        )
-      }
-    }
+    return context
+  }
 
+  /**
+   * Un onglet de rang reçoit son tour tout préparé dans `spell` : données, champs du schéma pour `formInput`,
+   * noms des champs du formulaire et textes enrichis.
+   * @inheritDoc
+   */
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options)
+    if (!RANK_TABS.includes(partId)) return context
+
+    const number = RANK_TABS.indexOf(partId) + 1
+    const data = this.document.system.ranks[number]
+    const fields = this.document.system.schema.fields.ranks.fields[number].fields
+    const path = `system.ranks.${number}`
+    const enrich = (html) => foundry.applications.ux.TextEditor.implementation.enrichHTML(html ?? "")
+
+    context.spell = {
+      tab: partId,
+      active: context.tabs?.[partId]?.active ?? false,
+      path,
+      data,
+      fields,
+      effectName: `${path}.effect`,
+      enrichedEffect: await enrich(data.effect),
+      variants: await Promise.all(
+        Object.entries(data.variants).map(async ([key, variant]) => ({
+          path: `${path}.variants.${key}`,
+          label: variant.label,
+          effect: variant.effect,
+          effectName: `${path}.variants.${key}.effect`,
+          field: fields.variants.fields[key].fields.effect,
+          enriched: await enrich(variant.effect),
+        })),
+      ),
+    }
     return context
   }
 }

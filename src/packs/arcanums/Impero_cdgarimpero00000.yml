@@ -14,129 +14,143 @@ system:
     manipulation magique, ce qui provoque invariablement rancœur et colère.</p>
   arcanumType: mystique
   rank: 1
-  rankData:
-    name1: Autorité
-    cost1:
-      obscurite: 1
-      balance: 1
-      lumiere: 1
-    effect1: >-
-      <p>Ce tour affecte un petit groupe d’individus qui reconnaissent
-      l’autorité du pratiquant. Le Marqué n’a pas besoin d’être apprécié, mais
-      il faut que les cibles le considèrent comme leur supérieur hiérarchique.
-      Le pouvoir a pour effet de fortifier son emprise sur ses victimes, la
-      plupart du temps ses propres hommes, pour la durée d’une scène. On peut
-      parfaitement combiner les effets de ce tour avec celui du rang 3 ( )
-      d’Impello, « grandeur fantasmée ».</p>
-    label1a: Lumière
-    effect1a: >-
-      <p>Le pratiquant doit dépenser 1 point d’Esprit puis réussir un test
-      d’Esprit / Arcanum pour influencer ses hommes. Son autorité est alors
-      renforcée de telle façon qu’ils suivent bien plus aisément ses ordres et
-      deviennent peu sensibles aux effets de la peur. Le Marqué devient un
-      meneur d’hommes modèle : sous son commandement et tant qu’il reste
-      honorable, il est improbable que quiconque désobéisse ou prenne la
-      fuite.</p>
-    label1b: Balance / Obscurité
-    effect1b: >-
-      <p>Le pratiquant doit dépenser 1 point d’Esprit puis réussir un test
-      d’Esprit / Arcanum pour renforcer son emprise sur ses hommes. Ses
-      consignes sont alors suivies avec beaucoup plus de conviction et les
-      hésitations liées à la morale ou à l’honneur sont étouffées dans l’œuf. Le
-      Marqué devient un meneur d’hommes à poigne : sous son commandement et tant
-      qu’il ne montre aucune faiblesse, les instructions sont suivies, peu
-      importe l’éthique.</p>
-    name2: Commandement
-    cost2:
-      obscurite: 2
-      balance: 2
-      lumiere: 2
-    effect2: >-
-      <p>Le pratiquant devient capable d’imposer brutalement sa volonté à
-      autrui, au travers d’un ordre bref qu’il sera bien difficile d’ignorer. Ce
-      tour affecte une unique cible qui doit être attentive au Marqué, dans une
-      situation calme. Elle doit être capable de comprendre ses directives sans
-      la moindre ambiguïté, ce qui impose qu’elle puisse l’entendre nettement
-      dans une langue qu’elle maîtrise parfaitement. Ces conditions font que ce
-      tour est inutilisable dans le chaos d’une mêlée. L’ordre donné doit être
-      succinct (une demi-douzaine de mots tout au plus) et ne souffrir d’aucune
-      difficulté d’interprétation : la cible doit pouvoir y répondre
-      intuitivement dans la seconde, sans avoir à s’interroger sur sa
-      signification ou la façon de procéder. La moindre hésitation qu’elle
-      pourrait ressentir aura pour effet de briser la suggestion. Si l’ordre
-      implique de se prolonger dans le temps, il ne le sera que quelques
-      dizaines de secondes au maximum, une durée plus longue entraînant la fin
-      de l’enchantement. Ce tour sera vécu ultérieurement comme un viol
-      psychique, auquel les victimes répondront variablement en fonction de leur
-      psychologie, mais il est vraisemblable qu’elles finissent par nourrir un
-      vif ressentiment, ou pire encore.</p>
-    label2a: Lumière / Balance
-    effect2a: >-
-      <p>L’ordre imposé ne peut en aucune façon mettre en danger la victime, que
-      ce soit directement (« saute de la falaise ») ou indirectement (« lâche
-      ton arme »). Le pratiquant dépense alors 2 points d’Esprit et doit réussir
-      un test d’opposition d’Esprit / Arcanum contre Esprit / Volonté de la
-      cible. Cette dernière bénéficiera d’un bonus de + 0 à + 5 en fonction du
-      caractère humiliant ou contre nature de l’ordre (+ 0 : « faismoi un
-      sourire », + 5 : « retire ton pantalon »).</p>
-    label2b: Obscurité
-    effect2b: >-
-      <p>L’ordre imposé ne peut pas directement menacer la vie de la victime ou
-      la blesser (« tranche-toi la gorge ») mais il peut indirectement la mettre
-      en danger (« allonge-toi au sol »). Le pratiquant dépense alors 2 points
-      d’Esprit et doit réussir un test d’opposition d’Esprit / Arcanum contre
-      Esprit / Volonté de la cible. Cette dernière bénéficiera d’un bonus de + 5
-      à + 10 en fonction du caractère contre nature ou dangereux de l’ordre (+ 5
-      : « fuis ! », + 10 : « rends-toi »).</p>
-    name3: Asservissement
-    cost3:
-      obscurite: 3
-      balance: 3
-      lumiere: 3
-    effect3: >-
-      <p>À ce stade, le pratiquant est en mesure d’imposer sa volonté à un
-      individu pour le forcer à agir comme il le souhaite, à la façon d’un
-      automate. Le Marqué doit préalablement tenir une longue discussion avec sa
-      victime, avoir un contact visuel prolongé, puis exprimer à haute et
-      intelligible voix ses directives dans une langue parfaitement maîtrisée
-      par la cible. Celles-ci peuvent se révéler aussi complexes et précises
-      qu’il le désire — et il est plutôt dans son intérêt d’être exhaustif. Les
-      directives ne peuvent concerner que des actes : elles ne peuvent pas
-      altérer la mémoire, la personnalité ou les sentiments. Une fois envoûtée,
-      la cible exécute les instructions en faisant preuve d’une capacité
-      d’initiative et d’adaptation très limitée. D’une certaine façon, les
-      directives font office de programmation : des contradictions ou une
-      situation insoluble provoquent l’arrêt brutal de l’enchantement. Pour tout
-      observateur, il est évident que la victime n’est pas dans son état normal
-      et qu’elle ne semble pas pleinement consciente de ses actes. L’emprise
-      mentale se prolonge jusqu’à ce que les directives soient remplies, que la
-      victime soit brutalisée (une claque suffit) ou qu’une heure se soit
-      écoulée. La victime se souvient alors parfaitement de ce qui s’est passé
-      et réagira très négativement à ce qu’elle percevra comme un viol
-      psychique, nourrissant immédiatement un très vif ressentiment à l’égard du
-      Marqué.</p>
-    label3a: Lumière / Balance
-    effect3a: >-
-      <p>Les directives ne peuvent pas mettre en danger la vie de la victime ou
-      la blesser. Si ses actions l’amènent à commettre un acte allant à
-      l’encontre de ses convictions (le meurtre en fait souvent partie), alors
-      l’enchantement se rompt immédiatement. Les ordres peuvent toutefois
-      inclure un déclenchement différé (« quand tu entendras un hennissement, tu
-      ouvriras la porte d’entrée de ta maison »), du moment que la limite d’une
-      heure n’est pas dépassée. Le lancement de ce tour nécessite la dépense de
-      3 points d’Esprit et la réussite d’un test d’opposition d’Esprit / Arcanum
-      contre Esprit / Volonté. La victime bénéficie d’un bonus de + 5 pour
-      résister.</p>
-    label3b: Obscurité
-    effect3b: >-
-      <p>Les directives peuvent parfaitement inclure des actes allant à
-      l’encontre des convictions profondes de la victime, la blesser ou même la
-      tuer. En revanche les directives doivent être exécutées dans l’instant :
-      le Marqué ne peut pas inclure de clause permettant de différer leur
-      exécution. Le lancement de ce tour nécessite la dépense de 3 points
-      d’Esprit et la réussite d’un test d’opposition Esprit / Arcanum contre
-      Esprit / Volonté. La victime bénéficie d’un bonus de + 10 pour
-      résister.</p>
+  ranks:
+    '1':
+      name: Autorité
+      cost:
+        obscurite: 1
+        balance: 1
+        lumiere: 1
+      effect: >-
+        <p>Ce tour affecte un petit groupe d’individus qui reconnaissent
+        l’autorité du pratiquant. Le Marqué n’a pas besoin d’être apprécié, mais
+        il faut que les cibles le considèrent comme leur supérieur hiérarchique.
+        Le pouvoir a pour effet de fortifier son emprise sur ses victimes, la
+        plupart du temps ses propres hommes, pour la durée d’une scène. On peut
+        parfaitement combiner les effets de ce tour avec celui du rang 3 ( )
+        d’Impello, « grandeur fantasmée ».</p>
+      variants:
+        a:
+          label: Lumière
+          effect: >-
+            <p>Le pratiquant doit dépenser 1 point d’Esprit puis réussir un test
+            d’Esprit / Arcanum pour influencer ses hommes. Son autorité est
+            alors renforcée de telle façon qu’ils suivent bien plus aisément ses
+            ordres et deviennent peu sensibles aux effets de la peur. Le Marqué
+            devient un meneur d’hommes modèle : sous son commandement et tant
+            qu’il reste honorable, il est improbable que quiconque désobéisse ou
+            prenne la fuite.</p>
+        b:
+          label: Balance / Obscurité
+          effect: >-
+            <p>Le pratiquant doit dépenser 1 point d’Esprit puis réussir un test
+            d’Esprit / Arcanum pour renforcer son emprise sur ses hommes. Ses
+            consignes sont alors suivies avec beaucoup plus de conviction et les
+            hésitations liées à la morale ou à l’honneur sont étouffées dans
+            l’œuf. Le Marqué devient un meneur d’hommes à poigne : sous son
+            commandement et tant qu’il ne montre aucune faiblesse, les
+            instructions sont suivies, peu importe l’éthique.</p>
+    '2':
+      name: Commandement
+      cost:
+        obscurite: 2
+        balance: 2
+        lumiere: 2
+      effect: >-
+        <p>Le pratiquant devient capable d’imposer brutalement sa volonté à
+        autrui, au travers d’un ordre bref qu’il sera bien difficile d’ignorer.
+        Ce tour affecte une unique cible qui doit être attentive au Marqué, dans
+        une situation calme. Elle doit être capable de comprendre ses directives
+        sans la moindre ambiguïté, ce qui impose qu’elle puisse l’entendre
+        nettement dans une langue qu’elle maîtrise parfaitement. Ces conditions
+        font que ce tour est inutilisable dans le chaos d’une mêlée. L’ordre
+        donné doit être succinct (une demi-douzaine de mots tout au plus) et ne
+        souffrir d’aucune difficulté d’interprétation : la cible doit pouvoir y
+        répondre intuitivement dans la seconde, sans avoir à s’interroger sur sa
+        signification ou la façon de procéder. La moindre hésitation qu’elle
+        pourrait ressentir aura pour effet de briser la suggestion. Si l’ordre
+        implique de se prolonger dans le temps, il ne le sera que quelques
+        dizaines de secondes au maximum, une durée plus longue entraînant la fin
+        de l’enchantement. Ce tour sera vécu ultérieurement comme un viol
+        psychique, auquel les victimes répondront variablement en fonction de
+        leur psychologie, mais il est vraisemblable qu’elles finissent par
+        nourrir un vif ressentiment, ou pire encore.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>L’ordre imposé ne peut en aucune façon mettre en danger la
+            victime, que ce soit directement (« saute de la falaise ») ou
+            indirectement (« lâche ton arme »). Le pratiquant dépense alors 2
+            points d’Esprit et doit réussir un test d’opposition d’Esprit /
+            Arcanum contre Esprit / Volonté de la cible. Cette dernière
+            bénéficiera d’un bonus de + 0 à + 5 en fonction du caractère
+            humiliant ou contre nature de l’ordre (+ 0 : « faismoi un sourire »,
+            + 5 : « retire ton pantalon »).</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>L’ordre imposé ne peut pas directement menacer la vie de la
+            victime ou la blesser (« tranche-toi la gorge ») mais il peut
+            indirectement la mettre en danger (« allonge-toi au sol »). Le
+            pratiquant dépense alors 2 points d’Esprit et doit réussir un test
+            d’opposition d’Esprit / Arcanum contre Esprit / Volonté de la cible.
+            Cette dernière bénéficiera d’un bonus de + 5 à + 10 en fonction du
+            caractère contre nature ou dangereux de l’ordre (+ 5 : « fuis ! », +
+            10 : « rends-toi »).</p>
+    '3':
+      name: Asservissement
+      cost:
+        obscurite: 3
+        balance: 3
+        lumiere: 3
+      effect: >-
+        <p>À ce stade, le pratiquant est en mesure d’imposer sa volonté à un
+        individu pour le forcer à agir comme il le souhaite, à la façon d’un
+        automate. Le Marqué doit préalablement tenir une longue discussion avec
+        sa victime, avoir un contact visuel prolongé, puis exprimer à haute et
+        intelligible voix ses directives dans une langue parfaitement maîtrisée
+        par la cible. Celles-ci peuvent se révéler aussi complexes et précises
+        qu’il le désire — et il est plutôt dans son intérêt d’être exhaustif.
+        Les directives ne peuvent concerner que des actes : elles ne peuvent pas
+        altérer la mémoire, la personnalité ou les sentiments. Une fois
+        envoûtée, la cible exécute les instructions en faisant preuve d’une
+        capacité d’initiative et d’adaptation très limitée. D’une certaine
+        façon, les directives font office de programmation : des contradictions
+        ou une situation insoluble provoquent l’arrêt brutal de l’enchantement.
+        Pour tout observateur, il est évident que la victime n’est pas dans son
+        état normal et qu’elle ne semble pas pleinement consciente de ses actes.
+        L’emprise mentale se prolonge jusqu’à ce que les directives soient
+        remplies, que la victime soit brutalisée (une claque suffit) ou qu’une
+        heure se soit écoulée. La victime se souvient alors parfaitement de ce
+        qui s’est passé et réagira très négativement à ce qu’elle percevra comme
+        un viol psychique, nourrissant immédiatement un très vif ressentiment à
+        l’égard du Marqué.</p>
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: >-
+            <p>Les directives ne peuvent pas mettre en danger la vie de la
+            victime ou la blesser. Si ses actions l’amènent à commettre un acte
+            allant à l’encontre de ses convictions (le meurtre en fait souvent
+            partie), alors l’enchantement se rompt immédiatement. Les ordres
+            peuvent toutefois inclure un déclenchement différé (« quand tu
+            entendras un hennissement, tu ouvriras la porte d’entrée de ta
+            maison »), du moment que la limite d’une heure n’est pas dépassée.
+            Le lancement de ce tour nécessite la dépense de 3 points d’Esprit et
+            la réussite d’un test d’opposition d’Esprit / Arcanum contre Esprit
+            / Volonté. La victime bénéficie d’un bonus de + 5 pour résister.</p>
+        b:
+          label: Obscurité
+          effect: >-
+            <p>Les directives peuvent parfaitement inclure des actes allant à
+            l’encontre des convictions profondes de la victime, la blesser ou
+            même la tuer. En revanche les directives doivent être exécutées dans
+            l’instant : le Marqué ne peut pas inclure de clause permettant de
+            différer leur exécution. Le lancement de ce tour nécessite la
+            dépense de 3 points d’Esprit et la réussite d’un test d’opposition
+            Esprit / Arcanum contre Esprit / Volonté. La victime bénéficie d’un
+            bonus de + 10 pour résister.</p>
   linkedSkill: ''
 effects: []
 folder: null

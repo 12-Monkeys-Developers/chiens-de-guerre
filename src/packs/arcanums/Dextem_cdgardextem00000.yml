@@ -19,37 +19,49 @@ system:
     pièges.</p>
   arcanumType: physique
   rank: 1
-  rankData:
-    name1: Rang 1
-    cost1:
-      obscurite: 0
-      balance: 0
-      lumiere: 0
-    effect1: ''
-    label1a: Lumière / Balance
-    effect1a: ''
-    label1b: Obscurité
-    effect1b: ''
-    name2: Rang 2
-    cost2:
-      obscurite: 0
-      balance: 0
-      lumiere: 0
-    effect2: ''
-    label2a: Lumière / Balance
-    effect2a: ''
-    label2b: Obscurité
-    effect2b: ''
-    name3: Rang 3
-    cost3:
-      obscurite: 0
-      balance: 0
-      lumiere: 0
-    effect3: ''
-    label3a: Lumière / Balance
-    effect3a: ''
-    label3b: Obscurité
-    effect3b: ''
+  ranks:
+    '1':
+      name: Rang 1
+      cost:
+        obscurite: 0
+        balance: 0
+        lumiere: 0
+      effect: ''
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: ''
+        b:
+          label: Obscurité
+          effect: ''
+    '2':
+      name: Rang 2
+      cost:
+        obscurite: 0
+        balance: 0
+        lumiere: 0
+      effect: ''
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: ''
+        b:
+          label: Obscurité
+          effect: ''
+    '3':
+      name: Rang 3
+      cost:
+        obscurite: 0
+        balance: 0
+        lumiere: 0
+      effect: ''
+      variants:
+        a:
+          label: Lumière / Balance
+          effect: ''
+        b:
+          label: Obscurité
+          effect: ''
   linkedSkill: melee
 effects: []
 folder: null
