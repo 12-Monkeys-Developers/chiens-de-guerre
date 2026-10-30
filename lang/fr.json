@@ -1185,7 +1185,7 @@
     "battle": {
       "title": "Bataille — {company}",
       "open": "Ouvrir la bataille",
-      "openTooltip": "Livrer une bataille rangée (p. 51-54)",
+      "openTooltip": "Livrer une bataille rangée",
       "chooseCompany": "Choisir la compagnie",
       "noCompany": "Aucune compagnie franche visible.",
       "startTitle": "La bataille s'engage",
