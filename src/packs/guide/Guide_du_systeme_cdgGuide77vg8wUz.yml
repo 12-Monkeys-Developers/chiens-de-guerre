@@ -15,7 +15,7 @@ pages:
           <h2>Bienvenue dans la compagnie</h2>
           <p>
             Ce guide présente ce que le système <strong>Chiens de guerre</strong> pour Foundry VTT met à votre disposition : l'assistant de création des Marqués, la fiche
-            de personnage, les PNJ et créatures, la compagnie franche, les tests à poignée de d20 et le combat en confrontation. Il ne remplace pas le livre de règles : il
+            de personnage, les PNJ et créatures, la compagnie franche et ses batailles, les tests à poignée de d20 et le combat en confrontation. Il ne remplace pas le livre de règles : il
             explique comment Foundry vous aide à les appliquer.
           </p>
           <p>Le système nécessite <strong>Foundry VTT V14</strong>.</p>
@@ -30,6 +30,7 @@ pages:
             <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.atUkWWFtqc9vxOlx]{La compagnie franche} : l'assistant et la fiche de la compagnie franche.</li>
             <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.IVgxzdiSc9kXDRd9]{Les tests} : la fenêtre de test, la poignée de dés, la carte de résultat et le dépassement.</li>
             <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GdA29X6mS3ScAj1f]{Le combat} : le suivi de combat, l'initiative, la confrontation et le personnage mourant.</li>
+            <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.Bt7kQw2RzN4xLm9c]{Les batailles} : la fenêtre de bataille de la compagnie, phase par phase, et la table des adversaires.</li>
             <li>@UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.d6qJxIR42RlaHXOi]{Macros et outils du meneur} : la barre de macros et le tableau de bord du meneur.</li>
           </ul>
 
@@ -42,6 +43,7 @@ pages:
               </p>
               <ul>
                 <li><strong>Tableau de bord des joueurs</strong> (meneur seulement) : l'état des personnages des joueurs connectés, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.d6qJxIR42RlaHXOi]{Macros et outils du meneur} ;</li>
+                <li><strong>Ouvrir la bataille</strong> : la fenêtre de bataille d'une compagnie franche, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.Bt7kQw2RzN4xLm9c]{Les batailles} ;</li>
                 <li><strong>Création de personnage</strong> : l'assistant qui guide la création d'un Marqué, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.2wzFoVxI1eErVbzz]{Créer un Marqué} ;</li>
                 <li><strong>Création de compagnie</strong> : l'assistant de la compagnie franche, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.atUkWWFtqc9vxOlx]{La compagnie franche}.</li>
               </ul>
@@ -121,6 +123,10 @@ pages:
                 Activé par défaut. À la fin de chaque round de combat, le compteur d'esquives et la parade de chaque combattant reviennent à zéro : la première esquive du
                 round suivant redevient gratuite et la parade est de nouveau disponible. Désactivez-le si votre table préfère tenir ces compteurs à la main, depuis
                 l'onglet Combat de chaque fiche.
+              </p>
+              <h3>Table des adversaires en bataille</h3>
+              <p>
+                Réservé au meneur : ouvre la table du tirage des adversaires en bataille, pour en changer les profils (voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.Bt7kQw2RzN4xLm9c]{Les batailles}).
               </p>
               <h3>Mode débogage</h3>
               <p>
@@ -856,6 +862,12 @@ pages:
             <li><strong>Récupération nocturne des réserves</strong> : les quatre conforts de repos, de +1 à +4, comme pour un personnage.</li>
           </ul>
 
+          <h3>Les batailles</h3>
+          <p>
+            Le bouton <i class="fa-solid fa-chess-rook"></i> <strong>Ouvrir la bataille</strong> de l'en-tête ouvre la fenêtre de bataille de la compagnie : voir
+            @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.Bt7kQw2RzN4xLm9c]{Les batailles}.
+          </p>
+
           <h3>Chroniques et notes</h3>
           <p>Les <strong>chroniques</strong> consignent les événements de la compagnie, une date et un texte par ligne ; les <strong>notes</strong> sont libres.</p>
         </div>
@@ -1191,6 +1203,194 @@ pages:
       default: -1
     flags: {}
     _key: '!journal.pages!cdgGuide77vg8wUz.GdA29X6mS3ScAj1f'
+  - _id: Bt7kQw2RzN4xLm9c
+    name: Les batailles
+    type: text
+    title:
+      show: false
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: |-
+        <div class="cdg-guide">
+          <p>
+            Une <strong>bataille</strong> (p. 51-54) se joue en tours de cinq phases, jusqu'à ce qu'un camp totalise <strong>trois points de victoire</strong>. Le système
+            la mène dans une fenêtre propre à chaque compagnie franche : le meneur la prépare et fait avancer les phases, chaque joueur place son personnage et lance ses
+            tests de chez lui. Une compagnie ne livre qu'une bataille à la fois ; seuls ses <strong>personnages joueurs</strong> (onglet Membres de sa fiche, voir
+            @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.atUkWWFtqc9vxOlx]{La compagnie franche}) y prennent part.
+          </p>
+
+          <h2>Ouvrir la fenêtre de bataille</h2>
+          <ul>
+            <li>
+              Depuis l'onglet <i class="fa-solid fa-flag-swallowtail"></i> de la barre latérale, bouton <strong>Ouvrir la bataille</strong>. La fenêtre s'ouvre directement
+              s'il n'y a qu'une compagnie, ou une seule déjà engagée ; sinon, on choisit la compagnie.
+            </li>
+            <li>Depuis la fiche de la compagnie, bouton <i class="fa-solid fa-chess-rook"></i> <strong>Ouvrir la bataille</strong> de l'en-tête, mis en évidence pendant une bataille.</li>
+            <li>Depuis la carte « La bataille s'engage » du tchat.</li>
+          </ul>
+          <p>Tant que le meneur n'a pas engagé la bataille, un joueur ne voit qu'un message d'attente.</p>
+
+          <h2>Préparer la bataille (meneur)</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/bataille-preparation.webp" alt="Préparation d'une bataille" /></div>
+            <div>
+              <ul>
+                <li><strong>Enjeu</strong> : ce pour quoi on se bat, repris par les cartes, le récapitulatif et le journal.</li>
+                <li>
+                  <strong>Modificateur de bataille</strong> : de <strong>−10</strong> (bataille désespérée) à <strong>+10</strong> (simple formalité), avec les repères
+                  de la table p. 51.
+                </li>
+                <li>
+                  <strong>Armée adverse</strong> : ordinaire (1d20), piètres combattants (2d20, le plus bas) ou troupes d'élite (2d20, le plus haut). Elle décide du dé de
+                  la table des adversaires.
+                </li>
+                <li>
+                  <strong>Général adverse</strong> : déposez un PNJ (un officier du bestiaire, par exemple), ou saisissez son nom, son Esprit et son rang de Tactique.
+                </li>
+                <li>
+                  <strong>Chef d'armée</strong> : la compagnie elle-même, ou un personnage joueur de l'état-major, qui testera Esprit / Tactique à sa place lors de
+                  l'opposition des généraux.
+                </li>
+              </ul>
+              <p>
+                <strong>Engager la bataille</strong> l'annonce dans le tchat. Les joueurs n'y lisent que l'enjeu ; le général adverse et le modificateur sont réservés au
+                meneur.
+              </p>
+            </div>
+          </div>
+
+          <h2>Le tableau de la bataille</h2>
+          <div class="guide-image"><img src="systems/chiens-de-guerre/assets/guide/bataille-tour.webp" alt="Fenêtre de bataille pendant le déroulement des combats" /></div>
+          <p>
+            En tête, l'enjeu, le modificateur, l'armée adverse et le général ; au centre, les <strong>points de victoire</strong> des deux camps et le numéro du tour ;
+            dessous, les cinq phases, la phase en cours en évidence, puis une ligne par personnage joueur. La couronne <i class="fa-solid fa-chess-king"></i> désigne le
+            chef d'armée. Le meneur ajuste les points à la main avec <i class="fas fa-square-minus"></i> et <i class="fas fa-square-plus"></i>, et mène les phases avec
+            les boutons du pied de fenêtre : <strong>Phase précédente</strong> (pour revenir sur une erreur, sans rien défaire de ce qui a été joué) et
+            <strong>Phase suivante</strong>. À la phase des pertes, ce bouton devient <strong>Tour suivant</strong>, ou <strong>Conclure la bataille</strong> si un camp a
+            gagné.
+          </p>
+
+          <h3>1. Localisation</h3>
+          <p>
+            Chaque joueur place son personnage <strong>en soutien</strong>, <strong>engagé</strong> ou <strong>au front</strong>. D'un tour à l'autre, on ne se déplace
+            que d'un cran ; les autres positions restent grisées. Le meneur peut placer n'importe quel personnage n'importe où.
+          </p>
+
+          <h3>2. Déroulement des combats</h3>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/bataille-carte.webp" alt="Carte de conséquences d'un personnage" /></div>
+            <div>
+              <p>
+                Chaque joueur lance <strong>Esprit / Sens des batailles</strong>. Selon sa position et son résultat (table p. 52), une <strong>carte de
+                conséquences</strong> apparaît dans le tchat, avec les boutons de ce qu'il reste à jouer :
+              </p>
+              <ul>
+                <li>
+                  <strong>Encaisser (Corps / Protection)</strong> : la blessure annoncée baisse d'un cran sur une réussite, de deux sur une réussite critique, monte d'un
+                  cran sur un échec critique, puis se coche sur la fiche ;
+                </li>
+                <li>
+                  <strong>Tirer l'adversaire</strong> (meneur) : le dé de l'armée adverse sur la table des adversaires. <strong>Escarmouche contre…</strong> (un bouton par
+                  profil possible) importe une copie du profil, pose son jeton à côté de celui du personnage s'il est sur la scène, et démarre un combat d'un seul round ; le bouton <strong>Fiche de…</strong> ouvre la fiche
+                  de l'adversaire pour lancer ses jets. À la fin du round, combat, jeton et copie disparaissent, et l'issue s'inscrit sur la carte ;
+                </li>
+                <li><strong>Esprit / Tactique</strong> : le test dont dépend une action d'éclat, quand la table le demande.</li>
+              </ul>
+              <p>La même carte se met à jour à chaque étape, et les mêmes boutons figurent dans la fenêtre de bataille.</p>
+            </div>
+          </div>
+
+          <h3>3. Actions d'éclat</h3>
+          <p>
+            Un personnage qui a gagné une action d'éclat (d'emblée, ou par un test d'Esprit / Tactique réussi) la tente : si le meneur juge le succès éclatant, il clique
+            <strong>Succès éclatant</strong>, qui donne <strong>+1 point de victoire</strong> à la compagnie (et peut être annulé).
+          </p>
+
+          <h3>4. Opposition des généraux</h3>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/bataille-generaux.webp" alt="Opposition des généraux" /></div>
+            <div>
+              <ul>
+                <li>
+                  Côté compagnie : <strong>Esprit / Tactique</strong> du personnage chef d'armée (−1 s'il est engagé, −3 au front), ou à défaut
+                  <strong>Effectifs / Tactique</strong> de la compagnie. Le modificateur de bataille s'ajoute. Le meneur peut changer de chef d'armée à cette phase.
+                </li>
+                <li>
+                  Côté adverse (meneur) : <strong>Esprit / Tactique</strong> du général adverse, au modificateur de bataille inversé. Un PNJ ouvre sa fenêtre de jet ; un
+                  général saisi à la main lance directement.
+                </li>
+              </ul>
+              <p>
+                Les deux résultats s'opposent : le vainqueur marque <strong>un</strong> point de victoire (<strong>deux</strong> si l'opposition donne une réussite ou un
+                échec critique), et la compagnie
+                reçoit un <strong>modificateur de pertes</strong> de ±2 (±5).
+              </p>
+            </div>
+          </div>
+
+          <h3>5. Pertes</h3>
+          <p>
+            La compagnie teste <strong>Effectifs / Bataille</strong>, au modificateur de pertes. Un échec critique coche une case de blessés mortels, un échec une case de
+            graves, une réussite une case de légers ; une réussite critique épargne la compagnie. La case se coche sur la fiche de la compagnie, avec ses conséquences
+            (perte d'Effectifs, dissolution, voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.atUkWWFtqc9vxOlx]{La compagnie franche}).
+          </p>
+
+          <h3>Relancer un test</h3>
+          <p>
+            Un test de bataille se dépasse comme les autres, depuis sa carte (voir @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.IVgxzdiSc9kXDRd9]{Les tests}), et le meneur peut changer le dé conservé : le nouveau résultat remplace
+            l'ancien dans la bataille, tant que la suite n'a pas été jouée (un combat déjà encaissé, par exemple, ne se relance plus).
+          </p>
+
+          <h2>Victoire et archive</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/bataille-recapitulatif.webp" alt="Récapitulatif de fin de bataille" /></div>
+            <div>
+              <p>
+                Dès qu'un camp atteint trois points de victoire, la bataille passe directement aux pertes du tour, puis le meneur la conclut. À égalité au-delà de trois
+                points, on continue jusqu'à départage.
+              </p>
+              <p>
+                <strong>Conclure la bataille</strong> poste un récapitulatif tour par tour dans le tchat et l'ajoute comme une page au journal
+                <strong>« Batailles — <em>nom de la compagnie</em> »</strong>, créé au premier besoin et lisible par les joueurs. La fenêtre se ferme chez tout le monde.
+              </p>
+              <p>
+                <strong>Abandonner la bataille</strong> la clôt sans récapitulatif ni archive ; les blessures déjà cochées restent.
+              </p>
+            </div>
+          </div>
+
+          <h2>La table des adversaires</h2>
+          <div class="guide-row">
+            <div class="guide-image guide-image-half"><img src="systems/chiens-de-guerre/assets/guide/bataille-adversaires.webp" alt="Table des adversaires en bataille" /></div>
+            <div>
+              <p>
+                Le tirage de l'adversaire suit la table p. 52, dont les profils viennent du bestiaire du système. Le meneur peut l'adapter à sa campagne :
+                <strong>Paramètres de jeu → Configurer les paramètres → Chiens de guerre → Table des adversaires en bataille</strong>.
+              </p>
+              <ul>
+                <li>Le d20 à gauche, le ou les profils à droite ; un clic sur un portrait ouvre la fiche du profil.</li>
+                <li>La corbeille retire un profil ; un PNJ déposé sur une ligne (depuis un compendium ou la barre latérale) l'y ajoute.</li>
+                <li>Seules les lignes modifiées sont enregistrées ; <strong>Table du livre</strong> rétablit l'original.</li>
+                <li>
+                  Les résultats 16 et 20 (officier, Marqué ou Élu) sont vides par défaut : l'adversaire tiré reste alors « à choisir par le meneur », qui mène l'affrontement
+                  à sa façon.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    system: {}
+    sort: 1000000
+    ownership:
+      default: -1
+    flags: {}
+    _key: '!journal.pages!cdgGuide77vg8wUz.Bt7kQw2RzN4xLm9c'
   - _id: d6qJxIR42RlaHXOi
     name: Macros et outils du meneur
     type: text
@@ -1235,7 +1435,7 @@ pages:
       volume: 0.5
     src: null
     system: {}
-    sort: 1000000
+    sort: 1100000
     ownership:
       default: -1
     flags: {}

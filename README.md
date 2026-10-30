@@ -26,9 +26,9 @@ Ce système est développé par Khrystov et Khaali.
 
 ## Général
 
-  - Guide du système : compendium « Guide du système », illustré, qui présente la création, les fiches, les objets, les PNJ, la compagnie, les tests, le combat et les outils du meneur
+  - Guide du système : compendium « Guide du système », illustré, qui présente la création, les fiches, les objets, les PNJ, la compagnie, les tests, le combat, les batailles et les outils du meneur
   - Langue : le système est en français
-  - Onglet Chiens de guerre dans la barre latérale : création de personnage, création de compagnie, tableau de bord des joueurs
+  - Onglet Chiens de guerre dans la barre latérale : création de personnage, création de compagnie, bataille, tableau de bord des joueurs
   - Grille configurée en mètres (1,5 m par case)
   - Portrait du personnage dans l'en-tête des messages du tchat
   - Compatible Foundry VTT v14
@@ -88,6 +88,18 @@ Ce système est développé par Khrystov et Khaali.
   - Effectifs, Logistique et Moral, 18 compétences, blessés et chroniques
   - Roster des personnages joueurs et non joueurs, liés aux acteurs, avec le grade de chacun
   - Guérison et repos de la compagnie, dissolution et réactivation
+  - Batailles rangées, depuis l'en-tête de la fiche (voir ci-dessous)
+
+## Batailles
+
+  - Fenêtre de bataille par compagnie franche, ouverte depuis la barre latérale, la fiche de la compagnie ou le tchat
+  - Préparation par le meneur : enjeu, modificateur de bataille, armée adverse, général adverse (PNJ déposé ou saisi), chef d'armée
+  - Tours de cinq phases jusqu'à trois points de victoire : localisation, déroulement des combats, actions d'éclat, opposition des généraux, pertes
+  - Chaque joueur place son personnage et lance ses tests de chez lui ; le meneur seul fait avancer la bataille
+  - Carte de conséquences par personnage : encaissement, tirage de l'adversaire, escarmouche d'un round avec jeton et combat créés puis retirés, action d'éclat
+  - Opposition des généraux et pertes de la compagnie appliquées d'office
+  - Récapitulatif dans le tchat et archive dans le journal des batailles de la compagnie
+  - Table des adversaires modifiable dans les réglages
 
 ## Macros & Hotbar
 

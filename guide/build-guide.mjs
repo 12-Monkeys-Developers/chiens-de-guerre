@@ -24,6 +24,7 @@ const PAGES = [
   { file: "compagnie", id: "atUkWWFtqc9vxOlx", title: "La compagnie franche" },
   { file: "jets", id: "IVgxzdiSc9kXDRd9", title: "Les tests" },
   { file: "combat", id: "GdA29X6mS3ScAj1f", title: "Le combat" },
+  { file: "batailles", id: "Bt7kQw2RzN4xLm9c", title: "Les batailles" },
   { file: "outils", id: "d6qJxIR42RlaHXOi", title: "Macros et outils du meneur" },
 ]
 
