@@ -1442,30 +1442,16 @@ export default class CdgCharacterCreation extends CdgCreationWizard {
     // Les origines doivent passer par l'API de l'acteur : elle marque la provenance des objets
     // accordés et permet de les retirer proprement plus tard.
     if (this.#peupleItem) await actor.grantOrigin(this.#peupleItem, { notifySuccess: false })
+    // Les choix de l'assistant passent à `grantOrigin`, qui les applique en embarquant : un arcanum
+    // de la carrière monté en personnalisation part à son rang, l'option écartée d'un choix « OU »
+    // n'est pas embarquée.
     if (this.#carriereItem) {
-      await actor.grantOrigin(this.#carriereItem, { notifySuccess: false })
-      // Un arcanum de la carrière que le joueur a monté avec ses points de personnalisation :
-      // la copie embarquée par `grantOrigin` part au rang de la carrière, à corriger ici plutôt
-      // que d'embarquer un doublon.
-      const grantedArcanums = actor.grantedBy(actor.carriere).filter((item) => item.type === SYSTEM.ITEM_TYPE.arcanum)
+      const ranks = {}
       for (const source of this.#carriereArcanums) {
         const target = this._draft.arcanumRanks[source.uuid]
-        if (!target || target <= source.system.rank) continue
-        const embedded = grantedArcanums.find((item) => item.name === source.name)
-        if (embedded) await embedded.update({ "system.rank": target })
+        if (target > source.system.rank) ranks[source.uuid] = target
       }
-
-      // Les doublons d'un choix "OU" (les deux options sont accordées par `grantOrigin`) que le
-      // joueur a écartés dans l'assistant ne doivent pas rester sur le personnage.
-      if (this._draft.excludedCarriereEquipment.length) {
-        const excludedNames = new Set(this.#carriereEquipments.filter((item) => this._draft.excludedCarriereEquipment.includes(item.uuid)).map((item) => item.name))
-        const toRemove = actor.grantedBy(actor.carriere).filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment && excludedNames.has(item.name))
-        if (toRemove.length)
-          await actor.deleteEmbeddedDocuments(
-            "Item",
-            toRemove.map((item) => item.id),
-          )
-      }
+      await actor.grantOrigin(this.#carriereItem, { notifySuccess: false, ranks, exclude: this._draft.excludedCarriereEquipment })
     }
 
     // Le coût de l'équipement supplémentaire de l'étape 8 se déduit maintenant que l'argent de
@@ -1483,18 +1469,8 @@ export default class CdgCharacterCreation extends CdgCreationWizard {
     const items = await this.#startingItems()
     if (items.length > 0) await actor.createEmbeddedDocuments("Item", items)
 
-    if (this.#ascendanceItem) {
-      await actor.grantAscendance(this.#ascendanceItem)
-      // `grantAscendance` a repris le bonus inscrit sur l'objet source (le plus souvent aucun) :
-      // s'il diffère du candidat choisi dans l'assistant, on défait l'un et pose l'autre, puis on
-      // consigne le choix sur la copie embarquée — sans quoi retirer l'ascendance plus tard sur
-      // la fiche lirait un bonus resté vide et ne rendrait rien.
-      const ascendance = actor.ascendance
-      if (ascendance && ascendance.system.arcanumBonus !== this._draft.ascendanceArcanumBonus) {
-        await actor.updateArcanumBonus(ascendance, ascendance.system.arcanumBonus, this._draft.ascendanceArcanumBonus)
-        await ascendance.update({ "system.arcanumBonus": this._draft.ascendanceArcanumBonus })
-      }
-    }
+    // Le candidat choisi dans l'assistant est inscrit sur la copie avant d'être appliqué.
+    if (this.#ascendanceItem) await actor.grantAscendance(this.#ascendanceItem, { arcanumBonus: this._draft.ascendanceArcanumBonus })
 
     // Les ajustements d'origine modifient le maximum par effet actif. La réserve de départ est
     // remplie ensuite, afin de partir au vrai maximum sans stocker deux fois le bonus.

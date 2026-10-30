@@ -111,13 +111,19 @@ export default class CdgActor extends Actor {
    * L'ajustement de caractéristique n'est **pas** appliqué ici : les objets de compendium portent
    * déjà un effet actif `transfer: true` sur `abilities.<x>.bonus`, et `system.abilityBonus` n'est
    * plus qu'un mémo pour l'assistant de création. Le lire doublerait le bonus.
+   * Les choix faits dans l'assistant de création s'appliquent ici, avant que rien ne soit embarqué :
+   * un objet écarté (l'option non retenue d'un choix « OU ») n'est ni créé ni référencé, et un
+   * arcanum monté en personnalisation part directement à son rang. Les deux se désignent par l'UUID
+   * de la référence de l'origine, jamais par le nom.
    * @param {CdgItem} item L'origine déposée, encore extérieure au personnage.
-   * @param {Object} [options] Options d'affichage.
+   * @param {Object} [options]
    * @param {boolean} [options.notifySuccess=true] Afficher le compte rendu de succès — l'assistant
    *   de création le tait, un peuple ou une carrière déposés à la main sur la fiche le montrent.
+   * @param {Record<string, number>} [options.ranks] Le rang voulu, par UUID de référence.
+   * @param {string[]} [options.exclude] Les UUID de référence à ne pas embarquer.
    * @returns {Promise<CdgItem|undefined>} L'origine embarquée.
    */
-  async grantOrigin(item, { notifySuccess = true } = {}) {
+  async grantOrigin(item, { notifySuccess = true, ranks = {}, exclude = [] } = {}) {
     if (!SYSTEM.ORIGIN_TYPES.includes(item.type)) return
     const typeLabel = game.i18n.localize(`TYPES.Item.${item.type}`)
 
@@ -143,13 +149,19 @@ export default class CdgActor extends Actor {
     for (const group of groups) {
       const ids = (createdIds[group.field] = [])
       for (const uuid of group.uuids) {
+        if (exclude.includes(uuid)) continue
         const granted = await fromUuid(uuid)
         if (!granted) {
           missing++
           continue
         }
+        // La référence et l'UUID du document résolu coïncident d'ordinaire ; l'appelant peut
+        // désigner l'objet par l'un ou l'autre.
+        if (exclude.includes(granted.uuid)) continue
         const data = granted.toObject()
         data._id = foundry.utils.randomID()
+        const rank = ranks[uuid] ?? ranks[granted.uuid]
+        if (Number.isInteger(rank)) data.system.rank = rank
         foundry.utils.setProperty(data, `flags.${SYSTEM.PACKAGE_ID}.${CdgActor.GRANT_FLAG}`, origin.id)
         created.push(data)
         ids.push(data._id)
@@ -320,9 +332,12 @@ export default class CdgActor extends Actor {
    * Contrairement à un peuple ou une carrière, une ascendance n'accorde ni traits ni équipement :
    * seul son bonus d'arcanum (`updateArcanumBonus`) a un effet mécanique sur la fiche.
    * @param {CdgItem} item L'ascendance déposée, encore extérieure au personnage.
+   * @param {Object} [options]
+   * @param {string} [options.arcanumBonus] Le candidat choisi, inscrit sur la copie avant d'être
+   *   appliqué ("" pour aucun). Sans cette option, c'est celui de l'objet déposé.
    * @returns {Promise<CdgItem[]|undefined>}
    */
-  async grantAscendance(item) {
+  async grantAscendance(item, { arcanumBonus } = {}) {
     if (item.type !== SYSTEM.ITEM_TYPE.ascendance) return
     const typeLabel = game.i18n.localize(`TYPES.Item.${item.type}`)
 
@@ -331,7 +346,9 @@ export default class CdgActor extends Actor {
     const existing = this.ascendance
     if (existing) return ui.notifications.warn(game.i18n.format("CDG.origin.alreadyPresent", { type: typeLabel, name: existing.name }))
 
-    const [ascendance] = await this.createEmbeddedDocuments("Item", [item.toObject()])
+    const data = item.toObject()
+    if (arcanumBonus !== undefined) data.system.arcanumBonus = arcanumBonus
+    const [ascendance] = await this.createEmbeddedDocuments("Item", [data])
     if (!ascendance) return
 
     if (ascendance.system.arcanumBonus) await this.updateArcanumBonus(ascendance, "", ascendance.system.arcanumBonus)
