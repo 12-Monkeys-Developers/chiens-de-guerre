@@ -95,11 +95,9 @@ export default class CdgMacros {
    * @param {boolean} options.warn Afficher un avertissement quand aucun acteur n'est sélectionné.
    */
   static selectedActor({ warn = true } = {}) {
-    const speaker = ChatMessage.getSpeaker()
-    let actor = speaker.token ? game.actors.tokens[speaker.token] : null
-    actor ??= game.actors.get(speaker.actor)
+    const actor = ChatMessage.getSpeakerActor(ChatMessage.getSpeaker())
     if (!actor && warn) ui.notifications.warn("CDG.macro.noActor", { localize: true })
-    return actor ?? null
+    return actor
   }
 
   /**

@@ -16,19 +16,6 @@ export default class CdgChatMessage extends ChatMessage {
   }
 
   /**
-   * L'acteur qui parle : celui du jeton s'il y en a un (un PNJ non lié a le sien), sinon l'acteur.
-   * @returns {Actor|undefined}
-   */
-  get speakerActor() {
-    const { scene, token, actor } = this.speaker
-    if (scene && token) {
-      const tokenActor = game.scenes.get(scene)?.tokens.get(token)?.actor
-      if (tokenActor) return tokenActor
-    }
-    return game.actors.get(actor)
-  }
-
-  /**
    * Place le portrait devant le nom. Un contenu caché à l'utilisateur (jet à l'aveugle, initiative
    * d'un PNJ) montre le joueur qui l'a envoyé plutôt que le personnage, pour ne rien en révéler. La
    * carte de confrontation garde son en-tête : son bandeau attaquant → cible porte déjà les portraits.
@@ -41,7 +28,9 @@ export default class CdgChatMessage extends ChatMessage {
 
     const visible = this.isContentVisible
     const name = visible ? this.alias : this.author?.name
-    const src = (visible ? this.speakerActor?.img : null) ?? this.author?.avatar
+    // `getSpeakerActor` et non `speakerActor`, qui se rabat sur le personnage de l'auteur : un message
+    // sans locuteur garde l'avatar du joueur.
+    const src = (visible ? ChatMessage.getSpeakerActor(this.speaker)?.img : null) ?? this.author?.avatar
     if (!src) return
 
     const portrait = document.createElement("img")
