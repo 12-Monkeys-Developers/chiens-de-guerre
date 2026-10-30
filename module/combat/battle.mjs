@@ -1,7 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRollDialog from "../applications/roll-dialog.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
-import { keptOutcome } from "../dice/roll-outcome.mjs"
+import { createTest, keptOutcome } from "../dice/roll-outcome.mjs"
 import { createChatMessage } from "../helpers/chat.mjs"
 import { signed } from "../helpers/format.mjs"
 import { askActiveGM, serialize } from "../helpers/gm-writer.mjs"
@@ -452,30 +452,23 @@ export default class CdgBattle {
     }
 
     const { name, esprit, tactique } = state.general
-    const rankEntry = SYSTEM.RANKS[tactique] ?? SYSTEM.RANKS[SYSTEM.DEFAULT_RANK]
     const abilityLabel = game.i18n.localize(SYSTEM.ABILITIES.esprit.label)
     const breakdown = [{ label: abilityLabel, value: esprit, base: true }]
-    if (mirror) breakdown.push({ label, value: mirror, base: false })
-    return CdgRoll.post({
-      actorUuid: null,
-      actorName: name,
-      abilityId: "esprit",
-      abilityLabel,
-      abilityValue: esprit,
-      skillId: "tactique",
-      skillLabel: game.i18n.localize(SYSTEM.SKILLS.tactique.label),
-      rank: tactique,
-      dice: rankEntry.dice,
-      keep: rankEntry.keep,
-      sr: esprit + mirror,
-      breakdown,
-      effort: 0,
-      passion: null,
-      pushed: false,
-      noPush: true,
-      companyHealing: null,
-      battle: tag,
-    })
+    if (mirror) breakdown.push({ label, value: mirror })
+    return CdgRoll.post(
+      createTest({
+        actorName: name,
+        abilityId: "esprit",
+        abilityLabel,
+        abilityValue: esprit,
+        skillId: "tactique",
+        skillLabel: game.i18n.localize(SYSTEM.SKILLS.tactique.label),
+        rank: tactique,
+        breakdown,
+        noPush: true,
+        battle: tag,
+      }),
+    )
   }
 
   /**

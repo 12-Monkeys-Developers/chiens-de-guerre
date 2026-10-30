@@ -59,3 +59,34 @@ export function simulateCompanyHealing(wounds, operations) {
   }
   return result
 }
+
+/**
+ * Qui peut faire un effort : un personnage, une compagnie franche, ou un adversaire majeur.
+ * @param {{type: string, system: {major?: boolean}}} actor
+ * @returns {boolean}
+ */
+export function canSpendEffort(actor) {
+  return actor.type === "character" || actor.type === "compagnie" || !!actor.system.major
+}
+
+/**
+ * L'effort engageable sur une réserve, et les crans que la fenêtre de jet en affiche.
+ *
+ * « Un joueur ne peut jamais décider volontairement d'utiliser ainsi le dernier point d'une
+ * réserve et tomber à zéro » : le plafond laisse toujours un point.
+ * @param {number} poolValue La valeur courante de la réserve.
+ * @param {number|string} wanted L'effort demandé, ramené dans les bornes.
+ * @param {boolean} allowed Faux pour qui ne peut pas faire d'effort : tout est alors à zéro.
+ * @returns {{value: number, max: number, bonus: number, steps: {value: number, bonus: number, selected: boolean, disabled: boolean}[]}}
+ */
+export function effortChoices(poolValue, wanted, allowed) {
+  const max = allowed ? Math.max(0, Math.min(SYSTEM.MAX_EFFORT, poolValue - 1)) : 0
+  const value = Math.min(Math.max(parseInt(wanted) || 0, 0), max)
+  const steps = Array.from({ length: SYSTEM.MAX_EFFORT + 1 }, (unused, step) => ({
+    value: step,
+    bonus: step * SYSTEM.EFFORT_BONUS_PER_POINT,
+    selected: step === value,
+    disabled: step > max,
+  }))
+  return { value, max, bonus: value * SYSTEM.EFFORT_BONUS_PER_POINT, steps }
+}

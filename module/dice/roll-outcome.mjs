@@ -69,6 +69,67 @@ export function keptOutcome(test) {
 }
 
 /**
+ * Un test prêt à lancer, sous la forme que `CdgRoll.post` attend et que la carte conserve.
+ *
+ * La poignée de dés vient du rang, et le seuil est le total du détail : la carte explique ainsi
+ * exactement le nombre qu'elle affiche. Ce qui n'est pas fourni prend sa valeur neutre ; tout champ
+ * en plus (`battle`…) est recopié tel quel.
+ * @param {Object} fields
+ * @param {string|null} [fields.actorUuid] Nul pour un intervenant sans fiche (général adverse saisi à la main).
+ * @param {string} fields.actorName
+ * @param {string} fields.abilityId
+ * @param {string} fields.abilityLabel
+ * @param {number} fields.abilityValue La réserve avant toute dépense.
+ * @param {string|null} [fields.skillId]
+ * @param {string|null} [fields.skillLabel]
+ * @param {number} fields.rank
+ * @param {{label: string, value: number, base?: boolean}[]} fields.breakdown
+ * @param {number} [fields.effort] Les points d'effort dépensés.
+ * @param {Object|null} [fields.passion] La passion invoquée.
+ * @param {boolean} [fields.noPush] Vrai quand le test ne peut pas être dépassé.
+ * @param {Object|null} [fields.companyHealing] Le soin de compagnie que le test décide.
+ * @returns {Object}
+ */
+export function createTest({
+  actorUuid = null,
+  actorName,
+  abilityId,
+  abilityLabel,
+  abilityValue,
+  skillId = null,
+  skillLabel = null,
+  rank,
+  breakdown,
+  effort = 0,
+  passion = null,
+  noPush = false,
+  companyHealing = null,
+  ...extra
+}) {
+  const rankEntry = SYSTEM.RANKS[rank] ?? SYSTEM.RANKS[SYSTEM.DEFAULT_RANK]
+  return {
+    actorUuid,
+    actorName,
+    abilityId,
+    abilityLabel,
+    abilityValue,
+    skillId,
+    skillLabel,
+    rank,
+    dice: rankEntry.dice,
+    keep: rankEntry.keep,
+    sr: breakdown.reduce((total, part) => total + part.value, 0),
+    breakdown: breakdown.map((part) => ({ label: part.label, value: part.value, base: !!part.base })),
+    effort,
+    passion,
+    pushed: false,
+    noPush,
+    companyHealing,
+    ...extra,
+  }
+}
+
+/**
  * Tranche de qualité d'une réussite : de justesse jusqu'à 5, franche au-delà (p. 42).
  * @param {number} quality
  * @returns {string} `"weak"` ou `"standard"`

@@ -1,7 +1,9 @@
 import { SYSTEM } from "../config/system.mjs"
 import CdgRoll from "../dice/cdg-roll.mjs"
+import { createTest } from "../dice/roll-outcome.mjs"
 import { signed } from "../helpers/format.mjs"
 import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
+import { canSpendEffort, effortChoices } from "../helpers/rules.mjs"
 import Utils from "../helpers/utils.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
@@ -125,25 +127,15 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     super(options)
     this.#actor = actor
     this.#draft = {
-      abilityId: seed.abilityId ?? SYSTEM.SKILL_DEFAULT_ABILITY[seed.skillId] ?? Object.keys(this.#abilities)[0],
-      skillId: seed.skillId ?? "",
+      abilityId: Object.keys(this.#abilities)[0],
+      skillId: "",
       difficulty: SYSTEM.DEFAULT_DIFFICULTY,
       modifier: 0,
       effort: 0,
       passionPairId: "",
       passionMode: "bonus",
-      toggles: seed.toggles ?? {},
-      rankOverride: Number.isInteger(seed.rank) ? seed.rank : null,
-      labelOverride: seed.label ?? null,
-      lockedPair: !!seed.lockedPair,
     }
-    this.#afterRoll = typeof seed.afterRoll === "function" ? seed.afterRoll : null
-    this.#postHandler = typeof seed.postHandler === "function" ? seed.postHandler : null
-    this.#targetUuid = seed.targetUuid ?? null
-    this.#qualityDomain = Object.hasOwn(SYSTEM.EXCEPTIONAL_BONUS_DOMAINS, seed.qualityDomain) ? seed.qualityDomain : null
-    this.#companyHealing = ["recovery", "care"].includes(seed.companyHealing) && actor.type === "compagnie" ? seed.companyHealing : null
-    this.#restricted = !!seed.restricted
-    this.#extraModifiers = Array.isArray(seed.extraModifiers) ? seed.extraModifiers : []
+    this.#applySeed(seed)
   }
 
   /**
@@ -175,7 +167,9 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
   }
 
   /**
-   * Remplace la présélection d'une fenêtre déjà ouverte, notamment lors du choix d'une arme.
+   * Applique une présélection : à l'ouverture, ou sur une fenêtre déjà ouverte, notamment lors du
+   * choix d'une arme. Difficulté, effort, passion et modificateur libre saisis par le joueur sont
+   * gardés ; tout ce que la présélection décrit est remplacé.
    * @param {Object} seed Présélection : `abilityId`, `skillId`.
    */
   #applySeed(seed) {
@@ -248,11 +242,9 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     const rank = Number.isInteger(draft.rankOverride) ? draft.rankOverride : skill ? system.skills[draft.skillId].rank : SYSTEM.DEFAULT_RANK
     const rankEntry = SYSTEM.RANKS[rank] ?? SYSTEM.RANKS[SYSTEM.DEFAULT_RANK]
 
-    // « Un joueur ne peut jamais décider volontairement d'utiliser ainsi le dernier point d'une
-    // réserve et tomber à zéro. »
-    const canUseEffort = !this.#restricted && (this.#actor.type === "character" || this.#actor.type === "compagnie" || this.#actor.system.major)
-    const effortMax = canUseEffort ? Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1)) : 0
-    draft.effort = Math.clamp(draft.effort, 0, effortMax)
+    const canUseEffort = !this.#restricted && canSpendEffort(this.#actor)
+    const effort = effortChoices(pool.value, draft.effort, canUseEffort)
+    draft.effort = effort.value
 
     const difficulty = SYSTEM.DIFFICULTIES[draft.difficulty] ?? SYSTEM.DIFFICULTIES[SYSTEM.DEFAULT_DIFFICULTY]
     const passion = this.#computePassion()
@@ -262,7 +254,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     // avant qu'elle ait été diminuée par l'effort. »
     const parts = [{ id: "base", label: game.i18n.localize(ability.label), value: pool.value, base: true }]
     if (difficulty.modifier !== 0) parts.push({ id: "difficulty", label: game.i18n.localize(difficulty.label), value: difficulty.modifier })
-    if (draft.effort > 0) parts.push({ id: "effort", label: game.i18n.localize("CDG.roll.effort"), value: draft.effort * SYSTEM.EFFORT_BONUS_PER_POINT })
+    if (effort.value > 0) parts.push({ id: "effort", label: game.i18n.localize("CDG.roll.effort"), value: effort.bonus })
     if (passion.selected) parts.push({ id: "passion", label: passion.selected.label, value: passion.value })
     for (const modifier of modifiers) if (modifier.active) parts.push({ id: modifier.id, label: modifier.label, value: modifier.value })
     if (draft.modifier !== 0) parts.push({ id: "free", label: game.i18n.localize("CDG.roll.freeModifier"), value: draft.modifier })
@@ -289,13 +281,8 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       difficulty,
       difficultyChoices: SYSTEM.DIFFICULTIES_ORDERED.map((entry) => ({ id: entry.id, label: `${game.i18n.localize(entry.label)} (${signed(entry.modifier)})` })),
       canUseEffort,
-      effortMax,
-      effortSteps: Array.fromRange(SYSTEM.MAX_EFFORT + 1).map((step) => ({
-        value: step,
-        bonus: step * SYSTEM.EFFORT_BONUS_PER_POINT,
-        selected: step === draft.effort,
-        disabled: step > effortMax,
-      })),
+      effortMax: effort.max,
+      effortSteps: effort.steps,
       passion,
       modifiers,
       parts,
@@ -507,7 +494,7 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
     const draft = this.#draft
     const derived = this.#derived
 
-    const test = {
+    const test = createTest({
       actorUuid: actor.uuid,
       actorName: actor.name,
       abilityId: draft.abilityId,
@@ -516,18 +503,14 @@ export default class CdgRollDialog extends HandlebarsApplicationMixin(Applicatio
       skillId: draft.skillId || null,
       skillLabel: derived.testLabel ?? (derived.skill ? game.i18n.localize(derived.skill.label) : null),
       rank: derived.rank,
-      dice: derived.rankEntry.dice,
-      keep: derived.rankEntry.keep,
-      sr: derived.sr,
-      breakdown: derived.parts.map((part) => ({ label: part.label, value: part.value, base: !!part.base })),
+      breakdown: derived.parts,
       effort: draft.effort,
       passion: derived.passion.selected
         ? { pairId: derived.passion.selected.id, label: derived.passion.selected.label, value: derived.passion.value, mode: draft.passionMode }
         : null,
-      pushed: false,
       noPush: this.#restricted,
       companyHealing: this.#companyHealing ? { type: this.#companyHealing, applied: false } : null,
-    }
+    })
 
     const updates = {}
     if (draft.effort > 0) updates[`system.abilities.${draft.abilityId}.value`] = derived.pool.value - draft.effort

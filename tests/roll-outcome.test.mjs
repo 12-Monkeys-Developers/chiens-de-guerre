@@ -1,6 +1,7 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { bestDieIndex, keptOutcome, OUTCOMES, outcomeScore, resolveOutcome, worstDieIndex } from "../module/dice/roll-outcome.mjs"
+import { SYSTEM } from "../module/config/system.mjs"
+import { bestDieIndex, createTest, keptOutcome, OUTCOMES, outcomeScore, resolveOutcome, worstDieIndex } from "../module/dice/roll-outcome.mjs"
 
 const outcome = (die, sr) => resolveOutcome(die, sr).outcome
 
@@ -61,4 +62,36 @@ test("issue d'un test lancé : seul le dé conservé compte, pas le meilleur de 
   assert.deepEqual(keptOutcome(test), resolveOutcome(4, 12))
   assert.equal(keptOutcome({ ...test, keptIndex: 0 }).outcome, OUTCOMES.criticalSuccess.id)
   assert.equal(keptOutcome({ ...test, keptIndex: 2 }).outcome, OUTCOMES.criticalFailure.id)
+})
+
+test("construction d'un test : poignée tirée du rang, seuil égal au total du détail", () => {
+  const test = createTest({
+    actorName: "Général",
+    abilityId: "esprit",
+    abilityLabel: "Esprit",
+    abilityValue: 12,
+    skillId: "tactique",
+    skillLabel: "Tactique",
+    rank: 2,
+    breakdown: [
+      { label: "Esprit", value: 12, base: true },
+      { label: "Bataille", value: -3 },
+    ],
+    noPush: true,
+    battle: { phase: "generals" },
+  })
+  assert.equal(test.sr, 9)
+  assert.equal(test.dice, SYSTEM.RANKS[2].dice)
+  assert.equal(test.keep, SYSTEM.RANKS[2].keep)
+  assert.deepEqual(test.breakdown[1], { label: "Bataille", value: -3, base: false })
+  assert.equal(test.actorUuid, null)
+  assert.deepEqual([test.effort, test.passion, test.pushed, test.companyHealing], [0, null, false, null])
+  assert.equal(test.noPush, true)
+  assert.deepEqual(test.battle, { phase: "generals" })
+})
+
+test("construction d'un test : un rang inconnu retombe sur le rang par défaut", () => {
+  const test = createTest({ actorName: "X", abilityId: "corps", abilityLabel: "Corps", abilityValue: 10, rank: 9, breakdown: [{ label: "Corps", value: 10, base: true }] })
+  assert.equal(test.dice, SYSTEM.RANKS[SYSTEM.DEFAULT_RANK].dice)
+  assert.equal(test.keep, SYSTEM.RANKS[SYSTEM.DEFAULT_RANK].keep)
 })

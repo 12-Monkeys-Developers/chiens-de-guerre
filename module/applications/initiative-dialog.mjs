@@ -1,6 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import { signed } from "../helpers/format.mjs"
 import { invocablePassions, passionUpdates } from "../helpers/passion.mjs"
+import { canSpendEffort, effortChoices } from "../helpers/rules.mjs"
 import Utils from "../helpers/utils.mjs"
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
@@ -118,9 +119,9 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     const rank = system.skills[skillId]?.rank ?? 0
     const rankEntry = SYSTEM.RANKS[rank] ?? SYSTEM.RANKS[0]
     const pool = system.abilities.vivacite
-    const canUseEffort = actor.type === "character" || actor.system.major
-    const effortMax = canUseEffort ? Math.max(0, Math.min(SYSTEM.MAX_EFFORT, pool.value - 1)) : 0
-    draft.effort = Math.clamp(parseInt(draft.effort) || 0, 0, effortMax)
+    const canUseEffort = canSpendEffort(actor)
+    const effort = effortChoices(pool.value, draft.effort, canUseEffort)
+    draft.effort = effort.value
 
     const passion = invocablePassions(actor, draft)
     const wound = draft.wound !== false ? (system.wounds?.malus ?? 0) : 0
@@ -130,7 +131,7 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
     const free = Number(draft.modifier) || 0
 
     const parts = [{ label: game.i18n.localize("CDG.abilities.long.vivacite"), value: pool.value }]
-    if (draft.effort) parts.push({ label: game.i18n.localize("CDG.roll.effort"), value: draft.effort * SYSTEM.EFFORT_BONUS_PER_POINT })
+    if (effort.value) parts.push({ label: game.i18n.localize("CDG.roll.effort"), value: effort.bonus })
     if (passion.selected) parts.push({ label: passion.selected.label, value: passion.value })
     if (wound) parts.push({ label: game.i18n.localize("CDG.combat.initiative.wounds"), value: wound })
     if (equipment) parts.push({ label: game.i18n.localize("CDG.combat.initiative.equipment"), value: equipment })
@@ -146,14 +147,9 @@ export default class CdgInitiativeDialog extends HandlebarsApplicationMixin(Appl
       rankName: game.i18n.localize(rankEntry.label),
       pool,
       canUseEffort,
-      effort: draft.effort,
-      effortMax,
-      effortSteps: Array.fromRange(SYSTEM.MAX_EFFORT + 1).map((value) => ({
-        value,
-        bonus: value * SYSTEM.EFFORT_BONUS_PER_POINT,
-        selected: value === draft.effort,
-        disabled: value > effortMax,
-      })),
+      effort: effort.value,
+      effortMax: effort.max,
+      effortSteps: effort.steps,
       passion,
       parts,
       fixedTotal: parts.reduce((sum, part) => sum + part.value, 0),

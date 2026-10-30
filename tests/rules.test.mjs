@@ -2,7 +2,7 @@ import { test } from "node:test"
 import assert from "node:assert/strict"
 import { SYSTEM } from "../module/config/system.mjs"
 import { customizationBudget, skillBudget, skillCost, traitQuotas } from "../module/helpers/creation-calculations.mjs"
-import { computeKarma, simulateCompanyHealing } from "../module/helpers/rules.mjs"
+import { canSpendEffort, computeKarma, effortChoices, simulateCompanyHealing } from "../module/helpers/rules.mjs"
 
 const traits = (entries) => Object.fromEntries(Object.keys(SYSTEM.TRAIT_PAIRS).map((id, index) => [id, entries[index] ?? { dominant: null, value: 0 }]))
 
@@ -84,4 +84,30 @@ test("soins de compagnie : plan refusé si la blessure manque ou si la destinati
   assert.equal(simulateCompanyHealing(wounds(0, 0, 0), [{ level: "grave", steps: 1 }]), null)
   assert.equal(simulateCompanyHealing(wounds(2, 1, 0), [{ level: "grave", steps: 1 }]), null)
   assert.equal(simulateCompanyHealing(wounds(0, 1, 0), [{ level: "grave", steps: 3 }]), null)
+})
+
+test("effort : personnage, compagnie et adversaire majeur seulement", () => {
+  assert.equal(canSpendEffort({ type: "character", system: {} }), true)
+  assert.equal(canSpendEffort({ type: "compagnie", system: {} }), true)
+  assert.equal(canSpendEffort({ type: "adversaire", system: { major: true } }), true)
+  assert.equal(canSpendEffort({ type: "adversaire", system: { major: false } }), false)
+})
+
+test("effort : plafonné à la réserve moins un point, et au maximum des règles", () => {
+  const low = effortChoices(3, 5, true)
+  assert.equal(low.max, 2)
+  assert.equal(low.value, 2)
+  assert.equal(low.bonus, 2 * SYSTEM.EFFORT_BONUS_PER_POINT)
+  assert.equal(effortChoices(1, 1, true).max, 0)
+  assert.equal(effortChoices(20, 99, true).max, SYSTEM.MAX_EFFORT)
+  assert.equal(effortChoices(20, "-2", true).value, 0)
+
+  const closed = effortChoices(10, 2, false)
+  assert.deepEqual([closed.max, closed.value, closed.bonus], [0, 0, 0])
+  assert.equal(closed.steps.length, SYSTEM.MAX_EFFORT + 1)
+  assert.ok(closed.steps.slice(1).every((step) => step.disabled))
+  assert.deepEqual(
+    low.steps.filter((step) => step.selected).map((step) => step.value),
+    [2],
+  )
 })
