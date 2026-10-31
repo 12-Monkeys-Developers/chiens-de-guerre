@@ -1,3 +1,7 @@
+## 0.9.2
+
+- **Guide du système** : captures des assistants de création de personnage et de compagnie refaites avec les nouveaux titres, ainsi que celles du suivi en duel et de la confrontation résolue.
+
 ## 0.9.1
 - Ajout des titres stylisés manquant pour les aides à la création.
 
