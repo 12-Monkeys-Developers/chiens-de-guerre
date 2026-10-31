@@ -4,7 +4,9 @@
   et 3 : ils sont rappelés ici avec leur prix, et un bouton y ramène.
 }}
 <section class="creation-step step-personnalisation">
-  <h2 class="section-title">{{localize "CDG.creation.steps.personnalisation"}}</h2>
+  <h2 class="section-title section-title-art" data-bandeau="personnalite-l">
+    <img class="title-art" src="systems/chiens-de-guerre/ui/fiche/titres/personnalisation.webp" alt="{{localize 'CDG.label.long.personnalisation'}}" />
+  </h2>
   <p class="intro">{{localize "CDG.creation.personnalisation.intro" total=derived.customizationTotal}}</p>
 
   <div class="budget {{#if (gt derived.customizationRemaining 0)}}pending{{/if}} {{#if (lt derived.customizationRemaining 0)}}over{{/if}}">

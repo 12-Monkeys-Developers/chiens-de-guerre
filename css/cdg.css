@@ -390,6 +390,20 @@ cdg-toggle-switch[checked] thumb {
   width: 155.7px;
   top: -6.57201097px;
 }
+.cdg .section-title-art[data-bandeau="origine"] {
+  height: 30px;
+}
+.cdg .section-title-art[data-bandeau="origine"] > .title-art {
+  width: 290.6px;
+  top: -26.69327615px;
+}
+.cdg .section-title-art[data-bandeau="personnalite-l"] {
+  height: 44px;
+}
+.cdg .section-title-art[data-bandeau="personnalite-l"] > .title-art {
+  width: 241.92px;
+  top: -15.71264px;
+}
 .cdg .section-title-art[data-bandeau="pjs"] {
   height: 44px;
 }
