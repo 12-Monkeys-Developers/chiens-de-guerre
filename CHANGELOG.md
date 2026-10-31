@@ -1,3 +1,6 @@
+## 0.9.1
+- Ajout des titres stylisés manquant pour les aides à la création.
+
 ## 0.9.0
 
 - **Batailles** (p. 51-54) : nouvelle fenêtre « Bataille », ouverte depuis la fiche de compagnie, l'onglet du système ou la carte « La bataille s'engage » du tchat. Le Meneur fixe l'enjeu, le modificateur de bataille (repères de la table p. 51), la composition de l'armée adverse, le général adverse (PNJ déposé, ou nom, Esprit et rang de Tactique saisis) et le chef d'armée (la compagnie ou l'un de ses PJ), puis mène les tours phase par phase jusqu'à trois points de victoire, égalité départagée par de nouveaux tours.
