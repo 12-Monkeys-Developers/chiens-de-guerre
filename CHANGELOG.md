@@ -1,5 +1,6 @@
 ## 0.9.2
 
+- **Suivi de combat** : « Créer un combat » y ajoute d'emblée les jetons sélectionnés sur la scène, au lieu de rester vide.
 - **Guide du système** : captures des assistants de création de personnage et de compagnie refaites avec les nouveaux titres, ainsi que celles du suivi en duel et de la confrontation résolue.
 
 ## 0.9.1

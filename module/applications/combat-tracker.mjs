@@ -31,6 +31,17 @@ export default class CdgCombatTracker extends CoreCombatTracker {
     this.element.addEventListener("click", this.#onIndividualInitiativeClick.bind(this), { capture: true })
   }
 
+  /**
+   * Le cœur crée une rencontre vide : les jetons sélectionnés sur la scène y entrent d'emblée.
+   * @override
+   */
+  async _onCombatCreate(event, target) {
+    const combat = await Combat.implementation.create()
+    await combat.activate({ render: false })
+    const tokens = canvas.ready ? canvas.tokens.controlled.map((token) => token.document) : []
+    if (tokens.length) await TokenDocument.implementation.createCombatants(tokens, { combat })
+  }
+
   /** @override */
   async _prepareCombatContext(context, options) {
     await super._prepareCombatContext(context, options)
