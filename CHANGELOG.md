@@ -1,5 +1,6 @@
 ## 0.9.2
 
+- **Confrontation** : quand une étape revient à un autre (la défense d'un PNJ, l'encaissement de la cible…), la carte affiche « En attente de… » à la place des boutons, en nommant le personnage et en précisant quand c'est au Meneur de jouer. Un joueur qui attaque un PNJ ne voit plus une carte sans bouton ni explication.
 - **Suivi de combat** : « Créer un combat » y ajoute d'emblée les jetons sélectionnés sur la scène, au lieu de rester vide.
 - **Guide du système** : captures des assistants de création de personnage et de compagnie refaites avec les nouveaux titres, ainsi que celles du suivi en duel et de la confrontation résolue.
 

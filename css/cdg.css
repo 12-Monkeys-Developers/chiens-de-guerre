@@ -2819,6 +2819,16 @@ cdg-toggle-switch[checked] thumb {
   font-size: 0.8rem;
   color: var(--cdg-label);
 }
+.cdg-confrontation-card .confrontation-waiting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--cdg-muted);
+}
 .cdg .creation-grants {
   margin: 20px 0px 30px 0px;
 }

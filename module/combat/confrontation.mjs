@@ -203,6 +203,13 @@ export default class CdgConfrontation {
       context.canRollSoak = state.opposition.hit && !state.soakTest
     }
 
+    // Ce qu'on attend encore, et de qui : chaque client retire la ligne des étapes qu'il peut jouer
+    // (voir `activateListeners`), les autres lisent pourquoi la carte n'a pas de bouton pour eux.
+    context.waiting = {}
+    if (context.canChooseDefense) context.waiting.defense = this.#waitingLabel("defense", state)
+    if (context.canRollDamage) context.waiting.damage = this.#waitingLabel("damage", state)
+    if (context.canRollSoak) context.waiting.soak = this.#waitingLabel("soak", state)
+
     if (state.damageTest) context.damage = CdgRoll.cardContext(state.damageTest)
     if (state.soakTest) context.soak = CdgRoll.cardContext(state.soakTest)
 
@@ -228,6 +235,18 @@ export default class CdgConfrontation {
     }
 
     return context
+  }
+
+  /**
+   * La ligne d'attente d'une étape : qui doit la jouer, et le Meneur quand c'est un PNJ.
+   * @param {"defense"|"damage"|"soak"} phase
+   * @param {Object} state
+   * @returns {string}
+   */
+  static #waitingLabel(phase, state) {
+    const actor = this.#phaseActor(phase, state)
+    const key = actor && !actor.hasPlayerOwner ? "byGM" : "byPlayer"
+    return game.i18n.format(`CDG.confrontation.waiting.${phase}.${key}`, { name: actor?.name ?? "?" })
   }
 
   // #endregion
@@ -530,6 +549,10 @@ export default class CdgConfrontation {
     if (!state) return
     // Le message entier se repère comme clos dans le tchat, pas seulement la carte.
     html.classList.toggle("cdg-resolved", this.isResolved(state))
+
+    for (const line of html.querySelectorAll("[data-waiting-phase]")) {
+      if (this.#canAct(line.dataset.waitingPhase, state)) line.remove()
+    }
 
     for (const button of html.querySelectorAll("[data-action='keepDie']")) {
       if (!game.user.isGM) {

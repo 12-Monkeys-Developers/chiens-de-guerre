@@ -39,6 +39,7 @@
         <i class="fa-solid fa-shield"></i> {{localize "CDG.combat.defense.parry"}}
       </button>
     </div>
+    <p class="confrontation-waiting" data-waiting-phase="defense"><i class="fa-solid fa-hourglass-half" inert></i> {{waiting.defense}}</p>
   {{/if}}
 
   {{#if defense}}
@@ -68,6 +69,8 @@
           <button type="button" data-action="rollSoak"><i class="fa-solid fa-helmet-battle"></i> {{localize "CDG.combat.soakTest"}}</button>
         {{/if}}
       </div>
+      {{#if canRollDamage}}<p class="confrontation-waiting" data-waiting-phase="damage"><i class="fa-solid fa-hourglass-half" inert></i> {{waiting.damage}}</p>{{/if}}
+      {{#if canRollSoak}}<p class="confrontation-waiting" data-waiting-phase="soak"><i class="fa-solid fa-hourglass-half" inert></i> {{waiting.soak}}</p>{{/if}}
     {{/if}}
 
     {{#if damage}}

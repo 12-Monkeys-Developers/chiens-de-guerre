@@ -468,7 +468,21 @@
         "noTargetGM": "{user} : {name} attaque sans cible, le jet reste isolé.",
         "noGM": "Aucun Meneur de jeu connecté : impossible de faire progresser cette confrontation."
       },
-      "parryNeedsShield": "Un projectile ne se pare qu'avec un bouclier."
+      "parryNeedsShield": "Un projectile ne se pare qu'avec un bouclier.",
+      "waiting": {
+        "defense": {
+          "byPlayer": "En attente de la défense de {name}",
+          "byGM": "En attente du Meneur : défense de {name}"
+        },
+        "damage": {
+          "byPlayer": "En attente des dégâts de {name}",
+          "byGM": "En attente du Meneur : dégâts de {name}"
+        },
+        "soak": {
+          "byPlayer": "En attente de l'encaissement de {name}",
+          "byGM": "En attente du Meneur : encaissement de {name}"
+        }
+      }
     },
     "origin": {
       "open": "Ouvrir la fiche",
