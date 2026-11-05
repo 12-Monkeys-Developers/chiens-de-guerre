@@ -251,6 +251,68 @@ export default class CdgConfrontation {
 
   // #endregion
 
+  // #region Jets lancés hors de la carte
+
+  /**
+   * La confrontation la plus récente qui attend de cet acteur l'étape demandée : sa défense ou son
+   * encaissement comme cible, ses dégâts comme attaquant.
+   * @param {CdgActor} actor
+   * @param {"defense"|"damage"|"soak"} phase
+   * @returns {ChatMessage|null}
+   */
+  static pendingFor(actor, phase) {
+    const awaits = (state) => {
+      if (phase === "defense") return !state.defenseTest
+      if (!state.opposition?.hit) return false
+      return phase === "damage" ? !state.damageTest : !state.soakTest
+    }
+    for (const message of [...game.messages.contents].reverse()) {
+      const state = this.getState(message)
+      if (!state || this.isResolved(state) || !awaits(state)) continue
+      if (this.#phaseActor(phase, state)?.uuid === actor.uuid) return message
+    }
+    return null
+  }
+
+  /**
+   * Un jet de défense, de dégâts ou d'encaissement lancé depuis la fiche (ou sa macro) alors qu'une
+   * confrontation l'attend : un jet isolé n'avancerait pas la carte et n'appliquerait aucune
+   * blessure. On propose de le jouer sur la carte.
+   * @param {CdgActor} actor
+   * @param {"defense"|"damage"|"soak"} phase
+   * @param {Object} [options]
+   * @param {"dodge"|"parry"} [options.defense] La défense choisie, pour l'étape `defense`.
+   * @returns {Promise<boolean>} `true` si le jet a été pris en charge (joué sur la carte ou annulé) :
+   *   l'appelant ne lance alors pas son jet isolé.
+   */
+  static async redirectFromSheet(actor, phase, { defense } = {}) {
+    const message = this.pendingFor(actor, phase)
+    if (!message || !this.#canAct(phase, this.getState(message))) return false
+
+    const state = this.getState(message)
+    const choice = await foundry.applications.api.DialogV2.wait({
+      window: { title: game.i18n.localize("CDG.confrontation.redirect.title") },
+      content: `<p>${game.i18n.format(`CDG.confrontation.redirect.${phase}`, {
+        attacker: foundry.utils.escapeHTML(fromUuidSync(state.attackerUuid)?.name ?? "?"),
+        target: foundry.utils.escapeHTML(fromUuidSync(state.targetUuid)?.name ?? "?"),
+      })}</p>`,
+      buttons: [
+        { action: "card", label: "CDG.confrontation.redirect.card", icon: "fa-solid fa-comments", default: true },
+        { action: "free", label: "CDG.confrontation.redirect.free", icon: "fa-solid fa-dice-d20" },
+      ],
+      rejectClose: false,
+    })
+    if (choice === "free") return false
+    if (choice === "card") {
+      if (phase === "defense") await this.#onChooseDefense(message, defense)
+      else if (phase === "damage") await this.#onRollDamage(message)
+      else await this.#onRollSoak(message)
+    }
+    return true
+  }
+
+  // #endregion
+
   // #region Écriture par le Meneur
 
   /**
@@ -577,7 +639,7 @@ export default class CdgConfrontation {
         continue
       }
       this.#markPlayerSide(button, "defense", state)
-      button.addEventListener("click", (event) => this.#onChooseDefense(event, message))
+      button.addEventListener("click", (event) => this.#onChooseDefense(message, event.currentTarget.dataset.defense))
     }
 
     const damageButton = html.querySelector("[data-action='rollDamage']")
@@ -637,11 +699,10 @@ export default class CdgConfrontation {
 
   /**
    * La cible choisit sa défense — esquive ou parade — et ouvre le test correspondant.
-   * @param {PointerEvent} event
    * @param {ChatMessage} message
+   * @param {"dodge"|"parry"} defense
    */
-  static async #onChooseDefense(event, message) {
-    const defense = event.currentTarget.dataset.defense
+  static async #onChooseDefense(message, defense) {
     if (!Object.hasOwn(SYSTEM.DEFENSES, defense)) return
 
     const state = this.getState(message)

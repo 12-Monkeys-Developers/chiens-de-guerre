@@ -161,6 +161,7 @@ export default class CdgMacros {
   static async rollDamage(itemUuid, itemName) {
     const weapon = await this.#resolveWeapon(itemUuid, itemName)
     if (!weapon) return null
+    if (await CdgConfrontation.redirectFromSheet(weapon.parent, "damage")) return null
     return CdgRollDialog.open(weapon.parent, damageSeed(weapon))
   }
 
@@ -173,6 +174,7 @@ export default class CdgMacros {
     if (!Object.hasOwn(SYSTEM.DEFENSES, defense)) return null
     actor ??= this.selectedActor()
     if (!actor) return null
+    if (await CdgConfrontation.redirectFromSheet(actor, "defense", { defense })) return null
     if (defense === SYSTEM.DEFENSES.parry.id && actor.system.combat.parryUsed) ui.notifications.warn("CDG.combat.defense.parryAlreadyUsed", { localize: true })
     return CdgRollDialog.open(actor, { ...defenseSeed(defense), afterRoll: () => actor.consumeDefense(defense) })
   }
@@ -206,6 +208,7 @@ export default class CdgMacros {
   static async rollSoak(actor = null) {
     actor ??= this.selectedActor()
     if (!actor) return null
+    if (await CdgConfrontation.redirectFromSheet(actor, "soak")) return null
     return CdgRollDialog.open(actor, soakSeed(actor))
   }
 }
