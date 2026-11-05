@@ -62,6 +62,8 @@ export default class CdgConfrontation {
         abilityId: weapon.system.attack.ability,
         skillId: weapon.system.attack.skill,
         qualityDomain: "attack",
+        // La carte le dit aussi : la notification passe, la carte reste dans le tchat.
+        postHandler: (test) => CdgRoll.post({ ...test, noTarget: true }),
         afterRoll: () => this.#warnGMsNoTarget(actor),
       })
     }

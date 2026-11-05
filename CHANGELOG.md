@@ -1,5 +1,6 @@
 ## 0.9.2
 
+- **Attaque sans cible** : la carte du jet porte la mention « Sans cible : test isolé, sans défense, dégâts ni encaissement ». Jusqu'ici, seule une notification passagère distinguait ce jet d'une confrontation.
 - **Confrontation** : esquiver, parer, les dégâts ou l'encaissement lancés depuis la fiche (ou leur macro) alors qu'une confrontation attend ce jet proposent de le jouer sur la carte. Un jet isolé reste possible, mais il ne faisait pas avancer la carte et n'appliquait aucune blessure, sans que rien ne le dise.
 - **Confrontation** : quand une étape revient à un autre (la défense d'un PNJ, l'encaissement de la cible…), la carte affiche « En attente de… » à la place des boutons, en nommant le personnage et en précisant quand c'est au Meneur de jouer. Un joueur qui attaque un PNJ ne voit plus une carte sans bouton ni explication.
 - **Suivi de combat** : « Créer un combat » y ajoute d'emblée les jetons sélectionnés sur la scène, au lieu de rester vide.

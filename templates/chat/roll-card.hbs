@@ -11,6 +11,10 @@
     <span class="card-sr" data-tooltip="{{localize 'CDG.roll.sr'}}">{{localize "CDG.roll.srShort"}} {{test.sr}}</span>
   </header>
 
+  {{#if test.noTarget}}
+    <p class="card-no-target"><i class="fa-solid fa-crosshairs" inert></i> {{localize "CDG.confrontation.noTargetCard"}}</p>
+  {{/if}}
+
   {{> "systems/chiens-de-guerre/templates/chat/partials/test-body.hbs" this phase=""}}
 
 </div>

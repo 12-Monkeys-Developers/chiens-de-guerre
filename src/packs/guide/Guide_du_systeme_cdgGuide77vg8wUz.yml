@@ -1107,7 +1107,7 @@ pages:
           <p>
             Une attaque se mène de bout en bout dans <strong>une seule carte</strong> de tchat, mise à jour à chaque jet. Désignez <strong>une</strong> cible sur la scène
             (touche <kbd>T</kbd>), puis cliquez sur l'icône d'attaque <i class="fas fa-sword"></i> d'une arme tenue en main, sur la fiche ou depuis la barre de macros.
-            Sans cible, l'attaque est un test ordinaire, et une notification le rappelle à l'attaquant (et au meneur, quand c'est un joueur qui attaque) ; avec
+            Sans cible, l'attaque est un test ordinaire : sa carte le dit (« Sans cible : test isolé »), et une notification le rappelle à l'attaquant (et au meneur, quand c'est un joueur qui attaque) ; avec
             plusieurs cibles, elle est refusée.
           </p>
           <div class="guide-row">

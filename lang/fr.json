@@ -469,6 +469,7 @@
         "noGM": "Aucun Meneur de jeu connecté : impossible de faire progresser cette confrontation."
       },
       "parryNeedsShield": "Un projectile ne se pare qu'avec un bouclier.",
+      "noTargetCard": "Sans cible : test isolé, sans défense, dégâts ni encaissement.",
       "redirect": {
         "title": "Confrontation en cours",
         "defense": "{attacker} attaque {target} et la carte attend sa défense. Un jet lancé depuis la fiche ne fera pas avancer la confrontation.",
