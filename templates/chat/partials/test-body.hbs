@@ -8,6 +8,9 @@
   que pour le Meneur (voir `activateListeners`), qui peut ainsi outrepasser ce choix — pour tout
   autre client ils sont désactivés côté script, purement affichage ici.
 
+  Le détail du seuil n'est lu que par celui qui a lancé le jet, le joueur du personnage et le Meneur : chaque client
+  retire les autres (`CdgRoll.activateListeners`, `CdgConfrontation.activateListeners`).
+
   `../` plutôt que `@root` dans la boucle des dés : `@root` désignerait le contexte de la carte
   englobante quand ce partiel est inclus depuis confrontation-card.hbs, pas le sous-jet courant.
 }}
@@ -29,7 +32,7 @@
   <span class="verdict-label">{{outcomeLabel}}</span>
   {{#if outcome.success}}<span class="verdict-quality">{{localize "CDG.roll.quality"}} {{outcome.quality}}</span>{{/if}}
 </div>
-<details class="card-detail">
+<details class="card-detail" data-phase="{{phase}}">
   <summary>{{localize "CDG.roll.breakdown"}}</summary>
   <ul>
     {{#each test.breakdown as |part|}}

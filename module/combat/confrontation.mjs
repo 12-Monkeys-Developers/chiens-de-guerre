@@ -614,6 +614,11 @@ export default class CdgConfrontation {
     // Le message entier se repère comme clos dans le tchat, pas seulement la carte.
     html.classList.toggle("cdg-resolved", this.isResolved(state))
 
+    // Le détail du seuil d'un sous-jet reste à celui qui l'a lancé et au Meneur.
+    for (const detail of html.querySelectorAll(".card-detail[data-phase]")) {
+      if (!this.#canAct(detail.dataset.phase, state)) detail.remove()
+    }
+
     for (const line of html.querySelectorAll("[data-waiting-phase]")) {
       if (this.#canAct(line.dataset.waitingPhase, state)) line.remove()
     }

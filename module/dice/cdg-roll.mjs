@@ -203,6 +203,12 @@ export default class CdgRoll extends Roll {
       button.addEventListener("click", (event) => this.#onKeepDie(event, message))
     }
 
+    // Le détail du seuil reste à celui qui a lancé le jet, au Meneur, et au joueur du personnage
+    // quand le Meneur a lancé pour lui.
+    if (!this.#canInteract(message) && !(test.actorUuid && fromUuidSync(test.actorUuid)?.isOwner)) {
+      for (const detail of html.querySelectorAll(".card-detail")) detail.remove()
+    }
+
     if (!this.#canInteract(message)) return
     for (const button of html.querySelectorAll("[data-action='pushTest']")) {
       button.addEventListener("click", (event) => this.#onPushTest(event, message))
