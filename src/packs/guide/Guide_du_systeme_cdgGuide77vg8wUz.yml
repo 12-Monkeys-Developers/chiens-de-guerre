@@ -1177,6 +1177,11 @@ pages:
             <strong>Jouer sur la carte</strong> lance le jet de l'étape, qui fait avancer la carte et coche la blessure ; <strong>Jet isolé</strong> lance le jet seul,
             sans rien appliquer.
           </p>
+          <p class="guide-astuce">
+            Quand plusieurs cartes attendent le même jet (deux attaquants ont touché le même personnage, par exemple), la fiche propose toujours la <strong>plus
+            récente</strong>, et la boîte nomme son attaquant. Une fois ce jet joué, le clic suivant propose la carte d'avant. Pour jouer d'abord une carte plus ancienne,
+            cliquez directement le bouton sur cette carte.
+          </p>
           <p>
             À la fin de chaque round, les esquives et la parade de chaque combattant reviennent à zéro (réglage « Réinitialiser esquives et parade », voir
             @UUID[Compendium.chiens-de-guerre.guide.JournalEntry.cdgGuide77vg8wUz.JournalEntryPage.GmNyKHhl8NNxO3ep]{Réglages}).
