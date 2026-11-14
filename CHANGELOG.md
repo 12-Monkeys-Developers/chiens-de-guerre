@@ -1,5 +1,6 @@
-## 0.9.4
+## 1.0.0
 
+- Sortie officielle sur Foundry.
 - **Confrontation** : une fois l'action résolue, le Meneur dispose d'un bouton « Action suivante » sur la carte, qui fait la même chose que « Fin action » dans le suivi de combat. Il n'apparaît que si un combat a commencé et que l'attaquant a la main, et il ne sert qu'une fois.
 - **Distribution** : chaque release publiée sur GitHub est aussi déclarée sur foundryvtt.com : la nouvelle version apparaît d'elle-même dans la liste des systèmes installables depuis Foundry.
 
