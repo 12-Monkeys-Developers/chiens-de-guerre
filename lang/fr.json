@@ -457,6 +457,8 @@
       "ignoreArmor": "Armure ignorée",
       "noWound": "Aucune blessure",
       "resolved": "Action résolue",
+      "nextAction": "Action suivante",
+      "nextActionHint": "Termine l'action de l'attaquant dans le suivi de combat, comme « Fin action »",
       "woundOverflow": {
         "grave": "{wound} devenue grave",
         "mortelle": "{wound} devenue mortelle"
@@ -466,7 +468,8 @@
         "needSingleTarget": "Désignez exactement une cible avant d'attaquer.",
         "noTarget": "{name} attaque sans cible : le jet restera isolé, sans défense, dégâts ni encaissement. Ciblez un adversaire pour ouvrir une confrontation.",
         "noTargetGM": "{user} : {name} attaque sans cible, le jet reste isolé.",
-        "noGM": "Aucun Meneur de jeu connecté : impossible de faire progresser cette confrontation."
+        "noGM": "Aucun Meneur de jeu connecté : impossible de faire progresser cette confrontation.",
+        "notAttackerTurn": "L'attaquant de cette carte n'a plus la main : utilisez « Fin action » dans le suivi de combat."
       },
       "parryNeedsShield": "Un projectile ne se pare qu'avec un bouclier.",
       "noTargetCard": "Sans cible : test isolé, sans défense, dégâts ni encaissement.",

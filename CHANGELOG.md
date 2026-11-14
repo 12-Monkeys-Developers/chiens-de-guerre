@@ -1,3 +1,7 @@
+## 0.9.4
+
+- **Confrontation** : une fois l'action résolue, le Meneur dispose d'un bouton « Action suivante » sur la carte, qui fait la même chose que « Fin action » dans le suivi de combat. Il n'apparaît que si un combat a commencé et que l'attaquant a la main, et il ne sert qu'une fois.
+
 ## 0.9.3
 
 - **Tchat** : le volet « Détail du seuil » d'une carte de jet ou d'une étape de confrontation n'est plus affiché qu'à celui qui a lancé le jet, au joueur du personnage (quand le Meneur a lancé pour lui) et au Meneur.

@@ -123,6 +123,8 @@ export default class CdgConfrontation {
       woundId: null,
       appliedWoundId: null,
       woundResolved: false,
+      // Posé par « Action suivante » : l'action de l'attaquant a déjà été retirée du suivi.
+      turnAdvanced: false,
     }
 
     // Toujours publique, quel que soit le mode du tchat : la cible doit voir la carte pour s'y défendre.
@@ -658,6 +660,12 @@ export default class CdgConfrontation {
       }
     }
 
+    const nextAction = html.querySelector("[data-next-action]")
+    if (nextAction) {
+      if (!this.#canAdvanceTurn(state)) nextAction.remove()
+      else nextAction.querySelector("button").addEventListener("click", (event) => this.#onNextAction(event, message))
+    }
+
     const soakButton = html.querySelector("[data-action='rollSoak']")
     if (soakButton) {
       if (!this.#canAct("soak", state)) soakButton.style.display = "none"
@@ -666,6 +674,42 @@ export default class CdgConfrontation {
         soakButton.addEventListener("click", () => this.#onRollSoak(message))
       }
     }
+  }
+
+  /**
+   * Le bouton « Action suivante » d'une confrontation résolue n'est proposé qu'au Meneur, une seule
+   * fois, et seulement si l'attaquant de la carte a la main dans le combat actif et commencé : passer
+   * au suivant retire l'action à celui qui a la main, jamais à un autre.
+   *
+   * Le tchat ne se redessine pas quand le combat avance : un bouton resté affiché sur une carte plus
+   * ancienne est revérifié au clic (`#onNextAction`).
+   * @param {Object} state
+   * @returns {boolean}
+   */
+  static #canAdvanceTurn(state) {
+    if (!game.user.isGM || state.turnAdvanced || !this.isResolved(state)) return false
+    const combat = game.combats.active
+    return !!combat?.started && combat.combatant?.actor?.uuid === state.attackerUuid
+  }
+
+  /**
+   * Termine l'action de l'attaquant dans le suivi, comme « Fin action », puis retire le bouton de la carte.
+   * @param {PointerEvent} event
+   * @param {ChatMessage} message
+   */
+  static async #onNextAction(event, message) {
+    event.preventDefault()
+    const button = event.currentTarget
+    const state = this.getState(message)
+    if (!state || !this.#canAdvanceTurn(state)) {
+      button.closest("[data-next-action]")?.remove()
+      ui.notifications.warn("CDG.confrontation.notif.notAttackerTurn", { localize: true })
+      return
+    }
+    button.disabled = true
+    Utils.debug("confrontation", `Action suivante depuis la carte : fin d'action de ${fromUuidSync(state.attackerUuid)?.name}`)
+    await message.setFlag(SYSTEM.PACKAGE_ID, `${this.FLAG}.turnAdvanced`, true)
+    await game.combats.active.nextTurn()
   }
 
   /**
