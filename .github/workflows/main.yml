@@ -152,6 +152,14 @@ jobs:
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
 
-      # L'étape « Deploy Release » (POST vers foundryvtt.com/_api/packages/release_version) n'est pas
-      # reprise : le système n'est pas encore enregistré sur foundryvtt.com. À rajouter le jour où il
-      # y aura un id de paquet officiel et un FVTT_PACKAGE_RELEASE_TOKEN dans les secrets du dépôt.
+      # Publie la version sur foundryvtt.com (paquet « chiens-de-guerre ») : elle apparaît alors
+      # dans la liste des systèmes installables depuis Foundry. Jeton dans les secrets du dépôt.
+      - name: Deploy Release
+        id: deploy_release
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://foundryvtt.com/_api/packages/release_version'
+          method: 'POST'
+          contentType: 'application/json'
+          customHeaders: '{"Authorization": "${{ secrets.FVTT_PACKAGE_RELEASE_TOKEN }}"}'
+          data: '{"id": "chiens-de-guerre","dry-run":false,"release":{"version":"${{steps.get_version.outputs.version-without-v}}","manifest":"https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.json","notes":"https://github.com/${{github.repository}}/blob/main/CHANGELOG.md","compatibility":{"minimum":"14","verified":"14","maximum":"14"}}}'
